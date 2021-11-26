@@ -4,7 +4,7 @@ import com.g6jamm.stima.domain.model.Task;
 
 public interface TaskRepository {
 
-    Task createTask(Task task);
+  Task createTask(Task task);
 
-    Task getTask(int task_id);
+  Task getTask(int task_id);
 }
