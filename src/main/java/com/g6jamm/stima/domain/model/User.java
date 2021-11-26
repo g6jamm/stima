@@ -7,8 +7,7 @@ public class User {
   private final String LAST_NAME;
   private final String EMAIL;
   private final String PASSWORD;
-  private final Role ROLE;  //TODO skal vi stadig bruge den?
-
+  private final Role ROLE; // TODO skal vi stadig bruge den?
 
   private User(UserBuilder userBuilder) {
     this.ID = userBuilder.id;
@@ -49,7 +48,7 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    private Role role; //TODO skal vi stadig bruge den?
+    private Role role; // TODO skal vi stadig bruge den?
 
     public UserBuilder id(int id) {
       this.id = id;
@@ -81,10 +80,9 @@ public class User {
       return this;
     }
 
-    public User build(){
+    public User build() {
       User result = new User(this);
       return result;
     }
   }
-
 }
