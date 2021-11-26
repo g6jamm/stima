@@ -1,4 +1,4 @@
-package com.example.stima;
+package com.g6jamm.stima;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

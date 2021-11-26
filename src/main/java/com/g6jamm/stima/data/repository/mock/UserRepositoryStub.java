@@ -1,8 +1,8 @@
-package com.example.stima.data.repository.mock;
+package com.g6jamm.stima.data.repository.mock;
 
-import com.example.stima.data.repository.UserRepository;
-import com.example.stima.domain.model.Role;
-import com.example.stima.domain.model.User;
+import com.g6jamm.stima.data.repository.UserRepository;
+import com.g6jamm.stima.domain.model.Role;
+import com.g6jamm.stima.domain.model.User;
 
 public class UserRepositoryStub implements UserRepository {
 

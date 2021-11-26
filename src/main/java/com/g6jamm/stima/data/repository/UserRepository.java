@@ -1,6 +1,6 @@
-package com.example.stima.data.repository;
+package com.g6jamm.stima.data.repository;
 
-import com.example.stima.domain.model.User;
+import com.g6jamm.stima.domain.model.User;
 
 public interface UserRepository {
 

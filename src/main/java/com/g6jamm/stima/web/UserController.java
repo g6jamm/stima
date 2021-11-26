@@ -1,4 +1,4 @@
-package com.example.stima.web;
+package com.g6jamm.stima.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

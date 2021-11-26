@@ -1,4 +1,4 @@
-package com.example.stima.domain.model;
+package com.g6jamm.stima.domain.model;
 
 public class User {
 
