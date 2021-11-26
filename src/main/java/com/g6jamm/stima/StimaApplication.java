@@ -9,5 +9,4 @@ public class StimaApplication {
   public static void main(String[] args) {
     SpringApplication.run(StimaApplication.class, args);
   }
-
 }
