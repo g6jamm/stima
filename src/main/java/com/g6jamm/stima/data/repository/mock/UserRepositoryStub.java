@@ -4,6 +4,9 @@ import com.g6jamm.stima.data.repository.UserRepository;
 import com.g6jamm.stima.domain.model.Role;
 import com.g6jamm.stima.domain.model.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserRepositoryStub implements UserRepository {
 
   @Override
@@ -36,11 +39,52 @@ public class UserRepositoryStub implements UserRepository {
 
   @Override
   public int getNewUserId(User user) {
-    return 0;
+    user =
+        new User.UserBuilder()
+            .firstName("John")
+            .lastName("Doe")
+            .email("maill@mail.com")
+            .password("123")
+            .id(1)
+            .role(new Role())
+            .build();
+
+    return user.getId();
   }
 
   @Override
   public User getUser(int id) {
-    return null;
+
+    List<User> users = new ArrayList<>();
+    User result = null;
+    User user1 =
+        new User.UserBuilder()
+            .firstName("John")
+            .lastName("Doe")
+            .email("maill@mail.com")
+            .password("123")
+            .id(1)
+            .role(new Role())
+            .build();
+
+    User user2 =
+        new User.UserBuilder()
+            .firstName("John")
+            .lastName("Doe")
+            .email("maill@mail.com")
+            .password("123")
+            .id(2)
+            .role(new Role())
+            .build();
+
+    users.add(user1);
+    users.add(user2);
+
+    for (User u: users) {
+      if (u.getId() == id){
+        result = u;
+      }
+    }
+    return result;
   }
 }
