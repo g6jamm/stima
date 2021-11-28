@@ -9,5 +9,4 @@ public interface SubProjectRepository {
   SubProject createSubProject(SubProject project);
 
   SubProject deleteSubProject(SubProject project);
-
 }
