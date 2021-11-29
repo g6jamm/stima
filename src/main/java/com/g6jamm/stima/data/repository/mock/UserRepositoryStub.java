@@ -9,18 +9,42 @@ import java.util.List;
 
 public class UserRepositoryStub implements UserRepository {
 
-  @Override
-  public User login(String email, String password) {
+  public static List<User> userListStub = new ArrayList<>();
+
+  public UserRepositoryStub() {
     User user =
         new User.UserBuilder()
             .firstName("John")
             .lastName("Doe")
-            .email("maill@mail.com")
-            .password("123")
+            .email("demo@demo.com")
+            .password("demo")
             .id(1)
             .role(new Role())
             .build();
-    return user;
+
+    User user2 =
+        new User.UserBuilder()
+            .firstName("Jane")
+            .lastName("Doe")
+            .email("maill@mail.com")
+            .password("123")
+            .id(2)
+            .role(new Role())
+            .build();
+
+    userListStub.add(user);
+    userListStub.add(user2);
+  }
+
+  @Override
+  public User login(String email, String password) {
+
+    for (User u : userListStub) {
+      if (u.getEmail().equals(email) && u.getPassword().equals(password)) {
+        return u;
+      }
+    }
+    return null;
   }
 
   @Override
@@ -37,6 +61,8 @@ public class UserRepositoryStub implements UserRepository {
             .id(generatedIdStub)
             .role(user.getRole())
             .build();
+    userListStub.add(user);
+
     return user;
   }
 
@@ -55,8 +81,8 @@ public class UserRepositoryStub implements UserRepository {
         new User.UserBuilder()
             .firstName("John")
             .lastName("Doe")
-            .email("maill@mail.com")
-            .password("123")
+            .email("demo@demo.com")
+            .password("demo")
             .id(1)
             .role(new Role())
             .build();
@@ -66,33 +92,9 @@ public class UserRepositoryStub implements UserRepository {
 
   @Override
   public User getUser(int id) {
-
-    List<User> users = new ArrayList<>();
     User result = null;
-    User user1 =
-        new User.UserBuilder()
-            .firstName("John")
-            .lastName("Doe")
-            .email("maill@mail.com")
-            .password("123")
-            .id(1)
-            .role(new Role())
-            .build();
 
-    User user2 =
-        new User.UserBuilder()
-            .firstName("John")
-            .lastName("Doe")
-            .email("maill@mail.com")
-            .password("123")
-            .id(2)
-            .role(new Role())
-            .build();
-
-    users.add(user1);
-    users.add(user2);
-
-    for (User u : users) {
+    for (User u : userListStub) {
       if (u.getId() == id) {
         result = u;
       }
