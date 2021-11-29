@@ -9,15 +9,11 @@ import java.util.List;
 
 public class UserRepositoryStub implements UserRepository {
 
-  @Override
-  public User login(String email, String password) {
-    User user = null;
-    return user;
-  }
+
 
   @Override
-  public User createUser(User user) {
-    user =
+  public User login(String email, String password) {
+    User user =
         new User.UserBuilder()
             .firstName("John")
             .lastName("Doe")
@@ -25,6 +21,23 @@ public class UserRepositoryStub implements UserRepository {
             .password("123")
             .id(1)
             .role(new Role())
+            .build();
+    return user;
+  }
+
+  @Override
+  public User createUser(User user) {
+
+    int generatedIdStub = 1;
+
+    user =
+        new User.UserBuilder()
+            .firstName(user.getFirstName())
+            .lastName(user.getLastName())
+            .email(user.getEmail())
+            .password(user.getPassword())
+            .id(generatedIdStub)
+            .role(user.getRole())
             .build();
     return user;
   }
