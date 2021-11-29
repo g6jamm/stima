@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserServiceTest {
 
   @Test
-  void loginSuccesfullyReturnCorrectUserTest() throws LoginException {
+  void loginSuccessfullyReturnCorrectUserTest() throws LoginException {
     UserService userService = new UserService(new UserRepositoryStub());
     String email = "demo@demo.com";
     String password = "demo";
@@ -21,7 +21,17 @@ class UserServiceTest {
   }
 
   @Test
-  void createNewUserTest() throws LoginException {
+  void loginFailReturnCorrectUserTest() throws LoginException {
+    UserService userService = new UserService(new UserRepositoryStub());
+    String email = "demo@demo.com";
+    String password = "demo";
+    String expectedName = "Bo";
+    String actualName =  userService.login(email,password).getFirstName();
+    Assertions.assertNotEquals(expectedName,actualName);
+  }
+
+  @Test
+  void createNewUserSuccessfullyTest() throws LoginException {
     UserService userService = new UserService(new UserRepositoryStub());
     String firstName = "Bob";
     String lastName = "Marley";
@@ -32,8 +42,19 @@ class UserServiceTest {
 
   }
 
+//  @Test
+//  void createNewUserUserAlreadyExistFailTest() throws LoginException {
+//    UserService userService = new UserService(new UserRepositoryStub());
+//    String firstName = "Bob";
+//    String lastName = "Marley";
+//    String email = "demo@demo.com";
+//    String password = "demo";
+//    assertThrows(LoginException.class, () -> userService.createUser(firstName,lastName,email,password));
+//
+//  }
+
   @Test
-  void getUserByIDSuccesfullTest() {
+  void getUserByIdSuccessfullTest() {
     UserService userService = new UserService(new UserRepositoryStub());
     User actualUser = userService.getUser(1);
     assertEquals(1, actualUser.getId());
@@ -41,19 +62,39 @@ class UserServiceTest {
   }
 
   @Test
-  void isValidUserByIdTest() {
+  void getUserByIdFailTest() {
     UserService userService = new UserService(new UserRepositoryStub());
-    boolean isValidUser = userService.isValidUser(1);
-
-    Assertions.assertEquals(true, isValidUser);
-
+    User actualUser = userService.getUser(2);
+    assertNotEquals(1, actualUser.getId());
   }
 
   @Test
-  void userExists() {
+  void isValidUserByIdSuccessfullyTest() {
+    UserService userService = new UserService(new UserRepositoryStub());
+    boolean isValidUser = userService.isValidUser(1);
+    Assertions.assertEquals(true, isValidUser);
+  }
+
+  @Test
+  void isValidUserByIdFailTest() {
+    UserService userService = new UserService(new UserRepositoryStub());
+    boolean isValidUser = userService.isValidUser(68);
+    Assertions.assertNotEquals(true, isValidUser);
+  }
+
+  @Test
+  void userExistsSuccessfullyTest() {
     UserService userService = new UserService(new UserRepositoryStub());
     boolean doesUserExist = userService.userExists(2);
 
     Assertions.assertEquals(true, doesUserExist);
+  }
+
+  @Test
+  void userExistsFailTest() {
+    UserService userService = new UserService(new UserRepositoryStub());
+    boolean doesUserExist = userService.userExists(68);
+
+    Assertions.assertNotEquals(true, doesUserExist);
   }
 }
