@@ -17,12 +17,11 @@ public class TaskRepositoryStub implements TaskRepository {
                 .startDate(LocalDate.of(2021, 1, 1))
                 .endDate(LocalDate.of(2021, 1, 1))
                 .build();
+    return task;
+  }
 
-        return task;
-    }
-
-    @Override
-    public Task getTask(int task_id) {
-        return null;
-    }
+  @Override
+  public Task getTask(int task_id) {
+    return null;
+  }
 }
