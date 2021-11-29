@@ -6,13 +6,13 @@ import java.time.LocalDate;
 
 public interface SubProjectRepository {
 
-  SubProject getSubProject(SubProject subProject);
+  SubProject getSubProject(int id);
 
   SubProject createSubProject(String name, LocalDate startDate, LocalDate endDate);
 
   SubProject deleteSubProject(SubProject subProject);
 
-  SubProject getTotalHours(SubProject subProject);
+  double getTotalHours(SubProject subProject);
 
-  SubProject getTotalPrice(SubProject subProject);
+  int getTotalPrice(SubProject subProject);
 }
