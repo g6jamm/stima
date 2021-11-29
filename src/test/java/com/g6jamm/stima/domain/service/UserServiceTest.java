@@ -43,26 +43,25 @@ class UserServiceTest {
     String password = "demo";
     User actual = userService.createUser(firstName, lastName, email, password);
     Assertions.assertEquals("demo420@demo.com", actual.getEmail());
-
   }
 
-//  @Test
-//  void createNewUserUserAlreadyExistFailTest() throws LoginException {
-//    UserService userService = new UserService(new UserRepositoryStub());
-//    String firstName = "Bob";
-//    String lastName = "Marley";
-//    String email = "demo@demo.com";
-//    String password = "demo";
-//    assertThrows(LoginException.class, () -> userService.createUser(firstName,lastName,email,password));
-//
-//  }
+  //  @Test
+  //  void createNewUserUserAlreadyExistFailTest() throws LoginException {
+  //    UserService userService = new UserService(new UserRepositoryStub());
+  //    String firstName = "Bob";
+  //    String lastName = "Marley";
+  //    String email = "demo@demo.com";
+  //    String password = "demo";
+  //    assertThrows(LoginException.class, () ->
+  // userService.createUser(firstName,lastName,email,password));
+  //
+  //  }
 
   @Test
   void getUserByIdSuccessfullTest() {
     UserService userService = new UserService(new UserRepositoryStub());
     User actualUser = userService.getUser(1);
     assertEquals(1, actualUser.getId());
-
   }
 
   @Test

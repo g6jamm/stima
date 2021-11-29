@@ -18,18 +18,14 @@ class UserRepositoryStubTest {
   }
 
   @Test
-  void createUser() {
-  }
+  void createUser() {}
 
   @Test
-  void userExists() {
-  }
+  void userExists() {}
 
   @Test
-  void getNewUserId() {
-  }
+  void getNewUserId() {}
 
   @Test
-  void getUser() {
-  }
+  void getUser() {}
 }

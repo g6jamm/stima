@@ -32,7 +32,7 @@ public class UserService {
    * @param lastName
    * @param email
    * @param password
-   * @return New User with ID
+   * @return New User with the new ID
    * @throws LoginException
    * @author Mohamad
    */
