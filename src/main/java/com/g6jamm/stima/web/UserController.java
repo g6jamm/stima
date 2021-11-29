@@ -27,7 +27,7 @@ public class UserController {
   }
 
   @GetMapping("/otherPage")
-  public String otherPage(){
+  public String otherPage() {
     return "otherPage";
   }
 
@@ -39,8 +39,7 @@ public class UserController {
       User user = userService.login(email, password);
       webRequest.setAttribute("user", user.getId(), WebRequest.SCOPE_SESSION);
       return "redirect:/otherPage";
-    }
-    catch (LoginException e){
+    } catch (LoginException e) {
       model.addAttribute("loginFail", "Wrong password or email");
       return "index";
     }
@@ -53,7 +52,6 @@ public class UserController {
     String email = webRequest.getParameter("email");
     String password1 = webRequest.getParameter("password1");
     String password2 = webRequest.getParameter("password2");
-
 
     try {
       if (validatePassword(password1, password2)) {
@@ -84,7 +82,7 @@ public class UserController {
   }
 
   @ExceptionHandler(Exception.class)
-  public String error(Model model, Exception exception){
+  public String error(Model model, Exception exception) {
     model.addAttribute("message", exception.getMessage());
     return "error";
   }
