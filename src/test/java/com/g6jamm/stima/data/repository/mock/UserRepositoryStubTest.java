@@ -14,7 +14,7 @@ class UserRepositoryStubTest {
     String password = "demo";
     String expectedName = "John";
 
-    Assertions.assertEquals(expectedName, userRepositoryStub.login(email,password).getFirstName());
+    Assertions.assertEquals(expectedName, userRepositoryStub.login(email, password).getFirstName());
   }
 
   @Test

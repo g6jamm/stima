@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
+/**
+ * @Mohamad
+ */
 @Controller
 public class UserController { //TODO change name to Login controller?
 
@@ -30,6 +33,7 @@ public class UserController { //TODO change name to Login controller?
   public String otherPage() {
     return "otherPage";
   }
+
   @GetMapping("logout")
   public String logout(WebRequest webRequest) {
     webRequest.removeAttribute("user", WebRequest.SCOPE_SESSION);

@@ -10,7 +10,13 @@ import java.util.List;
 public class UserRepositoryStub implements UserRepository {
 
   public static List<User> userListStub = new ArrayList<>();
+  private int generatedIdStub = userListStub.size();
 
+  /**
+   * Creates stub data when instantiated and adds to userListStub List.
+   *
+   * @author Mohamad
+   */
   public UserRepositoryStub() {
     User user =
         new User.UserBuilder()
@@ -36,6 +42,12 @@ public class UserRepositoryStub implements UserRepository {
     userListStub.add(user2);
   }
 
+  /**
+   * @param email
+   * @param password
+   * @return User if user exist in stub data, else rturns null
+   * @author Mohamad
+   */
   @Override
   public User login(String email, String password) {
 
@@ -47,10 +59,13 @@ public class UserRepositoryStub implements UserRepository {
     return null;
   }
 
+  /**
+   * @param user
+   * @return New user, and assigns ID to user
+   * @author Mohamad
+   */
   @Override
   public User createUser(User user) {
-
-    int generatedIdStub = 1;
 
     user =
         new User.UserBuilder()
@@ -63,30 +78,46 @@ public class UserRepositoryStub implements UserRepository {
             .build();
     userListStub.add(user);
 
+    generatedIdStub++;
     return user;
   }
 
+  /**
+   * @param id
+   * @return true if user exists in list
+   * @author Mohamad
+   */
   @Override
   public boolean userExists(int id) {
     return userListStub.stream().anyMatch(user -> id == user.getId());
-
   }
 
+  /**
+   * @param user
+   * @return New user ID
+   * @author Mohamad
+   */
   @Override
   public int getNewUserId(User user) {
+
     user =
         new User.UserBuilder()
             .firstName("John")
             .lastName("Doe")
             .email("demo@demo.com")
             .password("demo")
-            .id(1)
+            .id(generatedIdStub)
             .role(new Role())
             .build();
 
     return user.getId();
   }
 
+  /**
+   * @param id
+   * @return user with user ID that matches param ID
+   * @author Mohamad
+   */
   @Override
   public User getUser(int id) {
     User result = null;

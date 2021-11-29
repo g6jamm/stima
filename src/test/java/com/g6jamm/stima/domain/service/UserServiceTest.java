@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+/**
+ * @author Mohamd
+ */
 class UserServiceTest {
 
   @Test
@@ -17,8 +20,8 @@ class UserServiceTest {
     String email = "demo@demo.com";
     String password = "demo";
     String expectedName = "John";
-    String actualName =  userService.login(email,password).getFirstName();
-    Assertions.assertEquals(expectedName,actualName);
+    String actualName = userService.login(email, password).getFirstName();
+    Assertions.assertEquals(expectedName, actualName);
   }
 
   @Test
@@ -27,8 +30,8 @@ class UserServiceTest {
     String email = "demo@demo.com";
     String password = "demo";
     String expectedName = "Bo";
-    String actualName =  userService.login(email,password).getFirstName();
-    Assertions.assertNotEquals(expectedName,actualName);
+    String actualName = userService.login(email, password).getFirstName();
+    Assertions.assertNotEquals(expectedName, actualName);
   }
 
   @Test
@@ -38,7 +41,7 @@ class UserServiceTest {
     String lastName = "Marley";
     String email = "demo420@demo.com";
     String password = "demo";
-    User actual = userService.createUser(firstName,lastName,email,password);
+    User actual = userService.createUser(firstName, lastName, email, password);
     Assertions.assertEquals("demo420@demo.com", actual.getEmail());
 
   }
