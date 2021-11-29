@@ -30,6 +30,11 @@ public class UserController { //TODO change name to Login controller?
   public String otherPage() {
     return "otherPage";
   }
+  @GetMapping("logout")
+  public String logout(WebRequest webRequest) {
+    webRequest.removeAttribute("user", WebRequest.SCOPE_SESSION);
+    return "redirect:/index";
+  }
 
   @PostMapping("/login")
   public String logIn(WebRequest webRequest, Model model) {
@@ -73,11 +78,6 @@ public class UserController { //TODO change name to Login controller?
     }
   }
 
-  @GetMapping("logout")
-  public String logout(WebRequest webRequest) {
-    webRequest.removeAttribute("user", WebRequest.SCOPE_SESSION);
-    return "redirect:/index";
-  }
 
   private boolean validatePassword(String password1, String password2) {
     if (password1.equals(password2)) {

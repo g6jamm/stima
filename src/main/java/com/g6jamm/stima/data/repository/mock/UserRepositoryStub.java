@@ -68,11 +68,8 @@ public class UserRepositoryStub implements UserRepository {
 
   @Override
   public boolean userExists(int id) {
-    int stubId = 1;
-    if (id == stubId) {
-      return true;
-    }
-    return false;
+    return userListStub.stream().anyMatch(user -> id == user.getId());
+
   }
 
   @Override
