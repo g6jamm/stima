@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.g6jamm</groupId>
-    <artifactId>UserEksamen</artifactId>
+    <artifactId>stima</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>UserEksamen</name>
-    <description>UserEksamen</description>
+    <name>stima</name>
+    <description>stima</description>
     <properties>
         <java.version>11</java.version>
     </properties>
