@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task ${task_name}</title>
+</head>
+<body>
+<div class="card">
+    <div>
+        <p>TASK NAME</p>
+        <p>Hours</p>
+        <p>REsource type</p>
+        <p>start date</p>
+        <p>end date</p>
+    </div>
+</div>
+
+<form onsubmit="/create-task" method="POST">
+    <div class="card" style="border: black solid 2px; border-radius: 10px">
+        <table>
+            <thead>
+            <th>
+                <p>TASK NAME</p>
+            </th>
+            <th>
+                <p>hours </p>
+            </th>
+            <th>
+                <p>Resource type</p>
+            </th>
+            <th>
+                <p>start date</p>
+            </th>
+            <th>
+                <p>end date</p>
+            </th>
+            </thead>
+            <td>
+                <input placeholder="TASK NAME" name="task_name">
+            </td>
+            <td>
+                <input placeholder="Hours" type="number" name="task_hours">
+            </td>
+            <td>
+                <input placeholder="Resource type" name="task_resourcetype">
+            </td>
+            <td>
+                <input placeholder="start date" type="date" name="task_startdate">
+            </td>
+            <td>
+                <input placeholder="End date" type="date" name="task_enddate">
+            </td>
+            <td>
+                <button action="submit">Submit</button>
+            </td>
+        </table>
+    </div>
+</form>
+</body>
+</html>
