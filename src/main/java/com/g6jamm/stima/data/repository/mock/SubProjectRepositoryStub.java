@@ -13,22 +13,30 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
   }
 
   @Override
-  public SubProject createSubProject(SubProject subProject) {
-    subProject =
-        new SubProject.SubProjectBuilder()
-            .name("PROJECT GREEN")
-            .hours(12.4)
-            .price(400)
-            .tasks(null) // TODO add task
-            .startDate(LocalDate.of(2022, 5, 6))
-            .endDate(LocalDate.of(2022, 10, 21))
-            .build();
+  public SubProject createSubProject(String name, LocalDate startDate, LocalDate endDate) {
 
-    return subProject;
+    return new SubProject.SubProjectBuilder()
+        .name(name)
+        .hours(0)
+        .price(0)
+        .tasks(null)
+        .startDate(startDate)
+        .endDate(endDate)
+        .build();
   }
 
   @Override
   public SubProject deleteSubProject(SubProject subProject) {
     return subProject;
+  }
+
+  @Override
+  public SubProject getTotalHours(SubProject subProject) {
+    return null;
+  }
+
+  @Override
+  public SubProject getTotalPrice(SubProject subProject) {
+    return null;
   }
 }
