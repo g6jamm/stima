@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
 @Controller
-public class UserController { //TODO change name to Login controller?
+public class UserController { // TODO change name to Login controller?
 
   UserService userService = new UserService(new UserRepositoryStub());
 
@@ -30,6 +30,7 @@ public class UserController { //TODO change name to Login controller?
   public String otherPage() {
     return "otherPage";
   }
+
   @GetMapping("logout")
   public String logout(WebRequest webRequest) {
     webRequest.removeAttribute("user", WebRequest.SCOPE_SESSION);
@@ -49,7 +50,7 @@ public class UserController { //TODO change name to Login controller?
     } catch (LoginException e) {
       model.addAttribute("loginFail", "Wrong password or email");
       return "index";
-    } catch (NullPointerException e) { //TODO skal det laves som en if i stedet?
+    } catch (NullPointerException e) { // TODO skal det laves som en if i stedet?
       model.addAttribute("loginFail", "Not a valid user");
       return "index";
     }
@@ -62,7 +63,6 @@ public class UserController { //TODO change name to Login controller?
     String email = webRequest.getParameter("email");
     String password1 = webRequest.getParameter("password1");
     String password2 = webRequest.getParameter("password2");
-
 
     try {
       if (validatePassword(password1, password2)) {
@@ -77,7 +77,6 @@ public class UserController { //TODO change name to Login controller?
       return "signup";
     }
   }
-
 
   private boolean validatePassword(String password1, String password2) {
     if (password1.equals(password2)) {

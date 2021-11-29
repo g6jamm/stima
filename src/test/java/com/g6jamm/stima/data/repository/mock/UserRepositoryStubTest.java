@@ -14,22 +14,18 @@ class UserRepositoryStubTest {
     String password = "demo";
     String expectedName = "John";
 
-    Assertions.assertEquals(expectedName, userRepositoryStub.login(email,password).getFirstName());
+    Assertions.assertEquals(expectedName, userRepositoryStub.login(email, password).getFirstName());
   }
 
   @Test
-  void createUser() {
-  }
+  void createUser() {}
 
   @Test
-  void userExists() {
-  }
+  void userExists() {}
 
   @Test
-  void getNewUserId() {
-  }
+  void getNewUserId() {}
 
   @Test
-  void getUser() {
-  }
+  void getUser() {}
 }
