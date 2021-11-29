@@ -53,7 +53,7 @@ public class Task {
     private int price;
     private LocalDate startDate;
     private LocalDate endDate;
-    private Role role;
+    private Role role; //TODO change to ressourcetype
 
 
 
