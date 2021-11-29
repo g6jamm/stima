@@ -10,8 +10,9 @@ import java.util.List;
 public class UserRepositoryStub implements UserRepository {
 
   @Override
-  public boolean login(String email, String password) {
-    return false;
+  public User login(String email, String password) {
+    User user = null;
+    return user;
   }
 
   @Override

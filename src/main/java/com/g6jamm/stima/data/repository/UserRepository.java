@@ -4,7 +4,7 @@ import com.g6jamm.stima.domain.model.User;
 
 public interface UserRepository {
 
-  boolean login(String email, String password);
+  User login(String email, String password);
 
   User createUser(User user);
 
