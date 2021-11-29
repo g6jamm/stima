@@ -1,0 +1,114 @@
+package com.g6jamm.stima.domain.model;
+
+import java.time.LocalDate;
+import java.util.List;
+
+public class Project {
+
+  private final String PROJECT_NAME;
+  private final double TOTAL_HOURS;
+  private final int TOTAL_PRICE;
+  private final LocalDate START_DATE;
+  private final LocalDate END_DATE;
+  private final List<Task> TASKS;
+  private final List<SubProject> SUB_PROJECTS;
+
+  private Project(ProjectBuilder projectBuilder) {
+    this.PROJECT_NAME = projectBuilder.projectName;
+    this.TOTAL_HOURS = projectBuilder.totalHours;
+    this.TOTAL_PRICE = projectBuilder.totalPrice;
+    this.START_DATE = projectBuilder.startDate;
+    this.END_DATE = projectBuilder.endDate;
+    this.TASKS = projectBuilder.tasks;
+    this.SUB_PROJECTS = projectBuilder.subProjects;
+  }
+
+  public String getName() {
+    return PROJECT_NAME;
+  }
+
+  public double getHours() {
+    return TOTAL_HOURS;
+  }
+
+  public int getPrice() {
+    return TOTAL_PRICE;
+  }
+
+  public LocalDate getStartDate() {
+    return START_DATE;
+  }
+
+  public LocalDate getEndDate() {
+    return END_DATE;
+  }
+
+  public List<Task> getTasks() {
+    return TASKS;
+  }
+
+  public List<SubProject> getSubProjects() {
+    return SUB_PROJECTS;
+  }
+
+  public static class ProjectBuilder {
+    private String projectName;
+    private double totalHours;
+    private int totalPrice;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private List<Task> tasks;
+    private List<SubProject> subProjects;
+
+    public ProjectBuilder projectName(String name) {
+      this.projectName = name;
+      return this;
+    }
+
+    public ProjectBuilder totalHours(double totalHours) {
+      this.totalHours = totalHours;
+      return this;
+    }
+
+    public ProjectBuilder totalPrice(int totalPrice) {
+      this.totalPrice = totalPrice;
+      return this;
+    }
+
+    public ProjectBuilder startDate(LocalDate startDate) {
+      this.startDate = startDate;
+      return this;
+    }
+
+    public ProjectBuilder endDate(LocalDate endDate) {
+      this.endDate = endDate;
+      return this;
+    }
+
+    public ProjectBuilder tasks(List<Task> tasks) {
+      this.tasks = tasks;
+      return this;
+    }
+
+    public ProjectBuilder subProjects(List<SubProject> subProjects) {
+      this.subProjects = subProjects;
+      return this;
+    }
+
+    private void reset() {
+      this.projectName = null;
+      this.totalHours = 0;
+      this.totalPrice = 0;
+      this.startDate = null;
+      this.endDate = null;
+      this.tasks = null;
+      this.subProjects = null;
+    }
+
+    public Project build() {
+      Project project = new Project(this);
+      reset();
+      return project;
+    }
+  }
+}
