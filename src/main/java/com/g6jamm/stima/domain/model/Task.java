@@ -41,6 +41,9 @@ public class Task {
   public LocalDate getSTART_DATE() {
     return START_DATE;
   }
+  public int getID() {
+    return ID;
+  }
 
   public Role getROLE() {
     return ROLE;
