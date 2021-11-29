@@ -33,7 +33,6 @@ public class UserController {
 
   @PostMapping("/login")
   public String logIn(WebRequest webRequest, Model model) {
-
     try {
       String email = webRequest.getParameter("email");
       String password = webRequest.getParameter("password");
@@ -83,6 +82,7 @@ public class UserController {
     }
     return false;
   }
+
   @ExceptionHandler(Exception.class)
   public String error(Model model, Exception exception){
     model.addAttribute("message", exception.getMessage());

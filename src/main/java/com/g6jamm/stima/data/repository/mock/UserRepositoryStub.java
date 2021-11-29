@@ -94,8 +94,8 @@ public class UserRepositoryStub implements UserRepository {
     users.add(user1);
     users.add(user2);
 
-    for (User u: users) {
-      if (u.getId() == id){
+    for (User u : users) {
+      if (u.getId() == id) {
         result = u;
       }
     }
