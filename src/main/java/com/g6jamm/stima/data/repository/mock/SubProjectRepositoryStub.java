@@ -8,13 +8,13 @@ import java.time.LocalDate;
 public class SubProjectRepositoryStub implements SubProjectRepository {
 
   @Override
-  public SubProject getSubProject(SubProject project) {
-    return null;
+  public SubProject getSubProject(SubProject subProject) {
+    return subProject;
   }
 
   @Override
-  public SubProject createSubProject(SubProject project) {
-    project =
+  public SubProject createSubProject(SubProject subProject) {
+    subProject =
         new SubProject.SubProjectBuilder()
             .name("PROJECT GREEN")
             .hours(12.4)
@@ -24,11 +24,11 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
             .endDate(LocalDate.of(2022, 10, 21))
             .build();
 
-    return project;
+    return subProject;
   }
 
   @Override
-  public SubProject deleteSubProject(SubProject project) {
-    return null;
+  public SubProject deleteSubProject(SubProject subProject) {
+    return subProject;
   }
 }
