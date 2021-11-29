@@ -7,15 +7,16 @@
 <body>
 <div class="card">
     <div>
-        <p>TASK NAME</p>
-        <p>Hours</p>
-        <p>REsource type</p>
-        <p>start date</p>
-        <p>end date</p>
+        <p th:text="${Task.getName()}">Name</p>
+        <p th:text="${Task.getHours()}">Hours</p>
+        <p th:text="${Task.getPrice()}">Price</p>
+        <p th:text="${Task.getROLE()}">REsource type</p>
+        <p th:text="${Task.getSTART_DATE()}">start date</p>
+        <p th:text="${Task.getEND_DATE()}">end date</p>
     </div>
 </div>
 
-<form onsubmit="/create-task" method="POST">
+<form  method="post" role="form" name="createTaskForm" action="/create-task">
     <div class="card" style="border: black solid 2px; border-radius: 10px">
         <table>
             <thead>
@@ -51,7 +52,7 @@
                 <input placeholder="End date" type="date" name="task_enddate">
             </td>
             <td>
-                <button action="submit">Submit</button>
+                <button type="submit">Submit</button>
             </td>
         </table>
     </div>
