@@ -6,5 +6,21 @@
 </head>
 <body>
 <h1>SUBPROJECT PAGE</h1>
+
+<div>
+    <h5 th:Text="${subProject.getName}"></h5>
+    <h5 th:Text="${subProject.getStartDate}"></h5>
+    <h5 th:Text="${subProject.getEndDate}"></h5>
+</div>
+
+<form method="post" action="/subproject/">
+    <label>Subproject name:</label><br>
+    <input type="text" name="name"><br>
+    <label>Start date:</label><br>
+    <input type="date" name="startDate" min="2020-01-01" max="2022-12-31"><br>
+    <label>End date:</label><br>
+    <input type="date" name="endDate" min="2020-01-01" max="2022-12-31"><br>
+    <button type="submit" >add project</button>
+</form>
 </body>
 </html>
