@@ -25,7 +25,6 @@ run_sql_script() {
     echo -e "${GREEN}Success${NC}"
   else
     echo -e "${RED}$my_sql_result${NC}"
-
   fi
 }
 
@@ -104,11 +103,11 @@ port=$webserver_port
 baseUrl=http://$webserver_host:$webserver_port/" >"$PROPERTY_FILE"
 }
 
-# creating a menu
+# Create menu
 echo -e "${CYAN}Installation:${NC}"
 echo "1. Set properties"
 echo "2. Install tables"
-echo "3. Install sample data"
+echo "3. Install tables and sample data"
 echo "4. Exit"
 echo -n "Enter your menu choice [1-4]: "
 
@@ -125,6 +124,7 @@ while :; do
     ;;
 
   3)
+    run_sql_script "Installing database ..." "./src/main/resources/data/install.sql"
     run_sql_script "Installing sample data ..." "./src/main/resources/data/sample-data.sql"
     ;;
 
