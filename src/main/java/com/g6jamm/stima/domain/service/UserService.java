@@ -12,30 +12,31 @@ public class UserService {
     this.userRepository = userRepository;
   }
 
-  public User login(String email, String password) throws LoginException{
+  public User login(String email, String password) throws LoginException {
     return userRepository.login(email, password);
   }
 
-  public User createUser(String firstName, String lastName, String email, String password) throws LoginException {
-    User user = new User.UserBuilder()
-        .firstName(firstName)
-        .lastName(lastName)
-        .email(email)
-        .password(password)
-        .build();
+  public User createUser(String firstName, String lastName, String email, String password)
+      throws LoginException {
+    User user =
+        new User.UserBuilder()
+            .firstName(firstName)
+            .lastName(lastName)
+            .email(email)
+            .password(password)
+            .build();
     return userRepository.createUser(user);
   }
 
-  public User getUser(int userId){
+  public User getUser(int userId) {
     return userRepository.getUser(userId);
   }
 
-  public boolean isValidUser(int userId){
+  public boolean isValidUser(int userId) {
     return userExists(userId);
   }
 
-  public boolean userExists(int userId){
+  public boolean userExists(int userId) {
     return userRepository.userExists(userId);
   }
-
 }
