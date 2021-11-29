@@ -8,11 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
-import java.time.LocalDate;
-
 @Controller
 public class SubProjectController {
-    
+
     TaskService taskService = new TaskService(new TaskRepositoryStub());
 
 
@@ -29,14 +27,17 @@ public class SubProjectController {
         String resourceType = webRequest.getParameter("task_resourcetype");
         String startDate = webRequest.getParameter("task_startdate");
         String endDate = webRequest.getParameter("task_enddate");
-        model.addAttribute("Task",taskService.createtask(name,hours,resourceType,startDate,endDate));
+
+
+        model.addAttribute("Task", taskService.createtask(name, hours, resourceType, startDate, endDate));
+
         return "Task";
     }
 
 
     @GetMapping("/task")
-    public String task(WebRequest webRequest, Model model){
-        model.addAttribute("Task", taskService.createtask("Placeholder",1.0,"test","1990-01-01","1991-01-01"));
+    public String task(WebRequest webRequest, Model model) {
+        model.addAttribute("Task", taskService.createtask("Placeholder", 1.0, "test", "1990-01-01", "1991-01-01"));
         return "Task";
     }
 }
