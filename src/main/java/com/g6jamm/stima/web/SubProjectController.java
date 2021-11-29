@@ -53,7 +53,7 @@ public class SubProjectController {
 
         model.addAttribute("Task", taskService.createtask(name, hours, resourceType, startDate, endDate));
 
-        return "Task";
+        return "Task"; //TODO redirect to /projects/{project_id}
     }
 
 
