@@ -67,7 +67,6 @@ public class UserController {
     }
   }
 
-
   @GetMapping("logout")
   public String logout(WebRequest webRequest) {
     webRequest.removeAttribute("user", WebRequest.SCOPE_SESSION);

@@ -9,7 +9,6 @@ import java.util.List;
 
 public class UserRepositoryStub implements UserRepository {
 
-
   @Override
   public User login(String email, String password) {
     User user =
