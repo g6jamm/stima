@@ -8,12 +8,11 @@ import org.junit.jupiter.api.Test;
 
 public class TaskServiceTest {
 
-    @Test
-    public void createValidUserTest(){
-        TaskService taskService = new TaskService(new TaskRepositoryStub());
-        Task task = taskService.createtask("Test",2.5, "TestResource","1990-01-01","1990-01-01");
+  @Test
+  public void createValidUserTest() {
+    TaskService taskService = new TaskService(new TaskRepositoryStub());
+    Task task = taskService.createtask("Test", 2.5, "TestResource", "1990-01-01", "1990-01-01");
 
-        Assertions.assertEquals(1, task.getID());
-        
-    }
+    Assertions.assertEquals(1, task.getID());
+  }
 }

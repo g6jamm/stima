@@ -41,6 +41,7 @@ public class Task {
   public LocalDate getSTART_DATE() {
     return START_DATE;
   }
+
   public int getID() {
     return ID;
   }
@@ -56,11 +57,9 @@ public class Task {
     private int price;
     private LocalDate startDate;
     private LocalDate endDate;
-    private Role role; //TODO change to ressourcetype
+    private Role role; // TODO change to ressourcetype
 
-
-
-    public TaskBuilder id(int id){
+    public TaskBuilder id(int id) {
       this.id = id;
       return this;
     }
