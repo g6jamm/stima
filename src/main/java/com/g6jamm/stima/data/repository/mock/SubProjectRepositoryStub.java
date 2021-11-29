@@ -19,7 +19,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
             .name("PROJECT GREEN")
             .hours(12.4)
             .price(400)
-            // .tasks(new Task()) //TODO add task
+            .tasks(null) // TODO add task
             .startDate(LocalDate.of(2022, 5, 6))
             .endDate(LocalDate.of(2022, 10, 21))
             .build();
