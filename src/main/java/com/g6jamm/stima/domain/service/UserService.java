@@ -4,13 +4,10 @@ import com.g6jamm.stima.data.repository.UserRepository;
 import com.g6jamm.stima.domain.exception.LoginException;
 import com.g6jamm.stima.domain.model.User;
 
-/**
- * @author Mohamad
- */
+/** @author Mohamad */
 public class UserService {
 
   UserRepository userRepository;
-
 
   public UserService(UserRepository userRepository) {
     this.userRepository = userRepository;
