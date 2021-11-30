@@ -77,7 +77,7 @@ public class UserRepositoryStub implements UserRepository {
             .lastName(user.getLastName())
             .email(user.getEmail())
             .password(user.getPassword())
-            .id(userListStub.size()+1)
+            .id(userListStub.size() + 1)
             .role(user.getRole())
             .build();
     userListStub.add(user);
@@ -113,7 +113,7 @@ public class UserRepositoryStub implements UserRepository {
             .lastName("Doe")
             .email("demo@demo.com")
             .password("demo")
-            .id(userListStub.size()+1)
+            .id(userListStub.size() + 1)
             .role(new Role())
             .build();
 

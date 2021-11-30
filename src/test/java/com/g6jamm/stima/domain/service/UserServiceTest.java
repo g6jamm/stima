@@ -61,7 +61,6 @@ class UserServiceTest {
     Assertions.assertEquals("demo420@demo.com", actual.getEmail());
   }
 
-
   //  @Test
   //  void createNewUserUserAlreadyExistFailTest() throws LoginException {
   //    UserService userService = new UserService(new UserRepositoryStub());
