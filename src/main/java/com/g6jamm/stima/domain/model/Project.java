@@ -3,8 +3,12 @@ package com.g6jamm.stima.domain.model;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * @auther Mathias
+ * */
 public class Project {
 
+  private final int PROJECT_ID;
   private final String PROJECT_NAME;
   private final double TOTAL_HOURS;
   private final int TOTAL_PRICE;
@@ -12,8 +16,10 @@ public class Project {
   private final LocalDate END_DATE;
   private final List<Task> TASKS;
   private final List<SubProject> SUB_PROJECTS;
+  private final String COLOR_CODE;
 
   private Project(ProjectBuilder projectBuilder) {
+    this.PROJECT_ID = projectBuilder.projectId;
     this.PROJECT_NAME = projectBuilder.projectName;
     this.TOTAL_HOURS = projectBuilder.totalHours;
     this.TOTAL_PRICE = projectBuilder.totalPrice;
@@ -21,6 +27,11 @@ public class Project {
     this.END_DATE = projectBuilder.endDate;
     this.TASKS = projectBuilder.tasks;
     this.SUB_PROJECTS = projectBuilder.subProjects;
+    this.COLOR_CODE = projectBuilder.colorCode;
+  }
+
+  public int getId() {
+    return PROJECT_ID;
   }
 
   public String getName() {
@@ -51,7 +62,12 @@ public class Project {
     return SUB_PROJECTS;
   }
 
+  public String getColorCode() {
+    return COLOR_CODE;
+  }
+
   public static class ProjectBuilder {
+    private int projectId;
     private String projectName;
     private double totalHours;
     private int totalPrice;
@@ -59,6 +75,12 @@ public class Project {
     private LocalDate endDate;
     private List<Task> tasks;
     private List<SubProject> subProjects;
+    private String colorCode;
+
+    public ProjectBuilder projectId(int projectId) {
+      this.projectId = projectId;
+      return this;
+    }
 
     public ProjectBuilder projectName(String name) {
       this.projectName = name;
@@ -95,7 +117,13 @@ public class Project {
       return this;
     }
 
+    public ProjectBuilder colorCode(String colorCode) {
+      this.colorCode = colorCode;
+      return this;
+    }
+
     private void reset() {
+      this.projectId = 0;
       this.projectName = null;
       this.totalHours = 0;
       this.totalPrice = 0;
@@ -103,6 +131,7 @@ public class Project {
       this.endDate = null;
       this.tasks = null;
       this.subProjects = null;
+      this.colorCode = null;
     }
 
     public Project build() {
