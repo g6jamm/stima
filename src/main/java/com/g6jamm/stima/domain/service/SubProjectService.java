@@ -1,7 +1,6 @@
 package com.g6jamm.stima.domain.service;
 
 import com.g6jamm.stima.data.repository.SubProjectRepository;
-import com.g6jamm.stima.data.repository.mock.ProjectRepositoryStub;
 import com.g6jamm.stima.domain.model.SubProject;
 
 import java.time.LocalDate;
