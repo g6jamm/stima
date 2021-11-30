@@ -61,7 +61,7 @@
                     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 g-3">
                         <h2>Underprojekter</h2>
                         <div class="col" th:each="subProject : ${subprojects}">
-                            <a th:href="@{/subProject/{id}(id=1)}">
+                            <a th:href="@{/projects/{projectId}/{subProjectId}(projectId=1, subProjectId=1)}"> <!-- TODO: softcode Ids -->
                                 <div class="card shadow-sm" th:style="'background-color: #000'">
                                     <!-- TODO: add colorCode to subproject builder -->
                                     <div class="card-body card-text card-text-size-lg" style="margin-top: 150px">

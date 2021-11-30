@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -48,8 +49,8 @@ public class ProjectController {
    * @return String
    * @auther Mathias
    */
-  @GetMapping("/project")
-  public String projectId(Model model) {
+  @GetMapping("/projects/{projectId}")
+  public String projectId(Model model, @PathVariable int projectId) {
 
     SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
     List<SubProject> subProjects = subProjectService.getSubprojects();
@@ -65,6 +66,20 @@ public class ProjectController {
     model.addAttribute("project", project);
 
     return "project";
+  }
+
+  @GetMapping("/projects/{projectId}/{subProjectId}")
+  public String subProject(Model model, @PathVariable int projectId, @PathVariable int subProjectId)
+  {
+     SubProjectService SUBPROJECT_SERVICE =
+        new SubProjectService(new SubProjectRepositoryStub());
+    SubProject subP =
+        SUBPROJECT_SERVICE.createSubProject(
+            "TEST", LocalDate.of(2021, 5, 6), LocalDate.of(2021, 6, 5));
+
+    model.addAttribute("subProject", subP);
+
+    return "subProject";
   }
 
   /**
