@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 /** @Mohamad */
 @Controller
 public class UserController { // TODO change name to Login controller?
@@ -31,11 +28,14 @@ public class UserController { // TODO change name to Login controller?
   }
 
   @GetMapping("/signup")
-  public String signUp() {
+  public String signUp(WebRequest webRequest) {
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null){
+      return "redirect:/projects";
+    }
     return "signup";
   }
 
-  @GetMapping("logout")
+  @GetMapping("/logout")
   public String logout(WebRequest webRequest) {
     webRequest.removeAttribute("user", WebRequest.SCOPE_SESSION);
     return "redirect:/index";
