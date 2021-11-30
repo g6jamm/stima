@@ -13,7 +13,7 @@ public class TaskRepositoryStub implements TaskRepository {
   public static List<Task> taskListStub = new ArrayList<>();
   private int generatedIdStub = taskListStub.size();
 
-  public TaskRepositoryStub(){
+  public TaskRepositoryStub() {
 
     Task task =
         new Task.TaskBuilder()
@@ -37,11 +37,8 @@ public class TaskRepositoryStub implements TaskRepository {
             .id(generatedIdStub)
             .build();
 
-
-
     taskListStub.add(task);
     taskListStub.add(task2);
-
   }
 
   @Override
