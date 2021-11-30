@@ -44,6 +44,22 @@ class UserServiceTest {
     Assertions.assertEquals("demo420@demo.com", actual.getEmail());
   }
 
+
+  /**
+   * Found bug in UserRepositoryStub - generated id didnt consider the users created in the constructor
+   * @Author Andreas
+   */
+  @Test
+  void createUserUserIdIncrements() throws SignUpException {
+    UserService userService = new UserService(new UserRepositoryStub());
+    String firstName = "Bob";
+    String lastName = "Marley";
+    String email = "demo420@demo.com";
+    String password = "demo";
+    User actual = userService.createUser(firstName, lastName, email, password);
+    Assertions.assertEquals(3, actual.getId());
+  }
+
   //  @Test
   //  void createNewUserUserAlreadyExistFailTest() throws LoginException {
   //    UserService userService = new UserService(new UserRepositoryStub());
