@@ -3,7 +3,7 @@ package com.g6jamm.stima.web;
 import com.g6jamm.stima.data.repository.mock.ProjectRepositoryStub;
 import com.g6jamm.stima.data.repository.mock.SubProjectRepositoryStub;
 import com.g6jamm.stima.data.repository.mock.TaskRepositoryStub;
-import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.model.HeadProject;
 import com.g6jamm.stima.domain.model.SubProject;
 import com.g6jamm.stima.domain.model.Task;
 import com.g6jamm.stima.domain.service.ProjectService;
@@ -35,11 +35,11 @@ public class ProjectController {
   public String projects(WebRequest webRequest, Model model, ModelAndView model2) {
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
 
-    List<Project> projects = projectService.getProjects();
+    List<HeadProject> headProjects = projectService.getProjects();
 
-    model.addAttribute("projects", projects);
+    model.addAttribute("headProjects", headProjects);
 
-    return "projects";
+    return "headProjects";
   }
 
   /**
@@ -49,8 +49,8 @@ public class ProjectController {
    * @return String
    * @auther Mathias
    */
-  @GetMapping("/projects/{projectId}")
-  public String projectId(Model model, @PathVariable int projectId) {
+  @GetMapping("/projects/{headProjectId}")
+  public String projectId(Model model, @PathVariable int headProjectId) {
 
     SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
     List<SubProject> subProjects = subProjectService.getSubprojects();
@@ -61,16 +61,16 @@ public class ProjectController {
     model.addAttribute("tasks", tasks);
 
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-    Project project = projectService.getProjects().get(0); // TODO: ID of project
+    HeadProject headProject = projectService.getProjects().get(0); // TODO: ID of headProject
 
-    model.addAttribute("project", project);
+    model.addAttribute("headProject", headProject);
 
-    return "project";
+    return "headProject";
   }
 
-  @GetMapping("/projects/{projectId}/{subProjectId}")
+  @GetMapping("/projects/{headProjectId}/{subProjectId}")
   public String subProject(
-      Model model, @PathVariable int projectId, @PathVariable int subProjectId) {
+      Model model, @PathVariable int headProjectId, @PathVariable int subProjectId) {
     SubProjectService SUBPROJECT_SERVICE = new SubProjectService(new SubProjectRepositoryStub());
     SubProject subP =
         SUBPROJECT_SERVICE.createSubProject(
@@ -99,12 +99,12 @@ public class ProjectController {
    * Navigates the user to edit project page.
    *
    * @param webRequest WebRequest
-   * @param id int
+   * @param headProjectId int
    * @return String
    * @auther Mathias
    */
-  @PostMapping("/edit-project{id}")
-  public String editProject(WebRequest webRequest, @PathVariable int id) {
+  @PostMapping("/edit-project{headProjectId}")
+  public String editProject(WebRequest webRequest, @PathVariable int headProjectId) {
     return "redirect:/project/edit-project"; // TODO: redirect?
   }
 
@@ -112,12 +112,12 @@ public class ProjectController {
    * Deletes the project by id and navigate the user to the project page.
    *
    * @param webRequest WebRequest
-   * @param id int
+   * @param headProjectId int
    * @return String
    * @auther Mathias
    */
-  @PostMapping("/delete-project/{id}")
-  public String deleteProject(WebRequest webRequest, @PathVariable int id) {
+  @PostMapping("/delete-project/{headProjectId}")
+  public String deleteProject(WebRequest webRequest, @PathVariable int headProjectId) {
     return "redirect:/project"; // TODO: redirect?
   }
 }

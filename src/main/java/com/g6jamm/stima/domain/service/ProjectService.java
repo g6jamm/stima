@@ -1,7 +1,7 @@
 package com.g6jamm.stima.domain.service;
 
 import com.g6jamm.stima.data.repository.mock.ProjectRepositoryStub;
-import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.model.HeadProject;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class ProjectService {
     this.PROJECT_REPOSITORY_STUB = projectRepositoryStub;
   }
 
-  public List<Project> getProjects() {
+  public List<HeadProject> getProjects() {
     return PROJECT_REPOSITORY_STUB.getProjects();
   }
 }

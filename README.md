@@ -7,7 +7,7 @@
 ![GitHub forks](https://img.shields.io/github/forks/g6jamm/stima)
 ![GitHub licence](https://img.shields.io/github/license/g6jamm/stima.svg)
 
-Stima is a project estimation tool.
+Stima is a headProject estimation tool.
 
 ## Using
 
@@ -55,7 +55,7 @@ mvn spring-boot:run
 
 ## Contributors
 
-Thanks to the following people who have contributed to this project:
+Thanks to the following people who have contributed to this headProject:
 
 * [@Andreassim](https://github.com/Andreassim)
 * [@Jarkyman](https://github.com/Jarkyman)
@@ -64,4 +64,4 @@ Thanks to the following people who have contributed to this project:
 
 ## License
 
-This project uses the following license: [MIT License](https://github.com/g6jamm/stima/blob/develop/LICENSE).
+This headProject uses the following license: [MIT License](https://github.com/g6jamm/stima/blob/develop/LICENSE).
