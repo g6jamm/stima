@@ -16,5 +16,4 @@ public class SubProjectService {
   public SubProject createSubProject(String name, LocalDate startDate, LocalDate endDate) {
     return subProjectRepository.createSubProject(name, startDate, endDate);
   }
-
 }

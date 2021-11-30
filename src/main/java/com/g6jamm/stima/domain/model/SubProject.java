@@ -25,11 +25,17 @@ public class SubProject {
     return this.TASKS;
   }
 
-  public String getName() { return this.NAME; }
+  public String getName() {
+    return this.NAME;
+  }
 
-  public LocalDate getStartDate() { return this.START_DATE; }
+  public LocalDate getStartDate() {
+    return this.START_DATE;
+  }
 
-  public LocalDate getEndDate() { return this.END_DATE; }
+  public LocalDate getEndDate() {
+    return this.END_DATE;
+  }
 
   public static class SubProjectBuilder {
     private String name;
