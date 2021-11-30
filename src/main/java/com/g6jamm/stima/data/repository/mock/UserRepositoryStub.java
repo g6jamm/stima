@@ -28,7 +28,10 @@ public class UserRepositoryStub implements UserRepository {
   @Override
   public boolean userExists(int id) {
     int stubId = 1;
-    return id == stubId;
+    if (id == stubId) {
+      return true;
+    }
+    return false;
   }
 
   @Override
