@@ -18,7 +18,8 @@ public class UserController { // TODO change name to Login controller?
   UserService userService = new UserService(new UserRepositoryStub());
 
   @GetMapping("/")
-  public String goToHomepage() {
+  public String goToHomepage(Model model) {
+    model.addAttribute("test", "something");
     return "index";
   }
 
