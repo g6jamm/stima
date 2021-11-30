@@ -69,10 +69,9 @@ public class ProjectController {
   }
 
   @GetMapping("/projects/{projectId}/{subProjectId}")
-  public String subProject(Model model, @PathVariable int projectId, @PathVariable int subProjectId)
-  {
-     SubProjectService SUBPROJECT_SERVICE =
-        new SubProjectService(new SubProjectRepositoryStub());
+  public String subProject(
+      Model model, @PathVariable int projectId, @PathVariable int subProjectId) {
+    SubProjectService SUBPROJECT_SERVICE = new SubProjectService(new SubProjectRepositoryStub());
     SubProject subP =
         SUBPROJECT_SERVICE.createSubProject(
             "TEST", LocalDate.of(2021, 5, 6), LocalDate.of(2021, 6, 5));
