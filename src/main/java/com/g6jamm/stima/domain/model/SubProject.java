@@ -37,6 +37,14 @@ public class SubProject {
     return this.END_DATE;
   }
 
+  public double getHours() {
+    return this.HOURS;
+  }
+
+  public int getPrice() {
+    return this.PRICE;
+  }
+
   public static class SubProjectBuilder {
     private String name;
     private double hours;

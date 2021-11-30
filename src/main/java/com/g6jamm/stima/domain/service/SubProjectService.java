@@ -1,9 +1,11 @@
 package com.g6jamm.stima.domain.service;
 
 import com.g6jamm.stima.data.repository.SubProjectRepository;
+import com.g6jamm.stima.data.repository.mock.ProjectRepositoryStub;
 import com.g6jamm.stima.domain.model.SubProject;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class SubProjectService {
 
@@ -15,5 +17,9 @@ public class SubProjectService {
 
   public SubProject createSubProject(String name, LocalDate startDate, LocalDate endDate) {
     return subProjectRepository.createSubProject(name, startDate, endDate);
+  }
+
+  public List<SubProject> getSubprojects() {
+    return subProjectRepository.getSubProjects();
   }
 }

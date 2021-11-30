@@ -1,17 +1,42 @@
 package com.g6jamm.stima.data.repository.mock;
 
 import com.g6jamm.stima.data.repository.SubProjectRepository;
+import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.SubProject;
 import com.g6jamm.stima.domain.model.Task;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SubProjectRepositoryStub implements SubProjectRepository {
 
   @Override
-  public SubProject getSubProject(int id) {
-    return null;
+  public List<SubProject> getSubProjects() {
+    List<SubProject> subProjects = new ArrayList<>();
+
+    subProjects.add(
+        new SubProject.SubProjectBuilder()
+            .name("example")
+            .hours(100)
+            .price(80000)
+            .startDate(LocalDate.of(2020,1,1))
+            .endDate(LocalDate.of(2021,1,1))
+            .build()
+    );
+
+    subProjects.add(
+        new SubProject.SubProjectBuilder()
+            .name("example2")
+            .hours(100)
+            .price(80000)
+            .startDate(LocalDate.of(2020,1,1))
+            .endDate(LocalDate.of(2021,1,1))
+            .build()
+    );
+
+    return subProjects;
   }
 
   @Override
@@ -19,9 +44,9 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
 
     return new SubProject.SubProjectBuilder()
         .name(name)
-        .hours(0)
-        .price(0)
-        .tasks(null)
+       // .hours(0)
+       // .price(0)
+       // .tasks(null)
         .startDate(startDate)
         .endDate(endDate)
         .build();

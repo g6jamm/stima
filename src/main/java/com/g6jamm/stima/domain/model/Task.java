@@ -34,19 +34,19 @@ public class Task {
     return HOURS;
   }
 
-  public LocalDate getEND_DATE() {
+  public LocalDate getEndDate() {
     return END_DATE;
   }
 
-  public LocalDate getSTART_DATE() {
+  public LocalDate getStartDate() {
     return START_DATE;
   }
 
-  public int getID() {
+  public int getId() {
     return ID;
   }
 
-  public Role getROLE() {
+  public Role getRole() {
     return ROLE;
   }
 
