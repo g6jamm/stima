@@ -18,28 +18,30 @@ public class UserRepositoryStub implements UserRepository {
    * @author Mohamad
    */
   public UserRepositoryStub() {
-    User user =
-        new User.UserBuilder()
-            .firstName("John")
-            .lastName("Doe")
-            .email("demo@demo.com")
-            .password("demo")
-            .id(userListStub.size()+1)
-            .role(new Role())
-            .build();
+    if(userListStub.isEmpty()) {
+      User user =
+              new User.UserBuilder()
+                      .firstName("John")
+                      .lastName("Doe")
+                      .email("demo@demo.com")
+                      .password("demo")
+                      .id(userListStub.size() + 1)
+                      .role(new Role())
+                      .build();
 
-    User user2 =
-        new User.UserBuilder()
-            .firstName("Jane")
-            .lastName("Doe")
-            .email("maill@mail.com")
-            .password("123")
-            .id(userListStub.size()+1)
-            .role(new Role())
-            .build();
+      User user2 =
+              new User.UserBuilder()
+                      .firstName("Jane")
+                      .lastName("Doe")
+                      .email("maill@mail.com")
+                      .password("123")
+                      .id(userListStub.size() + 1)
+                      .role(new Role())
+                      .build();
 
-    userListStub.add(user);
-    userListStub.add(user2);
+      userListStub.add(user);
+      userListStub.add(user2);
+    }
   }
 
   /**

@@ -1,5 +1,6 @@
 package com.g6jamm.stima.domain.service;
 
+import com.g6jamm.stima.data.repository.UserRepository;
 import com.g6jamm.stima.data.repository.mock.UserRepositoryStub;
 import com.g6jamm.stima.domain.exception.LoginException;
 import com.g6jamm.stima.domain.exception.SignUpException;
@@ -12,6 +13,22 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 /** @author Mohamd */
 class UserServiceTest {
+
+  /**
+   * Found bug in UserRepositoryStub - generated id didnt consider the users created in the constructor
+   * @Author Andreas
+   */
+  @Test
+  void createUserUserIdIncrements() throws SignUpException {
+    UserService userService = new UserService(new UserRepositoryStub());
+    String firstName = "Bobby";
+    String lastName = "Olsen";
+    String email = "newtest@demo.com";
+    String password = "demo";
+    User actual = userService.createUser(firstName, lastName, email, password);
+
+    Assertions.assertEquals(3, actual.getId());
+  }
 
   @Test
   void loginSuccessfullyReturnCorrectUserTest() throws LoginException {
@@ -45,21 +62,6 @@ class UserServiceTest {
   }
 
 
-  /**
-   * Found bug in UserRepositoryStub - generated id didnt consider the users created in the constructor
-   * @Author Andreas
-   */
-  @Test
-  void createUserUserIdIncrements() throws SignUpException {
-    UserService userService = new UserService(new UserRepositoryStub());
-    String firstName = "Bob";
-    String lastName = "Marley";
-    String email = "demo420@demo.com";
-    String password = "demo";
-    User actual = userService.createUser(firstName, lastName, email, password);
-    Assertions.assertEquals(3, actual.getId());
-  }
-
   //  @Test
   //  void createNewUserUserAlreadyExistFailTest() throws LoginException {
   //    UserService userService = new UserService(new UserRepositoryStub());
@@ -82,14 +84,14 @@ class UserServiceTest {
   @Test
   void getUserByIdFailTest() {
     UserService userService = new UserService(new UserRepositoryStub());
-    User actualUser = userService.getUser(2);
-    assertNotEquals(1, actualUser.getId());
+    User actualUser = userService.getUser(1);
+    assertNotEquals(0, actualUser.getId());
   }
 
   @Test
   void userExistsSuccessfullyTest() {
     UserService userService = new UserService(new UserRepositoryStub());
-    boolean doesUserExist = userService.userExists(2);
+    boolean doesUserExist = userService.userExists(1);
 
     Assertions.assertEquals(true, doesUserExist);
   }

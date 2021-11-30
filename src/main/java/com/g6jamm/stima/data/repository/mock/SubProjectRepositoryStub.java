@@ -10,27 +10,28 @@ import java.util.List;
 
 public class SubProjectRepositoryStub implements SubProjectRepository {
 
-    private static List<SubProject> subProjects;
+    private static List<SubProject> subProjects = new ArrayList<>();
 
     public SubProjectRepositoryStub() {
-        subProjects = new ArrayList<>();
-        subProjects.add(
-                new SubProject.SubProjectBuilder()
-                        .name("example")
-                        .hours(100)
-                        .price(80000)
-                        .startDate(LocalDate.of(2020, 1, 1))
-                        .endDate(LocalDate.of(2021, 1, 1))
-                        .build());
+        if (subProjects.isEmpty()) {
+            subProjects.add(
+                    new SubProject.SubProjectBuilder()
+                            .name("example")
+                            .hours(100)
+                            .price(80000)
+                            .startDate(LocalDate.of(2020, 1, 1))
+                            .endDate(LocalDate.of(2021, 1, 1))
+                            .build());
 
-        subProjects.add(
-                new SubProject.SubProjectBuilder()
-                        .name("example2")
-                        .hours(100)
-                        .price(80000)
-                        .startDate(LocalDate.of(2020, 1, 1))
-                        .endDate(LocalDate.of(2021, 1, 1))
-                        .build());
+            subProjects.add(
+                    new SubProject.SubProjectBuilder()
+                            .name("example2")
+                            .hours(100)
+                            .price(80000)
+                            .startDate(LocalDate.of(2020, 1, 1))
+                            .endDate(LocalDate.of(2021, 1, 1))
+                            .build());
+        }
     }
 
     @Override
