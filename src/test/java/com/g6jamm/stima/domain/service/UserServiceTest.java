@@ -44,10 +44,9 @@ class UserServiceTest {
     Assertions.assertEquals("demo420@demo.com", actual.getEmail());
   }
 
-
   /**
-   * Found bug in UserRepositoryStub - generated id didnt consider the users created in the constructor
-   * @Author Andreas
+   * Found bug in UserRepositoryStub - generated id didnt consider the users created in the
+   * constructor @Author Andreas
    */
   @Test
   void createUserUserIdIncrements() throws SignUpException {
