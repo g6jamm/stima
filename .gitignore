@@ -36,7 +36,7 @@ buildNumber.properties
 .flattened-pom.xml
 
 ### Intellij ###
-# File-based headProject format
+# File-based project format
 *.iws
 
 # IntelliJ
