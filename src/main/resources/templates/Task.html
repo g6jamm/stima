@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${Task.getName()}"></title>
+</head>
+<body>
+<div class="card">
+    <div>
+        <p th:text="${Task.getName()}">Name</p>
+        <p th:text="${Task.getHours()}">Hours</p>
+        <p th:text="${Task.getPrice()}">Price</p>
+        <p th:text="${Task.getROLE()}">REsource type</p>
+        <p th:text="${Task.getSTART_DATE()}">start date</p>
+        <p th:text="${Task.getEND_DATE()}">end date</p>
+    </div>
+</div>
+
+<form  method="post" role="form" name="createTaskForm" action="/create-task">
+    <div class="card" style="border: black solid 2px; border-radius: 10px">
+        <table>
+            <thead>
+            <th>
+                <p>TASK NAME</p>
+            </th>
+            <th>
+                <p>hours </p>
+            </th>
+            <th>
+                <p>Resource type</p>
+            </th>
+            <th>
+                <p>start date</p>
+            </th>
+            <th>
+                <p>end date</p>
+            </th>
+            </thead>
+            <td>
+                <input placeholder="TASK NAME" name="task_name">
+            </td>
+            <td>
+                <input placeholder="Hours" type="text" name="task_hours">
+            </td>
+            <td>
+                <input placeholder="Resource type" name="task_resourcetype">
+            </td>
+            <td>
+                <input placeholder="start date" type="date" name="task_startdate">
+            </td>
+            <td>
+                <input placeholder="End date" type="date" name="task_enddate">
+            </td>
+            <td>
+                <button type="submit">Submit</button>
+            </td>
+        </table>
+    </div>
+</form>
+</body>
+</html>

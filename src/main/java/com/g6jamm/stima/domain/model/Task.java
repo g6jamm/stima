@@ -10,8 +10,10 @@ public class Task {
   private final LocalDate START_DATE;
   private final LocalDate END_DATE;
   private final Role ROLE;
+  private final int ID;
 
   private Task(TaskBuilder taskBuilder) {
+    this.ID = taskBuilder.id;
     this.NAME = taskBuilder.name;
     this.HOURS = taskBuilder.hours;
     this.PRICE = taskBuilder.price;
@@ -40,17 +42,27 @@ public class Task {
     return START_DATE;
   }
 
+  public int getID() {
+    return ID;
+  }
+
   public Role getROLE() {
     return ROLE;
   }
 
   public static class TaskBuilder {
+    private int id;
     private String name;
     private double hours;
     private int price;
     private LocalDate startDate;
     private LocalDate endDate;
-    private Role role;
+    private Role role; // TODO change to ressourcetype
+
+    public TaskBuilder id(int id) {
+      this.id = id;
+      return this;
+    }
 
     public TaskBuilder name(String name) {
       this.name = name;
@@ -83,6 +95,7 @@ public class Task {
     }
 
     private void reset() {
+      this.id = 0;
       this.name = null;
       this.hours = 0;
       this.price = 0;
