@@ -80,7 +80,8 @@ public class HeadProjectController {
   }
 
   @PostMapping("/head-projects/{headProjectId}/create-new") // TODO /{subProjectId}
-  public String createSubProject(WebRequest webRequest, Model model, @PathVariable int headProjectId) {
+  public String createSubProject(
+      WebRequest webRequest, Model model, @PathVariable int headProjectId) {
 
     String subProjectName = webRequest.getParameter("name");
     String startDate = webRequest.getParameter("start-date");
@@ -89,13 +90,13 @@ public class HeadProjectController {
     // TODO check if valid date
     // TODO check if date are inside project start and end
 
-   /* SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
-    SubProject subP =
-        subProjectService.createSubProject(
-            subProjectName, LocalDate.parse(startDate), LocalDate.parse(endDate));
+    /* SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
+        SubProject subP =
+            subProjectService.createSubProject(
+                subProjectName, LocalDate.parse(startDate), LocalDate.parse(endDate));
 
-    model.addAttribute("subProject", subP);
-*/
+        model.addAttribute("subProject", subP);
+    */
     return "redirect:/head-projects/" + headProjectId;
   }
 
