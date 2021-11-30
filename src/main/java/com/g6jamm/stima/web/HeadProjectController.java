@@ -19,7 +19,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Controller
-public class ProjectController {
+public class HeadProjectController {
 
   /**
    * View all projects.
@@ -80,21 +80,23 @@ public class ProjectController {
   }
 
   @PostMapping("/head-projects/{headProjectId}/create-new") // TODO /{subProjectId}
-  public String createSubProject(
-      WebRequest webRequest, Model model, @PathVariable int headProjectId) {
+  public String createSubProject(WebRequest webRequest, Model model, @PathVariable int headProjectId) {
+
     String subProjectName = webRequest.getParameter("name");
     String startDate = webRequest.getParameter("start-date");
     String endDate = webRequest.getParameter("end-date");
+
     // TODO check if valid date
     // TODO check if date are inside project start and end
-    SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
+
+   /* SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
     SubProject subP =
         subProjectService.createSubProject(
             subProjectName, LocalDate.parse(startDate), LocalDate.parse(endDate));
 
     model.addAttribute("subProject", subP);
-
-    return "headProject";
+*/
+    return "redirect:/head-projects/" + headProjectId;
   }
 
   /**
