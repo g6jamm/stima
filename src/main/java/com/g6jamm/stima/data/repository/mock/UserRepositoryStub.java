@@ -11,7 +11,6 @@ import java.util.List;
 public class UserRepositoryStub implements UserRepository {
 
   public static List<User> userListStub = new ArrayList<>();
-  private int generatedIdStub = userListStub.size();
 
   /**
    * Creates stub data when instantiated and adds to userListStub List.
@@ -25,7 +24,7 @@ public class UserRepositoryStub implements UserRepository {
             .lastName("Doe")
             .email("demo@demo.com")
             .password("demo")
-            .id(1)
+            .id(userListStub.size()+1)
             .role(new Role())
             .build();
 
@@ -35,7 +34,7 @@ public class UserRepositoryStub implements UserRepository {
             .lastName("Doe")
             .email("maill@mail.com")
             .password("123")
-            .id(2)
+            .id(userListStub.size()+1)
             .role(new Role())
             .build();
 
@@ -76,12 +75,11 @@ public class UserRepositoryStub implements UserRepository {
             .lastName(user.getLastName())
             .email(user.getEmail())
             .password(user.getPassword())
-            .id(generatedIdStub)
+            .id(userListStub.size()+1)
             .role(user.getRole())
             .build();
     userListStub.add(user);
 
-    generatedIdStub++;
     return user;
   }
 
@@ -113,7 +111,7 @@ public class UserRepositoryStub implements UserRepository {
             .lastName("Doe")
             .email("demo@demo.com")
             .password("demo")
-            .id(generatedIdStub)
+            .id(userListStub.size()+1)
             .role(new Role())
             .build();
 
