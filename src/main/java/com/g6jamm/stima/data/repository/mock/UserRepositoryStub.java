@@ -1,7 +1,6 @@
 package com.g6jamm.stima.data.repository.mock;
 
 import com.g6jamm.stima.data.repository.UserRepository;
-import com.g6jamm.stima.domain.exception.LoginException;
 import com.g6jamm.stima.domain.exception.SignUpException;
 import com.g6jamm.stima.domain.model.Role;
 import com.g6jamm.stima.domain.model.User;
@@ -68,7 +67,7 @@ public class UserRepositoryStub implements UserRepository {
    */
   @Override
   public User createUser(User user) throws SignUpException {
-    if(emailExists(user.getEmail())){
+    if (emailExists(user.getEmail())) {
       throw new SignUpException("Email already in use");
     }
     user =
@@ -96,7 +95,7 @@ public class UserRepositoryStub implements UserRepository {
     return userListStub.stream().anyMatch(user -> id == user.getId());
   }
 
-  private boolean emailExists(String email){
+  private boolean emailExists(String email) {
     return userListStub.stream().anyMatch(user -> email == user.getEmail());
   }
 
