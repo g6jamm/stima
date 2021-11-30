@@ -13,10 +13,9 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDate;
 
-
 @Controller
 public class SubProjectController {
- TaskService taskService = new TaskService(new TaskRepositoryStub());
+  TaskService taskService = new TaskService(new TaskRepositoryStub());
 
   private final SubProjectService SUBPROJECT_SERVICE =
       new SubProjectService(new SubProjectRepositoryStub());
