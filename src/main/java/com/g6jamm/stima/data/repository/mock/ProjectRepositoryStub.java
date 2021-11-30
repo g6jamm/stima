@@ -73,7 +73,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
     @Override
     public Project createProject() {
 
-        return new Project.ProjectBuilder()
+        Project newProject = new Project.ProjectBuilder()
                 .projectId(1)
                 .projectName("Demo")
                 .startDate(LocalDate.of(2021, 1, 1))
@@ -83,6 +83,9 @@ public class ProjectRepositoryStub implements ProjectRepository {
                 // .tasks()
                 // .subProjects()
                 .build();
+
+        projects.add(newProject);
+        return newProject;
     }
 
     @Override
