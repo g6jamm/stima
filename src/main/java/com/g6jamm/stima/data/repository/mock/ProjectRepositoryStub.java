@@ -32,55 +32,57 @@ public class ProjectRepositoryStub implements ProjectRepository {
   public List<Project> getProjects() {
     List<Project> projects = new ArrayList<>();
 
-    projects.add(new Project.ProjectBuilder()
-        .projectId(2)
-        .projectName("Projekt pink")
-        .startDate(LocalDate.of(2021, 1, 1))
-        .endDate(LocalDate.of(2021, 1, 2))
-        .totalPrice(4000000)
-        .totalHours(300)
-        // .tasks()
-        // .subProjects()
+    projects.add(
+        new Project.ProjectBuilder()
+            .projectId(2)
+            .projectName("Projekt pink")
+            .startDate(LocalDate.of(2021, 1, 1))
+            .endDate(LocalDate.of(2021, 1, 2))
+            .totalPrice(4000000)
+            .totalHours(300)
+            // .tasks()
+            // .subProjects()
             .colorCode("pink")
-        .build());
+            .build());
 
-    projects.add(new Project.ProjectBuilder()
-        .projectId(1)
-        .projectName("Projekt lilla")
-        .startDate(LocalDate.of(2021, 1, 1))
-        .endDate(LocalDate.of(2021, 1, 2))
-        .totalPrice(7000000)
-        .totalHours(800)
-        // .tasks()
-        // .subProjects()
-        .colorCode("purple")
-        .build());
+    projects.add(
+        new Project.ProjectBuilder()
+            .projectId(1)
+            .projectName("Projekt lilla")
+            .startDate(LocalDate.of(2021, 1, 1))
+            .endDate(LocalDate.of(2021, 1, 2))
+            .totalPrice(7000000)
+            .totalHours(800)
+            // .tasks()
+            // .subProjects()
+            .colorCode("purple")
+            .build());
 
-
-    projects.add(new Project.ProjectBuilder()
-        .projectId(3)
-        .projectName("Projekt grøn")
-        .startDate(LocalDate.of(2021, 1, 1))
-        .endDate(LocalDate.of(2021, 1, 2))
-        .totalPrice(200000)
-        .totalHours(60)
-        // .tasks()
-        // .subProjects()
+    projects.add(
+        new Project.ProjectBuilder()
+            .projectId(3)
+            .projectName("Projekt grøn")
+            .startDate(LocalDate.of(2021, 1, 1))
+            .endDate(LocalDate.of(2021, 1, 2))
+            .totalPrice(200000)
+            .totalHours(60)
+            // .tasks()
+            // .subProjects()
             .colorCode("green")
-        .build());
+            .build());
 
-    projects.add(new Project.ProjectBuilder()
-        .projectId(3)
-        .projectName("Projekt brun")
-        .startDate(LocalDate.of(2021, 1, 1))
-        .endDate(LocalDate.of(2021, 1, 2))
-        .totalPrice(12000000)
-        .totalHours(120)
-        // .tasks()
-        // .subProjects()
-        .colorCode("brown")
-        .build());
-
+    projects.add(
+        new Project.ProjectBuilder()
+            .projectId(3)
+            .projectName("Projekt brun")
+            .startDate(LocalDate.of(2021, 1, 1))
+            .endDate(LocalDate.of(2021, 1, 2))
+            .totalPrice(12000000)
+            .totalHours(120)
+            // .tasks()
+            // .subProjects()
+            .colorCode("brown")
+            .build());
 
     return projects;
   }

@@ -3,9 +3,7 @@ package com.g6jamm.stima.domain.model;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * @auther Mathias
- * */
+/** @auther Mathias */
 public class Project {
 
   private final int PROJECT_ID;
