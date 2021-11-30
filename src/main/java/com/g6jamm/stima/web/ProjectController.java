@@ -31,7 +31,7 @@ public class ProjectController {
    * @return String
    * @auther Mathias
    */
-  @GetMapping("/projects")
+  @GetMapping("/head-projects")
   public String projects(WebRequest webRequest, Model model, ModelAndView model2) {
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
 
@@ -49,7 +49,7 @@ public class ProjectController {
    * @return String
    * @auther Mathias
    */
-  @GetMapping("/projects/{headProjectId}")
+  @GetMapping("/head-projects/{headProjectId}")
   public String projectId(Model model, @PathVariable int headProjectId) {
 
     SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
@@ -68,7 +68,7 @@ public class ProjectController {
     return "headProject";
   }
 
-  @GetMapping("/projects/{headProjectId}/{subProjectId}")
+  @GetMapping("/head-projects/{headProjectId}/{subProjectId}")
   public String subProject(
       Model model, @PathVariable int headProjectId, @PathVariable int subProjectId) {
     SubProjectService SUBPROJECT_SERVICE = new SubProjectService(new SubProjectRepositoryStub());
