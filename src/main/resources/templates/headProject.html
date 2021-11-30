@@ -108,28 +108,31 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                         </div>
-                                        <div class="modal-body">
-                                            <form method="post" th:action="/head-projects/{headProjectId}/create-new">
+                                        <form method="POST"
+                                              th:action="@{/head-projects/{headProjectId}/create-new (headProjectId=${headProject.getId})}">
+                                            <div class="modal-body">
                                                 <div class="mb-3">
                                                     <label for="name" class="col-form-label">Navn:</label>
-                                                    <input type="text" class="form-control" id="name">
+                                                    <input type="text" class="form-control" id="name" name="name">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="start-date" class="col-form-label">Start dag:</label>
-                                                    <input type="date" class="form-control" id="start-date">
+                                                    <input type="date" class="form-control" id="start-date"
+                                                           name="start-date">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="end-date" class="col-form-label">Slut dag:</label>
-                                                    <input type="date" class="form-control" id="end-date">
+                                                    <input type="date" class="form-control" id="end-date"
+                                                           name="end-date">
                                                 </div>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                Luk
-                                            </button>
-                                            <button type="button" class="btn btn-primary">Opret</button>
-                                        </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Luk
+                                                </button>
+                                                <button type="submit" class="btn btn-primary">Opret</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
