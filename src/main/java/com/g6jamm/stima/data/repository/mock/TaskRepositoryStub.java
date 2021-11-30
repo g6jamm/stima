@@ -49,8 +49,8 @@ public class TaskRepositoryStub implements TaskRepository {
             .role(new Role())
             .price(task.getPrice())
             .hours(task.getHours())
-            .startDate(task.getSTART_DATE())
-            .endDate(task.getEND_DATE())
+            .startDate(task.getStartDate())
+            .endDate(task.getEndDate())
             .id(generatedIdStub)
             .build();
 
