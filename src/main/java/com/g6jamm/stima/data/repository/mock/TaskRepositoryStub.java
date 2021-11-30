@@ -10,11 +10,10 @@ import java.util.List;
 
 public class TaskRepositoryStub implements TaskRepository {
 
-  public static List<Task> taskListStub = new ArrayList<>();
-  private int generatedIdStub = taskListStub.size();
+  private static List<Task> taskListStub;
 
   public TaskRepositoryStub() {
-
+  taskListStub = new ArrayList<>();
     Task task =
         new Task.TaskBuilder()
             .name("Task one")
@@ -23,7 +22,7 @@ public class TaskRepositoryStub implements TaskRepository {
             .hours(5)
             .startDate(LocalDate.parse("1990-01-01"))
             .endDate(LocalDate.parse("1990-01-02"))
-            .id(generatedIdStub)
+            .id(taskListStub.size()+1)
             .build();
 
     Task task2 =
@@ -34,7 +33,7 @@ public class TaskRepositoryStub implements TaskRepository {
             .hours(5)
             .startDate(LocalDate.parse("1990-01-01"))
             .endDate(LocalDate.parse("1990-01-02"))
-            .id(generatedIdStub)
+            .id(taskListStub.size()+1)
             .build();
 
     taskListStub.add(task);
@@ -51,7 +50,7 @@ public class TaskRepositoryStub implements TaskRepository {
             .hours(task.getHours())
             .startDate(task.getStartDate())
             .endDate(task.getEndDate())
-            .id(generatedIdStub)
+            .id(taskListStub.size()+1)
             .build();
 
     taskListStub.add(task);
