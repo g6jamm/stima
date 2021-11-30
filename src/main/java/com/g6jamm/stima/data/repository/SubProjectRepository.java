@@ -2,11 +2,17 @@ package com.g6jamm.stima.data.repository;
 
 import com.g6jamm.stima.domain.model.SubProject;
 
+import java.time.LocalDate;
+
 public interface SubProjectRepository {
 
-  SubProject getSubProject(SubProject project);
+  SubProject getSubProject(int id);
 
-  SubProject createSubProject(SubProject project);
+  SubProject createSubProject(String name, LocalDate startDate, LocalDate endDate);
 
-  SubProject deleteSubProject(SubProject project);
+  SubProject deleteSubProject(SubProject subProject);
+
+  double getTotalHours(SubProject subProject);
+
+  int getTotalPrice(SubProject subProject);
 }

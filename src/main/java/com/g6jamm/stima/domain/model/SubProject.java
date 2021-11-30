@@ -21,6 +21,22 @@ public class SubProject {
     this.END_DATE = subProjectBuilder.endDate;
   }
 
+  public List<Task> getTasks() {
+    return this.TASKS;
+  }
+
+  public String getName() {
+    return this.NAME;
+  }
+
+  public LocalDate getStartDate() {
+    return this.START_DATE;
+  }
+
+  public LocalDate getEndDate() {
+    return this.END_DATE;
+  }
+
   public static class SubProjectBuilder {
     private String name;
     private double hours;

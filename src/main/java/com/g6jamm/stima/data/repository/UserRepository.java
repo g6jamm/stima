@@ -2,9 +2,10 @@ package com.g6jamm.stima.data.repository;
 
 import com.g6jamm.stima.domain.model.User;
 
+/** @author Mohamad */
 public interface UserRepository {
 
-  boolean login(String email, String password);
+  User login(String email, String password);
 
   User createUser(User user);
 

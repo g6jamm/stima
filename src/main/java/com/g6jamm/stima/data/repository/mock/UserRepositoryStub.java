@@ -4,43 +4,129 @@ import com.g6jamm.stima.data.repository.UserRepository;
 import com.g6jamm.stima.domain.model.Role;
 import com.g6jamm.stima.domain.model.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserRepositoryStub implements UserRepository {
 
-  @Override
-  public boolean login(String email, String password) {
-    return false;
+  public static List<User> userListStub = new ArrayList<>();
+  private int generatedIdStub = userListStub.size();
+
+  /**
+   * Creates stub data when instantiated and adds to userListStub List.
+   *
+   * @author Mohamad
+   */
+  public UserRepositoryStub() {
+    User user =
+        new User.UserBuilder()
+            .firstName("John")
+            .lastName("Doe")
+            .email("demo@demo.com")
+            .password("demo")
+            .id(1)
+            .role(new Role())
+            .build();
+
+    User user2 =
+        new User.UserBuilder()
+            .firstName("Jane")
+            .lastName("Doe")
+            .email("maill@mail.com")
+            .password("123")
+            .id(2)
+            .role(new Role())
+            .build();
+
+    userListStub.add(user);
+    userListStub.add(user2);
   }
 
+  /**
+   * @param email
+   * @param password
+   * @return User if user exist in stub data, else rturns null
+   * @author Mohamad
+   */
+  @Override
+  public User login(String email, String password) {
+
+    for (User u : userListStub) {
+      if (u.getEmail().equals(email) && u.getPassword().equals(password)) {
+        return u;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @param user
+   * @return New user, and assigns ID to user
+   * @author Mohamad
+   */
   @Override
   public User createUser(User user) {
+
+    user =
+        new User.UserBuilder()
+            .firstName(user.getFirstName())
+            .lastName(user.getLastName())
+            .email(user.getEmail())
+            .password(user.getPassword())
+            .id(generatedIdStub)
+            .role(user.getRole())
+            .build();
+    userListStub.add(user);
+
+    generatedIdStub++;
+    return user;
+  }
+
+  /**
+   * @param id
+   * @return true if user exists in list
+   * @author Mohamad
+   */
+  @Override
+  public boolean userExists(int id) {
+    return userListStub.stream().anyMatch(user -> id == user.getId());
+  }
+
+  /**
+   * @param user
+   * @return New user ID
+   * @author Mohamad
+   */
+  @Override
+  public int getNewUserId(User user) {
+
     user =
         new User.UserBuilder()
             .firstName("John")
             .lastName("Doe")
-            .email("maill@mail.com")
-            .password("123")
-            .id(1)
+            .email("demo@demo.com")
+            .password("demo")
+            .id(generatedIdStub)
             .role(new Role())
             .build();
-    return user;
+
+    return user.getId();
   }
 
-  @Override
-  public boolean userExists(int id) {
-    int stubId = 1;
-    if (id == stubId) {
-      return true;
-    }
-    return false;
-  }
-
-  @Override
-  public int getNewUserId(User user) {
-    return 0;
-  }
-
+  /**
+   * @param id
+   * @return user with user ID that matches param ID
+   * @author Mohamad
+   */
   @Override
   public User getUser(int id) {
-    return null;
+    User result = null;
+
+    for (User u : userListStub) {
+      if (u.getId() == id) {
+        result = u;
+      }
+    }
+    return result;
   }
 }
