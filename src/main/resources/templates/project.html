@@ -82,7 +82,7 @@
                     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 g-3">
                         <h2>Opgaver</h2>
                         <div class="col" th:each="task : ${tasks}">
-                            <a th:href="@{/subProject/{id}(id=1)}">
+                            <a href="#">
                                 <div class="card shadow-sm" th:style="'background-color: ' + ${project.getColorCode}">
                                     <div class="card-body card-text card-text-size-sm">
                                         <p><span th:remove="tag" th:text="${task.getName}"></span></p>
