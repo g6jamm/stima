@@ -90,14 +90,16 @@
                             </a>
                         </div>
                         <div class="col">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                               data-bs-whatever="@getbootstrap">
                                 <div class="card shadow-sm align-items-center justify-content-center card-btn">
                                     <div class="card-body card-text card-text-size-sm card-icon">
                                         + <!-- TODO change to icon -->
                                     </div>
                                 </div>
                             </a>
-                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                                  aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
@@ -107,7 +109,7 @@
                                                     aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <form>
+                                            <form method="post" th:action="/head-projects/{headProjectId}/create-new">
                                                 <div class="mb-3">
                                                     <label for="name" class="col-form-label">Navn:</label>
                                                     <input type="text" class="form-control" id="name">
