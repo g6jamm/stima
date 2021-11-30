@@ -92,7 +92,7 @@ public class TaskRepositoryStub implements TaskRepository {
   public Task getTask(int task_id) {
     Task result = null;
     for (Task t : taskListStub) {
-      if (t.getID() == task_id) {
+      if (t.getId() == task_id) {
         result = t;
       }
     }
