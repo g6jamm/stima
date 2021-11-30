@@ -29,11 +29,6 @@ public class UserController { // TODO change name to Login controller?
     return "signup";
   }
 
-  @GetMapping("/otherPage")
-  public String otherPage() {
-    return "otherPage";
-  }
-
   @GetMapping("logout")
   public String logout(WebRequest webRequest) {
     webRequest.removeAttribute("user", WebRequest.SCOPE_SESSION);
@@ -49,7 +44,7 @@ public class UserController { // TODO change name to Login controller?
 
       webRequest.setAttribute(
           "user", user.getId(), WebRequest.SCOPE_SESSION); // if user is null null pointer exception
-      return "redirect:/otherPage";
+      return "redirect:/projects";
 
     } catch (LoginException e) {
       model.addAttribute("loginFail", e.getMessage());
@@ -69,7 +64,7 @@ public class UserController { // TODO change name to Login controller?
       if (validatePassword(password1, password2)) {
         User user = userService.createUser(firstName, lastName, email, password1);
         webRequest.setAttribute("user", user.getId(), WebRequest.SCOPE_SESSION);
-        return "redirect:/otherPage";
+        return "redirect:/projects";
       }
       model.addAttribute("signupFail", "The passwords do not match");
       return "signup";
