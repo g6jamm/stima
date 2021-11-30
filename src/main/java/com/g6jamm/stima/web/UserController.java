@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 /** @Mohamad */
 @Controller
 public class UserController { // TODO change name to Login controller?
@@ -19,8 +22,11 @@ public class UserController { // TODO change name to Login controller?
   UserService userService = new UserService(new UserRepositoryStub());
 
   @GetMapping("/")
-  public String goToHomepage(Model model) {
-    model.addAttribute("test", "something");
+  public String goToHomepage(WebRequest webRequest) {
+
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null){
+      return "redirect:/projects";
+    }
     return "index";
   }
 
