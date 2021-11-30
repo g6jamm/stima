@@ -2,6 +2,7 @@ package com.g6jamm.stima.domain.service;
 
 import com.g6jamm.stima.data.repository.mock.UserRepositoryStub;
 import com.g6jamm.stima.domain.exception.LoginException;
+import com.g6jamm.stima.domain.exception.SignUpException;
 import com.g6jamm.stima.domain.model.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,7 @@ class UserServiceTest {
   }
 
   @Test
-  void createNewUserSuccessfullyTest() throws LoginException {
+  void createNewUserSuccessfullyTest() throws SignUpException {
     UserService userService = new UserService(new UserRepositoryStub());
     String firstName = "Bob";
     String lastName = "Marley";
@@ -67,20 +68,6 @@ class UserServiceTest {
     UserService userService = new UserService(new UserRepositoryStub());
     User actualUser = userService.getUser(2);
     assertNotEquals(1, actualUser.getId());
-  }
-
-  @Test
-  void isValidUserByIdSuccessfullyTest() {
-    UserService userService = new UserService(new UserRepositoryStub());
-    boolean isValidUser = userService.isValidUser(1);
-    Assertions.assertEquals(true, isValidUser);
-  }
-
-  @Test
-  void isValidUserByIdFailTest() {
-    UserService userService = new UserService(new UserRepositoryStub());
-    boolean isValidUser = userService.isValidUser(68);
-    Assertions.assertNotEquals(true, isValidUser);
   }
 
   @Test

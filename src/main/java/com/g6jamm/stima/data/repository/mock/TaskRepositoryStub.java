@@ -9,6 +9,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskRepositoryStub implements TaskRepository {
+
+  public static List<Task> taskListStub = new ArrayList<>();
+  private int generatedIdStub = taskListStub.size();
+
+  public TaskRepositoryStub() {
+
+    Task task =
+        new Task.TaskBuilder()
+            .name("Task one")
+            .role(new Role())
+            .price(200)
+            .hours(5)
+            .startDate(LocalDate.parse("1990-01-01"))
+            .endDate(LocalDate.parse("1990-01-02"))
+            .id(generatedIdStub)
+            .build();
+
+    Task task2 =
+        new Task.TaskBuilder()
+            .name("Task one")
+            .role(new Role())
+            .price(200)
+            .hours(5)
+            .startDate(LocalDate.parse("1990-01-01"))
+            .endDate(LocalDate.parse("1990-01-02"))
+            .id(generatedIdStub)
+            .build();
+
+    taskListStub.add(task);
+    taskListStub.add(task2);
+  }
+
   @Override
   public Task createTask(Task task) {
     task =
@@ -17,10 +49,12 @@ public class TaskRepositoryStub implements TaskRepository {
             .role(new Role())
             .price(task.getPrice())
             .hours(task.getHours())
-            .startDate(task.getStartDate())
-            .endDate(task.getEndDate())
-            .id(1)
+            .startDate(task.getSTART_DATE())
+            .endDate(task.getEND_DATE())
+            .id(generatedIdStub)
             .build();
+
+    taskListStub.add(task);
     return task;
   }
 
@@ -56,6 +90,12 @@ public class TaskRepositoryStub implements TaskRepository {
 
   @Override
   public Task getTask(int task_id) {
-    return null;
+    Task result = null;
+    for (Task t : taskListStub) {
+      if (t.getID() == task_id) {
+        result = t;
+      }
+    }
+    return result;
   }
 }

@@ -2,6 +2,7 @@ package com.g6jamm.stima.domain.service;
 
 import com.g6jamm.stima.data.repository.UserRepository;
 import com.g6jamm.stima.domain.exception.LoginException;
+import com.g6jamm.stima.domain.exception.SignUpException;
 import com.g6jamm.stima.domain.model.User;
 
 /** @author Mohamad */
@@ -21,7 +22,11 @@ public class UserService {
    * @author Mohamad
    */
   public User login(String email, String password) throws LoginException {
-    return userRepository.login(email, password);
+    User user = userRepository.login(email, password);
+    if (user != null) {
+      return user;
+    }
+    throw new LoginException("Wrong email or password");
   }
 
   /**
@@ -30,11 +35,11 @@ public class UserService {
    * @param email
    * @param password
    * @return New User with the new ID
-   * @throws LoginException
+   * @throws SignUpException
    * @author Mohamad
    */
   public User createUser(String firstName, String lastName, String email, String password)
-      throws LoginException {
+      throws SignUpException {
     User user =
         new User.UserBuilder()
             .firstName(firstName)
@@ -52,15 +57,6 @@ public class UserService {
    */
   public User getUser(int userId) {
     return userRepository.getUser(userId);
-  }
-
-  /**
-   * @param userId
-   * @return true if userId is valid
-   * @author Mohamad
-   */
-  public boolean isValidUser(int userId) {
-    return userExists(userId);
   }
 
   /**

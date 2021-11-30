@@ -2,6 +2,7 @@ package com.g6jamm.stima.web;
 
 import com.g6jamm.stima.data.repository.mock.UserRepositoryStub;
 import com.g6jamm.stima.domain.exception.LoginException;
+import com.g6jamm.stima.domain.exception.SignUpException;
 import com.g6jamm.stima.domain.model.User;
 import com.g6jamm.stima.domain.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -46,14 +47,12 @@ public class UserController { // TODO change name to Login controller?
       String password = webRequest.getParameter("password");
       User user = userService.login(email, password);
 
-      webRequest.setAttribute("user", user.getId(), WebRequest.SCOPE_SESSION);
+      webRequest.setAttribute(
+          "user", user.getId(), WebRequest.SCOPE_SESSION); // if user is null null pointer exception
       return "redirect:/otherPage";
 
     } catch (LoginException e) {
-      model.addAttribute("loginFail", "Wrong password or email");
-      return "index";
-    } catch (NullPointerException e) { // TODO skal det laves som en if i stedet?
-      model.addAttribute("loginFail", "Not a valid user");
+      model.addAttribute("loginFail", e.getMessage());
       return "index";
     }
   }
@@ -74,8 +73,8 @@ public class UserController { // TODO change name to Login controller?
       }
       model.addAttribute("signupFail", "The passwords do not match");
       return "signup";
-    } catch (LoginException e) {
-      model.addAttribute("signupFail", "user already exist");
+    } catch (SignUpException e) {
+      model.addAttribute("signupFail", e.getMessage());
       return "signup";
     }
   }
