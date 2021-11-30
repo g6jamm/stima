@@ -16,7 +16,7 @@ import org.springframework.web.context.request.WebRequest;
 public class UserController { // TODO change name to Login controller?
 
   UserService userService = new UserService(new UserRepositoryStub());
-  
+
   @GetMapping("/")
   public String goToHomepage(Model model) {
     model.addAttribute("test", "something");
