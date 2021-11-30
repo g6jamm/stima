@@ -4,6 +4,7 @@ import com.g6jamm.stima.data.repository.TaskRepository;
 import com.g6jamm.stima.domain.model.Task;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class TaskService {
 
@@ -29,5 +30,9 @@ public class TaskService {
 
   private LocalDate convertStringToDate(String stringDate) {
     return LocalDate.parse(stringDate);
+  }
+
+  public List<Task> getTasks() {
+    return taskRepository.getTasks();
   }
 }

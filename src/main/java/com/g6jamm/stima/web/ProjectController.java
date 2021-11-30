@@ -1,8 +1,14 @@
 package com.g6jamm.stima.web;
 
 import com.g6jamm.stima.data.repository.mock.ProjectRepositoryStub;
+import com.g6jamm.stima.data.repository.mock.SubProjectRepositoryStub;
+import com.g6jamm.stima.data.repository.mock.TaskRepositoryStub;
 import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.model.SubProject;
+import com.g6jamm.stima.domain.model.Task;
 import com.g6jamm.stima.domain.service.ProjectService;
+import com.g6jamm.stima.domain.service.SubProjectService;
+import com.g6jamm.stima.domain.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,13 +44,26 @@ public class ProjectController {
   /**
    * View a specific project.
    *
-   * @param webRequest WebRequest
    * @param model Model
    * @return String
    * @auther Mathias
    */
-  @GetMapping("/project/{project_id}/")
-  public String projectId(WebRequest webRequest, Model model, @PathVariable String project_id) {
+  @GetMapping("/project")
+  public String projectId(Model model) {
+
+    SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
+    List<SubProject> subProjects = subProjectService.getSubprojects();
+    model.addAttribute("subprojects", subProjects);
+
+    TaskService taskService = new TaskService(new TaskRepositoryStub());
+    List<Task> tasks = taskService.getTasks();
+    model.addAttribute("tasks", tasks);
+
+    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
+    Project project = projectService.getProjects().get(0); // TODO: ID of project
+
+    model.addAttribute("project", project);
+
     return "project";
   }
 

@@ -3,10 +3,11 @@ package com.g6jamm.stima.data.repository;
 import com.g6jamm.stima.domain.model.SubProject;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface SubProjectRepository {
 
-  SubProject getSubProject(int id);
+  List<SubProject> getSubProjects();
 
   SubProject createSubProject(String name, LocalDate startDate, LocalDate endDate);
 

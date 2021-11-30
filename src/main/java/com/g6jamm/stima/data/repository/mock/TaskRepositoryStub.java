@@ -49,8 +49,8 @@ public class TaskRepositoryStub implements TaskRepository {
             .role(new Role())
             .price(task.getPrice())
             .hours(task.getHours())
-            .startDate(task.getSTART_DATE())
-            .endDate(task.getEND_DATE())
+            .startDate(task.getStartDate())
+            .endDate(task.getEndDate())
             .id(generatedIdStub)
             .build();
 
@@ -59,10 +59,40 @@ public class TaskRepositoryStub implements TaskRepository {
   }
 
   @Override
+  public List<Task> getTasks() {
+
+    List<Task> tasks = new ArrayList<>();
+
+    tasks.add(
+        new Task.TaskBuilder()
+            .id(1)
+            .name("task example")
+            .role(new Role())
+            .price(5000)
+            .hours(8)
+            .startDate(LocalDate.of(2021, 1, 1))
+            .endDate(LocalDate.of(2021, 2, 1))
+            .build());
+
+    tasks.add(
+        new Task.TaskBuilder()
+            .id(2)
+            .name("task example2")
+            .role(new Role())
+            .price(5000)
+            .hours(8)
+            .startDate(LocalDate.of(2021, 1, 1))
+            .endDate(LocalDate.of(2021, 2, 1))
+            .build());
+
+    return tasks;
+  }
+
+  @Override
   public Task getTask(int task_id) {
     Task result = null;
     for (Task t : taskListStub) {
-      if (t.getID() == task_id) {
+      if (t.getId() == task_id) {
         result = t;
       }
     }
