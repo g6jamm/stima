@@ -1,6 +1,5 @@
 package com.g6jamm.stima.domain.service;
 
-import com.g6jamm.stima.data.repository.UserRepository;
 import com.g6jamm.stima.data.repository.mock.UserRepositoryStub;
 import com.g6jamm.stima.domain.exception.LoginException;
 import com.g6jamm.stima.domain.exception.SignUpException;
@@ -15,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 class UserServiceTest {
 
   /**
-   * Found bug in UserRepositoryStub - generated id didnt consider the users created in the constructor
-   * @Author Andreas
+   * Found bug in UserRepositoryStub - generated id didnt consider the users created in the
+   * constructor @Author Andreas
    */
   @Test
   void createUserUserIdIncrements() throws SignUpException {
