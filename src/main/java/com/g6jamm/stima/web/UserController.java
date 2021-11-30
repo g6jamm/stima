@@ -21,7 +21,7 @@ public class UserController { // TODO change name to Login controller?
   @GetMapping("/")
   public String goToHomepage(WebRequest webRequest) {
 
-    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null){
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       return "redirect:/projects";
     }
     return "index";
@@ -29,7 +29,7 @@ public class UserController { // TODO change name to Login controller?
 
   @GetMapping("/signup")
   public String signUp(WebRequest webRequest) {
-    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null){
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       return "redirect:/projects";
     }
     return "signup";
