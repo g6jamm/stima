@@ -1,6 +1,8 @@
 package com.g6jamm.stima.domain.service;
 
+import com.g6jamm.stima.data.repository.ResourceTypeRepository;
 import com.g6jamm.stima.data.repository.TaskRepository;
+import com.g6jamm.stima.domain.model.ResourceType;
 import com.g6jamm.stima.domain.model.Task;
 
 import java.time.LocalDate;
@@ -9,9 +11,11 @@ import java.util.List;
 public class TaskService {
 
   private TaskRepository taskRepository;
+  private ResourceTypeRepository resourceTypeRepository;
 
-  public TaskService(TaskRepository taskRepository) {
+  public TaskService(TaskRepository taskRepository, ResourceTypeRepository resourceTypeRepository) {
     this.taskRepository = taskRepository;
+    this.resourceTypeRepository = resourceTypeRepository;
   }
 
   public Task createtask(
@@ -34,4 +38,9 @@ public class TaskService {
   public List<Task> getTasks() {
     return taskRepository.getTasks();
   }
+
+  public List<ResourceType> getResourceTypes(){
+    return resourceTypeRepository.getResourceTypes();
+  }
+
 }

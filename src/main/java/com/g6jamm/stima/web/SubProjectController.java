@@ -1,5 +1,6 @@
 package com.g6jamm.stima.web;
 
+import com.g6jamm.stima.data.repository.stub.ResourceTypeRepositoryStub;
 import com.g6jamm.stima.data.repository.stub.SubProjectRepositoryStub;
 import com.g6jamm.stima.domain.model.SubProject;
 import com.g6jamm.stima.domain.service.SubProjectService;
@@ -15,7 +16,7 @@ import java.time.LocalDate;
 
 @Controller
 public class SubProjectController {
-  TaskService taskService = new TaskService(new TaskRepositoryStub());
+  TaskService taskService = new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
 
   private final SubProjectService SUBPROJECT_SERVICE =
       new SubProjectService(new SubProjectRepositoryStub());
@@ -87,6 +88,7 @@ public class SubProjectController {
 
     model.addAttribute(
         "Task", taskService.createtask(name, hours, resourceType, startDate, endDate));
+    model.addAttribute("ResourceTypeList", taskService.getResourceTypes());
 
     return "Task"; // TODO redirect to /projects/{project_id}
   }
@@ -103,6 +105,7 @@ public class SubProjectController {
     if (model.getAttribute("Task") == null) {
       model.addAttribute(
           "Task", taskService.createtask("Placeholder", 1.0, "test", "1990-01-01", "1991-01-01"));
+      model.addAttribute("ResourceTypeList", taskService.getResourceTypes());
     }
     return "Task";
   }
