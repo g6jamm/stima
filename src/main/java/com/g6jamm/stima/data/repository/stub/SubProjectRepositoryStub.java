@@ -34,16 +34,30 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
     }
   }
 
+  /**
+   *
+   * @return List of Projects
+   * @author Jackie
+   */
   @Override
   public List<SubProject> getSubProjects() {
     return subProjects;
   }
 
+  /**
+   * Creates a sub project
+   *
+   * @param name
+   * @param startDate
+   * @param endDate
+   * @return sub project
+   */
   @Override
   public SubProject createSubProject(String name, LocalDate startDate, LocalDate endDate) {
 
     SubProject subProject =
         new SubProject.SubProjectBuilder()
+            .subProjectId(5) //TODO hardcorded, to test
             .name(name)
             // .hours(0)
             // .price(0)
@@ -62,6 +76,13 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
     return subProject;
   }
 
+  /**
+   * Calculate the total hours from tasks in the subproject
+   *
+   * @param subProject
+   * @return hours as double
+   * @author Jackie
+   */
   @Override
   public double getTotalHours(SubProject subProject) {
     int result = 0;
@@ -74,6 +95,13 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
     return result;
   }
 
+  /**
+   * Calculate the total price from tasks in the subproject
+   *
+   * @param subProject
+   * @return price as int
+   * @author Jackie
+   */
   @Override
   public int getTotalPrice(SubProject subProject) {
     int result = 0;
