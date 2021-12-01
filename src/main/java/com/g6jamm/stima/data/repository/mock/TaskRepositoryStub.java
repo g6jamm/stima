@@ -10,35 +10,35 @@ import java.util.List;
 
 public class TaskRepositoryStub implements TaskRepository {
 
-  public static List<Task> taskListStub = new ArrayList<>();
-  private int generatedIdStub = taskListStub.size();
+  private static List<Task> taskListStub = new ArrayList<>();
 
   public TaskRepositoryStub() {
+    if (taskListStub.isEmpty()) {
+      Task task =
+          new Task.TaskBuilder()
+              .name("Task one")
+              .role(new Role())
+              .price(200)
+              .hours(5)
+              .startDate(LocalDate.parse("1990-01-01"))
+              .endDate(LocalDate.parse("1990-01-02"))
+              .id(taskListStub.size() + 1)
+              .build();
 
-    Task task =
-        new Task.TaskBuilder()
-            .name("Task one")
-            .role(new Role())
-            .price(200)
-            .hours(5)
-            .startDate(LocalDate.parse("1990-01-01"))
-            .endDate(LocalDate.parse("1990-01-02"))
-            .id(generatedIdStub)
-            .build();
+      Task task2 =
+          new Task.TaskBuilder()
+              .name("Task one")
+              .role(new Role())
+              .price(200)
+              .hours(5)
+              .startDate(LocalDate.parse("1990-01-01"))
+              .endDate(LocalDate.parse("1990-01-02"))
+              .id(taskListStub.size() + 1)
+              .build();
 
-    Task task2 =
-        new Task.TaskBuilder()
-            .name("Task one")
-            .role(new Role())
-            .price(200)
-            .hours(5)
-            .startDate(LocalDate.parse("1990-01-01"))
-            .endDate(LocalDate.parse("1990-01-02"))
-            .id(generatedIdStub)
-            .build();
-
-    taskListStub.add(task);
-    taskListStub.add(task2);
+      taskListStub.add(task);
+      taskListStub.add(task2);
+    }
   }
 
   @Override
@@ -51,7 +51,7 @@ public class TaskRepositoryStub implements TaskRepository {
             .hours(task.getHours())
             .startDate(task.getStartDate())
             .endDate(task.getEndDate())
-            .id(generatedIdStub)
+            .id(taskListStub.size() + 1)
             .build();
 
     taskListStub.add(task);
@@ -60,32 +60,7 @@ public class TaskRepositoryStub implements TaskRepository {
 
   @Override
   public List<Task> getTasks() {
-
-    List<Task> tasks = new ArrayList<>();
-
-    tasks.add(
-        new Task.TaskBuilder()
-            .id(1)
-            .name("task example")
-            .role(new Role())
-            .price(5000)
-            .hours(8)
-            .startDate(LocalDate.of(2021, 1, 1))
-            .endDate(LocalDate.of(2021, 2, 1))
-            .build());
-
-    tasks.add(
-        new Task.TaskBuilder()
-            .id(2)
-            .name("task example2")
-            .role(new Role())
-            .price(5000)
-            .hours(8)
-            .startDate(LocalDate.of(2021, 1, 1))
-            .endDate(LocalDate.of(2021, 2, 1))
-            .build());
-
-    return tasks;
+    return taskListStub;
   }
 
   @Override
