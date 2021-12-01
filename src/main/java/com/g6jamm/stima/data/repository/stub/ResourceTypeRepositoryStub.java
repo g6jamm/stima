@@ -6,12 +6,12 @@ import com.g6jamm.stima.domain.model.ResourceType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResourceTypeStub implements ResourceTypeRepository {
+public class ResourceTypeRepositoryStub implements ResourceTypeRepository {
 
     private static List<ResourceType> resourceTypes = new ArrayList();
 
 
-    public ResourceTypeStub() {
+    public ResourceTypeRepositoryStub() {
         if (resourceTypes.isEmpty()) {
             resourceTypes.add(
                     new ResourceType.ResourceTypeBuilder()

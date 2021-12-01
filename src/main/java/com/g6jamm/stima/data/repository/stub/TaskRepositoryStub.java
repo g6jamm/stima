@@ -1,7 +1,7 @@
 package com.g6jamm.stima.data.repository.stub;
 
+import com.g6jamm.stima.data.repository.ResourceTypeRepository;
 import com.g6jamm.stima.data.repository.TaskRepository;
-import com.g6jamm.stima.domain.model.Role;
 import com.g6jamm.stima.domain.model.Task;
 
 import java.time.LocalDate;
@@ -10,6 +10,7 @@ import java.util.List;
 
 public class TaskRepositoryStub implements TaskRepository {
 
+  private static ResourceTypeRepository resourceTypeRepository = new ResourceTypeRepositoryStub();
   private static List<Task> taskListStub = new ArrayList<>();
 
   public TaskRepositoryStub() {
@@ -17,7 +18,7 @@ public class TaskRepositoryStub implements TaskRepository {
       Task task =
           new Task.TaskBuilder()
               .name("Task one")
-              .role(new Role())
+              .resourceType(resourceTypeRepository.getResourceTypes().get(1))
               .price(200)
               .hours(5)
               .startDate(LocalDate.parse("1990-01-01"))
@@ -28,7 +29,7 @@ public class TaskRepositoryStub implements TaskRepository {
       Task task2 =
           new Task.TaskBuilder()
               .name("Task one")
-              .role(new Role())
+              .resourceType(resourceTypeRepository.getResourceTypes().get(2))
               .price(200)
               .hours(5)
               .startDate(LocalDate.parse("1990-01-01"))
@@ -46,7 +47,7 @@ public class TaskRepositoryStub implements TaskRepository {
     task =
         new Task.TaskBuilder()
             .name(task.getName())
-            .role(new Role())
+            .resourceType(resourceTypeRepository.getResourceTypes().get(0)) //TODO Lookup value from form
             .price(task.getPrice())
             .hours(task.getHours())
             .startDate(task.getStartDate())
