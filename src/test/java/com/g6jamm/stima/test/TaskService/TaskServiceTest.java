@@ -13,7 +13,7 @@ public class TaskServiceTest {
   @Test
   public void createValidTaskTest() throws TaskCreationException{
     TaskService taskService = new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
-    Task task = taskService.createtask("Test", 2.5, "TestResource", "1990-01-01", "1990-01-01");
+    Task task = taskService.createtask("Test", 2.5, "Project Manager", "1990-01-01", "1990-01-01");
 
     Assertions.assertEquals(3, task.getId());
   }
