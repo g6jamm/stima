@@ -19,7 +19,6 @@ public class TaskRepositoryStub implements TaskRepository {
           new Task.TaskBuilder()
               .name("Task one")
               .resourceType(resourceTypeRepository.getResourceTypes().get(1))
-              .price(200)
               .hours(5)
               .startDate(LocalDate.parse("1990-01-01"))
               .endDate(LocalDate.parse("1990-01-02"))
@@ -30,7 +29,6 @@ public class TaskRepositoryStub implements TaskRepository {
           new Task.TaskBuilder()
               .name("Task one")
               .resourceType(resourceTypeRepository.getResourceTypes().get(2))
-              .price(200)
               .hours(5)
               .startDate(LocalDate.parse("1990-01-01"))
               .endDate(LocalDate.parse("1990-01-02"))
@@ -48,7 +46,6 @@ public class TaskRepositoryStub implements TaskRepository {
         new Task.TaskBuilder()
             .name(task.getName())
             .resourceType(resourceTypeRepository.getResourceTypes().get(0)) //TODO Lookup value from form
-            .price(task.getPrice())
             .hours(task.getHours())
             .startDate(task.getStartDate())
             .endDate(task.getEndDate())

@@ -20,7 +20,6 @@ public class TaskService {
         new Task.TaskBuilder()
             .name(taskName)
             .hours(hours)
-            .price((int) (1000 * hours))
             .startDate(convertStringToDate(startDate))
             .endDate(convertStringToDate(endDate))
             .build();
