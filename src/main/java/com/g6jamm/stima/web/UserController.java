@@ -19,17 +19,23 @@ public class UserController { // TODO change name to Login controller?
   UserService userService = new UserService(new UserRepositoryStub());
 
   @GetMapping("/")
-  public String goToHomepage(Model model) {
-    model.addAttribute("test", "something");
+  public String goToHomepage(WebRequest webRequest) {
+
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
+      return "redirect:/projects";
+    }
     return "index";
   }
 
   @GetMapping("/signup")
-  public String signUp() {
+  public String signUp(WebRequest webRequest) {
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
+      return "redirect:/projects";
+    }
     return "signup";
   }
 
-  @GetMapping("logout")
+  @GetMapping("/logout")
   public String logout(WebRequest webRequest) {
     webRequest.removeAttribute("user", WebRequest.SCOPE_SESSION);
     return "redirect:/index";
