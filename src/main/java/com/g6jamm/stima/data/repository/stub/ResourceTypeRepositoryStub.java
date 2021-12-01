@@ -9,43 +9,41 @@ import java.util.List;
 
 public class ResourceTypeRepositoryStub implements ResourceTypeRepository {
 
-    private static List<ResourceType> resourceTypes = new ArrayList();
+  private static List<ResourceType> resourceTypes = new ArrayList();
 
+  public ResourceTypeRepositoryStub() {
+    if (resourceTypes.isEmpty()) {
+      resourceTypes.add(
+          new ResourceType.ResourceTypeBuilder()
+              .name("Senior Developer")
+              .id(resourceTypes.size() + 1)
+              .pricePrHour(1250)
+              .build());
 
-    public ResourceTypeRepositoryStub() {
-        if (resourceTypes.isEmpty()) {
-            resourceTypes.add(
-                    new ResourceType.ResourceTypeBuilder()
-                            .name("Senior Developer")
-                            .id(resourceTypes.size() + 1)
-                            .pricePrHour(1250)
-                            .build());
-
-            resourceTypes.add(
-                    new ResourceType.ResourceTypeBuilder()
-                            .name("Project Manager")
-                            .id(resourceTypes.size() + 1)
-                            .pricePrHour(1000)
-                            .build());
-            resourceTypes.add(
-                    new ResourceType.ResourceTypeBuilder()
-                            .name("Junior Developer")
-                            .id(resourceTypes.size() + 1)
-                            .pricePrHour(800)
-                            .build());
-        }
+      resourceTypes.add(
+          new ResourceType.ResourceTypeBuilder()
+              .name("Project Manager")
+              .id(resourceTypes.size() + 1)
+              .pricePrHour(1000)
+              .build());
+      resourceTypes.add(
+          new ResourceType.ResourceTypeBuilder()
+              .name("Junior Developer")
+              .id(resourceTypes.size() + 1)
+              .pricePrHour(800)
+              .build());
     }
+  }
 
-    public List<ResourceType> getResourceTypes() {
-        return resourceTypes;
-    }
+  public List<ResourceType> getResourceTypes() {
+    return resourceTypes;
+  }
 
-    @Override
-    public ResourceType findByName(String resourceTypeName) throws ResourceTypeNotFoundException {
-        for (ResourceType resourceType : resourceTypes) {
-            if(resourceType.getName().equals(resourceTypeName))
-                return resourceType;
-        }
-        throw new ResourceTypeNotFoundException("ResourceType does not exists");
+  @Override
+  public ResourceType findByName(String resourceTypeName) throws ResourceTypeNotFoundException {
+    for (ResourceType resourceType : resourceTypes) {
+      if (resourceType.getName().equals(resourceTypeName)) return resourceType;
     }
+    throw new ResourceTypeNotFoundException("ResourceType does not exists");
+  }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ResourceTypeRepository {
 
-    public List<ResourceType> getResourceTypes();
+  public List<ResourceType> getResourceTypes();
 
-    public ResourceType findByName(String resourceTypeName) throws ResourceTypeNotFoundException;
+  public ResourceType findByName(String resourceTypeName) throws ResourceTypeNotFoundException;
 }

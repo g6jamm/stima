@@ -17,7 +17,8 @@ import java.time.LocalDate;
 
 @Controller
 public class SubProjectController {
-  TaskService taskService = new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
+  TaskService taskService =
+      new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
 
   private final SubProjectService SUBPROJECT_SERVICE =
       new SubProjectService(new SubProjectRepositoryStub());
@@ -88,9 +89,9 @@ public class SubProjectController {
     // TODO Add to Task to project
     try {
       model.addAttribute(
-              "Task", taskService.createtask(name, hours, resourceType, startDate, endDate));
+          "Task", taskService.createtask(name, hours, resourceType, startDate, endDate));
       model.addAttribute("ResourceTypeList", taskService.getResourceTypes());
-    }catch (TaskCreationException e){
+    } catch (TaskCreationException e) {
       model.addAttribute("error", e.getMessage());
     }
     return "Task"; // TODO redirect to /projects/{project_id}
@@ -107,11 +108,10 @@ public class SubProjectController {
   public String task(WebRequest webRequest, Model model) {
     if (model.getAttribute("Task") == null) {
       try {
-      model.addAttribute(
-          "Task", taskService.createtask("Placeholder", 1.0, "test", "1990-01-01", "1991-01-01"));
-      model.addAttribute("ResourceTypeList", taskService.getResourceTypes());
-      }
-      catch (TaskCreationException e){
+        model.addAttribute(
+            "Task", taskService.createtask("Placeholder", 1.0, "test", "1990-01-01", "1991-01-01"));
+        model.addAttribute("ResourceTypeList", taskService.getResourceTypes());
+      } catch (TaskCreationException e) {
         model.addAttribute("error", e.getMessage());
       }
     }

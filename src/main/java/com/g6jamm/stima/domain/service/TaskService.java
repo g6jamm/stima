@@ -12,47 +12,48 @@ import java.util.List;
 
 public class TaskService {
 
-    private TaskRepository taskRepository;
-    private ResourceTypeRepository resourceTypeRepository;
+  private TaskRepository taskRepository;
+  private ResourceTypeRepository resourceTypeRepository;
 
-    public TaskService(TaskRepository taskRepository, ResourceTypeRepository resourceTypeRepository) {
-        this.taskRepository = taskRepository;
-        this.resourceTypeRepository = resourceTypeRepository;
+  public TaskService(TaskRepository taskRepository, ResourceTypeRepository resourceTypeRepository) {
+    this.taskRepository = taskRepository;
+    this.resourceTypeRepository = resourceTypeRepository;
+  }
+
+  public Task createtask(
+      String taskName, double hours, String resourceType, String startDate, String endDate)
+      throws TaskCreationException {
+
+    Task newTask =
+        new Task.TaskBuilder()
+            .name(taskName)
+            .hours(hours)
+            .resourceType(findResourceTypeByName(resourceType))
+            .startDate(convertStringToDate(startDate))
+            .endDate(convertStringToDate(endDate))
+            .build();
+    return taskRepository.createTask(newTask);
+  }
+
+  private LocalDate convertStringToDate(String stringDate) {
+    return LocalDate.parse(stringDate);
+  }
+
+  public List<Task> getTasks() {
+    return taskRepository.getTasks();
+  }
+
+  public List<ResourceType> getResourceTypes() {
+    return resourceTypeRepository.getResourceTypes();
+  }
+
+  private ResourceType findResourceTypeByName(String resourceTypeName)
+      throws TaskCreationException {
+    try {
+      ResourceType resourceType = resourceTypeRepository.findByName(resourceTypeName);
+      return resourceType;
+    } catch (ResourceTypeNotFoundException e) {
+      throw new TaskCreationException(e.getMessage());
     }
-
-    public Task createtask(
-            String taskName, double hours, String resourceType, String startDate, String endDate)
-            throws TaskCreationException {
-
-        Task newTask =
-                new Task.TaskBuilder()
-                        .name(taskName)
-                        .hours(hours).resourceType(findResourceTypeByName(resourceType))
-                        .startDate(convertStringToDate(startDate))
-                        .endDate(convertStringToDate(endDate))
-                        .build();
-        return taskRepository.createTask(newTask);
-
-    }
-
-    private LocalDate convertStringToDate(String stringDate) {
-        return LocalDate.parse(stringDate);
-    }
-
-    public List<Task> getTasks() {
-        return taskRepository.getTasks();
-    }
-
-    public List<ResourceType> getResourceTypes() {
-        return resourceTypeRepository.getResourceTypes();
-    }
-
-    private ResourceType findResourceTypeByName(String resourceTypeName) throws TaskCreationException {
-        try {
-            ResourceType resourceType = resourceTypeRepository.findByName(resourceTypeName);
-            return resourceType;
-        } catch (ResourceTypeNotFoundException e) {
-            throw new TaskCreationException(e.getMessage());
-        }
-    }
+  }
 }

@@ -55,7 +55,8 @@ public class ProjectController {
     List<SubProject> subProjects = subProjectService.getSubprojects();
     model.addAttribute("subprojects", subProjects);
 
-    TaskService taskService = new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
+    TaskService taskService =
+        new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
     List<Task> tasks = taskService.getTasks();
     model.addAttribute("tasks", tasks);
 
