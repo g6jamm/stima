@@ -80,8 +80,7 @@ public class ProjectController {
   }
 
   @PostMapping("/projects/{projectId}/create-new") // TODO /{subProjectId}
-  public String createSubProject(
-      WebRequest webRequest, Model model, @PathVariable int projectId) {
+  public String createSubProject(WebRequest webRequest, Model model, @PathVariable int projectId) {
 
     String subProjectName = webRequest.getParameter("name");
     String startDate = webRequest.getParameter("start-date");
