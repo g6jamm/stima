@@ -32,7 +32,7 @@ public class TaskService {
                         .endDate(convertStringToDate(endDate))
                         .build();
         return taskRepository.createTask(newTask);
-        
+
     }
 
     private LocalDate convertStringToDate(String stringDate) {

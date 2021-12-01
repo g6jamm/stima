@@ -36,4 +36,11 @@ public class TaskServiceTest {
 
     Assertions.assertEquals((int) 2.5 * 1250, task.getPrice());
   }
+
+  @Test
+  public void testExceptionOnNonExistingResourceType(){
+    TaskService taskService = new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
+    String resourceName = "This does not exist";
+    Assertions.assertThrows(TaskCreationException.class,() -> taskService.createtask("test",2.1,resourceName, "1111-11-11","1111-11-11"));
+  }
 }
