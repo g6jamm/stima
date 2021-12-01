@@ -11,9 +11,7 @@ import com.g6jamm.stima.domain.service.SubProjectService;
 import com.g6jamm.stima.domain.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -68,7 +66,7 @@ public class ProjectController {
     return "project";
   }
 
-  @GetMapping("/projects/{projectId}/{subProjectId}")
+  @GetMapping("/projects/{ProjectId}/{subProjectId}")
   public String subProject(
       Model model, @PathVariable int projectId, @PathVariable int subProjectId) {
     SubProjectService SUBPROJECT_SERVICE = new SubProjectService(new SubProjectRepositoryStub());
@@ -79,6 +77,26 @@ public class ProjectController {
     model.addAttribute("subProject", subP);
 
     return "subProject";
+  }
+
+  @PostMapping("/projects/{projectId}/create-new") // TODO /{subProjectId}
+  public String createSubProject(WebRequest webRequest, Model model, @PathVariable int projectId) {
+
+    String subProjectName = webRequest.getParameter("name");
+    String startDate = webRequest.getParameter("start-date");
+    String endDate = webRequest.getParameter("end-date");
+
+    // TODO check if valid date
+    // TODO check if date are inside project start and end
+
+    SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
+    SubProject subP =
+        subProjectService.createSubProject(
+            subProjectName, LocalDate.parse(startDate), LocalDate.parse(endDate));
+
+    model.addAttribute("subProject", subP);
+
+    return "redirect:/projects/" + projectId;
   }
 
   /**
@@ -99,12 +117,12 @@ public class ProjectController {
    * Navigates the user to edit project page.
    *
    * @param webRequest WebRequest
-   * @param id int
+   * @param projectId int
    * @return String
    * @auther Mathias
    */
-  @PostMapping("/edit-project{id}")
-  public String editProject(WebRequest webRequest, @PathVariable int id) {
+  @PostMapping("/edit-project{projectId}")
+  public String editProject(WebRequest webRequest, @PathVariable int projectId) {
     return "redirect:/project/edit-project"; // TODO: redirect?
   }
 
@@ -112,12 +130,12 @@ public class ProjectController {
    * Deletes the project by id and navigate the user to the project page.
    *
    * @param webRequest WebRequest
-   * @param id int
+   * @param projectId int
    * @return String
    * @auther Mathias
    */
-  @PostMapping("/delete-project/{id}")
-  public String deleteProject(WebRequest webRequest, @PathVariable int id) {
+  @PostMapping("/delete-project/{projectId}")
+  public String deleteProject(WebRequest webRequest, @PathVariable int projectId) {
     return "redirect:/project"; // TODO: redirect?
   }
 }

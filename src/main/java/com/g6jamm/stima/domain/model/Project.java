@@ -133,9 +133,9 @@ public class Project {
     }
 
     public Project build() {
-      Project project = new Project(this);
+      Project headProject = new Project(this);
       reset();
-      return project;
+      return headProject;
     }
   }
 }

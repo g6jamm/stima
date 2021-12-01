@@ -36,7 +36,7 @@ public class SubProjectController {
     return "subProject";
   }
 
-  @PostMapping("/subproject/") // TODO /{subProjectId}
+  @PostMapping("/subproject") // TODO /{subProjectId}
   public String createSubProject(WebRequest webRequest, Model model) {
     String subProjectName = webRequest.getParameter("name");
     String startDate = webRequest.getParameter("startDate");

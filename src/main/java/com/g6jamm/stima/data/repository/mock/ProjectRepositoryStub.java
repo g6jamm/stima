@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ProjectRepositoryStub implements ProjectRepository {
 
-  private static List<Project> projects = new ArrayList<>();
+  private static final List<Project> projects = new ArrayList<>();
 
   public ProjectRepositoryStub() {
     if (projects.isEmpty()) {

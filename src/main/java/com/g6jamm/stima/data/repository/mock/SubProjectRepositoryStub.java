@@ -42,14 +42,19 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
   @Override
   public SubProject createSubProject(String name, LocalDate startDate, LocalDate endDate) {
 
-    return new SubProject.SubProjectBuilder()
-        .name(name)
-        // .hours(0)
-        // .price(0)
-        // .tasks(null)
-        .startDate(startDate)
-        .endDate(endDate)
-        .build();
+    SubProject subProject =
+        new SubProject.SubProjectBuilder()
+            .name(name)
+            // .hours(0)
+            // .price(0)
+            // .tasks(null)
+            .startDate(startDate)
+            .endDate(endDate)
+            .build();
+
+    subProjects.add(subProject);
+
+    return subProject;
   }
 
   @Override

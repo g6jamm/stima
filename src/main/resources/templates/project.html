@@ -37,9 +37,22 @@
         }
 
         .card-text-size-lg {
-            letter-spacing: 2.4px;
+            letter-spacing: 2px;
             font-weight: 900;
             font-size: 50px;
+        }
+
+        .card-btn {
+            border-style: dashed;
+            border-width: 5px;
+            border-color: #000;
+            min-height: 250px;
+            color: #000;
+        }
+
+        .card-icon {
+            flex: none;
+            font-size: 100px;
         }
 
     </style>
@@ -61,7 +74,8 @@
                     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 g-3">
                         <h2>Underprojekter</h2>
                         <div class="col" th:each="subProject : ${subprojects}">
-                            <a th:href="@{/projects/{projectId}/{subProjectId}(projectId=1, subProjectId=1)}"> <!-- TODO: softcode Ids -->
+                            <a th:href="@{/projects/{projectId}/{subProjectId}(projectId=1, subProjectId=1)}">
+                                <!-- TODO: softcode Ids -->
                                 <div class="card shadow-sm" th:style="'background-color: #000'">
                                     <!-- TODO: add colorCode to subproject builder -->
                                     <div class="card-body card-text card-text-size-lg" style="margin-top: 150px">
@@ -75,6 +89,53 @@
                                 </div>
                             </a>
                         </div>
+                        <div class="col">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <div class="card shadow-sm align-items-center justify-content-center card-btn">
+                                    <div class="card-body card-text card-text-size-sm card-icon">
+                                        + <!-- TODO change to icon -->
+                                    </div>
+                                </div>
+                            </a>
+
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Nyt underprojekt</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <form method="POST"
+                                              th:action="@{/projects/{projectId}/create-new (projectId=${project.getId})}">
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label for="name" class="col-form-label">Navn:</label>
+                                                    <input type="text" class="form-control" id="name" name="name">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="start-date" class="col-form-label">Start dag:</label>
+                                                    <input type="date" class="form-control" id="start-date"
+                                                           name="start-date">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="end-date" class="col-form-label">Slut dag:</label>
+                                                    <input type="date" class="form-control" id="end-date"
+                                                           name="end-date">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Luk
+                                                </button>
+                                                <button type="submit" class="btn btn-primary">Opret</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -83,7 +144,8 @@
                         <h2>Opgaver</h2>
                         <div class="col" th:each="task : ${tasks}">
                             <a href="#">
-                                <div class="card shadow-sm" th:style="'background-color: ' + ${project.getColorCode}">
+                                <div class="card shadow-sm"
+                                     th:style="'background-color: ' + ${project.getColorCode}">
                                     <div class="card-body card-text card-text-size-sm">
                                         <p><span th:remove="tag" th:text="${task.getName}"></span></p>
                                         <p>Timer: <span th:remove="tag" th:text="${task.getHours}"></span></p>
@@ -94,7 +156,15 @@
                                 </div>
                             </a>
                         </div>
-
+                        <div class="col">
+                            <a href="#">
+                                <div class="card shadow-sm align-items-center justify-content-center card-btn">
+                                    <div class="card-body card-text card-text-size-sm card-icon">
+                                        + <!-- TODO change to icon -->
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
