@@ -37,3 +37,14 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+.logopic{
+  text-align: left;
+}
+
+.pic-center{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
