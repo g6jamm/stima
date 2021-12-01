@@ -1,6 +1,7 @@
 package com.g6jamm.stima.data.repository.stub;
 
 import com.g6jamm.stima.data.repository.ResourceTypeRepository;
+import com.g6jamm.stima.domain.exception.ResourceTypeNotFoundException;
 import com.g6jamm.stima.domain.model.ResourceType;
 
 import java.util.ArrayList;
@@ -37,5 +38,14 @@ public class ResourceTypeRepositoryStub implements ResourceTypeRepository {
 
     public List<ResourceType> getResourceTypes() {
         return resourceTypes;
+    }
+
+    @Override
+    public ResourceType findByName(String resourceTypeName) throws ResourceTypeNotFoundException {
+        for (ResourceType resourceType : resourceTypes) {
+            if(resourceType.getName().equals(resourceTypeName))
+                return resourceType;
+        }
+        throw new ResourceTypeNotFoundException("ResourceType does not exists");
     }
 }

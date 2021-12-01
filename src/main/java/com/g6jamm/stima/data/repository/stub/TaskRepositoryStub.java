@@ -45,7 +45,7 @@ public class TaskRepositoryStub implements TaskRepository {
     task =
         new Task.TaskBuilder()
             .name(task.getName())
-            .resourceType(resourceTypeRepository.getResourceTypes().get(0)) //TODO Lookup value from form
+            .resourceType(task.getResourceType()) //TODO Lookup value from form
             .hours(task.getHours())
             .startDate(task.getStartDate())
             .endDate(task.getEndDate())
