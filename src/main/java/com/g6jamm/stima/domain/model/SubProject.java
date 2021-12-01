@@ -7,6 +7,7 @@ public class SubProject {
 
   /** @auther Jackie */
   private final int SUB_PROJECT_ID;
+
   private final String NAME;
   private final double HOURS;
   private final int PRICE;

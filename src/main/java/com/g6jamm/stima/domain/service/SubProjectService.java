@@ -15,8 +15,7 @@ public class SubProjectService {
   }
 
   /**
-   * Generate a subproject, with start parameter.
-   * hours = 0, price = 0
+   * Generate a subproject, with start parameter. hours = 0, price = 0
    *
    * @param name
    * @param startDate
@@ -34,7 +33,7 @@ public class SubProjectService {
    * @return List of subprojects
    * @author Jackie
    */
-  public List<SubProject> getSubprojects() { //TODO add reference to project
+  public List<SubProject> getSubprojects() { // TODO add reference to project
     return subProjectRepository.getSubProjects();
   }
 }

@@ -35,7 +35,6 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
   }
 
   /**
-   *
    * @return List of Projects
    * @author Jackie
    */
@@ -57,7 +56,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
 
     SubProject subProject =
         new SubProject.SubProjectBuilder()
-            .subProjectId(5) //TODO hardcorded, to test
+            .subProjectId(5) // TODO hardcorded, to test
             .name(name)
             // .hours(0)
             // .price(0)
