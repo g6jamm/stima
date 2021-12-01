@@ -1,9 +1,7 @@
-package com.g6jamm.stima.data.repository.mock;
+package com.g6jamm.stima.data.repository.stub;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class UserRepositoryStubTest {
 

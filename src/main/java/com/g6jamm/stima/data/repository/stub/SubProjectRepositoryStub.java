@@ -1,4 +1,4 @@
-package com.g6jamm.stima.data.repository.mock;
+package com.g6jamm.stima.data.repository.stub;
 
 import com.g6jamm.stima.data.repository.SubProjectRepository;
 import com.g6jamm.stima.domain.model.SubProject;

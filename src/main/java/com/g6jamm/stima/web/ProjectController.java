@@ -1,8 +1,8 @@
 package com.g6jamm.stima.web;
 
-import com.g6jamm.stima.data.repository.mock.ProjectRepositoryStub;
-import com.g6jamm.stima.data.repository.mock.SubProjectRepositoryStub;
-import com.g6jamm.stima.data.repository.mock.TaskRepositoryStub;
+import com.g6jamm.stima.data.repository.stub.ProjectRepositoryStub;
+import com.g6jamm.stima.data.repository.stub.SubProjectRepositoryStub;
+import com.g6jamm.stima.data.repository.stub.TaskRepositoryStub;
 import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.SubProject;
 import com.g6jamm.stima.domain.model.Task;

@@ -1,6 +1,6 @@
 package com.g6jamm.stima.web;
 
-import com.g6jamm.stima.data.repository.mock.UserRepositoryStub;
+import com.g6jamm.stima.data.repository.stub.UserRepositoryStub;
 import com.g6jamm.stima.domain.exception.LoginException;
 import com.g6jamm.stima.domain.exception.SignUpException;
 import com.g6jamm.stima.domain.model.User;
