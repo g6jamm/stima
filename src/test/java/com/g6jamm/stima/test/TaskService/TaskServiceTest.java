@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public class TaskServiceTest {
 
   @Test
-  public void createValidUserTest() {
+  public void createValidTaskTest() {
     TaskService taskService = new TaskService(new TaskRepositoryStub());
     Task task = taskService.createtask("Test", 2.5, "TestResource", "1990-01-01", "1990-01-01");
 
