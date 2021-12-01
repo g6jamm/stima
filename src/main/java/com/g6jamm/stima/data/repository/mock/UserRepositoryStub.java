@@ -11,7 +11,6 @@ import java.util.List;
 public class UserRepositoryStub implements UserRepository {
 
   public static List<User> userListStub = new ArrayList<>();
-  private int generatedIdStub = userListStub.size();
 
   /**
    * Creates stub data when instantiated and adds to userListStub List.
@@ -19,28 +18,30 @@ public class UserRepositoryStub implements UserRepository {
    * @author Mohamad
    */
   public UserRepositoryStub() {
-    User user =
-        new User.UserBuilder()
-            .firstName("John")
-            .lastName("Doe")
-            .email("demo@demo.com")
-            .password("demo")
-            .id(1)
-            .role(new Role())
-            .build();
+    if (userListStub.isEmpty()) {
+      User user =
+          new User.UserBuilder()
+              .firstName("John")
+              .lastName("Doe")
+              .email("demo@demo.com")
+              .password("demo")
+              .id(userListStub.size() + 1)
+              .role(new Role())
+              .build();
 
-    User user2 =
-        new User.UserBuilder()
-            .firstName("Jane")
-            .lastName("Doe")
-            .email("maill@mail.com")
-            .password("123")
-            .id(2)
-            .role(new Role())
-            .build();
+      User user2 =
+          new User.UserBuilder()
+              .firstName("Jane")
+              .lastName("Doe")
+              .email("maill@mail.com")
+              .password("123")
+              .id(userListStub.size() + 1)
+              .role(new Role())
+              .build();
 
-    userListStub.add(user);
-    userListStub.add(user2);
+      userListStub.add(user);
+      userListStub.add(user2);
+    }
   }
 
   /**
@@ -76,12 +77,11 @@ public class UserRepositoryStub implements UserRepository {
             .lastName(user.getLastName())
             .email(user.getEmail())
             .password(user.getPassword())
-            .id(generatedIdStub)
+            .id(userListStub.size() + 1)
             .role(user.getRole())
             .build();
     userListStub.add(user);
 
-    generatedIdStub++;
     return user;
   }
 
@@ -113,7 +113,7 @@ public class UserRepositoryStub implements UserRepository {
             .lastName("Doe")
             .email("demo@demo.com")
             .password("demo")
-            .id(generatedIdStub)
+            .id(userListStub.size() + 1)
             .role(new Role())
             .build();
 
