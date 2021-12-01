@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${Task.getName()}"></title>
+    <title th:text=" ':)' "></title>
 </head>
 <body>
 <div class="card">
@@ -10,7 +10,7 @@
         <p th:text="${Task.getName()}">Name</p>
         <p th:text="${Task.getHours()}">Hours</p>
         <p th:text="${Task.getPrice()}">Price</p>
-        <p th:text="${Task.getRole()}">REsource type</p>
+        <p th:text="${Task.getResourceType().getName()}">REsource type</p>
         <p th:text="${Task.getStartDate()}">start date</p>
         <p th:text="${Task.getEndDate()}">end date</p>
     </div>
@@ -43,7 +43,9 @@
                 <input placeholder="Hours" type="text" name="task_hours">
             </td>
             <td>
-                <input placeholder="Resource type" name="task_resourcetype">
+                <select name="task_resourcetype">
+                    <option th:each="resourceType : ${ResourceTypeList}" th:value="${resourceType.getName()}" th:text="${resourceType.getName()}"></option>
+                </select>
             </td>
             <td>
                 <input placeholder="start date" type="date" name="task_startdate">

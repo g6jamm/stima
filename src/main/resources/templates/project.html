@@ -151,7 +151,7 @@
                                         <p>Timer: <span th:remove="tag" th:text="${task.getHours}"></span></p>
                                         <p>Pris: <span th:remove="tag" th:text="${task.getPrice}"></span> DKK</p>
                                         <p>Ressourcetype: <span th:remove="tag"
-                                                                th:text="${task.getRole}"></span></p>
+                                                                th:text="${task.resourceType.getName()}"></span></p>
                                     </div>
                                 </div>
                             </a>

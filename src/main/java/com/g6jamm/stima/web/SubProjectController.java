@@ -1,6 +1,8 @@
 package com.g6jamm.stima.web;
 
+import com.g6jamm.stima.data.repository.stub.ResourceTypeRepositoryStub;
 import com.g6jamm.stima.data.repository.stub.SubProjectRepositoryStub;
+import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.SubProject;
 import com.g6jamm.stima.domain.service.SubProjectService;
 import com.g6jamm.stima.data.repository.stub.TaskRepositoryStub;
@@ -15,7 +17,8 @@ import java.time.LocalDate;
 
 @Controller
 public class SubProjectController {
-  TaskService taskService = new TaskService(new TaskRepositoryStub());
+  TaskService taskService =
+      new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
 
   private final SubProjectService SUBPROJECT_SERVICE =
       new SubProjectService(new SubProjectRepositoryStub());
@@ -84,10 +87,13 @@ public class SubProjectController {
             : "1990-01-01"; // change to project end date
 
     // TODO Add to Task to project
-
-    model.addAttribute(
-        "Task", taskService.createtask(name, hours, resourceType, startDate, endDate));
-
+    try {
+      model.addAttribute(
+          "Task", taskService.createtask(name, hours, resourceType, startDate, endDate));
+      model.addAttribute("ResourceTypeList", taskService.getResourceTypes());
+    } catch (TaskCreationException e) {
+      model.addAttribute("error", e.getMessage());
+    }
     return "Task"; // TODO redirect to /projects/{project_id}
   }
 
@@ -101,8 +107,15 @@ public class SubProjectController {
   @GetMapping("/task")
   public String task(WebRequest webRequest, Model model) {
     if (model.getAttribute("Task") == null) {
-      model.addAttribute(
-          "Task", taskService.createtask("Placeholder", 1.0, "test", "1990-01-01", "1991-01-01"));
+      try {
+        model.addAttribute(
+            "Task",
+            taskService.createtask(
+                "Placeholder", 1.0, "Senior Developer", "1990-01-01", "1991-01-01"));
+        model.addAttribute("ResourceTypeList", taskService.getResourceTypes());
+      } catch (TaskCreationException e) {
+        model.addAttribute("error", e.getMessage());
+      }
     }
     return "Task";
   }
