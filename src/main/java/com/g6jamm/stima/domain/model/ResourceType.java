@@ -6,7 +6,7 @@ public class ResourceType {
     private final int PRICE_PR_HOUR;
     private int ID;
 
-    public ResourceType (ResourceTypeBuilder resourceTypeBuilder) {
+    public ResourceType(ResourceTypeBuilder resourceTypeBuilder) {
         this.ID = resourceTypeBuilder.id;
         this.NAME = resourceTypeBuilder.name;
         this.PRICE_PR_HOUR = resourceTypeBuilder.pricePrHour;
@@ -24,33 +24,33 @@ public class ResourceType {
         return NAME;
     }
 
-    public static class ResourceTypeBuilder{
+    public static class ResourceTypeBuilder {
         private String name;
         private int pricePrHour;
         private int id;
 
-        public ResourceTypeBuilder name(String name){
+        public ResourceTypeBuilder name(String name) {
             this.name = name;
             return this;
         }
 
-        public ResourceTypeBuilder pricePrHour(int pricePrHour){
+        public ResourceTypeBuilder pricePrHour(int pricePrHour) {
             this.pricePrHour = pricePrHour;
             return this;
         }
 
-        public ResourceTypeBuilder id(int id){
+        public ResourceTypeBuilder id(int id) {
             this.id = id;
             return this;
         }
 
-        public void reset(){
+        public void reset() {
             this.name = null;
             this.id = 0;
             this.pricePrHour = 0;
         }
 
-        public ResourceType build(){
+        public ResourceType build() {
             ResourceType resourceType = new ResourceType(this);
             reset();
             return resourceType;
