@@ -89,12 +89,12 @@ public class ProjectController {
     // TODO check if valid date
     // TODO check if date are inside project start and end
 
-     SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
-        SubProject subP =
-            subProjectService.createSubProject(
-                subProjectName, LocalDate.parse(startDate), LocalDate.parse(endDate));
+    SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
+    SubProject subP =
+        subProjectService.createSubProject(
+            subProjectName, LocalDate.parse(startDate), LocalDate.parse(endDate));
 
-        model.addAttribute("subProject", subP);
+    model.addAttribute("subProject", subP);
 
     return "redirect:/projects/" + projectId;
   }
