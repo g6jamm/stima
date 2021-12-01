@@ -109,7 +109,7 @@ public class SubProjectController {
     if (model.getAttribute("Task") == null) {
       try {
         model.addAttribute(
-            "Task", taskService.createtask("Placeholder", 1.0, "test", "1990-01-01", "1991-01-01"));
+            "Task", taskService.createtask("Placeholder", 1.0, "Senior Developer", "1990-01-01", "1991-01-01"));
         model.addAttribute("ResourceTypeList", taskService.getResourceTypes());
       } catch (TaskCreationException e) {
         model.addAttribute("error", e.getMessage());

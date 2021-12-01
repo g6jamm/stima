@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${Task.getName()}"></title>
+    <title th:text=" ':)' "></title>
 </head>
 <body>
 <div class="card">
@@ -43,7 +43,7 @@
                 <input placeholder="Hours" type="text" name="task_hours">
             </td>
             <td>
-                <select>
+                <select name="task_resourcetype">
                     <option th:each="resourceType : ${ResourceTypeList}" th:value="${resourceType.getName()}" th:text="${resourceType.getName()}"></option>
                 </select>
             </td>
