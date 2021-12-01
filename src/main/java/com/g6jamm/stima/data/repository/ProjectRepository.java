@@ -1,15 +1,15 @@
 package com.g6jamm.stima.data.repository;
 
-import com.g6jamm.stima.domain.model.HeadProject;
+import com.g6jamm.stima.domain.model.Project;
 
 public interface ProjectRepository {
-  HeadProject createProject();
+  Project createProject();
 
-  HeadProject getProject(int projectId);
+  Project getProject(int projectId);
 
-  HeadProject deleteProject(int projectId);
+  Project deleteProject(int projectId);
 
-  HeadProject editProject(int projectId);
+  Project editProject(int projectId);
 
-  HeadProject getTotalHoursOfProject(int projectId);
+  Project getTotalHoursOfProject(int projectId);
 }

@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 /** @auther Mathias */
-public class HeadProject {
+public class Project {
 
   private final int PROJECT_ID;
   private final String PROJECT_NAME;
@@ -16,7 +16,7 @@ public class HeadProject {
   private final List<SubProject> SUB_PROJECTS;
   private final String COLOR_CODE;
 
-  private HeadProject(ProjectBuilder projectBuilder) {
+  private Project(ProjectBuilder projectBuilder) {
     this.PROJECT_ID = projectBuilder.projectId;
     this.PROJECT_NAME = projectBuilder.projectName;
     this.TOTAL_HOURS = projectBuilder.totalHours;
@@ -132,8 +132,8 @@ public class HeadProject {
       this.colorCode = null;
     }
 
-    public HeadProject build() {
-      HeadProject headProject = new HeadProject(this);
+    public Project build() {
+      Project headProject = new Project(this);
       reset();
       return headProject;
     }

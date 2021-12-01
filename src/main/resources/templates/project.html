@@ -67,14 +67,14 @@
 
     <div class="py-5 bg-light">
         <div class="container">
-            <h1 th:text="${headProject.getName}"></h1>
+            <h1 th:text="${project.getName}"></h1>
             <div class="row row-cols-2 row-cols-sm-2 row-cols-md-2 g-3">
 
                 <div class="container">
                     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 g-3">
                         <h2>Underprojekter</h2>
                         <div class="col" th:each="subProject : ${subprojects}">
-                            <a th:href="@{/head-projects/{projectId}/{subProjectId}(projectId=1, subProjectId=1)}">
+                            <a th:href="@{/projects/{projectId}/{subProjectId}(projectId=1, subProjectId=1)}">
                                 <!-- TODO: softcode Ids -->
                                 <div class="card shadow-sm" th:style="'background-color: #000'">
                                     <!-- TODO: add colorCode to subproject builder -->
@@ -108,7 +108,7 @@
                                                     aria-label="Close"></button>
                                         </div>
                                         <form method="POST"
-                                              th:action="@{/head-projects/{headProjectId}/create-new (headProjectId=${headProject.getId})}">
+                                              th:action="@{/projects/{projectId}/create-new (projectId=${project.getId})}">
                                             <div class="modal-body">
                                                 <div class="mb-3">
                                                     <label for="name" class="col-form-label">Navn:</label>
@@ -145,7 +145,7 @@
                         <div class="col" th:each="task : ${tasks}">
                             <a href="#">
                                 <div class="card shadow-sm"
-                                     th:style="'background-color: ' + ${headProject.getColorCode}">
+                                     th:style="'background-color: ' + ${project.getColorCode}">
                                     <div class="card-body card-text card-text-size-sm">
                                         <p><span th:remove="tag" th:text="${task.getName}"></span></p>
                                         <p>Timer: <span th:remove="tag" th:text="${task.getHours}"></span></p>
