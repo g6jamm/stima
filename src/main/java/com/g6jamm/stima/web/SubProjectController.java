@@ -1,9 +1,9 @@
 package com.g6jamm.stima.web;
 
-import com.g6jamm.stima.data.repository.mock.SubProjectRepositoryStub;
+import com.g6jamm.stima.data.repository.stub.SubProjectRepositoryStub;
 import com.g6jamm.stima.domain.model.SubProject;
 import com.g6jamm.stima.domain.service.SubProjectService;
-import com.g6jamm.stima.data.repository.mock.TaskRepositoryStub;
+import com.g6jamm.stima.data.repository.stub.TaskRepositoryStub;
 import com.g6jamm.stima.domain.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

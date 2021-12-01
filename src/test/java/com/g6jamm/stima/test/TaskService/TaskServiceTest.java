@@ -1,6 +1,6 @@
 package com.g6jamm.stima.test.TaskService;
 
-import com.g6jamm.stima.data.repository.mock.TaskRepositoryStub;
+import com.g6jamm.stima.data.repository.stub.TaskRepositoryStub;
 import com.g6jamm.stima.domain.model.Task;
 import com.g6jamm.stima.domain.service.TaskService;
 import org.junit.jupiter.api.Assertions;

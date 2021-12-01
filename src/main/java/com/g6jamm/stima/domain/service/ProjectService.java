@@ -1,6 +1,6 @@
 package com.g6jamm.stima.domain.service;
 
-import com.g6jamm.stima.data.repository.mock.ProjectRepositoryStub;
+import com.g6jamm.stima.data.repository.stub.ProjectRepositoryStub;
 import com.g6jamm.stima.domain.model.Project;
 
 import java.util.List;
