@@ -1,12 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-
-<head>
-  <meta charset="UTF-8">
-  <title>Error</title>
-</head>
+<html lang="da" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/headFragment :: head (title='Error')"></head>
 <body>
-<h1>Wooops, something went wrong.</h1>
-<p><span th:text="${message}"></span></p>
+<nav th:replace="fragments/navFragment :: nav"></nav>
+<main>
+    <div class="container">
+        <h1>Whoops, something went wrong.</h1>
+        <div>
+            <p th:text="${message}">...</p>
+        </div>
+    </div>
+</main>
+<footer th:replace="fragments/footerFragtment :: footer"></footer>
 </body>
 </html>

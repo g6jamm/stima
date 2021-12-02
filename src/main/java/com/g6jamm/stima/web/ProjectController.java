@@ -12,7 +12,9 @@ import com.g6jamm.stima.domain.service.SubProjectService;
 import com.g6jamm.stima.domain.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -64,6 +66,7 @@ public class ProjectController {
     Project project = projectService.getProjects().get(0); // TODO: ID of project
 
     model.addAttribute("project", project);
+    model.addAttribute("classActiveSettings", "active");
 
     return "project";
   }
