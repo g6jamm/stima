@@ -50,6 +50,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
    *
    * @param subProjectId
    * @return a sub project
+   * @author Jackie
    */
   @Override
   public SubProject getSubproject(int subProjectId) {
@@ -70,6 +71,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
    * @param startDate
    * @param endDate
    * @return sub project
+   * @author Jackie
    */
   @Override
   public SubProject createSubProject(String name, LocalDate startDate, LocalDate endDate) {
@@ -95,12 +97,21 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
     return subProject;
   }
 
+  /**
+   * Adding a task to sub project by id
+   *
+   * @param subProjectId
+   * @param task
+   * @return
+   * @author Jackie
+   */
   @Override
   public boolean addTaskToSubProject(int subProjectId, Task task) {
 
     for (SubProject sp : subProjects) {
       if (sp.getId() == subProjectId) {
-
+        sp.addTask(task);
+        return true;
       }
     }
 

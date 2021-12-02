@@ -53,6 +53,11 @@ public class SubProject {
     return this.PRICE;
   }
 
+  //TODO skal måske laves om
+  public void addTask(Task task) {
+    TASKS.add(task);
+  }
+
   public static class SubProjectBuilder {
     private int subProjectId;
     private String name;

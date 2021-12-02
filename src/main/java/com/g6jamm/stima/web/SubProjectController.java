@@ -30,36 +30,29 @@ public class SubProjectController {
           "TEST", LocalDate.of(2021, 5, 6), LocalDate.of(2021, 6, 5));
   // TODO skal fjernes
 
+  /**
+   * Get method for sub project page, shows all task for the sup project
+   *
+   * @param model
+   * @param projectId
+   * @param subProjectId
+   * @return
+   * @author Jackie
+   */
   @GetMapping("/projects/{projectId}/{subProjectId}") // TODO /{subProjectId}
   public String subProjectPage(Model model, @PathVariable int projectId, @PathVariable int subProjectId) {
     SubProject subProject = SUBPROJECT_SERVICE.getSubProject(subProjectId);
     TaskService taskService =
         new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
     List<Task> tasks = taskService.getTasks();
+    // TODO need change remove hardcode when possible
 
+//    for (Task t : tasks) {
+//      SUBPROJECT_SERVICE.addTaskToSubProject(subProject.getId(), t);
+//    } //TODO FIX!!
+
+    model.addAttribute("tasks", tasks);
     model.addAttribute("subProject", subProject);
-    return "subProject";
-  }
-
-  @GetMapping("/subproject/createnew/") // TODO /{subProjectId}
-  public String createSubProject(Model model) {
-    model.addAttribute("true", "isCreate");
-    return "subProject";
-  }
-
-  @PostMapping("/subproject") // TODO /{subProjectId}
-  public String createSubProject(WebRequest webRequest, Model model) {
-    String subProjectName = webRequest.getParameter("name");
-    String startDate = webRequest.getParameter("startDate");
-    String endDate = webRequest.getParameter("endDate");
-    // TODO check if valid date
-    // TODO check if date are inside project start and end
-    subP =
-        SUBPROJECT_SERVICE.createSubProject(
-            subProjectName, LocalDate.parse(startDate), LocalDate.parse(endDate));
-
-    model.addAttribute("subProject", subP);
-
     return "subProject";
   }
 
