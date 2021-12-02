@@ -9,8 +9,9 @@ public class SubProject {
    * Model for subproject
    *
    * @auther Jackie
-   * */
+   */
   private final int SUB_PROJECT_ID;
+
   private final String SUB_PROJECT_NAME;
   private final double TOTAL_HOURS;
   private final int TOTAL_PRICE;
@@ -58,9 +59,11 @@ public class SubProject {
     return this.TOTAL_PRICE;
   }
 
-  public String getColorCode() { return this.COLOR_CODE; }
+  public String getColorCode() {
+    return this.COLOR_CODE;
+  }
 
-  //TODO skal måske laves om
+  // TODO skal måske laves om
   public void addTask(Task task) {
     SUB_PROJECT_TASKS.add(task);
   }

@@ -44,7 +44,9 @@ public class SubProjectService {
    * @param subProjectId
    * @return a sub project
    */
-  public SubProject getSubProject(int subProjectId) { return subProjectRepository.getSubproject(subProjectId); }
+  public SubProject getSubProject(int subProjectId) {
+    return subProjectRepository.getSubproject(subProjectId);
+  }
 
   /**
    * Adding a task to sub project by id
@@ -57,5 +59,4 @@ public class SubProjectService {
   public boolean addTaskToSubProject(int subProjectId, Task task) {
     return subProjectRepository.addTaskToSubProject(subProjectId, task);
   }
-
 }

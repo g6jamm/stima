@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -36,16 +35,17 @@ public class SubProjectController {
    * @author Jackie
    */
   @GetMapping("/projects/{projectId}/{subProjectId}")
-  public String subProjectPage(Model model, @PathVariable int projectId, @PathVariable int subProjectId) {
+  public String subProjectPage(
+      Model model, @PathVariable int projectId, @PathVariable int subProjectId) {
     SubProject subProject = SUBPROJECT_SERVICE.getSubProject(subProjectId);
     TaskService taskService =
         new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
     List<Task> tasks = taskService.getTasks();
     // TODO need change remove hardcoded tasks when possible
 
-//    for (Task t : tasks) {
-//      SUBPROJECT_SERVICE.addTaskToSubProject(subProject.getId(), t);
-//    } //TODO FIX!!
+    //    for (Task t : tasks) {
+    //      SUBPROJECT_SERVICE.addTaskToSubProject(subProject.getId(), t);
+    //    } //TODO FIX!!
 
     model.addAttribute("tasks", tasks);
     model.addAttribute("subProject", subProject);
@@ -63,7 +63,9 @@ public class SubProjectController {
    * @param model
    * @return redirects user to Task page.
    */
-  @PostMapping("/create-task") // TODO Change to /projects/{project_id}/create-task (Maybe make modal box (see projects, create subproject))
+  @PostMapping(
+      "/create-task") // TODO Change to /projects/{project_id}/create-task (Maybe make modal box
+                      // (see projects, create subproject))
   public String createTask(WebRequest webRequest, Model model) {
     // TODO get project from project_id
 
