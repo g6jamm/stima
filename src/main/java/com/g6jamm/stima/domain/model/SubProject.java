@@ -5,6 +5,9 @@ import java.util.List;
 
 public class SubProject {
 
+  /** @auther Jackie */
+  private final int SUB_PROJECT_ID;
+
   private final String NAME;
   private final double HOURS;
   private final int PRICE;
@@ -13,6 +16,7 @@ public class SubProject {
   private final LocalDate END_DATE;
 
   public SubProject(SubProjectBuilder subProjectBuilder) {
+    this.SUB_PROJECT_ID = subProjectBuilder.subProjectId;
     this.NAME = subProjectBuilder.name;
     this.HOURS = subProjectBuilder.hours;
     this.PRICE = subProjectBuilder.price;
@@ -23,6 +27,10 @@ public class SubProject {
 
   public List<Task> getTasks() {
     return this.TASKS;
+  }
+
+  public int getId() {
+    return this.SUB_PROJECT_ID;
   }
 
   public String getName() {
@@ -46,12 +54,18 @@ public class SubProject {
   }
 
   public static class SubProjectBuilder {
+    private int subProjectId;
     private String name;
     private double hours;
     private int price;
     private List<Task> tasks;
     private LocalDate startDate;
     private LocalDate endDate;
+
+    public SubProjectBuilder subProjectId(int subProjectId) {
+      this.subProjectId = subProjectId;
+      return this;
+    }
 
     public SubProjectBuilder name(String name) {
       this.name = name;
@@ -84,6 +98,7 @@ public class SubProject {
     }
 
     private void reset() {
+      this.subProjectId = 0;
       this.name = null;
       this.hours = 0.0;
       this.price = 0;
