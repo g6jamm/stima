@@ -1,12 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-
+<html lang="da" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/headFragment :: head (title='Home')"></head>
 <body>
-
+<nav th:replace="fragments/navFragment :: nav"></nav>
 <main class="main-content mt-0">
     <section>
         <div class="page-header min-vh-75">
@@ -70,6 +66,6 @@
         </div>
     </section>
 </main>
-  </body>
-
+<footer th:replace="fragments/footerFragtment :: footer"></footer>
+</body>
 </html>

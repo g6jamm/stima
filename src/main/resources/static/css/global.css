@@ -1,0 +1,64 @@
+body {
+    font-family: Montserrat, sans-serif;
+    font-size: 22px;
+    position: relative;
+}
+
+.container {
+    max-width: 1330px;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+<!-- TODO: make dynamic -->
+}
+
+.card-text {
+    text-transform: uppercase;
+    line-height: 0.8;
+    margin: unset;
+}
+
+.card-text-size-sm {
+    font-weight: 600;
+    font-size: 30px;
+}
+
+.card-text-size-lg {
+    letter-spacing: 2px;
+    font-weight: 900;
+    font-size: 50px;
+}
+
+.card-btn {
+    border-style: dashed;
+    border-width: 5px;
+    border-color: #000;
+    min-height: 250px;
+    color: #000;
+}
+
+.card-icon {
+    flex: none;
+    font-size: 100px;
+}
+
+.nav-item {
+    text-transform: uppercase;
+    font-weight: 800;
+    font-size: 15px;
+    margin: 0 0 0 35px;
+}
+
+.navbar-expand-lg .navbar-nav .nav-link {
+    padding: 0;
+}
+
+.navbar {
+    padding-top: 29px;
+}
+
+.navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .show > .nav-link {
+    border-bottom: #FF325A 2px solid;
+}

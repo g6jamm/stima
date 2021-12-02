@@ -1,61 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="${Task.getName()}"></title>
-</head>
+<html lang="da" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/headFragment :: head (title='Task')"></head>
 <body>
-<div class="card">
-    <div>
-        <p th:text="${Task.getName()}">Name</p>
-        <p th:text="${Task.getHours()}">Hours</p>
-        <p th:text="${Task.getPrice()}">Price</p>
-        <p th:text="${Task.getRole()}">REsource type</p>
-        <p th:text="${Task.getStartDate()}">start date</p>
-        <p th:text="${Task.getEndDate()}">end date</p>
+<nav th:replace="fragments/navFragment :: nav"></nav>
+<main>
+    <div class="card">
+        <div>
+            <p th:text="${Task.getName()}">Name</p>
+            <p th:text="${Task.getHours()}">Hours</p>
+            <p th:text="${Task.getPrice()}">Price</p>
+            <p th:text="${Task.getRole()}">REsource type</p>
+            <p th:text="${Task.getStartDate()}">start date</p>
+            <p th:text="${Task.getEndDate()}">end date</p>
+        </div>
     </div>
-</div>
-
-<form  method="post" role="form" name="createTaskForm" action="/create-task">
-    <div class="card" style="border: black solid 2px; border-radius: 10px">
-        <table>
-            <thead>
-            <th>
-                <p>TASK NAME</p>
-            </th>
-            <th>
-                <p>hours </p>
-            </th>
-            <th>
-                <p>Resource type</p>
-            </th>
-            <th>
-                <p>start date</p>
-            </th>
-            <th>
-                <p>end date</p>
-            </th>
-            </thead>
-            <td>
-                <input placeholder="TASK NAME" name="task_name">
-            </td>
-            <td>
-                <input placeholder="Hours" type="text" name="task_hours">
-            </td>
-            <td>
-                <input placeholder="Resource type" name="task_resourcetype">
-            </td>
-            <td>
-                <input placeholder="start date" type="date" name="task_startdate">
-            </td>
-            <td>
-                <input placeholder="End date" type="date" name="task_enddate">
-            </td>
-            <td>
-                <button type="submit">Submit</button>
-            </td>
-        </table>
-    </div>
-</form>
+    <form action="/create-task" method="post" name="createTaskForm" role="form">
+        <div class="card" style="border: black solid 2px; border-radius: 10px">
+            <table>
+                <thead>
+                <th>
+                    <p>TASK NAME</p>
+                </th>
+                <th>
+                    <p>hours </p>
+                </th>
+                <th>
+                    <p>Resource type</p>
+                </th>
+                <th>
+                    <p>start date</p>
+                </th>
+                <th>
+                    <p>end date</p>
+                </th>
+                </thead>
+                <td>
+                    <input name="task_name" placeholder="TASK NAME">
+                </td>
+                <td>
+                    <input name="task_hours" placeholder="Hours" type="text">
+                </td>
+                <td>
+                    <input name="task_resourcetype" placeholder="Resource type">
+                </td>
+                <td>
+                    <input name="task_startdate" placeholder="start date" type="date">
+                </td>
+                <td>
+                    <input name="task_enddate" placeholder="End date" type="date">
+                </td>
+                <td>
+                    <button type="submit">Submit</button>
+                </td>
+            </table>
+        </div>
+    </form>
+</main>
+<footer th:replace="fragments/footerFragtment :: footer"></footer>
 </body>
 </html>
