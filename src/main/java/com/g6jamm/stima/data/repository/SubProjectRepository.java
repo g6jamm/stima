@@ -6,9 +6,9 @@ import com.g6jamm.stima.domain.model.Task;
 import java.time.LocalDate;
 import java.util.List;
 
+/** @author Jackie */
 public interface SubProjectRepository {
 
-  /** @author Jackie */
   List<SubProject> getSubProjects();
 
   SubProject getSubproject(int subProjectId);
