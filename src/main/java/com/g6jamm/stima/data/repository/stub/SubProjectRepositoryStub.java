@@ -60,7 +60,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
         return sp;
       }
     }
-    //TODO exception
+    // TODO exception
     return null;
   }
 

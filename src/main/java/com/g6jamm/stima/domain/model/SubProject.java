@@ -9,7 +9,7 @@ public class SubProject {
    * Model for subproject
    *
    * @auther Jackie
-   * */
+   */
   private final int SUB_PROJECT_ID;
 
   private final String NAME;
@@ -57,7 +57,7 @@ public class SubProject {
     return this.PRICE;
   }
 
-  //TODO skal måske laves om
+  // TODO skal måske laves om
   public void addTask(Task task) {
     TASKS.add(task);
   }
