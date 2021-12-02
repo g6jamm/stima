@@ -46,6 +46,14 @@ public class SubProjectService {
    */
   public SubProject getSubProject(int subProjectId) { return subProjectRepository.getSubproject(subProjectId); }
 
+  /**
+   * Adding a task to sub project by id
+   *
+   * @param subProjectId
+   * @param task
+   * @return
+   * @author Jackie
+   */
   public boolean addTaskToSubProject(int subProjectId, Task task) {
     return subProjectRepository.addTaskToSubProject(subProjectId, task);
   }

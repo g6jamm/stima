@@ -5,7 +5,11 @@ import java.util.List;
 
 public class SubProject {
 
-  /** @auther Jackie */
+  /**
+   * Model for subproject
+   *
+   * @auther Jackie
+   * */
   private final int SUB_PROJECT_ID;
 
   private final String NAME;

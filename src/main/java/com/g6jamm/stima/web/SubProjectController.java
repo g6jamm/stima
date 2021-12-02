@@ -25,10 +25,6 @@ public class SubProjectController {
 
   private final SubProjectService SUBPROJECT_SERVICE =
       new SubProjectService(new SubProjectRepositoryStub());
-  private SubProject subP =
-      SUBPROJECT_SERVICE.createSubProject(
-          "TEST", LocalDate.of(2021, 5, 6), LocalDate.of(2021, 6, 5));
-  // TODO skal fjernes
 
   /**
    * Get method for sub project page, shows all task for the sup project
@@ -39,13 +35,13 @@ public class SubProjectController {
    * @return
    * @author Jackie
    */
-  @GetMapping("/projects/{projectId}/{subProjectId}") // TODO /{subProjectId}
+  @GetMapping("/projects/{projectId}/{subProjectId}")
   public String subProjectPage(Model model, @PathVariable int projectId, @PathVariable int subProjectId) {
     SubProject subProject = SUBPROJECT_SERVICE.getSubProject(subProjectId);
     TaskService taskService =
         new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
     List<Task> tasks = taskService.getTasks();
-    // TODO need change remove hardcode when possible
+    // TODO need change remove hardcoded tasks when possible
 
 //    for (Task t : tasks) {
 //      SUBPROJECT_SERVICE.addTaskToSubProject(subProject.getId(), t);
@@ -67,7 +63,7 @@ public class SubProjectController {
    * @param model
    * @return redirects user to Task page.
    */
-  @PostMapping("/create-task") // TODO Change to /projects/{project_id}/create-task
+  @PostMapping("/create-task") // TODO Change to /projects/{project_id}/create-task (Maybe make modal box (see projects, create subproject))
   public String createTask(WebRequest webRequest, Model model) {
     // TODO get project from project_id
 
