@@ -1,6 +1,10 @@
 package com.g6jamm.stima.domain.service;
 
+import com.g6jamm.stima.data.repository.ResourceTypeRepository;
 import com.g6jamm.stima.data.repository.TaskRepository;
+import com.g6jamm.stima.domain.exception.ResourceTypeNotFoundException;
+import com.g6jamm.stima.domain.exception.TaskCreationException;
+import com.g6jamm.stima.domain.model.ResourceType;
 import com.g6jamm.stima.domain.model.Task;
 
 import java.time.LocalDate;
@@ -9,22 +13,25 @@ import java.util.List;
 public class TaskService {
 
   private TaskRepository taskRepository;
+  private ResourceTypeRepository resourceTypeRepository;
 
-  public TaskService(TaskRepository taskRepository) {
+  public TaskService(TaskRepository taskRepository, ResourceTypeRepository resourceTypeRepository) {
     this.taskRepository = taskRepository;
+    this.resourceTypeRepository = resourceTypeRepository;
   }
 
   public Task createtask(
-      String taskName, double hours, String resourceType, String startDate, String endDate) {
+      String taskName, double hours, String resourceType, String startDate, String endDate)
+      throws TaskCreationException {
+
     Task newTask =
         new Task.TaskBuilder()
             .name(taskName)
             .hours(hours)
-            .price((int) (1000 * hours))
+            .resourceType(findResourceTypeByName(resourceType))
             .startDate(convertStringToDate(startDate))
             .endDate(convertStringToDate(endDate))
             .build();
-
     return taskRepository.createTask(newTask);
   }
 
@@ -34,5 +41,19 @@ public class TaskService {
 
   public List<Task> getTasks() {
     return taskRepository.getTasks();
+  }
+
+  public List<ResourceType> getResourceTypes() {
+    return resourceTypeRepository.getResourceTypes();
+  }
+
+  private ResourceType findResourceTypeByName(String resourceTypeName)
+      throws TaskCreationException {
+    try {
+      ResourceType resourceType = resourceTypeRepository.findByName(resourceTypeName);
+      return resourceType;
+    } catch (ResourceTypeNotFoundException e) {
+      throw new TaskCreationException(e.getMessage());
+    }
   }
 }

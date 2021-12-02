@@ -1,6 +1,7 @@
 package com.g6jamm.stima.web;
 
 import com.g6jamm.stima.data.repository.stub.ProjectRepositoryStub;
+import com.g6jamm.stima.data.repository.stub.ResourceTypeRepositoryStub;
 import com.g6jamm.stima.data.repository.stub.SubProjectRepositoryStub;
 import com.g6jamm.stima.data.repository.stub.TaskRepositoryStub;
 import com.g6jamm.stima.domain.model.Project;
@@ -56,7 +57,8 @@ public class ProjectController {
     List<SubProject> subProjects = subProjectService.getSubprojects();
     model.addAttribute("subprojects", subProjects);
 
-    TaskService taskService = new TaskService(new TaskRepositoryStub());
+    TaskService taskService =
+        new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
     List<Task> tasks = taskService.getTasks();
     model.addAttribute("tasks", tasks);
 

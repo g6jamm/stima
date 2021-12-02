@@ -9,7 +9,7 @@ public class Task {
   private final int PRICE;
   private final LocalDate START_DATE;
   private final LocalDate END_DATE;
-  private final Role ROLE;
+  private final ResourceType RESOURCE_TYPE;
   private final int ID;
 
   private Task(TaskBuilder taskBuilder) {
@@ -19,7 +19,7 @@ public class Task {
     this.PRICE = taskBuilder.price;
     this.START_DATE = taskBuilder.startDate;
     this.END_DATE = taskBuilder.endDate;
-    this.ROLE = taskBuilder.role;
+    this.RESOURCE_TYPE = taskBuilder.resourceType;
   }
 
   public String getName() {
@@ -46,8 +46,8 @@ public class Task {
     return ID;
   }
 
-  public Role getRole() {
-    return ROLE;
+  public ResourceType getResourceType() {
+    return RESOURCE_TYPE;
   }
 
   public static class TaskBuilder {
@@ -57,7 +57,7 @@ public class Task {
     private int price;
     private LocalDate startDate;
     private LocalDate endDate;
-    private Role role; // TODO change to ressourcetype
+    private ResourceType resourceType;
 
     public TaskBuilder id(int id) {
       this.id = id;
@@ -74,8 +74,12 @@ public class Task {
       return this;
     }
 
-    public TaskBuilder price(int price) {
-      this.price = price;
+    private TaskBuilder price() {
+      if (this.resourceType == null) {
+        this.price = 0;
+      } else {
+        this.price = (int) this.hours * this.resourceType.getPricePrHour(); // TODO rounding??
+      }
       return this;
     }
 
@@ -89,8 +93,8 @@ public class Task {
       return this;
     }
 
-    public TaskBuilder role(Role role) {
-      this.role = role;
+    public TaskBuilder resourceType(ResourceType resourceType) {
+      this.resourceType = resourceType;
       return this;
     }
 
@@ -101,10 +105,11 @@ public class Task {
       this.price = 0;
       this.startDate = null;
       this.endDate = null;
-      this.role = null;
+      this.resourceType = null;
     }
 
     public Task build() {
+      price();
       Task newTask = new Task(this);
       reset();
       return newTask;
