@@ -36,4 +36,13 @@ public class SubProjectService {
   public List<SubProject> getSubprojects() { // TODO add reference to project
     return subProjectRepository.getSubProjects();
   }
+
+  /**
+   * Get a subproject by id
+   *
+   * @param subProjectId
+   * @return a sub project
+   */
+  public SubProject getSubProject(int subProjectId) { return subProjectRepository.getSubproject(subProjectId); }
+
 }

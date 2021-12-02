@@ -16,6 +16,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
     if (subProjects.isEmpty()) {
       subProjects.add(
           new SubProject.SubProjectBuilder()
+              .subProjectId(1)
               .name("example")
               .hours(100)
               .price(80000)
@@ -25,6 +26,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
 
       subProjects.add(
           new SubProject.SubProjectBuilder()
+              .subProjectId(2)
               .name("example2")
               .hours(100)
               .price(80000)
@@ -41,6 +43,24 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
   @Override
   public List<SubProject> getSubProjects() {
     return subProjects;
+  }
+
+  /**
+   * Get a subproject by id
+   *
+   * @param subProjectId
+   * @return a sub project
+   */
+  @Override
+  public SubProject getSubproject(int subProjectId) {
+
+    for (SubProject sp : subProjects) {
+      if (sp.getId() == subProjectId) {
+        return sp;
+      }
+    }
+    //TODO exception
+    return null;
   }
 
   /**
@@ -73,6 +93,18 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
   @Override
   public SubProject deleteSubProject(SubProject subProject) {
     return subProject;
+  }
+
+  @Override
+  public boolean addTaskToSubProject(int subProjectId, Task task) {
+
+    for (SubProject sp : subProjects) {
+      if (sp.getId() == subProjectId) {
+
+      }
+    }
+
+    return false;
   }
 
   /**

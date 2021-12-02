@@ -4,16 +4,19 @@ import com.g6jamm.stima.data.repository.stub.ResourceTypeRepositoryStub;
 import com.g6jamm.stima.data.repository.stub.SubProjectRepositoryStub;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.SubProject;
+import com.g6jamm.stima.domain.model.Task;
 import com.g6jamm.stima.domain.service.SubProjectService;
 import com.g6jamm.stima.data.repository.stub.TaskRepositoryStub;
 import com.g6jamm.stima.domain.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 public class SubProjectController {
@@ -27,9 +30,14 @@ public class SubProjectController {
           "TEST", LocalDate.of(2021, 5, 6), LocalDate.of(2021, 6, 5));
   // TODO skal fjernes
 
-  @GetMapping("/subproject") // TODO /{subProjectId}
-  public String subProjectPage(Model model) {
-    model.addAttribute("subProject", subP);
+  @GetMapping("/projects/{projectId}/{subProjectId}") // TODO /{subProjectId}
+  public String subProjectPage(Model model, @PathVariable int projectId, @PathVariable int subProjectId) {
+    SubProject subProject = SUBPROJECT_SERVICE.getSubProject(subProjectId);
+    TaskService taskService =
+        new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
+    List<Task> tasks = taskService.getTasks();
+
+    model.addAttribute("subProject", subProject);
     return "subProject";
   }
 
