@@ -15,9 +15,8 @@
                         <h2>Underprojekter</h2>
                         <div class="col" th:each="subProject : ${subprojects}">
                             <a th:href="@{/projects/{projectId}/{subProjectId}(projectId=${project.getId}, subProjectId=${subProject.getId})}">
-                                <!-- TODO: softcode Ids -->
-                                <div class="card shadow-sm" th:style="'background-color: #000'">
-                                    <!-- TODO: add colorCode to subproject builder -->
+                                <div class="card shadow-sm"
+                                     th:style="'background-color: ' + ${subProject.getColorCode}">
                                     <div class="card-body card-text card-text-size-lg" style="margin-top: 150px">
                                         <!-- TODO: use css -->
                                         <p><span th:remove="tag" th:text="${subProject.getName}"></span></p>
@@ -87,6 +86,7 @@
                             <a href="#">
                                 <div class="card shadow-sm"
                                      th:style="'background-color: ' + ${project.getColorCode}">
+                                    <!-- TODO somethings wrong with the task color, its always pink -->
                                     <div class="card-body card-text card-text-size-sm">
                                         <p><span th:remove="tag" th:text="${task.getName}"></span></p>
                                         <p>Timer: <span th:remove="tag" th:text="${task.getHours}"></span></p>
