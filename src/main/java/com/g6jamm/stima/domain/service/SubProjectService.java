@@ -2,6 +2,7 @@ package com.g6jamm.stima.domain.service;
 
 import com.g6jamm.stima.data.repository.SubProjectRepository;
 import com.g6jamm.stima.domain.model.SubProject;
+import com.g6jamm.stima.domain.model.Task;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -35,5 +36,27 @@ public class SubProjectService {
    */
   public List<SubProject> getSubprojects() { // TODO add reference to project
     return subProjectRepository.getSubProjects();
+  }
+
+  /**
+   * Get a subproject by id
+   *
+   * @param subProjectId
+   * @return a sub project
+   */
+  public SubProject getSubProject(int subProjectId) {
+    return subProjectRepository.getSubproject(subProjectId);
+  }
+
+  /**
+   * Adding a task to sub project by id
+   *
+   * @param subProjectId
+   * @param task
+   * @return
+   * @author Jackie
+   */
+  public boolean addTaskToSubProject(int subProjectId, Task task) {
+    return subProjectRepository.addTaskToSubProject(subProjectId, task);
   }
 }

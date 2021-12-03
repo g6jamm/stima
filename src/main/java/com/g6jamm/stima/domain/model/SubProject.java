@@ -5,7 +5,11 @@ import java.util.List;
 
 public class SubProject {
 
-  /** @auther Jackie */
+  /**
+   * Model for subproject
+   *
+   * @auther Jackie
+   */
   private final int SUB_PROJECT_ID;
 
   private final String NAME;
@@ -51,6 +55,11 @@ public class SubProject {
 
   public int getPrice() {
     return this.PRICE;
+  }
+
+  // TODO skal måske laves om
+  public void addTask(Task task) {
+    TASKS.add(task);
   }
 
   public static class SubProjectBuilder {

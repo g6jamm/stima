@@ -71,19 +71,6 @@ public class ProjectController {
     return "project";
   }
 
-  @GetMapping("/projects/{ProjectId}/{subProjectId}")
-  public String subProject(
-      Model model, @PathVariable int projectId, @PathVariable int subProjectId) {
-    SubProjectService SUBPROJECT_SERVICE = new SubProjectService(new SubProjectRepositoryStub());
-    SubProject subP =
-        SUBPROJECT_SERVICE.createSubProject(
-            "TEST", LocalDate.of(2021, 5, 6), LocalDate.of(2021, 6, 5));
-
-    model.addAttribute("subProject", subP);
-
-    return "subProject";
-  }
-
   @PostMapping("/projects/{projectId}/create-new") // TODO /{subProjectId}
   public String createSubProject(WebRequest webRequest, Model model, @PathVariable int projectId) {
 

@@ -16,6 +16,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
     if (subProjects.isEmpty()) {
       subProjects.add(
           new SubProject.SubProjectBuilder()
+              .subProjectId(1)
               .name("example")
               .hours(100)
               .price(80000)
@@ -25,6 +26,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
 
       subProjects.add(
           new SubProject.SubProjectBuilder()
+              .subProjectId(2)
               .name("example2")
               .hours(100)
               .price(80000)
@@ -44,12 +46,32 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
   }
 
   /**
+   * Get a subproject by id
+   *
+   * @param subProjectId
+   * @return a sub project
+   * @author Jackie
+   */
+  @Override
+  public SubProject getSubproject(int subProjectId) {
+
+    for (SubProject sp : subProjects) {
+      if (sp.getId() == subProjectId) {
+        return sp;
+      }
+    }
+    // TODO exception
+    return null;
+  }
+
+  /**
    * Creates a sub project
    *
    * @param name
    * @param startDate
    * @param endDate
    * @return sub project
+   * @author Jackie
    */
   @Override
   public SubProject createSubProject(String name, LocalDate startDate, LocalDate endDate) {
@@ -73,6 +95,27 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
   @Override
   public SubProject deleteSubProject(SubProject subProject) {
     return subProject;
+  }
+
+  /**
+   * Adding a task to sub project by id
+   *
+   * @param subProjectId
+   * @param task
+   * @return
+   * @author Jackie
+   */
+  @Override
+  public boolean addTaskToSubProject(int subProjectId, Task task) {
+
+    for (SubProject sp : subProjects) {
+      if (sp.getId() == subProjectId) {
+        sp.addTask(task);
+        return true;
+      }
+    }
+
+    return false;
   }
 
   /**

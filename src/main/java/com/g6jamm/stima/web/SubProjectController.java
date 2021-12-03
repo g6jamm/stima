@@ -4,16 +4,18 @@ import com.g6jamm.stima.data.repository.stub.ResourceTypeRepositoryStub;
 import com.g6jamm.stima.data.repository.stub.SubProjectRepositoryStub;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.SubProject;
+import com.g6jamm.stima.domain.model.Task;
 import com.g6jamm.stima.domain.service.SubProjectService;
 import com.g6jamm.stima.data.repository.stub.TaskRepositoryStub;
 import com.g6jamm.stima.domain.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
-import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 public class SubProjectController {
@@ -22,36 +24,31 @@ public class SubProjectController {
 
   private final SubProjectService SUBPROJECT_SERVICE =
       new SubProjectService(new SubProjectRepositoryStub());
-  private SubProject subP =
-      SUBPROJECT_SERVICE.createSubProject(
-          "TEST", LocalDate.of(2021, 5, 6), LocalDate.of(2021, 6, 5));
-  // TODO skal fjernes
 
-  @GetMapping("/subproject") // TODO /{subProjectId}
-  public String subProjectPage(Model model) {
-    model.addAttribute("subProject", subP);
-    return "subProject";
-  }
+  /**
+   * Get method for sub project page, shows all task for the sup project
+   *
+   * @param model
+   * @param projectId
+   * @param subProjectId
+   * @return
+   * @author Jackie
+   */
+  @GetMapping("/projects/{projectId}/{subProjectId}")
+  public String subProjectPage(
+      Model model, @PathVariable int projectId, @PathVariable int subProjectId) {
+    SubProject subProject = SUBPROJECT_SERVICE.getSubProject(subProjectId);
+    TaskService taskService =
+        new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
+    List<Task> tasks = taskService.getTasks();
+    // TODO need change remove hardcoded tasks when possible
 
-  @GetMapping("/subproject/createnew/") // TODO /{subProjectId}
-  public String createSubProject(Model model) {
-    model.addAttribute("true", "isCreate");
-    return "subProject";
-  }
+    //    for (Task t : tasks) {
+    //      SUBPROJECT_SERVICE.addTaskToSubProject(subProject.getId(), t);
+    //    } //TODO FIX!!
 
-  @PostMapping("/subproject") // TODO /{subProjectId}
-  public String createSubProject(WebRequest webRequest, Model model) {
-    String subProjectName = webRequest.getParameter("name");
-    String startDate = webRequest.getParameter("startDate");
-    String endDate = webRequest.getParameter("endDate");
-    // TODO check if valid date
-    // TODO check if date are inside project start and end
-    subP =
-        SUBPROJECT_SERVICE.createSubProject(
-            subProjectName, LocalDate.parse(startDate), LocalDate.parse(endDate));
-
-    model.addAttribute("subProject", subP);
-
+    model.addAttribute("tasks", tasks);
+    model.addAttribute("subProject", subProject);
     return "subProject";
   }
 
@@ -66,7 +63,9 @@ public class SubProjectController {
    * @param model
    * @return redirects user to Task page.
    */
-  @PostMapping("/create-task") // TODO Change to /projects/{project_id}/create-task
+  @PostMapping(
+      "/create-task") // TODO Change to /projects/{project_id}/create-task (Maybe make modal box
+                      // (see projects, create subproject))
   public String createTask(WebRequest webRequest, Model model) {
     // TODO get project from project_id
 

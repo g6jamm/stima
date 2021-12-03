@@ -4,22 +4,37 @@
 <body>
 <nav th:replace="fragments/navFragment :: nav"></nav>
 <main>
-    <h1>SUBPROJECT PAGE</h1>
-    <div>
-        <h5 th:Text="${subProject.getName}"></h5>
-        <h5 th:Text="${subProject.getStartDate}"></h5>
-        <h5 th:Text="${subProject.getEndDate}"></h5>
+    <div class="album py-5 bg-light">
+        <h1 th:text="${subProject.getName()}"></h1>
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-3">
+                <div class="col" th:each="task : ${tasks}">
+                    <a href="#">
+                        <div class="card shadow-sm" th:style="'background-color: #000'">
+                            <!-- TODO add color code to subproject ' + ${subProject.getColorCode} -->
+                            <div class="card-body card-text card-text-size-sm">
+                                <p><span th:remove="tag" th:text="${task.getName}"></span></p>
+                                <p>Timer: <span th:remove="tag" th:text="${task.getHours}"></span></p>
+                                <p>Pris: <span th:remove="tag" th:text="${task.getPrice}"></span> DKK</p>
+                                <p>Ressourcetype: <span th:remove="tag"
+                                                        th:text="${task.resourceType.getName()}"></span></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#"> <!-- TODO add task, copy from project.html -->
+                        <div class="card shadow-sm align-items-center justify-content-center card-btn">
+                            <div class="card-body card-text card-text-size-sm card-icon">
+                                + <!-- TODO change to icon -->
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <form action="/subproject/" method="post">
-        <label>Subproject name:</label><br>
-        <input name="name" type="text"><br>
-        <label>Start date:</label><br>
-        <input max="2022-12-31" min="2020-01-01" name="startDate" type="date"><br>
-        <label>End date:</label><br>
-        <input max="2022-12-31" min="2020-01-01" name="endDate" type="date"><br>
-        <button type="submit">add headProject</button>
-    </form>
+    </div>
 </main>
 <footer th:replace="fragments/footerFragtment :: footer"></footer>
 </body>
