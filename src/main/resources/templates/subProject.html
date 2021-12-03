@@ -8,16 +8,16 @@
         <h1 th:text="${project.getName()}"></h1>
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-3">
-                <div th:replace="fragments/taskFragment"></div>
                 <div class="col">
-                    <a href="#"> <!-- TODO add task, copy from project.html -->
+                    <a href="#">
                         <div class="card shadow-sm align-items-center justify-content-center card-btn">
                             <div class="card-body card-text card-text-size-sm card-icon">
-                                + <!-- TODO change to icon -->
+                                +
                             </div>
                         </div>
                     </a>
                 </div>
+                <div th:replace="fragments/taskFragment"></div>
             </div>
         </div>
     </div>
