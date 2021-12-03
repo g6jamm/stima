@@ -10,8 +10,7 @@
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-3">
                 <div class="col" th:each="task : ${tasks}">
                     <a href="#">
-                        <div class="card shadow-sm" th:style="'background-color: #000'">
-                            <!-- TODO add color code to subproject ' + ${subProject.getColorCode} -->
+                        <div class="card shadow-sm" th:style="'background-color: ' + ${subProject.getColorCode}">
                             <div class="card-body card-text card-text-size-sm">
                                 <p><span th:remove="tag" th:text="${task.getName}"></span></p>
                                 <p>Timer: <span th:remove="tag" th:text="${task.getHours}"></span></p>

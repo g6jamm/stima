@@ -12,25 +12,27 @@ public class SubProject {
    */
   private final int SUB_PROJECT_ID;
 
-  private final String NAME;
-  private final double HOURS;
-  private final int PRICE;
-  private final List<Task> TASKS;
+  private final String SUB_PROJECT_NAME;
+  private final double TOTAL_HOURS;
+  private final int TOTAL_PRICE;
+  private final List<Task> SUB_PROJECT_TASKS;
   private final LocalDate START_DATE;
   private final LocalDate END_DATE;
+  private final String COLOR_CODE;
 
   public SubProject(SubProjectBuilder subProjectBuilder) {
     this.SUB_PROJECT_ID = subProjectBuilder.subProjectId;
-    this.NAME = subProjectBuilder.name;
-    this.HOURS = subProjectBuilder.hours;
-    this.PRICE = subProjectBuilder.price;
-    this.TASKS = subProjectBuilder.tasks;
+    this.SUB_PROJECT_NAME = subProjectBuilder.subProjectName;
+    this.TOTAL_HOURS = subProjectBuilder.totalHours;
+    this.TOTAL_PRICE = subProjectBuilder.totalPrice;
+    this.SUB_PROJECT_TASKS = subProjectBuilder.subProjectTasks;
     this.START_DATE = subProjectBuilder.startDate;
     this.END_DATE = subProjectBuilder.endDate;
+    this.COLOR_CODE = subProjectBuilder.colorCode;
   }
 
   public List<Task> getTasks() {
-    return this.TASKS;
+    return this.SUB_PROJECT_TASKS;
   }
 
   public int getId() {
@@ -38,7 +40,7 @@ public class SubProject {
   }
 
   public String getName() {
-    return this.NAME;
+    return this.SUB_PROJECT_NAME;
   }
 
   public LocalDate getStartDate() {
@@ -50,26 +52,31 @@ public class SubProject {
   }
 
   public double getHours() {
-    return this.HOURS;
+    return this.TOTAL_HOURS;
   }
 
   public int getPrice() {
-    return this.PRICE;
+    return this.TOTAL_PRICE;
+  }
+
+  public String getColorCode() {
+    return this.COLOR_CODE;
   }
 
   // TODO skal måske laves om
   public void addTask(Task task) {
-    TASKS.add(task);
+    SUB_PROJECT_TASKS.add(task);
   }
 
   public static class SubProjectBuilder {
     private int subProjectId;
-    private String name;
-    private double hours;
-    private int price;
-    private List<Task> tasks;
+    private String subProjectName;
+    private double totalHours;
+    private int totalPrice;
+    private List<Task> subProjectTasks;
     private LocalDate startDate;
     private LocalDate endDate;
+    private String colorCode;
 
     public SubProjectBuilder subProjectId(int subProjectId) {
       this.subProjectId = subProjectId;
@@ -77,22 +84,22 @@ public class SubProject {
     }
 
     public SubProjectBuilder name(String name) {
-      this.name = name;
+      this.subProjectName = name;
       return this;
     }
 
     public SubProjectBuilder hours(double hours) {
-      this.hours = hours;
+      this.totalHours = hours;
       return this;
     }
 
     public SubProjectBuilder price(int price) {
-      this.price = price;
+      this.totalPrice = price;
       return this;
     }
 
     public SubProjectBuilder tasks(List<Task> tasks) {
-      this.tasks = tasks;
+      this.subProjectTasks = tasks;
       return this;
     }
 
@@ -106,14 +113,20 @@ public class SubProject {
       return this;
     }
 
+    public SubProjectBuilder colorCode(String colorCode) {
+      this.colorCode = colorCode;
+      return this;
+    }
+
     private void reset() {
       this.subProjectId = 0;
-      this.name = null;
-      this.hours = 0.0;
-      this.price = 0;
-      this.tasks = null;
+      this.subProjectName = null;
+      this.totalHours = 0.0;
+      this.totalPrice = 0;
+      this.subProjectTasks = null;
       this.startDate = null;
       this.endDate = null;
+      this.colorCode = null;
     }
 
     public SubProject build() {

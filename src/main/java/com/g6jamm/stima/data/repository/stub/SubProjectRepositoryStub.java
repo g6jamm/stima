@@ -22,6 +22,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
               .price(80000)
               .startDate(LocalDate.of(2020, 1, 1))
               .endDate(LocalDate.of(2021, 1, 1))
+              .colorCode("green")
               .build());
 
       subProjects.add(
@@ -32,6 +33,18 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
               .price(80000)
               .startDate(LocalDate.of(2020, 1, 1))
               .endDate(LocalDate.of(2021, 1, 1))
+              .colorCode("blue")
+              .build());
+
+      subProjects.add(
+          new SubProject.SubProjectBuilder()
+              .subProjectId(3)
+              .name("example3")
+              .hours(1)
+              .price(500)
+              .startDate(LocalDate.of(2020, 5, 1))
+              .endDate(LocalDate.of(2021, 8, 1))
+              .colorCode("red")
               .build());
     }
   }
