@@ -120,12 +120,12 @@ while :; do
     ;;
 
   2)
-    run_sql_script "Installing database ..." "./src/main/resources/data/install.sql"
+    run_sql_script "Installing database ..." "./src/main/resources/static/data/install.sql"
     ;;
 
   3)
-    run_sql_script "Installing database ..." "./src/main/resources/data/install.sql"
-    run_sql_script "Installing sample data ..." "./src/main/resources/data/sample-data.sql"
+    run_sql_script "Installing database ..." "./src/main/resources/static/data/install.sql"
+    run_sql_script "Installing sample data ..." "./src/main/resources/static/data/sample-data.sql"
     ;;
 
   4)
