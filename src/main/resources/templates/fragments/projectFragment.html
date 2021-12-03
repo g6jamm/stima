@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+
+<div class="col" th:each="subProject : ${subprojects}">
+    <a th:href="@{/projects/{projectId}/{subProjectId}(projectId=${project.getId}, subProjectId=${subProject.getId})}">
+        <div class="card shadow-sm"
+             th:style="'background-color: ' + ${subProject.getColorCode}">
+            <div class="card-body card-text card-text-size-lg" style="margin-top: 150px">
+                <p th:text="${subProject.getName}"></p>
+                <p th:text="'Timer: ' + ${subProject.getHours}"></p>
+                <p th:text="'Pris: ' + ${subProject.getPrice} + ' DKK'"></p>
+            </div>
+        </div>
+    </a>
+</div>
+
+</html>

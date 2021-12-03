@@ -13,26 +13,12 @@
                 <div class="container">
                     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 g-3">
                         <h2>Underprojekter</h2>
-                        <div class="col" th:each="subProject : ${subprojects}">
-                            <a th:href="@{/projects/{projectId}/{subProjectId}(projectId=${project.getId}, subProjectId=${subProject.getId})}">
-                                <div class="card shadow-sm"
-                                     th:style="'background-color: ' + ${subProject.getColorCode}">
-                                    <div class="card-body card-text card-text-size-lg" style="margin-top: 150px">
-                                        <!-- TODO: use css -->
-                                        <p><span th:remove="tag" th:text="${subProject.getName}"></span></p>
-                                        <p>Timer: <span th:remove="tag"
-                                                        th:text="${subProject.getHours}"></span></p>
-                                        <p>Pris: <span th:remove="tag"
-                                                       th:text="${subProject.getPrice}"></span> DKK</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                            <div th:replace="fragments/projectFragment"></div>
                         <div class="col">
                             <a data-bs-target="#exampleModal" data-bs-toggle="modal" href="#">
                                 <div class="card shadow-sm align-items-center justify-content-center card-btn">
                                     <div class="card-body card-text card-text-size-sm card-icon">
-                                        + <!-- TODO change to icon -->
+                                        +
                                     </div>
                                 </div>
                             </a>
@@ -82,21 +68,7 @@
                 <div class="container">
                     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 g-3">
                         <h2>Opgaver</h2>
-                        <div class="col" th:each="task : ${tasks}">
-                            <a href="#">
-                                <div class="card shadow-sm"
-                                     th:style="'background-color: ' + ${project.getColorCode}">
-                                    <!-- TODO somethings wrong with the task color, its always pink -->
-                                    <div class="card-body card-text card-text-size-sm">
-                                        <p><span th:remove="tag" th:text="${task.getName}"></span></p>
-                                        <p>Timer: <span th:remove="tag" th:text="${task.getHours}"></span></p>
-                                        <p>Pris: <span th:remove="tag" th:text="${task.getPrice}"></span> DKK</p>
-                                        <p>Ressourcetype: <span th:remove="tag"
-                                                                th:text="${task.resourceType.getName()}"></span></p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                        <div th:replace="fragments/tastFragment"></div>
                         <div class="col">
                             <a href="#">
                                 <div class="card shadow-sm align-items-center justify-content-center card-btn">
