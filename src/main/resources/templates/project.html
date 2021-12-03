@@ -13,7 +13,9 @@
                 <div class="container">
                     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 g-3">
                         <h2>Underprojekter</h2>
-                            <div th:replace="fragments/projectFragment"></div>
+                        <div class="col" th:each="p : ${subprojects}">
+                            <div th:replace="fragments/projectFragment :: link (@{/projects/{projectId}/{subProjectId}(projectId=${project.getId}, subProjectId=${p.getId})})"></div>
+                        </div>
                         <div class="col">
                             <a data-bs-target="#exampleModal" data-bs-toggle="modal" href="#">
                                 <div class="card shadow-sm align-items-center justify-content-center card-btn">
@@ -22,7 +24,6 @@
                                     </div>
                                 </div>
                             </a>
-
                             <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade"
                                  id="exampleModal"
                                  tabindex="-1">

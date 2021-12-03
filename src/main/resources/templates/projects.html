@@ -4,26 +4,11 @@
 <body>
 <nav th:replace="fragments/navFragment :: nav"></nav>
 <main>
-    <div class="album py-5 bg-light">
+    <div class="py-5 bg-light">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-3">
-                <div class="col" th:each="project : ${projects}">
-                    <div class="card shadow-sm" th:style="'background-color: ' + ${project.getColorCode}">
-                        <div class="card-body">
-                            <p class="card-text"><span th:remove="tag" th:text="${project.getName}"></span></p>
-                            <p class="card-text">Timer: <span th:remove="tag" th:text="${project.getHours}"></span>
-                            </p>
-                            <p class="card-text">Pris: <span th:remove="tag" th:text="${project.getPrice}"></span>
-                                DKK
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a class="btn btn-sm btn-outline-secondary"
-                                       th:href="@{/projects/{id}(id=${project.getId})}" type="button">View</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col" th:each="p : ${projects}">
+                    <div th:replace="fragments/projectFragment :: link (@{/projects/{id}(id=${p.getId})})"></div>
                 </div>
             </div>
         </div>
