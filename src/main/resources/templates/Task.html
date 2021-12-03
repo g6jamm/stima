@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 
 <html lang="da" xmlns:th="https://www.thymeleaf.org">
-<head th:replace="fragments/headFragment :: head (title='Task')"></head>
+<head th:replace="fragments/headFragment :: head (title=${Task.getName})"></head>
+
 <body>
 <nav th:replace="fragments/navFragment :: nav"></nav>
 <main>

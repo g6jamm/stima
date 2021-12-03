@@ -48,7 +48,7 @@ public class SubProjectController {
     //    } //TODO FIX!!
 
     model.addAttribute("tasks", tasks);
-    model.addAttribute("subProject", subProject);
+    model.addAttribute("project", subProject);
     return "subProject";
   }
 

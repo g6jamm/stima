@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="da" xmlns:th="https://www.thymeleaf.org">
 
-<head th:replace="fragments/headFragment :: head (title='Project')"></head>
+<head th:replace="fragments/headFragment :: head (title=${project.getName()})"></head>
 
 <body>
 <nav th:replace="fragments/navFragment :: nav"></nav>
@@ -68,7 +68,7 @@
                 <div class="container">
                     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 g-3">
                         <h2>Opgaver</h2>
-                        <div th:replace="fragments/tastFragment"></div>
+                        <div th:replace="fragments/taskFragment"></div>
                         <div class="col">
                             <a href="#">
                                 <div class="card shadow-sm align-items-center justify-content-center card-btn">
