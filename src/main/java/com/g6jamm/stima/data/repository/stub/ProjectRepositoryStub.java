@@ -7,6 +7,7 @@ import com.g6jamm.stima.domain.model.SubProject;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ProjectRepositoryStub implements ProjectRepository {
 
@@ -70,7 +71,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
   }
 
   @Override
-  public Project createProject(String name, LocalDate startDate, LocalDate endDate) {
+  public Project createProject(String name, LocalDate startDate, LocalDate endDate, String projectColor) {
 
     Project newProject =
         new Project.ProjectBuilder()
@@ -80,6 +81,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
             .endDate(endDate)
             .totalPrice(20000)
             .totalHours(500.0)
+            .colorCode(projectColor)
             // .tasks()
             // .subProjects()
             .build();

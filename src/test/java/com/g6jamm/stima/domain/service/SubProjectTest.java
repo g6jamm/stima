@@ -14,7 +14,7 @@ public class SubProjectTest {
     SubProjectService sunProjectService = new SubProjectService(new SubProjectRepositoryStub());
     SubProject subProject =
         sunProjectService.createSubProject(
-            "Test", LocalDate.of(2020, 5, 5), LocalDate.of(2021, 5, 5));
+            "Test", LocalDate.of(2020, 5, 5), LocalDate.of(2021, 5, 5), "#fff");
 
     Assertions.assertEquals(5, subProject.getId());
   }

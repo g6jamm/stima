@@ -87,7 +87,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
    * @author Jackie
    */
   @Override
-  public SubProject createSubProject(String name, LocalDate startDate, LocalDate endDate) {
+  public SubProject createSubProject(String name, LocalDate startDate, LocalDate endDate, String projectColorParam) {
 
     SubProject subProject =
         new SubProject.SubProjectBuilder()
@@ -98,6 +98,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
             // .tasks(null)
             .startDate(startDate)
             .endDate(endDate)
+            .colorCode(projectColorParam)
             .build();
 
     SUB_PROJECTS.add(subProject);

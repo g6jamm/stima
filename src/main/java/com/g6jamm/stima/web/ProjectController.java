@@ -1,12 +1,10 @@
 package com.g6jamm.stima.web;
 
-import com.g6jamm.stima.data.repository.stub.ProjectRepositoryStub;
-import com.g6jamm.stima.data.repository.stub.ResourceTypeRepositoryStub;
-import com.g6jamm.stima.data.repository.stub.SubProjectRepositoryStub;
-import com.g6jamm.stima.data.repository.stub.TaskRepositoryStub;
+import com.g6jamm.stima.data.repository.stub.*;
 import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.SubProject;
 import com.g6jamm.stima.domain.model.Task;
+import com.g6jamm.stima.domain.service.ProjectColorService;
 import com.g6jamm.stima.domain.service.ProjectService;
 import com.g6jamm.stima.domain.service.SubProjectService;
 import com.g6jamm.stima.domain.service.TaskService;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -40,6 +37,9 @@ public class ProjectController {
 
     model.addAttribute("projects", projects);
 
+    ProjectColorService projectColorService = new ProjectColorService(new ProjectColorStub());
+    model.addAttribute("projectColors", projectColorService.getProjectColors());
+
     return "projects";
   }
 
@@ -60,12 +60,16 @@ public class ProjectController {
     TaskService taskService =
         new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
     List<Task> tasks = taskService.getTasks();
-    model.addAttribute("tasks", tasks); // WIP
+    model.addAttribute("tasks", tasks);
 
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
     Project project = projectService.getProjectById(projectId);
 
-    model.addAttribute("project", project); // WIP
+    model.addAttribute("project", project);
+
+    ProjectColorService projectColorService = new ProjectColorService(new ProjectColorStub());
+    model.addAttribute("projectColors", projectColorService.getProjectColors());
+
     model.addAttribute("classActiveSettings", "active");
 
     model.addAttribute("resourceTypes", taskService.getResourceTypes());
@@ -79,6 +83,7 @@ public class ProjectController {
     String subProjectNameParam = webRequest.getParameter("subproject-name");
     String startDateParam = webRequest.getParameter("subproject-start-date");
     String endDateParam = webRequest.getParameter("subproject-end-date");
+    String projectColorParam = webRequest.getParameter("subproject-color");
 
     // TODO check if valid date
     // TODO check if date are inside project start and end
@@ -86,7 +91,10 @@ public class ProjectController {
     SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
     SubProject subProject =
         subProjectService.createSubProject(
-            subProjectNameParam, LocalDate.parse(startDateParam), LocalDate.parse(endDateParam));
+            subProjectNameParam,
+            LocalDate.parse(startDateParam),
+            LocalDate.parse(endDateParam),
+            projectColorParam);
 
     model.addAttribute("subProject", subProject);
 
@@ -96,17 +104,21 @@ public class ProjectController {
   @PostMapping("/projects/create-project")
   public String createProject(WebRequest webRequest, Model model) {
 
-    String ProjectNameParam = webRequest.getParameter("project-name");
+    String projectNameParam = webRequest.getParameter("project-name");
     String startDateParam = webRequest.getParameter("project-start-date");
     String endDateParam = webRequest.getParameter("project-end-date");
+    String projectColorParam = webRequest.getParameter("project-color");
 
     // TODO check if valid date
     // TODO check if date are inside project start and end
 
-    ProjectService ProjectService = new ProjectService(new ProjectRepositoryStub());
+    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
     Project project =
-        ProjectService.createProject(
-            ProjectNameParam, LocalDate.parse(startDateParam), LocalDate.parse(endDateParam));
+        projectService.createProject(
+            projectNameParam,
+            LocalDate.parse(startDateParam),
+            LocalDate.parse(endDateParam),
+            projectColorParam);
 
     model.addAttribute("project", project);
 
@@ -121,7 +133,7 @@ public class ProjectController {
    * @return String
    * @auther Mathias
    */
-  @PostMapping("/edit-project{projectId}")
+  @PostMapping("/edit-project/{projectId}")
   public String editProject(WebRequest webRequest, @PathVariable int projectId) {
     return "redirect:/project/edit-project"; // TODO: redirect?
   }

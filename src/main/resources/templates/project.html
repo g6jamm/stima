@@ -9,7 +9,7 @@
 <nav class="container breadcrumb-container">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a th:href="@{/projects}">Projects</a></li>
-        <li th:text="${project.getName}" class="breadcrumb-item active"></li>
+        <li class="breadcrumb-item active" th:text="${project.getName}"></li>
     </ol>
 </nav>
 
@@ -82,6 +82,22 @@
                         <label class="col-form-label" for="subproject-end-date">Slut dag:</label>
                         <input class="form-control" id="subproject-end-date" name="subproject-end-date"
                                type="date">
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Farve:</label>
+                        <select class="form-select" name="subproject-color">
+                            <option th:each="resourceType : ${resourceTypes}" th:text="${resourceType.getName}"
+                                    th:value="${resourceType.getName}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Farve:</label>
+                        <select class="form-select" name="subproject-color">
+                            <option th:each="color : ${projectColors}"
+                                    th:style="'color: #fff; background-color: ' + ${color.value}"
+                                    th:text="${color.key}"
+                                    th:value="${color.value}"></option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
