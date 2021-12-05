@@ -86,13 +86,6 @@
                     <div class="mb-3">
                         <label class="col-form-label">Farve:</label>
                         <select class="form-select" name="subproject-color">
-                            <option th:each="resourceType : ${resourceTypes}" th:text="${resourceType.getName}"
-                                    th:value="${resourceType.getName}"></option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="col-form-label">Farve:</label>
-                        <select class="form-select" name="subproject-color">
                             <option th:each="color : ${projectColors}"
                                     th:style="'color: #fff; background-color: ' + ${color.value}"
                                     th:text="${color.key}"
