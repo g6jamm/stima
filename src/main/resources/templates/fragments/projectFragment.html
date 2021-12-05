@@ -5,11 +5,11 @@
 
     <a th:href="${link}">
         <div class="card shadow-sm"
-             th:style="'background-color: ' + ${p.getColorCode}">
+             th:style="'background-color: ' + ${project.getColorCode}">
             <div class="card-body card-text card-text-size-lg" style="margin-top: 150px">
-                <p th:text="${p.getName}"></p>
-                <p th:text="'Timer: ' + ${p.getHours}"></p>
-                <p th:text="'Pris: ' + ${p.getPrice} + ' DKK'"></p>
+                <p th:text="${project.getName}"></p>
+                <p th:text="'Timer: ' + ${project.getHours}"></p>
+                <p th:text="'Pris: ' + ${project.getPrice} + ' DKK'"></p>
             </div>
         </div>
     </a>

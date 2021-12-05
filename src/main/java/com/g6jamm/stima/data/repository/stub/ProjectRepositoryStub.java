@@ -2,6 +2,7 @@ package com.g6jamm.stima.data.repository.stub;
 
 import com.g6jamm.stima.data.repository.ProjectRepository;
 import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.model.SubProject;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -69,14 +70,14 @@ public class ProjectRepositoryStub implements ProjectRepository {
   }
 
   @Override
-  public Project createProject() {
+  public Project createProject(String name, LocalDate startDate, LocalDate endDate) {
 
     Project newProject =
         new Project.ProjectBuilder()
-            .projectId(1)
-            .projectName("Demo")
-            .startDate(LocalDate.of(2021, 1, 1))
-            .endDate(LocalDate.of(2021, 1, 2))
+            .projectId(projects.size() + 1)
+            .projectName(name)
+            .startDate(startDate)
+            .endDate(endDate)
             .totalPrice(20000)
             .totalHours(500.0)
             // .tasks()

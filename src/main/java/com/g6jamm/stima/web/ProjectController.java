@@ -4,7 +4,6 @@ import com.g6jamm.stima.data.repository.stub.ProjectRepositoryStub;
 import com.g6jamm.stima.data.repository.stub.ResourceTypeRepositoryStub;
 import com.g6jamm.stima.data.repository.stub.SubProjectRepositoryStub;
 import com.g6jamm.stima.data.repository.stub.TaskRepositoryStub;
-import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.SubProject;
 import com.g6jamm.stima.domain.model.Task;
@@ -34,7 +33,7 @@ public class ProjectController {
    * @auther Mathias
    */
   @GetMapping("/projects")
-  public String projects(WebRequest webRequest, Model model, ModelAndView model2) {
+  public String projects(WebRequest webRequest, Model model) {
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
 
     List<Project> projects = projectService.getProjects();
@@ -64,8 +63,7 @@ public class ProjectController {
     model.addAttribute("tasks", tasks);
 
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-    Project project = projectService.getProjectById(projectId); // TODO: ID of project
-
+    Project project = projectService.getProjectById(projectId);
 
     model.addAttribute("project", project);
     model.addAttribute("classActiveSettings", "active");
@@ -75,38 +73,44 @@ public class ProjectController {
     return "project";
   }
 
-  @PostMapping("/projects/{projectId}/create-new") // TODO /{subProjectId}
+  @PostMapping("/projects/{projectId}/create-subproject")
   public String createSubProject(WebRequest webRequest, Model model, @PathVariable int projectId) {
 
-    String subProjectName = webRequest.getParameter("name");
-    String startDate = webRequest.getParameter("start-date");
-    String endDate = webRequest.getParameter("end-date");
+    String subProjectNameParam = webRequest.getParameter("name");
+    String startDateParam = webRequest.getParameter("start-date");
+    String endDateParam = webRequest.getParameter("end-date");
 
     // TODO check if valid date
     // TODO check if date are inside project start and end
 
     SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
-    SubProject subP =
+    SubProject subProject =
         subProjectService.createSubProject(
-            subProjectName, LocalDate.parse(startDate), LocalDate.parse(endDate));
+            subProjectNameParam, LocalDate.parse(startDateParam), LocalDate.parse(endDateParam));
 
-    model.addAttribute("subProject", subP);
+    model.addAttribute("subProject", subProject);
 
     return "redirect:/projects/" + projectId;
   }
 
-  /**
-   * Creates a project and navigates the user to the project page.
-   *
-   * @param webRequest WebRequest
-   * @param model Model
-   * @return String
-   * @auther Mathias
-   */
-  @PostMapping("/create-project")
+  @PostMapping("/projects/create-project")
   public String createProject(WebRequest webRequest, Model model) {
-    int projectId = 1; // TODO: make dynamic
-    return "redirect:/project/" + projectId;
+
+    String ProjectNameParam = webRequest.getParameter("project-name");
+    String startDateParam = webRequest.getParameter("project-start-date");
+    String endDateParam = webRequest.getParameter("project-end-date");
+
+    // TODO check if valid date
+    // TODO check if date are inside project start and end
+
+    ProjectService ProjectService = new ProjectService(new ProjectRepositoryStub());
+    Project project =
+        ProjectService.createProject(
+            ProjectNameParam, LocalDate.parse(startDateParam), LocalDate.parse(endDateParam));
+
+    model.addAttribute("project", project);
+
+    return "redirect:/projects";
   }
 
   /**

@@ -3,6 +3,7 @@ package com.g6jamm.stima.domain.service;
 import com.g6jamm.stima.data.repository.stub.ProjectRepositoryStub;
 import com.g6jamm.stima.domain.model.Project;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class ProjectService {
@@ -25,5 +26,9 @@ public class ProjectService {
     }
 
     return null;
+  }
+
+  public Project createProject(String name, LocalDate startDate, LocalDate endDate) {
+    return PROJECT_REPOSITORY_STUB.createProject(name, startDate, endDate);
   }
 }
