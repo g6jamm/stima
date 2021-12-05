@@ -87,55 +87,7 @@
     </div>
 </div>
 
-<div aria-hidden="true" aria-labelledby="taskModalLabel" class="modal fade"
-     id="taskModal"
-     tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="taskModalLabel">Tilføj ny opgave</h5>
-                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
-                        type="button"></button>
-            </div>
-            <form method="POST"
-                  name="createTaskForm"
-                  role="form" th:action="@{/projects/{projectId}/create-task (projectId=${project.getId})}">
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="col-form-label" for="task-name">Navn:</label>
-                        <input class="form-control" id="task-name" name="task-name" type="text">
-                    </div>
-                    <div class="mb-3">
-                        <label class="col-form-label" for="task-hours">Timer:</label>
-                        <input class="form-control" id="task-hours" name="task-hours" type="text">
-                    </div>
-                    <div class="mb-3">
-                        <label class="col-form-label">Resurcetype:</label>
-                        <select class="form-select" name="task-resource-type">
-                            <option th:each="resourceType : ${resourceTypes}" th:text="${resourceType.getName}"
-                                    th:value="${resourceType.getName}"></option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="col-form-label" for="task-start-date">Start dag:</label>
-                        <input class="form-control" id="task-start-date" name="task-start-date"
-                               type="date">
-                    </div>
-                    <div class="mb-3">
-                        <label class="col-form-label" for="task-end-date">Slut dag:</label>
-                        <input class="form-control" id="task-end-date" name="task-end-date"
-                               type="date">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">
-                        Luk
-                    </button>
-                    <button class="btn btn-primary" type="submit">Opret</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+<div th:replace="fragments/taskFormFragment :: actinLink (@{/projects/{projectId}/create-task (projectId=${project.getId})})"></div>
+
 </body>
 </html>
