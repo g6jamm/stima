@@ -47,8 +47,19 @@ public class SubProjectController {
     //    } //TODO FIX!!
 
     model.addAttribute("tasks", tasks);
-    model.addAttribute("project", subProject);
+    model.addAttribute("subProject", subProject);
+    model.addAttribute("resourceTypes", taskService.getResourceTypes());
+    model.addAttribute("projectId", projectId);
+
     return "subProject";
+  }
+
+  @PostMapping("/projects/{projectId}/create-task")
+  public String createProjectTask(WebRequest webRequest, Model model, @PathVariable int projectId) {
+
+    createTask(webRequest, model);
+
+    return "redirect:/projects/" + projectId;
   }
 
   /**
@@ -57,11 +68,10 @@ public class SubProjectController {
    *
    * @param webRequest
    * @param model
-   * @return redirects user to Task page.
    * @author Andreas
    */
-  @PostMapping("/projects/{projectId}/create-task")
-  public String createTask(WebRequest webRequest, Model model, @PathVariable int projectId) {
+  private void createTask(WebRequest webRequest, Model model) {
+
     String taskNameParam = webRequest.getParameter("task-name");
     String taskHoursParam = webRequest.getParameter("task-hours");
     String resourceTypeParam = webRequest.getParameter("task-resource-type");
@@ -88,12 +98,22 @@ public class SubProjectController {
           "Task",
           taskService.createtask(
               taskNameParam, hours, resourceTypeParam, taskStartDate, taskEndDate));
-      model.addAttribute("ResourceTypeList", taskService.getResourceTypes());
+      model.addAttribute("ResourceTypes", taskService.getResourceTypes());
     } catch (TaskCreationException e) {
       model.addAttribute("error", e.getMessage());
     }
+  }
 
-    return "redirect:/projects/" + projectId;
+  @PostMapping("/projects/{projectId}/{subProjectId}/create-task")
+  public String createSubProjectTask(
+      WebRequest webRequest,
+      Model model,
+      @PathVariable int projectId,
+      @PathVariable int subProjectId) {
+
+    createTask(webRequest, model);
+
+    return "redirect:/projects/" + projectId + "/" + subProjectId;
   }
 
   /**
@@ -111,7 +131,7 @@ public class SubProjectController {
             "Task",
             taskService.createtask(
                 "Placeholder", 1.0, "Senior Developer", "1990-01-01", "1991-01-01"));
-        model.addAttribute("ResourceTypeList", taskService.getResourceTypes());
+        model.addAttribute("ResourceTypes", taskService.getResourceTypes());
       } catch (TaskCreationException e) {
         model.addAttribute("error", e.getMessage());
       }
