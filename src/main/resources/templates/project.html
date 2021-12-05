@@ -87,7 +87,7 @@
     </div>
 </div>
 
-<div th:replace="fragments/taskFormFragment :: actinLink (@{/projects/{projectId}/create-task (projectId=${project.getId})})"></div>
+<div th:replace="fragments/taskModalFragment :: actinLink (@{/projects/{projectId}/create-task (projectId=${project.getId})})"></div>
 
 </body>
 </html>

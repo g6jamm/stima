@@ -35,6 +35,6 @@
     </div>
 </main>
 <footer th:replace="fragments/footerFragtment :: footer"></footer>
-<div th:replace="fragments/taskFormFragment :: actinLink (@{/projects/{projectId}/{subProjectId}/create-task (projectId=${projectId}, subProjectId=${subProject.getId})})"></div>
+<div th:replace="fragments/taskModalFragment :: actinLink (@{/projects/{projectId}/{subProjectId}/create-task (projectId=${projectId}, subProjectId=${subProject.getId})})"></div>
 </body>
 </html>
