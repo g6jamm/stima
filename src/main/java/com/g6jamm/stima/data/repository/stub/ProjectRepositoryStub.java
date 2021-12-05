@@ -2,12 +2,10 @@ package com.g6jamm.stima.data.repository.stub;
 
 import com.g6jamm.stima.data.repository.ProjectRepository;
 import com.g6jamm.stima.domain.model.Project;
-import com.g6jamm.stima.domain.model.SubProject;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ProjectRepositoryStub implements ProjectRepository {
 
@@ -71,7 +69,8 @@ public class ProjectRepositoryStub implements ProjectRepository {
   }
 
   @Override
-  public Project createProject(String name, LocalDate startDate, LocalDate endDate, String projectColor) {
+  public Project createProject(
+      String name, LocalDate startDate, LocalDate endDate, String projectColor) {
 
     Project newProject =
         new Project.ProjectBuilder()
