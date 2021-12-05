@@ -14,7 +14,7 @@
                     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 g-3">
                         <h2>Underprojekter</h2>
                         <div class="col">
-                            <a data-bs-target="#exampleModal" data-bs-toggle="modal" href="#">
+                            <a data-bs-target="#subprojectModal" data-bs-toggle="modal" href="#">
                                 <div class="card shadow-sm align-items-center justify-content-center card-btn">
                                     <div class="card-body card-text card-text-size-sm card-icon">
                                         +
@@ -31,7 +31,7 @@
                     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 g-3">
                         <h2>Opgaver</h2>
                         <div class="col">
-                            <a href="#">
+                            <a data-bs-target="#taskModal" data-bs-toggle="modal" href="#">
                                 <div class="card shadow-sm align-items-center justify-content-center card-btn">
                                     <div class="card-body card-text card-text-size-sm card-icon">
                                         +
@@ -42,20 +42,19 @@
                         <div th:replace="fragments/taskFragment"></div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 </main>
 <footer th:replace="fragments/footerFragtment :: footer"></footer>
 
-<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade"
-     id="exampleModal"
+<div aria-hidden="true" aria-labelledby="subprojectModalLabel" class="modal fade"
+     id="subprojectModal"
      tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Nyt underprojekt</h5>
+                <h5 class="modal-title" id="subprojectModalLabel">Tilføj nyt underprojekt</h5>
                 <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
                         type="button"></button>
             </div>
@@ -63,17 +62,68 @@
                   th:action="@{/projects/{projectId}/create-new (projectId=${project.getId})}">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="col-form-label" for="name">Navn:</label>
-                        <input class="form-control" id="name" name="name" type="text">
+                        <label class="col-form-label" for="project-name">Navn:</label>
+                        <input class="form-control" id="project-name" name="project-name" type="text">
                     </div>
                     <div class="mb-3">
-                        <label class="col-form-label" for="start-date">Start dag:</label>
-                        <input class="form-control" id="start-date" name="start-date"
+                        <label class="col-form-label" for="project-start-date">Start dag:</label>
+                        <input class="form-control" id="project-start-date" name="project-start-date"
                                type="date">
                     </div>
                     <div class="mb-3">
-                        <label class="col-form-label" for="end-date">Slut dag:</label>
-                        <input class="form-control" id="end-date" name="end-date"
+                        <label class="col-form-label" for="project-end-date">Slut dag:</label>
+                        <input class="form-control" id="project-end-date" name="project-end-date"
+                               type="date">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">
+                        Luk
+                    </button>
+                    <button class="btn btn-primary" type="submit">Opret</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div aria-hidden="true" aria-labelledby="taskModalLabel" class="modal fade"
+     id="taskModal"
+     tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="taskModalLabel">Tilføj ny opgave</h5>
+                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
+                        type="button"></button>
+            </div>
+            <form method="POST"
+                  name="createTaskForm"
+                  role="form" th:action="@{/projects/{projectId}/create-task (projectId=${project.getId})}">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="col-form-label" for="task-name">Navn:</label>
+                        <input class="form-control" id="task-name" name="task-name" type="text">
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label" for="task-hours">Timer:</label>
+                        <input class="form-control" id="task-hours" name="task-hours" type="text">
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Resurcetype:</label>
+                        <select class="form-select" name="task-resource-type">
+                            <option th:each="resourceType : ${resourceTypes}" th:text="${resourceType.getName}"
+                                    th:value="${resourceType.getName}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label" for="task-start-date">Start dag:</label>
+                        <input class="form-control" id="task-start-date" name="task-start-date"
+                               type="date">
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label" for="task-end-date">Slut dag:</label>
+                        <input class="form-control" id="task-end-date" name="task-end-date"
                                type="date">
                     </div>
                 </div>

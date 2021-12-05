@@ -19,11 +19,10 @@ import java.util.List;
 
 @Controller
 public class SubProjectController {
-  TaskService taskService =
-      new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
-
   private final SubProjectService SUBPROJECT_SERVICE =
       new SubProjectService(new SubProjectRepositoryStub());
+  TaskService taskService =
+      new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
 
   /**
    * Get method for sub project page, shows all task for the sup project
@@ -53,47 +52,48 @@ public class SubProjectController {
   }
 
   /**
-   * Post method for creating new tasks.
-   *
-   * <p>Takes all input from the form and passes them to taskService which create a Task object.
-   *
-   * <p>This object is then added to the parameter "model". @Author Andreas
+   * Post method for creating new tasks. Takes all input from the form and passes them to
+   * taskService which create a Task object. This object is then added to the parameter "model".
    *
    * @param webRequest
    * @param model
    * @return redirects user to Task page.
+   * @author Andreas
    */
-  @PostMapping(
-      "/create-task") // TODO Change to /projects/{project_id}/create-task (Maybe make modal box
-  // (see projects, create subproject))
-  public String createTask(WebRequest webRequest, Model model) {
-    // TODO get project from project_id
+  @PostMapping("/projects/{projectId}/create-task")
+  public String createTask(WebRequest webRequest, Model model, @PathVariable int projectId) {
+    String taskNameParam = webRequest.getParameter("task-name");
+    String taskHoursParam = webRequest.getParameter("task-hours");
+    String resourceTypeParam = webRequest.getParameter("task-resource-type");
+    String taskStartDateParam = webRequest.getParameter("task-start-date");
+    String taskEndDateParam = webRequest.getParameter("task-end-date");
 
-    String name = webRequest.getParameter("task_name");
-    double hours =
-        webRequest.getParameter("task_hours").matches("[0-9]+")
-            ? Double.valueOf(webRequest.getParameter("task_hours"))
-            : 0.0;
+    boolean isNumberTaskHours = taskHoursParam.matches("[0-9]+");
 
-    String resourceType = webRequest.getParameter("task_resourcetype");
-    String startDate =
-        !webRequest.getParameter("task_startdate").isEmpty()
-            ? webRequest.getParameter("task_startdate")
-            : "1990-01-01"; // change to project start date
-    String endDate =
-        !webRequest.getParameter("task_enddate").isEmpty()
-            ? webRequest.getParameter("task_enddate")
-            : "1990-01-01"; // change to project end date
+    double hours = isNumberTaskHours ? Double.parseDouble(taskHoursParam) : 0.0;
+
+    String taskStartDate =
+        !taskStartDateParam.isEmpty()
+            ? taskStartDateParam
+            : "1990-01-01"; // TODO: change to project start date
+
+    String taskEndDate =
+        !taskEndDateParam.isEmpty()
+            ? taskEndDateParam
+            : "1990-01-01"; // TODO: change to project end date
 
     // TODO Add to Task to project
     try {
       model.addAttribute(
-          "Task", taskService.createtask(name, hours, resourceType, startDate, endDate));
+          "Task",
+          taskService.createtask(
+              taskNameParam, hours, resourceTypeParam, taskStartDate, taskEndDate));
       model.addAttribute("ResourceTypeList", taskService.getResourceTypes());
     } catch (TaskCreationException e) {
       model.addAttribute("error", e.getMessage());
     }
-    return "Task"; // TODO redirect to /projects/{project_id}
+
+    return "redirect:/projects/" + projectId;
   }
 
   /**

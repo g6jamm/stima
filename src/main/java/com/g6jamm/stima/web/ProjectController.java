@@ -4,6 +4,7 @@ import com.g6jamm.stima.data.repository.stub.ProjectRepositoryStub;
 import com.g6jamm.stima.data.repository.stub.ResourceTypeRepositoryStub;
 import com.g6jamm.stima.data.repository.stub.SubProjectRepositoryStub;
 import com.g6jamm.stima.data.repository.stub.TaskRepositoryStub;
+import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.SubProject;
 import com.g6jamm.stima.domain.model.Task;
@@ -67,6 +68,8 @@ public class ProjectController {
 
     model.addAttribute("project", project);
     model.addAttribute("classActiveSettings", "active");
+
+    model.addAttribute("resourceTypes", taskService.getResourceTypes());
 
     return "project";
   }
