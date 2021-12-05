@@ -60,12 +60,12 @@ public class ProjectController {
     TaskService taskService =
         new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
     List<Task> tasks = taskService.getTasks();
-    model.addAttribute("tasks", tasks);
+    model.addAttribute("tasks", tasks); // WIP
 
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
     Project project = projectService.getProjectById(projectId);
 
-    model.addAttribute("project", project);
+    model.addAttribute("project", project); // WIP
     model.addAttribute("classActiveSettings", "active");
 
     model.addAttribute("resourceTypes", taskService.getResourceTypes());
@@ -76,9 +76,9 @@ public class ProjectController {
   @PostMapping("/projects/{projectId}/create-subproject")
   public String createSubProject(WebRequest webRequest, Model model, @PathVariable int projectId) {
 
-    String subProjectNameParam = webRequest.getParameter("name");
-    String startDateParam = webRequest.getParameter("start-date");
-    String endDateParam = webRequest.getParameter("end-date");
+    String subProjectNameParam = webRequest.getParameter("subproject-name");
+    String startDateParam = webRequest.getParameter("subproject-start-date");
+    String endDateParam = webRequest.getParameter("subproject-end-date");
 
     // TODO check if valid date
     // TODO check if date are inside project start and end

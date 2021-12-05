@@ -35,7 +35,7 @@ public class SubProjectService {
    * @author Jackie
    */
   public List<SubProject> getSubprojects() { // TODO add reference to project
-    return subProjectRepository.getSubProjects();
+    return subProjectRepository.getSubProjects(); // WIP
   }
 
   /**

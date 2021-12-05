@@ -10,13 +10,13 @@ import java.util.List;
 
 public class SubProjectRepositoryStub implements SubProjectRepository {
 
-  private static List<SubProject> subProjects = new ArrayList<>();
+  private static final List<SubProject> SUB_PROJECTS = new ArrayList<>();
 
   public SubProjectRepositoryStub() {
-    if (subProjects.isEmpty()) {
-      subProjects.add(
+    if (SUB_PROJECTS.isEmpty()) {
+      SUB_PROJECTS.add(
           new SubProject.SubProjectBuilder()
-              .subProjectId(1)
+              .subProjectId(SUB_PROJECTS.size() + 1)
               .name("example")
               .hours(100)
               .price(80000)
@@ -25,9 +25,9 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
               .colorCode("green")
               .build());
 
-      subProjects.add(
+      SUB_PROJECTS.add(
           new SubProject.SubProjectBuilder()
-              .subProjectId(2)
+              .subProjectId(SUB_PROJECTS.size() + 1)
               .name("example2")
               .hours(100)
               .price(80000)
@@ -36,9 +36,9 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
               .colorCode("blue")
               .build());
 
-      subProjects.add(
+      SUB_PROJECTS.add(
           new SubProject.SubProjectBuilder()
-              .subProjectId(3)
+              .subProjectId(SUB_PROJECTS.size() + 1)
               .name("example3")
               .hours(1)
               .price(500)
@@ -55,7 +55,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
    */
   @Override
   public List<SubProject> getSubProjects() {
-    return subProjects;
+    return SUB_PROJECTS;
   }
 
   /**
@@ -68,7 +68,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
   @Override
   public SubProject getSubproject(int subProjectId) {
 
-    for (SubProject sp : subProjects) {
+    for (SubProject sp : SUB_PROJECTS) {
       if (sp.getId() == subProjectId) {
         return sp;
       }
@@ -91,7 +91,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
 
     SubProject subProject =
         new SubProject.SubProjectBuilder()
-            .subProjectId(5) // TODO hardcorded, to test
+            .subProjectId(SUB_PROJECTS.size() + 1)
             .name(name)
             // .hours(0)
             // .price(0)
@@ -100,7 +100,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
             .endDate(endDate)
             .build();
 
-    subProjects.add(subProject);
+    SUB_PROJECTS.add(subProject);
 
     return subProject;
   }
@@ -121,7 +121,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
   @Override
   public boolean addTaskToSubProject(int subProjectId, Task task) {
 
-    for (SubProject sp : subProjects) {
+    for (SubProject sp : SUB_PROJECTS) {
       if (sp.getId() == subProjectId) {
         sp.addTask(task);
         return true;
