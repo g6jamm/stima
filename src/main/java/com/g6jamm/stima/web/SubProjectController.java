@@ -53,7 +53,6 @@ public class SubProjectController {
     model.addAttribute("resourceTypes", taskService.getResourceTypes());
 
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-
     model.addAttribute("parentProject", projectService.getProjectById(projectId));
 
     return "subProject";

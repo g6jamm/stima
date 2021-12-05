@@ -64,7 +64,8 @@ public class ProjectController {
     model.addAttribute("tasks", tasks);
 
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-    Project project = projectService.getProjects().get(0); // TODO: ID of project
+    Project project = projectService.getProjectById(projectId); // TODO: ID of project
+
 
     model.addAttribute("project", project);
     model.addAttribute("classActiveSettings", "active");

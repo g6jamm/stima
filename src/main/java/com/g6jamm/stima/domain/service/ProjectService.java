@@ -18,6 +18,12 @@ public class ProjectService {
   }
 
   public Project getProjectById(int id) {
-    return PROJECT_REPOSITORY_STUB.getProjects().get(id);
+    for (Project project : getProjects()) {
+      if (id == project.getId()) {
+        return project;
+      }
+    }
+
+    return null;
   }
 }
