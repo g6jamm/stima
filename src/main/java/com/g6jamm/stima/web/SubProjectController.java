@@ -1,10 +1,12 @@
 package com.g6jamm.stima.web;
 
+import com.g6jamm.stima.data.repository.stub.ProjectRepositoryStub;
 import com.g6jamm.stima.data.repository.stub.ResourceTypeRepositoryStub;
 import com.g6jamm.stima.data.repository.stub.SubProjectRepositoryStub;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.SubProject;
 import com.g6jamm.stima.domain.model.Task;
+import com.g6jamm.stima.domain.service.ProjectService;
 import com.g6jamm.stima.domain.service.SubProjectService;
 import com.g6jamm.stima.data.repository.stub.TaskRepositoryStub;
 import com.g6jamm.stima.domain.service.TaskService;
@@ -49,7 +51,10 @@ public class SubProjectController {
     model.addAttribute("tasks", tasks);
     model.addAttribute("subProject", subProject);
     model.addAttribute("resourceTypes", taskService.getResourceTypes());
-    model.addAttribute("projectId", projectId);
+
+    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
+
+    model.addAttribute("parentProject", projectService.getProjectById(projectId));
 
     return "subProject";
   }

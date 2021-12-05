@@ -5,6 +5,14 @@
 
 <body>
 <nav th:replace="fragments/navFragment :: nav"></nav>
+
+<nav class="container breadcrumb-container">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a th:href="@{/projects}">Projects</a></li>
+        <li th:text="${project.getName}" class="breadcrumb-item active"></li>
+    </ol>
+</nav>
+
 <main>
     <div class="py-5 bg-light">
         <div class="container">

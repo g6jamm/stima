@@ -61,3 +61,11 @@ a, a:hover {
 .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .show > .nav-link {
     border-bottom: #FF325A 2px solid;
 }
+
+.breadcrumb a, .breadcrumb a:hover {
+    color: black;
+}
+
+.breadcrumb-container {
+    padding-top: 30px;
+}

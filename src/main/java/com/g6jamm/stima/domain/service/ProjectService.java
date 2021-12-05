@@ -16,4 +16,8 @@ public class ProjectService {
   public List<Project> getProjects() {
     return PROJECT_REPOSITORY_STUB.getProjects();
   }
+
+  public Project getProjectById(int id) {
+    return PROJECT_REPOSITORY_STUB.getProjects().get(id);
+  }
 }

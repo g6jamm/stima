@@ -3,6 +3,15 @@
 <head th:replace="fragments/headFragment :: head (title=${subProject.getName})"></head>
 <body>
 <nav th:replace="fragments/navFragment :: nav"></nav>
+
+<nav class="container breadcrumb-container">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a th:href="@{/projects}">Projects</a></li>
+        <li class="breadcrumb-item active"><a th:href="@{/projects/{projectId} (projectId=${parentProject.getId})}" th:text="${parentProject.getName}"></a></li>
+        <li th:text="${subProject.getName}" class="breadcrumb-item active"></li>
+    </ol>
+</nav>
+
 <main>
     <div class="py-5 bg-light">
         <div class="container">
@@ -35,6 +44,6 @@
     </div>
 </main>
 <footer th:replace="fragments/footerFragtment :: footer"></footer>
-<div th:replace="fragments/taskModalFragment :: actinLink (@{/projects/{projectId}/{subProjectId}/create-task (projectId=${projectId}, subProjectId=${subProject.getId})})"></div>
+<div th:replace="fragments/taskModalFragment :: actinLink (@{/projects/{projectId}/{subProjectId}/create-task (projectId=${parentProject.getId}, subProjectId=${subProject.getId})})"></div>
 </body>
 </html>
