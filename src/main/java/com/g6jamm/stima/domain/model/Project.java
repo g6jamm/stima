@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 /** @auther Mathias */
-public class Project {
+public class Project implements ProjectInterface {
 
   private final int PROJECT_ID;
   private final String PROJECT_NAME;
