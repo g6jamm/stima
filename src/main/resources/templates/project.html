@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="da" xmlns:th="https://www.thymeleaf.org">
 
-<head th:replace="fragments/headFragment :: head (title=${project.getName})"></head>
+<head th:replace="fragments/headFragment :: head (title=${parentproject.getName})"></head>
 
 <body>
 <nav th:replace="fragments/navFragment :: nav"></nav>
@@ -9,14 +9,14 @@
 <nav class="container breadcrumb-container">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a th:href="@{/projects}">Projects</a></li>
-        <li class="breadcrumb-item active" th:text="${project.getName}"></li>
+        <li class="breadcrumb-item active" th:text="${parentproject.getName}"></li>
     </ol>
 </nav>
 
 <main>
     <div class="py-5 bg-light">
         <div class="container">
-            <h1 th:text="${project.getName}"></h1>
+            <h1 th:text="${parentproject.getName}"></h1>
             <div class="row row-cols-2 row-cols-sm-2 row-cols-md-2 g-3">
                 <div class="container">
                     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 g-3">
@@ -30,8 +30,8 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="col" th:each="project : ${subprojects}">
-                            <div th:replace="fragments/projectFragment :: link (@{/projects/{projectId}/{subProjectId}(projectId=${project.getId}, subProjectId=${project.getId})})"></div>
+                        <div class="col" th:each="project : ${projects}">
+                            <div th:replace="fragments/projectFragment :: project (@{/projects/{projectId}/{subProjectId}(projectId=${parentproject.getId}, subProjectId=${project.getId()})})"></div>
                         </div>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                         type="button"></button>
             </div>
             <form method="POST"
-                  th:action="@{/projects/{projectId}/create-subproject (projectId=${project.getId})}">
+                  th:action="@{/projects/{projectId}/create-subproject (projectId=${parentproject.getId})}">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="col-form-label" for="subproject-name">Navn:</label>
@@ -104,7 +104,7 @@
     </div>
 </div>
 
-<div th:replace="fragments/taskModalFragment :: actinLink (@{/projects/{projectId}/create-task (projectId=${project.getId})})"></div>
+<div th:replace="fragments/taskModalFragment :: actinLink (@{/projects/{projectId}/create-task (projectId=${parentproject.getId})})"></div>
 
 </body>
 </html>

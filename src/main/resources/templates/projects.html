@@ -24,7 +24,7 @@
                     </a>
                 </div>
                 <div class="col" th:each="project : ${projects}">
-                    <div th:replace="fragments/projectFragment :: link (@{/projects/{id} (id=${project.getId})})"></div>
+                    <div th:replace="fragments/projectFragment :: project (@{/projects/{id} (id=${project.getId})})"></div>
                 </div>
             </div>
         </div>

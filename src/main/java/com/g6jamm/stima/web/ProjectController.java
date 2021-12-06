@@ -21,139 +21,139 @@ import java.util.List;
 @Controller
 public class ProjectController {
 
-  /**
-   * View all projects.
-   *
-   * @param webRequest WebRequest
-   * @param model Model
-   * @return String
-   * @auther Mathias
-   */
-  @GetMapping("/projects")
-  public String projects(WebRequest webRequest, Model model) {
-    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
+    /**
+     * View all projects.
+     *
+     * @param webRequest WebRequest
+     * @param model      Model
+     * @return String
+     * @auther Mathias
+     */
+    @GetMapping("/projects")
+    public String projects(WebRequest webRequest, Model model) {
+        ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
 
-    List<Project> projects = projectService.getProjects();
+        List<Project> projects = projectService.getProjects();
 
-    model.addAttribute("projects", projects);
+        model.addAttribute("projects", projects);
 
-    ProjectColorService projectColorService = new ProjectColorService(new ProjectColorStub());
-    model.addAttribute("projectColors", projectColorService.getProjectColors());
+        ProjectColorService projectColorService = new ProjectColorService(new ProjectColorStub());
+        model.addAttribute("projectColors", projectColorService.getProjectColors());
 
-    return "projects";
-  }
+        return "projects";
+    }
 
-  /**
-   * View a specific project.
-   *
-   * @param model Model
-   * @return String
-   * @auther Mathias
-   */
-  @GetMapping("/projects/{projectId}")
-  public String projectId(Model model, @PathVariable int projectId) {
+    /**
+     * View a specific project.
+     *
+     * @param model Model
+     * @return String
+     * @auther Mathias
+     */
+    @GetMapping("/projects/{projectId}")
+    public String projectId(Model model, @PathVariable int projectId) {
 
-    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-    TaskService taskService =
-        new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
+        ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
+        TaskService taskService =
+                new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
 
-    Project project = projectService.getProjectById(projectId);
+        Project project = projectService.getProjectById(projectId);
 
-    SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
-    List<SubProject> subProjects = project.getSubProjects();
-    model.addAttribute("subprojects", subProjects);
+        SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
+        List<SubProject> subProjects = project.getSubProjects();
+        model.addAttribute("projects", subProjects);
 
-    List<Task> tasks = project.getTasks();
-    model.addAttribute("tasks", tasks);
+        List<Task> tasks = project.getTasks();
+        model.addAttribute("tasks", tasks);
 
-    model.addAttribute("project", project);
+        model.addAttribute("parentproject", project);
 
-    ProjectColorService projectColorService = new ProjectColorService(new ProjectColorStub());
-    model.addAttribute("projectColors", projectColorService.getProjectColors());
+        ProjectColorService projectColorService = new ProjectColorService(new ProjectColorStub());
+        model.addAttribute("projectColors", projectColorService.getProjectColors());
 
-    model.addAttribute("classActiveSettings", "active");
+        model.addAttribute("classActiveSettings", "active");
 
-    model.addAttribute("resourceTypes", taskService.getResourceTypes());
+        model.addAttribute("resourceTypes", taskService.getResourceTypes());
 
-    return "project";
-  }
+        return "project";
+    }
 
-  @PostMapping("/projects/{projectId}/create-subproject")
-  public String createSubProject(WebRequest webRequest, Model model, @PathVariable int projectId) {
+    @PostMapping("/projects/{projectId}/create-subproject")
+    public String createSubProject(WebRequest webRequest, Model model, @PathVariable int projectId) {
 
-    String subProjectNameParam = webRequest.getParameter("subproject-name");
-    String startDateParam = webRequest.getParameter("subproject-start-date");
-    String endDateParam = webRequest.getParameter("subproject-end-date");
-    String projectColorParam = webRequest.getParameter("subproject-color");
+        String subProjectNameParam = webRequest.getParameter("subproject-name");
+        String startDateParam = webRequest.getParameter("subproject-start-date");
+        String endDateParam = webRequest.getParameter("subproject-end-date");
+        String projectColorParam = webRequest.getParameter("subproject-color");
 
-    // TODO check if valid date
-    // TODO check if date are inside project start and end
+        // TODO check if valid date
+        // TODO check if date are inside project start and end
 
-    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-    Project project = projectService.getProjectById(projectId);
+        ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
+        Project project = projectService.getProjectById(projectId);
 
-    SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
-    SubProject subProject =
-        subProjectService.createSubProject(
-            subProjectNameParam,
-            LocalDate.parse(startDateParam),
-            LocalDate.parse(endDateParam),
-            projectColorParam);
+        SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
+        SubProject subProject =
+                subProjectService.createSubProject(
+                        subProjectNameParam,
+                        LocalDate.parse(startDateParam),
+                        LocalDate.parse(endDateParam),
+                        projectColorParam);
 
-    project.getSubProjects().add(subProject);
+        project.getSubProjects().add(subProject);
 
-    model.addAttribute("subProject", subProject); // TODO doesnt matter? we redirect?
+        model.addAttribute("subProject", subProject); // TODO doesnt matter? we redirect?
 
-    return "redirect:/projects/" + projectId;
-  }
+        return "redirect:/projects/" + projectId;
+    }
 
-  @PostMapping("/projects/create-project")
-  public String createProject(WebRequest webRequest, Model model) {
+    @PostMapping("/projects/create-project")
+    public String createProject(WebRequest webRequest, Model model) {
 
-    String projectNameParam = webRequest.getParameter("project-name");
-    String startDateParam = webRequest.getParameter("project-start-date");
-    String endDateParam = webRequest.getParameter("project-end-date");
-    String projectColorParam = webRequest.getParameter("project-color");
+        String projectNameParam = webRequest.getParameter("project-name");
+        String startDateParam = webRequest.getParameter("project-start-date");
+        String endDateParam = webRequest.getParameter("project-end-date");
+        String projectColorParam = webRequest.getParameter("project-color");
 
-    // TODO check if valid date
-    // TODO check if date are inside project start and end
+        // TODO check if valid date
+        // TODO check if date are inside project start and end
 
-    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-    Project project =
-        projectService.createProject(
-            projectNameParam,
-            LocalDate.parse(startDateParam),
-            LocalDate.parse(endDateParam),
-            projectColorParam);
+        ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
+        Project project =
+                projectService.createProject(
+                        projectNameParam,
+                        LocalDate.parse(startDateParam),
+                        LocalDate.parse(endDateParam),
+                        projectColorParam);
 
-    model.addAttribute("project", project);
+        model.addAttribute("project", project);
 
-    return "redirect:/projects";
-  }
+        return "redirect:/projects";
+    }
 
-  /**
-   * Navigates the user to edit project page.
-   *
-   * @param webRequest WebRequest
-   * @param projectId int
-   * @return String
-   * @auther Mathias
-   */
-  @PostMapping("/edit-project/{projectId}")
-  public String editProject(WebRequest webRequest, @PathVariable int projectId) {
-    return "redirect:/project/edit-project"; // TODO: redirect?
-  }
+    /**
+     * Navigates the user to edit project page.
+     *
+     * @param webRequest WebRequest
+     * @param projectId  int
+     * @return String
+     * @auther Mathias
+     */
+    @PostMapping("/edit-project/{projectId}")
+    public String editProject(WebRequest webRequest, @PathVariable int projectId) {
+        return "redirect:/project/edit-project"; // TODO: redirect?
+    }
 
-  /**
-   * Deletes the project by id and navigate the user to the project page.
-   *
-   * @param webRequest WebRequest
-   * @param projectId int
-   * @return String
-   * @auther Mathias
-   */
-  @PostMapping("/delete-project/{projectId}")
-  public String deleteProject(WebRequest webRequest, @PathVariable int projectId) {
-    return "redirect:/project"; // TODO: redirect?
-  }
+    /**
+     * Deletes the project by id and navigate the user to the project page.
+     *
+     * @param webRequest WebRequest
+     * @param projectId  int
+     * @return String
+     * @auther Mathias
+     */
+    @PostMapping("/delete-project/{projectId}")
+    public String deleteProject(WebRequest webRequest, @PathVariable int projectId) {
+        return "redirect:/project"; // TODO: redirect?
+    }
 }
