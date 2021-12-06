@@ -19,7 +19,7 @@ import org.springframework.web.context.request.WebRequest;
 @Controller
 public class UserController { // TODO change name to Login controller?
 
-    UserService userService = new UserService(new UserRepositoryStub());
+    UserService userService = new UserService(new UserRepositoryImpl());
 
     @GetMapping("/")
     public String goToHomepage(WebRequest webRequest) {
