@@ -92,6 +92,25 @@ public class UserRepositoryImpl implements UserRepository {
 
   @Override
   public User getUser(int id) {
+    try {
+      String query = "SELECT * FROM users WHERE user_id = ?";
+      PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
+      ps.setInt(1, id);
+
+      ResultSet resultSet = ps.executeQuery();
+      if (resultSet.next()){
+        return new User.UserBuilder()
+            .firstName(resultSet.getString("first_name"))
+            .lastName(resultSet.getString("last_name"))
+            .email(resultSet.getString("email"))
+            .password(resultSet.getString("password"))
+            .id(resultSet.getInt("user_id"))
+            .build();
+      }
+
+    }catch (SQLException e){
+      System.out.println(e.getMessage()); //TODO
+    }
     return null;
   }
 }
