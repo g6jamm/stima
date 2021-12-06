@@ -8,8 +8,8 @@
              th:style="'background-color: ' + ${project.getColorCode}">
             <div class="card-body card-text card-text-size-lg" style="margin-top: 150px">
                 <p th:text="${project.getName}"></p>
-                <p th:text="'Timer: ' + ${project.getHours}"></p>
-                <p th:text="'Pris: ' + ${project.getPrice} + ' DKK'"></p>
+                <p th:text="'Timer: ' + ${project.calculateHours()}"></p>
+                <p th:text="'Pris: ' + ${project.calculatePrice()} + ' DKK'"></p>
             </div>
         </div>
     </a>
