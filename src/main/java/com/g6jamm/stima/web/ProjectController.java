@@ -53,17 +53,18 @@ public class ProjectController {
   @GetMapping("/projects/{projectId}")
   public String projectId(Model model, @PathVariable int projectId) {
 
+    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
+    TaskService taskService =
+        new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
+
+    Project project = projectService.getProjectById(projectId);
+
     SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
     List<SubProject> subProjects = subProjectService.getSubprojects();
     model.addAttribute("subprojects", subProjects);
 
-    TaskService taskService =
-        new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
-    List<Task> tasks = taskService.getTasks();
+    List<Task> tasks = project.getTasks();
     model.addAttribute("tasks", tasks);
-
-    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-    Project project = projectService.getProjectById(projectId);
 
     model.addAttribute("project", project);
 

@@ -2,12 +2,13 @@ package com.g6jamm.stima.web;
 
 import com.g6jamm.stima.data.repository.stub.*;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
+import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.model.ProjectInterface;
 import com.g6jamm.stima.domain.model.SubProject;
 import com.g6jamm.stima.domain.model.Task;
 import com.g6jamm.stima.domain.service.ProjectService;
 import com.g6jamm.stima.domain.service.SubProjectService;
 import com.g6jamm.stima.domain.service.TaskService;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,8 +60,12 @@ public class SubProjectController {
   @PostMapping("/projects/{projectId}/create-task")
   public String createProjectTask(WebRequest webRequest, Model model, @PathVariable int projectId) {
 
+    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
+    Project project = projectService.getProjectById(projectId);
+
+
     try {
-    createTask(webRequest, projectId);
+    createTask(webRequest, project);
     }
     catch (TaskCreationException e){
       model.addAttribute("error", e.getMessage());
@@ -71,14 +76,12 @@ public class SubProjectController {
 
   /**
    * Post method for creating new tasks. Takes all input from the form and passes them to
-   * taskService which create a Task object. This object is then added to the parameter "model".
+   * taskService which create a Task object. The newly created task is then added to the projects list of tasks.
    *
    * @param webRequest
    * @author Andreas
    */
-  private void createTask(WebRequest webRequest, int projectId) throws TaskCreationException{
-
-    SubProject subProject = SUBPROJECT_SERVICE.getSubProject(projectId);
+  private void createTask(WebRequest webRequest, ProjectInterface project) throws TaskCreationException{
 
     String taskNameParam = webRequest.getParameter("task-name");
     String taskHoursParam = webRequest.getParameter("task-hours");
@@ -93,16 +96,16 @@ public class SubProjectController {
     String taskStartDate =
         !taskStartDateParam.isEmpty()
             ? taskStartDateParam
-            : subProject.getStartDate().format(DateTimeFormatter.ofPattern("YYYY-MM-DD"));
+            : project.getStartDate().format(DateTimeFormatter.ofPattern("YYYY-MM-DD"));
 
     String taskEndDate =
         !taskEndDateParam.isEmpty()
             ? taskEndDateParam
-            : subProject.getStartDate().format(DateTimeFormatter.ofPattern("YYYY-MM-DD")); //TODO More validation
+            : project.getStartDate().format(DateTimeFormatter.ofPattern("YYYY-MM-DD")); //TODO More validation
 
     Task newTask = taskService.createtask(taskNameParam, hours, resourceTypeParam, taskStartDate, taskEndDate);
 
-    subProject.getTasks().add(newTask);
+    project.getTasks().add(newTask);
 
   }
 
@@ -113,8 +116,9 @@ public class SubProjectController {
       @PathVariable int projectId,
       @PathVariable int subProjectId) {
 
+    SubProject subProject = SUBPROJECT_SERVICE.getSubProject(projectId);
     try {
-    createTask(webRequest, projectId);
+    createTask(webRequest, subProject);
     }catch (TaskCreationException e){
       model.addAttribute("error", e.getMessage()); //TODO Handle exceptions?????? if we redirect we dont see the error.
     }
