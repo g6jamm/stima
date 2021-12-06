@@ -94,7 +94,8 @@ public class ProjectController {
             subProjectNameParam,
             LocalDate.parse(startDateParam),
             LocalDate.parse(endDateParam),
-            projectColorParam);
+            projectColorParam,
+            projectId);
 
     model.addAttribute("subProject", subProject);
 

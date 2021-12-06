@@ -88,7 +88,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
    */
   @Override
   public SubProject createSubProject(
-      String name, LocalDate startDate, LocalDate endDate, String projectColor) {
+      String name, LocalDate startDate, LocalDate endDate, String projectColor, int parentProjectId) {
 
     SubProject subProject =
         new SubProject.SubProjectBuilder()
