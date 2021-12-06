@@ -82,8 +82,6 @@ public class Project implements ProjectInterface {
     return totalPrice;
   }
 
-
-
   public static class ProjectBuilder {
     private int projectId;
     private String projectName;
