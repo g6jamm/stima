@@ -18,19 +18,20 @@ public class TaskRepositoryImpl implements TaskRepository {
 
     try {
       String query =
-          "INSERT INTO tasks(name, hours, resource_type_id, project_id, start_date, end_date) VALUES(?,?,?,?,?,?)";
+          "INSERT INTO tasks(name, hours, resource_type_id, project_id, start_date, end_date)"
+              + " VALUES(?,?,?,?,?,?)";
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
 
       ps.setString(1, task.getName());
       ps.setDouble(2, task.getHours());
-      ps.setInt(3,task.getResourceType().getId());
+      ps.setInt(3, task.getResourceType().getId());
       ps.setInt(4, projectId);
       ps.setString(5, task.getStartDate().toString());
       ps.setString(6, task.getEndDate().toString());
 
       ps.executeUpdate();
       return task;
-    }catch (SQLException e){
+    } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
     return null;
