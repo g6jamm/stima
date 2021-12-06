@@ -52,7 +52,6 @@ public class TaskRepositoryStub implements TaskRepository {
             .id(taskListStub.size() + 1)
             .build();
 
-    taskListStub.add(task);
     return task;
   }
 

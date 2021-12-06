@@ -1,6 +1,6 @@
 package com.g6jamm.stima.domain.service;
 
-import com.g6jamm.stima.data.repository.stub.ProjectRepositoryStub;
+import com.g6jamm.stima.data.repository.ProjectRepository;
 import com.g6jamm.stima.domain.model.Project;
 
 import java.time.LocalDate;
@@ -8,14 +8,14 @@ import java.util.List;
 
 public class ProjectService {
 
-  private final ProjectRepositoryStub PROJECT_REPOSITORY_STUB;
+  private final ProjectRepository PROJECT_REPOSITORY;
 
-  public ProjectService(ProjectRepositoryStub projectRepositoryStub) {
-    this.PROJECT_REPOSITORY_STUB = projectRepositoryStub;
+  public ProjectService(ProjectRepository projectRepositoryStub) {
+    this.PROJECT_REPOSITORY = projectRepositoryStub;
   }
 
   public List<Project> getProjects() {
-    return PROJECT_REPOSITORY_STUB.getProjects();
+    return PROJECT_REPOSITORY.getProjects();
   }
 
   public Project getProjectById(int id) {
@@ -30,6 +30,6 @@ public class ProjectService {
 
   public Project createProject(
       String name, LocalDate startDate, LocalDate endDate, String projectColor) {
-    return PROJECT_REPOSITORY_STUB.createProject(name, startDate, endDate, projectColor);
+    return PROJECT_REPOSITORY.createProject(name, startDate, endDate, projectColor);
   }
 }

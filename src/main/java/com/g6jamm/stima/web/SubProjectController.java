@@ -2,6 +2,8 @@ package com.g6jamm.stima.web;
 
 import com.g6jamm.stima.data.repository.stub.*;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
+import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.model.ProjectInterface;
 import com.g6jamm.stima.domain.model.SubProject;
 import com.g6jamm.stima.domain.model.Task;
 import com.g6jamm.stima.domain.service.ProjectService;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -36,9 +39,7 @@ public class SubProjectController {
   public String subProjectPage(
       Model model, @PathVariable int projectId, @PathVariable int subProjectId) {
     SubProject subProject = SUBPROJECT_SERVICE.getSubProject(subProjectId);
-    TaskService taskService =
-        new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
-    List<Task> tasks = taskService.getTasks();
+    List<Task> tasks = subProject.getTasks();
     // TODO need change remove hardcoded tasks when possible
 
     //    for (Task t : tasks) {
@@ -59,20 +60,28 @@ public class SubProjectController {
   @PostMapping("/projects/{projectId}/create-task")
   public String createProjectTask(WebRequest webRequest, Model model, @PathVariable int projectId) {
 
-    createTask(webRequest, model);
+    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
+    Project project = projectService.getProjectById(projectId);
+
+    try {
+      createTask(webRequest, project);
+    } catch (TaskCreationException e) {
+      model.addAttribute("error", e.getMessage());
+    }
 
     return "redirect:/projects/" + projectId;
   }
 
   /**
    * Post method for creating new tasks. Takes all input from the form and passes them to
-   * taskService which create a Task object. This object is then added to the parameter "model".
+   * taskService which create a Task object. The newly created task is then added to the projects
+   * list of tasks.
    *
    * @param webRequest
-   * @param model
    * @author Andreas
    */
-  private void createTask(WebRequest webRequest, Model model) {
+  private void createTask(WebRequest webRequest, ProjectInterface project)
+      throws TaskCreationException {
 
     String taskNameParam = webRequest.getParameter("task-name");
     String taskHoursParam = webRequest.getParameter("task-hours");
@@ -87,23 +96,19 @@ public class SubProjectController {
     String taskStartDate =
         !taskStartDateParam.isEmpty()
             ? taskStartDateParam
-            : "1990-01-01"; // TODO: change to project start date
+            : project.getStartDate().format(DateTimeFormatter.ofPattern("YYYY-MM-DD"));
 
     String taskEndDate =
         !taskEndDateParam.isEmpty()
             ? taskEndDateParam
-            : "1990-01-01"; // TODO: change to project end date
+            : project
+                .getStartDate()
+                .format(DateTimeFormatter.ofPattern("YYYY-MM-DD")); // TODO More validation
 
-    // TODO Add to Task to project
-    try {
-      model.addAttribute(
-          "Task",
-          taskService.createtask(
-              taskNameParam, hours, resourceTypeParam, taskStartDate, taskEndDate));
-      model.addAttribute("ResourceTypes", taskService.getResourceTypes());
-    } catch (TaskCreationException e) {
-      model.addAttribute("error", e.getMessage());
-    }
+    Task newTask =
+        taskService.createtask(taskNameParam, hours, resourceTypeParam, taskStartDate, taskEndDate);
+
+    project.getTasks().add(newTask);
   }
 
   @PostMapping("/projects/{projectId}/{subProjectId}/create-task")
@@ -113,7 +118,14 @@ public class SubProjectController {
       @PathVariable int projectId,
       @PathVariable int subProjectId) {
 
-    createTask(webRequest, model);
+    SubProject subProject = SUBPROJECT_SERVICE.getSubProject(projectId);
+    try {
+      createTask(webRequest, subProject);
+    } catch (TaskCreationException e) {
+      model.addAttribute(
+          "error",
+          e.getMessage()); // TODO Handle exceptions?????? if we redirect we dont see the error.
+    }
 
     return "redirect:/projects/" + projectId + "/" + subProjectId;
   }
