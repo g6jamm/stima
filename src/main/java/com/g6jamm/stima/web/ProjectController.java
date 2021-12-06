@@ -57,11 +57,11 @@ public class ProjectController {
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
     TaskService taskService =
         new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
+    SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryImpl());
 
     Project project = projectService.getProjectById(projectId);
 
-    SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
-    List<SubProject> subProjects = project.getSubProjects();
+    List<SubProject> subProjects = subProjectService.getSubprojects(projectId);
     model.addAttribute("subprojects", subProjects);
 
     List<Task> tasks = project.getTasks();
@@ -103,7 +103,7 @@ public class ProjectController {
             projectColorParam,
             projectId);
 
-    // project.getSubProjects().add(subProject);
+    //project.getSubProjects().add(subProject); //TODO skal fjernes
 
     model.addAttribute("subProject", subProject); // TODO doesnt matter? we redirect?
 
