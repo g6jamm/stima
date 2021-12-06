@@ -15,6 +15,8 @@ import java.util.List;
 public class TaskRepositoryImpl implements TaskRepository {
   @Override
   public Task createTask(Task task) {
+    String query = "INSERT INTO tasks(name, hours, resource_type, project_id, start_date, end_date)";
+    //where do we get project id from?
     return null;
   }
 
