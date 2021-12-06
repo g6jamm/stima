@@ -14,10 +14,25 @@ import java.util.List;
 
 public class TaskRepositoryImpl implements TaskRepository {
   @Override
-  public Task createTask(Task task) {
-    String query =
-        "INSERT INTO tasks(name, hours, resource_type, project_id, start_date, end_date)";
-    // where do we get project id from?
+  public Task createTask(Task task, int projectId) {
+
+    try {
+      String query =
+          "INSERT INTO tasks(name, hours, resource_type_id, project_id, start_date, end_date) VALUES(?,?,?,?,?,?)";
+      PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
+
+      ps.setString(1, task.getName());
+      ps.setDouble(2, task.getHours());
+      ps.setInt(3,task.getResourceType().getId());
+      ps.setInt(4, projectId);
+      ps.setString(5, task.getStartDate().toString());
+      ps.setString(6, task.getEndDate().toString());
+
+      ps.executeUpdate();
+      return task;
+    }catch (SQLException e){
+      System.out.println(e.getMessage());
+    }
     return null;
   }
 

@@ -21,7 +21,7 @@ public class TaskService {
   }
 
   public Task createtask(
-      String taskName, double hours, String resourceType, String startDate, String endDate)
+      String taskName, double hours, String resourceType, String startDate, String endDate, int projectId)
       throws TaskCreationException {
 
     Task newTask =
@@ -32,7 +32,7 @@ public class TaskService {
             .startDate(convertStringToDate(startDate))
             .endDate(convertStringToDate(endDate))
             .build();
-    return taskRepository.createTask(newTask);
+    return taskRepository.createTask(newTask, projectId);
   }
 
   private LocalDate convertStringToDate(String stringDate) {

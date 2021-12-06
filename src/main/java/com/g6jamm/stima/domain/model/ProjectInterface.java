@@ -10,4 +10,6 @@ public interface ProjectInterface {
   public LocalDate getEndDate();
 
   public List<Task> getTasks();
+
+  public int getId();
 }
