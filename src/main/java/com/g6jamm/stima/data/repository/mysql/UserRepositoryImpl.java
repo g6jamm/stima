@@ -2,7 +2,6 @@ package com.g6jamm.stima.data.repository.mysql;
 
 import com.g6jamm.stima.data.repository.UserRepository;
 import com.g6jamm.stima.data.repository.util.DbManager;
-import com.g6jamm.stima.domain.exception.LoginException;
 import com.g6jamm.stima.domain.exception.SignUpException;
 import com.g6jamm.stima.domain.model.User;
 
@@ -11,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserRepositoryImpl implements UserRepository {
-
 
   @Override
   public User login(String email, String password) {
@@ -23,7 +21,7 @@ public class UserRepositoryImpl implements UserRepository {
 
       ResultSet resultSet = ps.executeQuery();
 
-      if (resultSet.next()){
+      if (resultSet.next()) {
         return new User.UserBuilder()
             .firstName(resultSet.getString("first_name"))
             .lastName(resultSet.getString("last_name"))
@@ -32,8 +30,8 @@ public class UserRepositoryImpl implements UserRepository {
             .id(resultSet.getInt("user_id"))
             .build();
       }
-    }catch (SQLException e){
-      System.out.println(e.getMessage()); //TODO
+    } catch (SQLException e) {
+      System.out.println(e.getMessage()); // TODO
     }
     return null;
   }
@@ -59,8 +57,8 @@ public class UserRepositoryImpl implements UserRepository {
 
       return ps.executeQuery().next();
 
-    }catch (SQLException e){
-      System.out.println(e.getMessage()); //TODO
+    } catch (SQLException e) {
+      System.out.println(e.getMessage()); // TODO
     }
     return false;
   }
@@ -79,13 +77,12 @@ public class UserRepositoryImpl implements UserRepository {
 
       ResultSet resultSet = ps.getGeneratedKeys();
 
-      if (resultSet.next()){
+      if (resultSet.next()) {
         return resultSet.getInt("user_id");
       }
 
-
-    }catch (SQLException e){
-      System.out.println(e.getMessage()); //TODO
+    } catch (SQLException e) {
+      System.out.println(e.getMessage()); // TODO
     }
     return 0;
   }
@@ -98,7 +95,7 @@ public class UserRepositoryImpl implements UserRepository {
       ps.setInt(1, id);
 
       ResultSet resultSet = ps.executeQuery();
-      if (resultSet.next()){
+      if (resultSet.next()) {
         return new User.UserBuilder()
             .firstName(resultSet.getString("first_name"))
             .lastName(resultSet.getString("last_name"))
@@ -108,8 +105,8 @@ public class UserRepositoryImpl implements UserRepository {
             .build();
       }
 
-    }catch (SQLException e){
-      System.out.println(e.getMessage()); //TODO
+    } catch (SQLException e) {
+      System.out.println(e.getMessage()); // TODO
     }
     return null;
   }
