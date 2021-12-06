@@ -105,7 +105,6 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
                         .colorCode(projectColor)
                         .build();
 
-        SUB_PROJECTS.add(subProject);
 
         return subProject;
     }
