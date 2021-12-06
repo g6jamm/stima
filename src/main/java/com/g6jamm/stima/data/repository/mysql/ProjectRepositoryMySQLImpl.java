@@ -82,7 +82,8 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
 
     try {
       String query =
-          "UPDATE projects SET name = ?, start_date = ?, end_date = ?, color_id = ? WHERE project_id = ?";
+          "UPDATE projects SET name = ?, start_date = ?, end_date = ?, color_id = ? WHERE"
+              + " project_id = ?";
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setString(1, project.getName());
       ps.setString(2, String.valueOf(Date.valueOf(project.getStartDate())));
