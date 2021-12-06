@@ -1,5 +1,6 @@
 package com.g6jamm.stima.web;
 
+import com.g6jamm.stima.data.repository.mysql.SubProjectRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.*;
 import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.SubProject;
@@ -53,13 +54,14 @@ public class ProjectController {
     @GetMapping("/projects/{projectId}")
     public String projectId(Model model, @PathVariable int projectId) {
 
-        ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-        TaskService taskService =
-                new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
+
+    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
+    TaskService taskService =
+        new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
+    SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryImpl());
 
         Project project = projectService.getProjectById(projectId);
 
-        SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
         List<SubProject> subProjects = project.getSubProjects();
         model.addAttribute("projects", subProjects);
 
@@ -92,15 +94,18 @@ public class ProjectController {
         ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
         Project project = projectService.getProjectById(projectId);
 
-        SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
-        SubProject subProject =
-                subProjectService.createSubProject(
-                        subProjectNameParam,
-                        LocalDate.parse(startDateParam),
-                        LocalDate.parse(endDateParam),
-                        projectColorParam);
 
-        project.getSubProjects().add(subProject);
+    //SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
+    SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryImpl());
+    SubProject subProject =
+        subProjectService.createSubProject(
+            subProjectNameParam,
+            LocalDate.parse(startDateParam),
+            LocalDate.parse(endDateParam),
+            projectColorParam,
+            projectId);
+
+    project.getSubProjects().add(subProject); //TODO skal fjernes - Hvorfor stubben virker ikke uden?
 
         model.addAttribute("subProject", subProject); // TODO doesnt matter? we redirect?
 

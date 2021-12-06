@@ -57,7 +57,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
    * @author Jackie
    */
   @Override
-  public List<SubProject> getSubProjects() {
+  public List<SubProject> getSubProjects(int projectId) {
     return SUB_PROJECTS;
   }
 
@@ -91,7 +91,11 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
    */
   @Override
   public SubProject createSubProject(
-      String name, LocalDate startDate, LocalDate endDate, String projectColor) {
+      String name,
+      LocalDate startDate,
+      LocalDate endDate,
+      String projectColor,
+      int parentProjectId) {
 
     SubProject subProject =
         new SubProject.SubProjectBuilder()
@@ -109,8 +113,8 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
   }
 
   @Override
-  public SubProject deleteSubProject(SubProject subProject) {
-    return subProject;
+  public SubProject deleteSubProject(int subProjectId) {
+    return null;
   }
 
   /**
