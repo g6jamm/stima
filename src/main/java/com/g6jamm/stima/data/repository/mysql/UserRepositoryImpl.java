@@ -16,10 +16,10 @@ public class UserRepositoryImpl implements UserRepository {
   @Override
   public User login(String email, String password) {
     try {
-      String query = "SELECT user_id FROM users WHERE email = ? AND password = ?";
+      String query = "SELECT * FROM users WHERE email = ? AND password = ?";
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setString(1, email);
-      ps.setString(2, password);
+      ps.setBytes(2, password.getBytes());
 
       ResultSet resultSet = ps.executeQuery();
 
