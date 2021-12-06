@@ -99,7 +99,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
                         .name(name)
                         // .hours(0)
                         // .price(0)
-                        // .tasks(null)
+                        .tasks(new ArrayList<Task>())
                         .startDate(startDate)
                         .endDate(endDate)
                         .colorCode(projectColor)
