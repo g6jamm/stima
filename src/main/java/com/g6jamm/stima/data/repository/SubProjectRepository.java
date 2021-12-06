@@ -9,14 +9,18 @@ import java.util.List;
 /** @author Jackie */
 public interface SubProjectRepository {
 
-  List<SubProject> getSubProjects();
+  List<SubProject> getSubProjects(int projectId);
 
   SubProject getSubproject(int subProjectId);
 
   SubProject createSubProject(
-      String name, LocalDate startDate, LocalDate endDate, String projectColorParam);
+      String name,
+      LocalDate startDate,
+      LocalDate endDate,
+      String projectColorParam,
+      int parentProjectId);
 
-  SubProject deleteSubProject(SubProject subProject);
+  SubProject deleteSubProject(int subProjectId);
 
   boolean addTaskToSubProject(int subProjectId, Task task);
 
