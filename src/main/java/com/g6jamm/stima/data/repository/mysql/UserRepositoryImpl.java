@@ -33,23 +33,60 @@ public class UserRepositoryImpl implements UserRepository {
             .build();
       }
     }catch (SQLException e){
-      System.out.println(e.getMessage());
+      System.out.println(e.getMessage()); //TODO
     }
     return null;
   }
 
   @Override
   public User createUser(User user) throws SignUpException {
-    return null;
+    int userId = getNewUserId(user);
+    return new User.UserBuilder()
+        .firstName(user.getFirstName())
+        .lastName(user.getLastName())
+        .email(user.getEmail())
+        .password(user.getPassword())
+        .id(userId)
+        .build();
   }
 
   @Override
   public boolean userExists(int id) {
+    try {
+      String query = "SELECT * FROM users WHERE user_id = ?";
+      PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
+      ps.setInt(1, id);
+
+      return ps.executeQuery().next();
+
+    }catch (SQLException e){
+      System.out.println(e.getMessage()); //TODO
+    }
     return false;
   }
 
   @Override
   public int getNewUserId(User user) {
+
+    try {
+      String query = "INSERT INTO users(first_name, last_name, email, password) VALUES(?,?,?,?)";
+      PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
+
+      ps.setString(1, user.getFirstName());
+      ps.setString(2, user.getLastName());
+      ps.setString(3, user.getEmail());
+      ps.setString(4, user.getPassword());
+
+      ResultSet resultSet = ps.getGeneratedKeys();
+
+      if (resultSet.next()){
+        return resultSet.getInt("user_id");
+      }
+
+
+    }catch (SQLException e){
+      System.out.println(e.getMessage()); //TODO
+    }
     return 0;
   }
 
