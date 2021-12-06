@@ -26,7 +26,7 @@ public class ProjectController {
    * View all projects.
    *
    * @param webRequest WebRequest
-   * @param model      Model
+   * @param model Model
    * @return String
    * @auther Mathias
    */
@@ -93,7 +93,7 @@ public class ProjectController {
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
     Project project = projectService.getProjectById(projectId);
 
-    //SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
+    // SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
     SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryImpl());
     SubProject subProject =
         subProjectService.createSubProject(
@@ -103,8 +103,7 @@ public class ProjectController {
             projectColorParam,
             projectId);
 
-    //project.getSubProjects().add(subProject);
-
+    // project.getSubProjects().add(subProject);
 
     model.addAttribute("subProject", subProject); // TODO doesnt matter? we redirect?
 
@@ -139,7 +138,7 @@ public class ProjectController {
    * Navigates the user to edit project page.
    *
    * @param webRequest WebRequest
-   * @param projectId  int
+   * @param projectId int
    * @return String
    * @auther Mathias
    */
@@ -152,7 +151,7 @@ public class ProjectController {
    * Deletes the project by id and navigate the user to the project page.
    *
    * @param webRequest WebRequest
-   * @param projectId  int
+   * @param projectId int
    * @return String
    * @auther Mathias
    */

@@ -15,7 +15,6 @@ import java.util.List;
 
 public class SubProjectRepositoryImpl implements SubProjectRepository {
 
-
   @Override
   public List<SubProject> getSubProjects(int projectId) {
 
@@ -29,19 +28,20 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       ResultSet rs = ps.executeQuery();
 
       while (rs.next()) {
-        SubProject subProject = new SubProject.SubProjectBuilder()
-            .subProjectId(rs.getInt("project_id"))
-            .name(rs.getString("name"))
-            .startDate(LocalDate.parse(rs.getString("start_date")))
-            .endDate(LocalDate.parse(rs.getString("end_date")))
-            .colorCode("#dc5b6e") //TODO rs.getString("color_id")
-            .build();
+        SubProject subProject =
+            new SubProject.SubProjectBuilder()
+                .subProjectId(rs.getInt("project_id"))
+                .name(rs.getString("name"))
+                .startDate(LocalDate.parse(rs.getString("start_date")))
+                .endDate(LocalDate.parse(rs.getString("end_date")))
+                .colorCode("#dc5b6e") // TODO rs.getString("color_id")
+                .build();
         subProjects.add(subProject);
       }
 
       return subProjects;
     } catch (SQLException e) {
-      System.out.println(e.getMessage()); //TODO FIX
+      System.out.println(e.getMessage()); // TODO FIX
     }
 
     return null;
@@ -64,35 +64,42 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
             .name(rs.getString("name"))
             .startDate(LocalDate.parse(rs.getString("start_date")))
             .endDate(LocalDate.parse(rs.getString("end_date")))
-            .colorCode("#dc5b6e") //TODO add rs.getString("color_id")
+            .colorCode("#dc5b6e") // TODO add rs.getString("color_id")
             .build();
-        //TODO colorcode handel,
+        // TODO colorcode handel,
       }
 
     } catch (SQLException e) {
-      System.out.println(e.getMessage()); //TODO FIX
+      System.out.println(e.getMessage()); // TODO FIX
     }
 
     return null;
   }
 
   @Override
-  public SubProject createSubProject(String name, LocalDate startDate, LocalDate endDate, String projectColorParam, int parentProjectId) {
-    //TODO change colorcode to id
-    String query = "INSERT INTO projects(name, start_date, end_date, color_id, parent_project_id) values (?,?,?,?,?)";
+  public SubProject createSubProject(
+      String name,
+      LocalDate startDate,
+      LocalDate endDate,
+      String projectColorParam,
+      int parentProjectId) {
+    // TODO change colorcode to id
+    String query =
+        "INSERT INTO projects(name, start_date, end_date, color_id, parent_project_id) values"
+            + " (?,?,?,?,?)";
 
     try {
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setString(1, name);
       ps.setDate(2, Date.valueOf(startDate));
       ps.setDate(3, Date.valueOf(endDate));
-      ps.setInt(4, 2); //TODO change to colorCodeId
+      ps.setInt(4, 2); // TODO change to colorCodeId
       ps.setInt(5, parentProjectId);
 
       ps.execute();
 
     } catch (SQLException e) {
-      System.out.println(e.getMessage()); //TODO FIX
+      System.out.println(e.getMessage()); // TODO FIX
     }
 
     return null;
