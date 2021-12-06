@@ -69,16 +69,18 @@ public class ProjectRepositoryStub implements ProjectRepository {
   }
 
   @Override
-  public Project createProject() {
+  public Project createProject(
+      String name, LocalDate startDate, LocalDate endDate, String projectColor) {
 
     Project newProject =
         new Project.ProjectBuilder()
-            .projectId(1)
-            .projectName("Demo")
-            .startDate(LocalDate.of(2021, 1, 1))
-            .endDate(LocalDate.of(2021, 1, 2))
+            .projectId(projects.size() + 1)
+            .projectName(name)
+            .startDate(startDate)
+            .endDate(endDate)
             .totalPrice(20000)
             .totalHours(500.0)
+            .colorCode(projectColor)
             // .tasks()
             // .subProjects()
             .build();

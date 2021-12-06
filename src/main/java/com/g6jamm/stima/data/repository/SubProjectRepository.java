@@ -13,7 +13,8 @@ public interface SubProjectRepository {
 
   SubProject getSubproject(int subProjectId);
 
-  SubProject createSubProject(String name, LocalDate startDate, LocalDate endDate);
+  SubProject createSubProject(
+      String name, LocalDate startDate, LocalDate endDate, String projectColorParam);
 
   SubProject deleteSubProject(SubProject subProject);
 

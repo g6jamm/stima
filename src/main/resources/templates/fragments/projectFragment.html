@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="link (link)">
+
+    <a th:href="${link}">
+        <div class="card shadow-sm"
+             th:style="'background-color: ' + ${project.getColorCode}">
+            <div class="card-body card-text card-text-size-lg" style="margin-top: 150px">
+                <p th:text="${project.getName}"></p>
+                <p th:text="'Timer: ' + ${project.getHours}"></p>
+                <p th:text="'Pris: ' + ${project.getPrice} + ' DKK'"></p>
+            </div>
+        </div>
+    </a>
+
+</div>
+
+</html>

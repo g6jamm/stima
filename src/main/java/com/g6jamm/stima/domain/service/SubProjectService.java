@@ -24,8 +24,9 @@ public class SubProjectService {
    * @return
    * @author Jackie
    */
-  public SubProject createSubProject(String name, LocalDate startDate, LocalDate endDate) {
-    return subProjectRepository.createSubProject(name, startDate, endDate);
+  public SubProject createSubProject(
+      String name, LocalDate startDate, LocalDate endDate, String projectColor) {
+    return subProjectRepository.createSubProject(name, startDate, endDate, projectColor);
   }
 
   /**
@@ -35,7 +36,7 @@ public class SubProjectService {
    * @author Jackie
    */
   public List<SubProject> getSubprojects() { // TODO add reference to project
-    return subProjectRepository.getSubProjects();
+    return subProjectRepository.getSubProjects(); // WIP
   }
 
   /**

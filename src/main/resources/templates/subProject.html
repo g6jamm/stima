@@ -1,31 +1,40 @@
 <!DOCTYPE html>
 <html lang="da" xmlns:th="https://www.thymeleaf.org">
-<head th:replace="fragments/headFragment :: head (title='Subproject')"></head>
+<head th:replace="fragments/headFragment :: head (title=${subProject.getName})"></head>
 <body>
 <nav th:replace="fragments/navFragment :: nav"></nav>
+
+<nav class="container breadcrumb-container">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a th:href="@{/projects}">Projects</a></li>
+        <li class="breadcrumb-item active"><a th:href="@{/projects/{projectId} (projectId=${parentProject.getId})}" th:text="${parentProject.getName}"></a></li>
+        <li th:text="${subProject.getName}" class="breadcrumb-item active"></li>
+    </ol>
+</nav>
+
 <main>
-    <div class="album py-5 bg-light">
-        <h1 th:text="${subProject.getName()}"></h1>
+    <div class="py-5 bg-light">
         <div class="container">
+            <h1 th:text="${subProject.getName}"></h1>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-3">
-                <div class="col" th:each="task : ${tasks}">
-                    <a href="#">
-                        <div class="card shadow-sm" th:style="'background-color: ' + ${subProject.getColorCode}">
-                            <div class="card-body card-text card-text-size-sm">
-                                <p><span th:remove="tag" th:text="${task.getName}"></span></p>
-                                <p>Timer: <span th:remove="tag" th:text="${task.getHours}"></span></p>
-                                <p>Pris: <span th:remove="tag" th:text="${task.getPrice}"></span> DKK</p>
-                                <p>Ressourcetype: <span th:remove="tag"
-                                                        th:text="${task.resourceType.getName()}"></span></p>
+                <div class="col">
+                    <a data-bs-target="#taskModal" data-bs-toggle="modal" href="#">
+                        <div class="card shadow-sm align-items-center justify-content-center card-btn">
+                            <div class="card-body card-text card-text-size-sm card-icon">
+                                +
                             </div>
                         </div>
                     </a>
                 </div>
-                <div class="col">
-                    <a href="#"> <!-- TODO add task, copy from project.html -->
-                        <div class="card shadow-sm align-items-center justify-content-center card-btn">
-                            <div class="card-body card-text card-text-size-sm card-icon">
-                                + <!-- TODO change to icon -->
+                <div class="col" th:each="task : ${tasks}">
+                    <a href="#">
+                        <div class="card shadow-sm"
+                             th:style="'background-color: ' + ${subProject.getColorCode}">
+                            <div class="card-body card-text card-text-size-sm">
+                                <p th:text="${task.getName}"></p>
+                                <p th:text="'Timer: ' + ${task.getHours}"></p>
+                                <p th:text="'Pris: ' + ${task.getPrice} + ' DKK'"></p>
+                                <p th:text="'Resource type: ' + ${task.resourceType.getName}"></p>
                             </div>
                         </div>
                     </a>
@@ -33,8 +42,8 @@
             </div>
         </div>
     </div>
-    </div>
 </main>
 <footer th:replace="fragments/footerFragtment :: footer"></footer>
+<div th:replace="fragments/taskModalFragment :: actinLink (@{/projects/{projectId}/{subProjectId}/create-task (projectId=${parentProject.getId}, subProjectId=${subProject.getId})})"></div>
 </body>
 </html>

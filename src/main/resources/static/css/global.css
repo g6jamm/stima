@@ -1,17 +1,15 @@
-body {
+html, body {
+    background-color: #f5f5f5;
     font-family: Montserrat, sans-serif;
-    font-size: 22px;
-    position: relative;
 }
 
 .container {
     max-width: 1330px;
 }
 
-a {
+a, a:hover {
     text-decoration: none;
-    color: #fff;
-<!-- TODO: make dynamic -->
+    color: #f5f5f5
 }
 
 .card-text {
@@ -35,8 +33,9 @@ a {
     border-style: dashed;
     border-width: 5px;
     border-color: #000;
-    min-height: 250px;
+    height: 250px;
     color: #000;
+    background: #f5f5f5;
 }
 
 .card-icon {
@@ -61,4 +60,12 @@ a {
 
 .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .show > .nav-link {
     border-bottom: #FF325A 2px solid;
+}
+
+.breadcrumb a, .breadcrumb a:hover {
+    color: black;
+}
+
+.breadcrumb-container {
+    padding-top: 30px;
 }
