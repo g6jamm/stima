@@ -56,7 +56,7 @@ public class TaskRepositoryStub implements TaskRepository {
   }
 
   @Override
-  public List<Task> getTasks() {
+  public List<Task> getTasks(int projectId) {
     return taskListStub;
   }
 

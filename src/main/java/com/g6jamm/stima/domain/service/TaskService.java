@@ -39,8 +39,8 @@ public class TaskService {
     return LocalDate.parse(stringDate);
   }
 
-  public List<Task> getTasks() {
-    return taskRepository.getTasks();
+  public List<Task> getTasks(int projectId) {
+    return taskRepository.getTasks(projectId);
   }
 
   public List<ResourceType> getResourceTypes() {

@@ -10,5 +10,5 @@ public interface TaskRepository {
 
   Task getTask(int task_id);
 
-  List<Task> getTasks();
+  List<Task> getTasks(int projectId);
 }

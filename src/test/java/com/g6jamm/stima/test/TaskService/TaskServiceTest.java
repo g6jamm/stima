@@ -23,7 +23,7 @@ public class TaskServiceTest {
   public void testPriceCalculation() {
     TaskService taskService =
         new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
-    Task task = taskService.getTasks().get(0);
+    Task task = taskService.getTasks(1).get(0);
     // expected is 5000 - Task 0 in stub is hours = 5 and pricePrHour = 1000
     Assertions.assertEquals(5000, task.getPrice());
   }
