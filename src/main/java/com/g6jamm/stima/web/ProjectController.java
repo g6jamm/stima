@@ -60,7 +60,7 @@ public class ProjectController {
     Project project = projectService.getProjectById(projectId);
 
     SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
-    List<SubProject> subProjects = subProjectService.getSubprojects();
+    List<SubProject> subProjects = project.getSubProjects();
     model.addAttribute("subprojects", subProjects);
 
     List<Task> tasks = project.getTasks();
@@ -89,6 +89,9 @@ public class ProjectController {
     // TODO check if valid date
     // TODO check if date are inside project start and end
 
+    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
+    Project project = projectService.getProjectById(projectId);
+
     SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
     SubProject subProject =
         subProjectService.createSubProject(
@@ -97,7 +100,10 @@ public class ProjectController {
             LocalDate.parse(endDateParam),
             projectColorParam);
 
-    model.addAttribute("subProject", subProject);
+
+    project.getSubProjects().add(subProject);
+
+    model.addAttribute("subProject", subProject); //TODO doesnt matter? we redirect?
 
     return "redirect:/projects/" + projectId;
   }

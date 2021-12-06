@@ -2,6 +2,7 @@ package com.g6jamm.stima.data.repository.stub;
 
 import com.g6jamm.stima.data.repository.ProjectRepository;
 import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.model.SubProject;
 import com.g6jamm.stima.domain.model.Task;
 
 import java.time.LocalDate;
@@ -15,6 +16,9 @@ public class ProjectRepositoryStub implements ProjectRepository {
     public ProjectRepositoryStub() {
         if (projects.isEmpty()) {
 
+            TaskRepositoryStub taskRepositoryStub = new TaskRepositoryStub();
+            SubProjectRepositoryStub subProjectRepositoryStub = new SubProjectRepositoryStub();
+
             projects.add(
                     new Project.ProjectBuilder()
                             .projectId(projects.size() + 1)
@@ -23,8 +27,8 @@ public class ProjectRepositoryStub implements ProjectRepository {
                             .endDate(LocalDate.of(2021, 1, 2))
                             .totalPrice(4000000)
                             .totalHours(300)
-                            .tasks(new ArrayList<Task>())
-                            // .subProjects()
+                            .tasks(taskRepositoryStub.getTasks())
+                            .subProjects(subProjectRepositoryStub.getSubProjects())
                             .colorCode("pink")
                             .build());
 
@@ -37,7 +41,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
                             .totalPrice(7000000)
                             .totalHours(800)
                             .tasks(new ArrayList<Task>())
-                            // .subProjects()
+                            .subProjects(new ArrayList<SubProject>())
                             .colorCode("purple")
                             .build());
 
@@ -50,7 +54,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
                             .totalPrice(200000)
                             .totalHours(60)
                             .tasks(new ArrayList<Task>())
-                            // .subProjects()
+                            .subProjects(new ArrayList<SubProject>())
                             .colorCode("green")
                             .build());
 
@@ -63,7 +67,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
                             .totalPrice(12000000)
                             .totalHours(120)
                             .tasks(new ArrayList<Task>())
-                            // .subProjects()
+                            .subProjects(new ArrayList<SubProject>())
                             .colorCode("brown")
                             .build());
         }
@@ -83,7 +87,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
                         .totalHours(500.0)
                         .colorCode(projectColor)
                         .tasks(new ArrayList<Task>())
-                        // .subProjects()
+                        .subProjects(new ArrayList<SubProject>())
                         .build();
 
         projects.add(newProject);
