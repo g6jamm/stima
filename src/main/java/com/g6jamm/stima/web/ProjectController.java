@@ -103,7 +103,7 @@ public class ProjectController {
             projectColorParam,
             projectId);
 
-    //project.getSubProjects().add(subProject); //TODO skal fjernes
+    // project.getSubProjects().add(subProject); //TODO skal fjernes
 
     model.addAttribute("subProject", subProject); // TODO doesnt matter? we redirect?
 
