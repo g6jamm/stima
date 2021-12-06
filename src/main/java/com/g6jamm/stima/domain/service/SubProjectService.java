@@ -25,8 +25,13 @@ public class SubProjectService {
    * @author Jackie
    */
   public SubProject createSubProject(
-      String name, LocalDate startDate, LocalDate endDate, String projectColor, int parentProjectId) {
-    return subProjectRepository.createSubProject(name, startDate, endDate, projectColor, parentProjectId);
+      String name,
+      LocalDate startDate,
+      LocalDate endDate,
+      String projectColor,
+      int parentProjectId) {
+    return subProjectRepository.createSubProject(
+        name, startDate, endDate, projectColor, parentProjectId);
   }
 
   /**

@@ -26,7 +26,7 @@ public class ProjectController {
    * View all projects.
    *
    * @param webRequest WebRequest
-   * @param model Model
+   * @param model      Model
    * @return String
    * @auther Mathias
    */
@@ -139,7 +139,7 @@ public class ProjectController {
    * Navigates the user to edit project page.
    *
    * @param webRequest WebRequest
-   * @param projectId int
+   * @param projectId  int
    * @return String
    * @auther Mathias
    */
@@ -152,7 +152,7 @@ public class ProjectController {
    * Deletes the project by id and navigate the user to the project page.
    *
    * @param webRequest WebRequest
-   * @param projectId int
+   * @param projectId  int
    * @return String
    * @auther Mathias
    */

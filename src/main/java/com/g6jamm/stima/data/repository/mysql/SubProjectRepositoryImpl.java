@@ -23,24 +23,24 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
     String query = "SELECT * FROM projects WHERE parent_project_id = ?";
 
     try {
-       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
-       ps.setInt(1, projectId);
+      PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
+      ps.setInt(1, projectId);
 
-       ResultSet rs = ps.executeQuery();
+      ResultSet rs = ps.executeQuery();
 
-       while (rs.next()) {
-         SubProject subProject = new SubProject.SubProjectBuilder()
-             .subProjectId(rs.getInt("project_id"))
-             .name(rs.getString("name"))
-             .startDate(LocalDate.parse(rs.getString("start_date")))
-             .endDate(LocalDate.parse(rs.getString("end_date")))
-             .colorCode("#dc5b6e") //TODO rs.getString("color_id")
-             .build();
-         subProjects.add(subProject);
-       }
+      while (rs.next()) {
+        SubProject subProject = new SubProject.SubProjectBuilder()
+            .subProjectId(rs.getInt("project_id"))
+            .name(rs.getString("name"))
+            .startDate(LocalDate.parse(rs.getString("start_date")))
+            .endDate(LocalDate.parse(rs.getString("end_date")))
+            .colorCode("#dc5b6e") //TODO rs.getString("color_id")
+            .build();
+        subProjects.add(subProject);
+      }
 
-       return subProjects;
-    }catch (SQLException e) {
+      return subProjects;
+    } catch (SQLException e) {
       System.out.println(e.getMessage()); //TODO FIX
     }
 
