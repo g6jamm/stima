@@ -1,5 +1,6 @@
 package com.g6jamm.stima.web;
 
+import com.g6jamm.stima.data.repository.mysql.SubProjectRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.*;
 import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.SubProject;
@@ -92,7 +93,8 @@ public class ProjectController {
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
     Project project = projectService.getProjectById(projectId);
 
-    SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
+    //SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
+    SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryImpl());
     SubProject subProject =
         subProjectService.createSubProject(
             subProjectNameParam,
@@ -101,7 +103,8 @@ public class ProjectController {
             projectColorParam,
             projectId);
 
-    project.getSubProjects().add(subProject);
+    //project.getSubProjects().add(subProject);
+
 
     model.addAttribute("subProject", subProject); // TODO doesnt matter? we redirect?
 

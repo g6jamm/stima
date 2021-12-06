@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubProjectImpl implements SubProjectRepository {
+public class SubProjectRepositoryImpl implements SubProjectRepository {
 
 
   @Override
@@ -88,6 +88,8 @@ public class SubProjectImpl implements SubProjectRepository {
       ps.setDate(3, Date.valueOf(endDate));
       ps.setInt(4, 2); //TODO change to colorCodeId
       ps.setInt(5, parentProjectId);
+
+      ps.execute();
 
     } catch (SQLException e) {
       System.out.println(e.getMessage()); //TODO FIX
