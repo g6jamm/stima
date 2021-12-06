@@ -28,7 +28,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
               .totalPrice(4000000)
               .totalHours(300)
               .tasks(taskRepositoryStub.getTasks())
-              .subProjects(subProjectRepositoryStub.getSubProjects())
+              .subProjects(subProjectRepositoryStub.getSubProjects(projects.size() + 1))
               .colorCode("pink")
               .build());
 

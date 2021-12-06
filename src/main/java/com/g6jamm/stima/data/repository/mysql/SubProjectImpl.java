@@ -10,14 +10,41 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SubProjectImpl implements SubProjectRepository {
 
 
   @Override
-  public List<SubProject> getSubProjects() {
-    return null; //TODO add product id
+  public List<SubProject> getSubProjects(int projectId) {
+
+    List<SubProject> subProjects = new ArrayList<>();
+    String query = "SELECT * FROM projects WHERE parent_project_id = ?"; //TODO add query
+
+    try {
+       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
+       ps.setInt(1, projectId);
+
+       ResultSet rs = ps.executeQuery();
+
+       while (rs.next()) {
+         SubProject subProject = new SubProject.SubProjectBuilder()
+             .subProjectId(rs.getInt("project_id"))
+             .name(rs.getString("name"))
+             .startDate(LocalDate.parse(rs.getString("start_date")))
+             .endDate(LocalDate.parse(rs.getString("end_date")))
+             .colorCode(rs.getString("color_id")) //TODO int til id
+             .build();
+         subProjects.add(subProject);
+       }
+
+       return subProjects;
+    }catch (SQLException e) {
+      System.out.println(e.getMessage()); //TODO FIX
+    }
+
+    return null;
   }
 
   @Override
@@ -71,7 +98,7 @@ public class SubProjectImpl implements SubProjectRepository {
   }
 
   @Override
-  public SubProject deleteSubProject(SubProject subProject) {
+  public SubProject deleteSubProject(int subProjectId) {
     return null;
   }
 
