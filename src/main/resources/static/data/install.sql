@@ -42,7 +42,7 @@ CREATE TABLE tasks
     end_date         date         NOT NULL,
     PRIMARY KEY (task_id)
 );
-CREATE TABLE resource_type_id
+CREATE TABLE resource_type
 (
     resource_type_id int(10)     NOT NULL AUTO_INCREMENT,
     price_per_hour   int(10)     NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE roles
 );
 
 ALTER TABLE users
-    ADD CONSTRAINT FKusers461286 FOREIGN KEY (resource_type_id) REFERENCES resource_type_id (resource_type_id);
+    ADD CONSTRAINT FKusers461286 FOREIGN KEY (resource_type_id) REFERENCES resource_type (resource_type_id);
 ALTER TABLE users
     ADD CONSTRAINT FKusers426032 FOREIGN KEY (permission_id) REFERENCES permissions (permission_id);
 ALTER TABLE projects
@@ -87,6 +87,6 @@ ALTER TABLE project_users
 ALTER TABLE project_users
     ADD CONSTRAINT FKproject_us744300 FOREIGN KEY (role_id) REFERENCES roles (role_id);
 ALTER TABLE tasks
-    ADD CONSTRAINT FKtasks17354 FOREIGN KEY (resource_type_id) REFERENCES resource_type_id (resource_type_id);
+    ADD CONSTRAINT FKtasks17354 FOREIGN KEY (resource_type_id) REFERENCES resource_type (resource_type_id);
 ALTER TABLE tasks
     ADD CONSTRAINT FKtasks538315 FOREIGN KEY (project_id) REFERENCES projects (project_id);
