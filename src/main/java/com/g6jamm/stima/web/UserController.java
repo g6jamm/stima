@@ -38,7 +38,7 @@ public class UserController { // TODO change name to Login controller?
   @GetMapping("/logout")
   public String logout(WebRequest webRequest) {
     webRequest.removeAttribute("user", WebRequest.SCOPE_SESSION);
-    return "redirect:/index";
+    return "redirect:/";
   }
 
   @PostMapping("/login")
