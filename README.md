@@ -11,9 +11,9 @@ Stima is a project estimation tool.
 
 ## Using
 
-To use stima, follow this link: https://stima.herokuapp.com/
+To use stima, follow this link: https://stima2.herokuapp.com/
 
-## Contributing to wishShare
+## Contributing to stima
 
 To contribute to stima, follow these steps:
 
