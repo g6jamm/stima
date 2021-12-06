@@ -100,10 +100,9 @@ public class ProjectController {
             LocalDate.parse(endDateParam),
             projectColorParam);
 
-
     project.getSubProjects().add(subProject);
 
-    model.addAttribute("subProject", subProject); //TODO doesnt matter? we redirect?
+    model.addAttribute("subProject", subProject); // TODO doesnt matter? we redirect?
 
     return "redirect:/projects/" + projectId;
   }

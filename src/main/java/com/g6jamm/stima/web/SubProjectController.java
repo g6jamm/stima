@@ -39,7 +39,7 @@ public class SubProjectController {
   public String subProjectPage(
       Model model, @PathVariable int projectId, @PathVariable int subProjectId) {
     SubProject subProject = SUBPROJECT_SERVICE.getSubProject(subProjectId);
-    List<Task> tasks =  subProject.getTasks();
+    List<Task> tasks = subProject.getTasks();
     // TODO need change remove hardcoded tasks when possible
 
     //    for (Task t : tasks) {
@@ -63,11 +63,9 @@ public class SubProjectController {
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
     Project project = projectService.getProjectById(projectId);
 
-
     try {
-    createTask(webRequest, project);
-    }
-    catch (TaskCreationException e){
+      createTask(webRequest, project);
+    } catch (TaskCreationException e) {
       model.addAttribute("error", e.getMessage());
     }
 
@@ -76,12 +74,14 @@ public class SubProjectController {
 
   /**
    * Post method for creating new tasks. Takes all input from the form and passes them to
-   * taskService which create a Task object. The newly created task is then added to the projects list of tasks.
+   * taskService which create a Task object. The newly created task is then added to the projects
+   * list of tasks.
    *
    * @param webRequest
    * @author Andreas
    */
-  private void createTask(WebRequest webRequest, ProjectInterface project) throws TaskCreationException{
+  private void createTask(WebRequest webRequest, ProjectInterface project)
+      throws TaskCreationException {
 
     String taskNameParam = webRequest.getParameter("task-name");
     String taskHoursParam = webRequest.getParameter("task-hours");
@@ -101,12 +101,14 @@ public class SubProjectController {
     String taskEndDate =
         !taskEndDateParam.isEmpty()
             ? taskEndDateParam
-            : project.getStartDate().format(DateTimeFormatter.ofPattern("YYYY-MM-DD")); //TODO More validation
+            : project
+                .getStartDate()
+                .format(DateTimeFormatter.ofPattern("YYYY-MM-DD")); // TODO More validation
 
-    Task newTask = taskService.createtask(taskNameParam, hours, resourceTypeParam, taskStartDate, taskEndDate);
+    Task newTask =
+        taskService.createtask(taskNameParam, hours, resourceTypeParam, taskStartDate, taskEndDate);
 
     project.getTasks().add(newTask);
-
   }
 
   @PostMapping("/projects/{projectId}/{subProjectId}/create-task")
@@ -118,9 +120,11 @@ public class SubProjectController {
 
     SubProject subProject = SUBPROJECT_SERVICE.getSubProject(projectId);
     try {
-    createTask(webRequest, subProject);
-    }catch (TaskCreationException e){
-      model.addAttribute("error", e.getMessage()); //TODO Handle exceptions?????? if we redirect we dont see the error.
+      createTask(webRequest, subProject);
+    } catch (TaskCreationException e) {
+      model.addAttribute(
+          "error",
+          e.getMessage()); // TODO Handle exceptions?????? if we redirect we dont see the error.
     }
 
     return "redirect:/projects/" + projectId + "/" + subProjectId;

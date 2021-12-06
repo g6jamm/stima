@@ -5,9 +5,9 @@ import java.util.List;
 
 public interface ProjectInterface {
 
-    public LocalDate getStartDate();
+  public LocalDate getStartDate();
 
-    public LocalDate getEndDate();
+  public LocalDate getEndDate();
 
-    public List<Task> getTasks();
+  public List<Task> getTasks();
 }
