@@ -74,24 +74,23 @@ public class ProjectRepositoryStub implements ProjectRepository {
   }
 
   @Override
-  public Project createProject(
-      String name, LocalDate startDate, LocalDate endDate, String projectColor) {
+  public Project createProject(Project project) {
 
     Project newProject =
         new Project.ProjectBuilder()
             .projectId(projects.size() + 1)
-            .projectName(name)
-            .startDate(startDate)
-            .endDate(endDate)
+            .projectName(project.getName())
+            .startDate(project.getStartDate())
+            .endDate(project.getEndDate())
             .totalPrice(20000)
             .totalHours(500.0)
-            .colorCode(projectColor)
+            .colorCode(project.getColorCode())
             .tasks(new ArrayList<Task>())
             .subProjects(new ArrayList<SubProject>())
             .build();
 
     projects.add(newProject);
-    return newProject;
+    return project;
   }
 
   @Override
@@ -104,17 +103,8 @@ public class ProjectRepositoryStub implements ProjectRepository {
   }
 
   @Override
-  public Project deleteProject(int projectId) {
-    return null;
-  }
+  public void deleteProject(int projectId) {}
 
   @Override
-  public Project editProject(int projectId) {
-    return null;
-  }
-
-  @Override
-  public Project getTotalHoursOfProject(int projectId) {
-    return null;
-  }
+  public void editProject(Project project) {}
 }
