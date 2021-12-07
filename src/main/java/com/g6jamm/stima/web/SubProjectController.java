@@ -38,23 +38,32 @@ public class SubProjectController {
   @GetMapping("/projects/{projectId}/{subProjectId}")
   public String subProjectPage(
       Model model, @PathVariable int projectId, @PathVariable int subProjectId) {
-    SubProject subProject = SUBPROJECT_SERVICE.getSubProject(subProjectId);
-    List<Task> tasks = subProject.getTasks();
-    // TODO need change remove hardcoded tasks when possible
-
-    //    for (Task t : tasks) {
-    //      SUBPROJECT_SERVICE.addTaskToSubProject(subProject.getId(), t);
-    //    } //TODO FIX!!
-
-    model.addAttribute("tasks", tasks);
-    model.addAttribute("subProject", subProject);
-    model.addAttribute("resourceTypes", taskService.getResourceTypes());
-
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
+    Project project = projectService.getProjectById(projectId);
 
-    model.addAttribute("parentProject", projectService.getProjectById(projectId));
+    SubProject subProject = null; // todo move??
+    for (SubProject sp : project.getSubProjects()) {
+      if (subProjectId == sp.getId()) {
+        subProject = sp;
+      }
+    }
+    if (subProject != null) {
+      List<Task> tasks = subProject.getTasks();
+      // TODO need change remove hardcoded tasks when possible
 
-    return "subProject";
+      //    for (Task t : tasks) {
+      //      SUBPROJECT_SERVICE.addTaskToSubProject(subProject.getId(), t);
+      //    } //TODO FIX!!
+
+      model.addAttribute("tasks", tasks);
+      model.addAttribute("subProject", subProject);
+      model.addAttribute("resourceTypes", taskService.getResourceTypes());
+
+      model.addAttribute("parentProject", projectService.getProjectById(projectId));
+
+      return "subProject";
+    }
+    return "redirect:/projects/" + projectId;
   }
 
   @PostMapping("/projects/{projectId}/create-task")

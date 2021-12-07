@@ -61,13 +61,13 @@ public class ProjectController {
 
     Project project = projectService.getProjectById(projectId);
 
-    List<SubProject> subProjects = subProjectService.getSubprojects(projectId);
-    model.addAttribute("subprojects", subProjects);
+    List<SubProject> subProjects = project.getSubProjects();
+    model.addAttribute("projects", subProjects);
 
     List<Task> tasks = project.getTasks();
     model.addAttribute("tasks", tasks);
 
-    model.addAttribute("project", project);
+    model.addAttribute("parentproject", project);
 
     ProjectColorService projectColorService = new ProjectColorService(new ProjectColorStub());
     model.addAttribute("projectColors", projectColorService.getProjectColors());
@@ -103,7 +103,9 @@ public class ProjectController {
             projectColorParam,
             projectId);
 
-    // project.getSubProjects().add(subProject); //TODO skal fjernes
+    project
+        .getSubProjects()
+        .add(subProject); // TODO skal fjernes - Hvorfor stubben virker ikke uden?
 
     model.addAttribute("subProject", subProject); // TODO doesnt matter? we redirect?
 

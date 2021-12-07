@@ -4,7 +4,7 @@
 <div class="col" th:each="task : ${tasks}">
     <a href="#">
         <div class="card shadow-sm"
-             th:style="'background-color: ' + ${project.getColorCode}">
+             th:style="'background-color: ' + ${parentproject.getColorCode}">
             <div class="card-body card-text card-text-size-sm">
                 <p th:text="${task.getName}"></p>
                 <p th:text="'Timer: ' + ${task.getHours}"></p>
