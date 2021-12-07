@@ -130,7 +130,6 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
         projects.add(project);
       }
 
-
     } catch (SQLException e) {
       e.printStackTrace(); // TODO
     }
