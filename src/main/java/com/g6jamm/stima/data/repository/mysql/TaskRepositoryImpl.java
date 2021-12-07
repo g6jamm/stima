@@ -51,7 +51,7 @@ public class TaskRepositoryImpl implements TaskRepository {
               + ", price_per_hour"
               + ", r.name AS resource_name"
               + "FROM tasks t"
-              + "INNER JOIN resource_type r ON t.resource_type_id = r.resource_type_id\n"
+              + "INNER JOIN resource_type r ON t.resource_type_id = r.resource_type_id"
               + "WHERE task_id = ?";
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setInt(1, task_id);
