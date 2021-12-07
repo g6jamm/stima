@@ -27,7 +27,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
               .endDate(LocalDate.of(2021, 1, 2))
               .totalPrice(4000000)
               .totalHours(300)
-              .tasks(taskRepositoryStub.getTasks())
+              .tasks(taskRepositoryStub.getTasks(1))
               .subProjects(subProjectRepositoryStub.getSubProjects(projects.size() + 1))
               .colorCode("pink")
               .build());

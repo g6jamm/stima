@@ -1,5 +1,6 @@
 package com.g6jamm.stima.web;
 
+import com.g6jamm.stima.data.repository.mysql.TaskRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.*;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.Project;
@@ -24,7 +25,7 @@ public class SubProjectController {
   private final SubProjectService SUBPROJECT_SERVICE =
       new SubProjectService(new SubProjectRepositoryStub());
   TaskService taskService =
-      new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
+      new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryStub());
 
   /**
    * Get method for sub project page, shows all task for the sup project
@@ -115,7 +116,8 @@ public class SubProjectController {
                 .format(DateTimeFormatter.ofPattern("YYYY-MM-DD")); // TODO More validation
 
     Task newTask =
-        taskService.createtask(taskNameParam, hours, resourceTypeParam, taskStartDate, taskEndDate);
+        taskService.createtask(
+            taskNameParam, hours, resourceTypeParam, taskStartDate, taskEndDate, project.getId());
 
     project.getTasks().add(newTask);
   }
@@ -153,7 +155,7 @@ public class SubProjectController {
         model.addAttribute(
             "Task",
             taskService.createtask(
-                "Placeholder", 1.0, "Senior Developer", "1990-01-01", "1991-01-01"));
+                "Placeholder", 1.0, "Senior Developer", "1990-01-01", "1991-01-01", 1));
         model.addAttribute("ResourceTypes", taskService.getResourceTypes());
       } catch (TaskCreationException e) {
         model.addAttribute("error", e.getMessage());
