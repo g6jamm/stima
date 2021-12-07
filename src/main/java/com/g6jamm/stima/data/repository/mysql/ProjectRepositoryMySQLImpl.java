@@ -1,6 +1,8 @@
 package com.g6jamm.stima.data.repository.mysql;
 
 import com.g6jamm.stima.data.repository.ProjectRepository;
+import com.g6jamm.stima.data.repository.SubProjectRepository;
+import com.g6jamm.stima.data.repository.TaskRepository;
 import com.g6jamm.stima.data.repository.util.DbManager;
 import com.g6jamm.stima.domain.model.Project;
 
@@ -13,6 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectRepositoryMySQLImpl implements ProjectRepository {
+
+  TaskRepository taskRepository = new TaskRepositoryImpl();
+  SubProjectRepository subProjectRepository = new SubProjectRepositoryImpl();
+
   @Override
   public Project createProject(Project project) {
 
@@ -101,8 +107,9 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
   @Override
   public List<Project> getProjects() {
 
+    List<Project> projects = new ArrayList<>();
     try {
-      List<Project> projects = new ArrayList<>();
+
       String query = "SELECT * FROM projects WHERE parent_project_id IS NULL";
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
 
@@ -115,17 +122,19 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
                 .projectName(rs.getString("name"))
                 .startDate(LocalDate.parse(rs.getString("start_date")))
                 .endDate(LocalDate.parse(rs.getString("end_date")))
+                .tasks(taskRepository.getTasks(rs.getInt("project_id")))
+                .subProjects(subProjectRepository.getSubProjects(rs.getInt("project_id")))
                 .colorCode(rs.getString("color_id")) // TODO: @Jackie
                 .build();
 
         projects.add(project);
       }
 
-      return projects;
+
     } catch (SQLException e) {
       e.printStackTrace(); // TODO
     }
 
-    return null;
+    return projects;
   }
 }
