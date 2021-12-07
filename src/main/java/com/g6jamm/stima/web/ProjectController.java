@@ -4,6 +4,7 @@ import com.g6jamm.stima.data.repository.mysql.ProjectRepositoryMySQLImpl;
 import com.g6jamm.stima.data.repository.mysql.SubProjectRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.ProjectColorStub;
 import com.g6jamm.stima.data.repository.stub.ResourceTypeRepositoryStub;
+import com.g6jamm.stima.data.repository.stub.SubProjectRepositoryStub;
 import com.g6jamm.stima.data.repository.stub.TaskRepositoryStub;
 import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.SubProject;
