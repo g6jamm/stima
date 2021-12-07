@@ -1,5 +1,6 @@
 package com.g6jamm.stima.web;
 
+import com.g6jamm.stima.data.repository.mysql.TaskRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.*;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.Project;
@@ -24,7 +25,7 @@ public class SubProjectController {
   private final SubProjectService SUBPROJECT_SERVICE =
       new SubProjectService(new SubProjectRepositoryStub());
   TaskService taskService =
-      new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
+      new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryStub());
 
   /**
    * Get method for sub project page, shows all task for the sup project
@@ -38,23 +39,32 @@ public class SubProjectController {
   @GetMapping("/projects/{projectId}/{subProjectId}")
   public String subProjectPage(
       Model model, @PathVariable int projectId, @PathVariable int subProjectId) {
-    SubProject subProject = SUBPROJECT_SERVICE.getSubProject(subProjectId);
-    List<Task> tasks = subProject.getTasks();
-    // TODO need change remove hardcoded tasks when possible
-
-    //    for (Task t : tasks) {
-    //      SUBPROJECT_SERVICE.addTaskToSubProject(subProject.getId(), t);
-    //    } //TODO FIX!!
-
-    model.addAttribute("tasks", tasks);
-    model.addAttribute("subProject", subProject);
-    model.addAttribute("resourceTypes", taskService.getResourceTypes());
-
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
+    Project project = projectService.getProjectById(projectId);
 
-    model.addAttribute("parentProject", projectService.getProjectById(projectId));
+    SubProject subProject = null; // todo move??
+    for (SubProject sp : project.getSubProjects()) {
+      if (subProjectId == sp.getId()) {
+        subProject = sp;
+      }
+    }
+    if (subProject != null) {
+      List<Task> tasks = subProject.getTasks();
+      // TODO need change remove hardcoded tasks when possible
 
-    return "subProject";
+      //    for (Task t : tasks) {
+      //      SUBPROJECT_SERVICE.addTaskToSubProject(subProject.getId(), t);
+      //    } //TODO FIX!!
+
+      model.addAttribute("tasks", tasks);
+      model.addAttribute("subProject", subProject);
+      model.addAttribute("resourceTypes", taskService.getResourceTypes());
+
+      model.addAttribute("parentProject", projectService.getProjectById(projectId));
+
+      return "subProject";
+    }
+    return "redirect:/projects/" + projectId;
   }
 
   @PostMapping("/projects/{projectId}/create-task")
@@ -106,7 +116,8 @@ public class SubProjectController {
                 .format(DateTimeFormatter.ofPattern("YYYY-MM-DD")); // TODO More validation
 
     Task newTask =
-        taskService.createtask(taskNameParam, hours, resourceTypeParam, taskStartDate, taskEndDate);
+        taskService.createtask(
+            taskNameParam, hours, resourceTypeParam, taskStartDate, taskEndDate, project.getId());
 
     project.getTasks().add(newTask);
   }
@@ -144,7 +155,7 @@ public class SubProjectController {
         model.addAttribute(
             "Task",
             taskService.createtask(
-                "Placeholder", 1.0, "Senior Developer", "1990-01-01", "1991-01-01"));
+                "Placeholder", 1.0, "Senior Developer", "1990-01-01", "1991-01-01", 1));
         model.addAttribute("ResourceTypes", taskService.getResourceTypes());
       } catch (TaskCreationException e) {
         model.addAttribute("error", e.getMessage());

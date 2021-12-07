@@ -41,7 +41,7 @@ public class TaskRepositoryStub implements TaskRepository {
   }
 
   @Override
-  public Task createTask(Task task) {
+  public Task createTask(Task task, int projectId) {
     task =
         new Task.TaskBuilder()
             .name(task.getName())
@@ -56,7 +56,7 @@ public class TaskRepositoryStub implements TaskRepository {
   }
 
   @Override
-  public List<Task> getTasks() {
+  public List<Task> getTasks(int projectId) {
     return taskListStub;
   }
 
