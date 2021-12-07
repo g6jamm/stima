@@ -97,7 +97,7 @@ public class TaskRepositoryImpl implements TaskRepository {
               + ", price_per_hour"
               + ", r.name as resource_name \n"
               + "FROM tasks t\n"
-              + "inner join resource_type_id r on t.resource_type_id = r.resource_type_id\n"
+              + "inner join resource_type r on t.resource_type_id = r.resource_type_id\n"
               + "where project_id = ?";
 
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
@@ -123,10 +123,9 @@ public class TaskRepositoryImpl implements TaskRepository {
                 .resourceType(resourceType)
                 .build());
       }
-      return result;
     } catch (SQLException e) {
       System.out.println(e.getMessage()); // TODO
     }
-    return null;
+    return result;
   }
 }

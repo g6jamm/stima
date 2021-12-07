@@ -1,6 +1,7 @@
 package com.g6jamm.stima.data.repository.mysql;
 
 import com.g6jamm.stima.data.repository.SubProjectRepository;
+import com.g6jamm.stima.data.repository.TaskRepository;
 import com.g6jamm.stima.data.repository.util.DbManager;
 import com.g6jamm.stima.domain.model.SubProject;
 import com.g6jamm.stima.domain.model.Task;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SubProjectRepositoryImpl implements SubProjectRepository {
+
+  private final TaskRepository TASK_REPOSITORY = new TaskRepositoryImpl();
 
   @Override
   public List<SubProject> getSubProjects(int projectId) {
@@ -32,6 +35,9 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
             new SubProject.SubProjectBuilder()
                 .subProjectId(rs.getInt("project_id"))
                 .name(rs.getString("name"))
+                .tasks(
+                    TASK_REPOSITORY.getTasks(
+                        rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
                 .startDate(LocalDate.parse(rs.getString("start_date")))
                 .endDate(LocalDate.parse(rs.getString("end_date")))
                 .colorCode("#dc5b6e") // TODO rs.getString("color_id")
@@ -39,12 +45,11 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
         subProjects.add(subProject);
       }
 
-      return subProjects;
     } catch (SQLException e) {
       System.out.println(e.getMessage()); // TODO FIX
     }
 
-    return null;
+    return subProjects;
   }
 
   @Override
