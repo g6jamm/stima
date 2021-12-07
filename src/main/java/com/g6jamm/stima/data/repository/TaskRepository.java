@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface TaskRepository {
 
-  Task createTask(Task task);
+  Task createTask(Task task, int projectId);
 
   Task getTask(int task_id);
 
-  List<Task> getTasks();
+  List<Task> getTasks(int projectId);
 }
