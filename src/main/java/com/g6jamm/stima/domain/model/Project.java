@@ -8,8 +8,6 @@ public class Project implements ProjectInterface {
 
   private final int PROJECT_ID;
   private final String PROJECT_NAME;
-  private final double TOTAL_HOURS;
-  private final int TOTAL_PRICE;
   private final LocalDate START_DATE;
   private final LocalDate END_DATE;
   private final List<Task> TASKS;
@@ -19,8 +17,6 @@ public class Project implements ProjectInterface {
   private Project(ProjectBuilder projectBuilder) {
     this.PROJECT_ID = projectBuilder.projectId;
     this.PROJECT_NAME = projectBuilder.projectName;
-    this.TOTAL_HOURS = projectBuilder.totalHours;
-    this.TOTAL_PRICE = projectBuilder.totalPrice;
     this.START_DATE = projectBuilder.startDate;
     this.END_DATE = projectBuilder.endDate;
     this.TASKS = projectBuilder.tasks;
@@ -34,14 +30,6 @@ public class Project implements ProjectInterface {
 
   public String getName() {
     return PROJECT_NAME;
-  }
-
-  public double getHours() {
-    return TOTAL_HOURS;
-  }
-
-  public int getPrice() {
-    return TOTAL_PRICE;
   }
 
   public LocalDate getStartDate() {
@@ -64,11 +52,39 @@ public class Project implements ProjectInterface {
     return COLOR_CODE;
   }
 
+  public double calculateHours() {
+    double totalHours = 0.0;
+    if (!SUB_PROJECTS.isEmpty()) {
+      for (SubProject subProject : SUB_PROJECTS) {
+        totalHours += subProject.calculateHours();
+      }
+    }
+    if (!TASKS.isEmpty()) {
+      for (Task t : TASKS) {
+        totalHours += t.getHours();
+      }
+    }
+    return totalHours;
+  }
+
+  public double calculatePrice() {
+    int totalPrice = 0;
+    if (!SUB_PROJECTS.isEmpty()) {
+      for (SubProject subProject : SUB_PROJECTS) {
+        totalPrice += subProject.calculatePrice();
+      }
+    }
+    if (!TASKS.isEmpty()) {
+      for (Task t : TASKS) {
+        totalPrice += t.getPrice();
+      }
+    }
+    return totalPrice;
+  }
+
   public static class ProjectBuilder {
     private int projectId;
     private String projectName;
-    private double totalHours;
-    private int totalPrice;
     private LocalDate startDate;
     private LocalDate endDate;
     private List<Task> tasks;
@@ -82,16 +98,6 @@ public class Project implements ProjectInterface {
 
     public ProjectBuilder projectName(String name) {
       this.projectName = name;
-      return this;
-    }
-
-    public ProjectBuilder totalHours(double totalHours) {
-      this.totalHours = totalHours;
-      return this;
-    }
-
-    public ProjectBuilder totalPrice(int totalPrice) {
-      this.totalPrice = totalPrice;
       return this;
     }
 
@@ -123,8 +129,6 @@ public class Project implements ProjectInterface {
     private void reset() {
       this.projectId = 0;
       this.projectName = null;
-      this.totalHours = 0;
-      this.totalPrice = 0;
       this.startDate = null;
       this.endDate = null;
       this.tasks = null;

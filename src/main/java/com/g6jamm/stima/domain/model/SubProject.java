@@ -13,8 +13,6 @@ public class SubProject implements ProjectInterface {
   private final int SUB_PROJECT_ID;
 
   private final String SUB_PROJECT_NAME;
-  private final double TOTAL_HOURS;
-  private final int TOTAL_PRICE;
   private final List<Task> SUB_PROJECT_TASKS;
   private final LocalDate START_DATE;
   private final LocalDate END_DATE;
@@ -23,8 +21,6 @@ public class SubProject implements ProjectInterface {
   public SubProject(SubProjectBuilder subProjectBuilder) {
     this.SUB_PROJECT_ID = subProjectBuilder.subProjectId;
     this.SUB_PROJECT_NAME = subProjectBuilder.subProjectName;
-    this.TOTAL_HOURS = subProjectBuilder.totalHours;
-    this.TOTAL_PRICE = subProjectBuilder.totalPrice;
     this.SUB_PROJECT_TASKS = subProjectBuilder.subProjectTasks;
     this.START_DATE = subProjectBuilder.startDate;
     this.END_DATE = subProjectBuilder.endDate;
@@ -51,12 +47,24 @@ public class SubProject implements ProjectInterface {
     return this.END_DATE;
   }
 
-  public double getHours() {
-    return this.TOTAL_HOURS;
+  public double calculateHours() {
+    double totalHours = 0.0;
+    if (!SUB_PROJECT_TASKS.isEmpty()) {
+      for (Task t : SUB_PROJECT_TASKS) {
+        totalHours += t.getHours();
+      }
+    }
+    return totalHours;
   }
 
-  public int getPrice() {
-    return this.TOTAL_PRICE;
+  public int calculatePrice() {
+    int totalPrice = 0;
+    if (!SUB_PROJECT_TASKS.isEmpty()) {
+      for (Task t : SUB_PROJECT_TASKS) {
+        totalPrice += t.getPrice();
+      }
+    }
+    return totalPrice;
   }
 
   public String getColorCode() {
@@ -71,8 +79,6 @@ public class SubProject implements ProjectInterface {
   public static class SubProjectBuilder {
     private int subProjectId;
     private String subProjectName;
-    private double totalHours;
-    private int totalPrice;
     private List<Task> subProjectTasks;
     private LocalDate startDate;
     private LocalDate endDate;
@@ -85,16 +91,6 @@ public class SubProject implements ProjectInterface {
 
     public SubProjectBuilder name(String name) {
       this.subProjectName = name;
-      return this;
-    }
-
-    public SubProjectBuilder hours(double hours) {
-      this.totalHours = hours;
-      return this;
-    }
-
-    public SubProjectBuilder price(int price) {
-      this.totalPrice = price;
       return this;
     }
 
@@ -121,8 +117,6 @@ public class SubProject implements ProjectInterface {
     private void reset() {
       this.subProjectId = 0;
       this.subProjectName = null;
-      this.totalHours = 0.0;
-      this.totalPrice = 0;
       this.subProjectTasks = null;
       this.startDate = null;
       this.endDate = null;
