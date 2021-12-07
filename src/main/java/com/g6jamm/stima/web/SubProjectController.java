@@ -107,7 +107,8 @@ public class SubProjectController {
                 .format(DateTimeFormatter.ofPattern("YYYY-MM-DD")); // TODO More validation
 
     Task newTask =
-        taskService.createtask(taskNameParam, hours, resourceTypeParam, taskStartDate, taskEndDate, project.getId());
+        taskService.createtask(
+            taskNameParam, hours, resourceTypeParam, taskStartDate, taskEndDate, project.getId());
 
     project.getTasks().add(newTask);
   }
