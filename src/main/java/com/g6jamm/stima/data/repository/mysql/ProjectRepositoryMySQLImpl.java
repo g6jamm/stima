@@ -16,8 +16,8 @@ import java.util.List;
 
 public class ProjectRepositoryMySQLImpl implements ProjectRepository {
 
-  TaskRepository taskRepository = new TaskRepositoryImpl();
-  SubProjectRepository subProjectRepository = new SubProjectRepositoryImpl();
+  private final TaskRepository TASK_REPOSITORY = new TaskRepositoryImpl();
+  private final SubProjectRepository SUBPROJECT_REPOSITORY = new SubProjectRepositoryImpl();
 
   @Override
   public Project createProject(Project project) {
@@ -122,8 +122,8 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
                 .projectName(rs.getString("name"))
                 .startDate(LocalDate.parse(rs.getString("start_date")))
                 .endDate(LocalDate.parse(rs.getString("end_date")))
-                .tasks(taskRepository.getTasks(rs.getInt("project_id")))
-                .subProjects(subProjectRepository.getSubProjects(rs.getInt("project_id")))
+                .tasks(TASK_REPOSITORY.getTasks(rs.getInt("project_id"))) //TODO kan laves som innerjoin istedet
+                .subProjects(SUBPROJECT_REPOSITORY.getSubProjects(rs.getInt("project_id"))) //TODO kan laves som innerjoin istedet
                 .colorCode(rs.getString("color_id")) // TODO: @Jackie
                 .build();
 

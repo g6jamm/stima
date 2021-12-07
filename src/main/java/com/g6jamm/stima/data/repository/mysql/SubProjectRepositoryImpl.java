@@ -16,7 +16,7 @@ import java.util.List;
 
 public class SubProjectRepositoryImpl implements SubProjectRepository {
 
-  TaskRepository taskRepository = new TaskRepositoryImpl();
+  private final TaskRepository TASK_REPOSITORY = new TaskRepositoryImpl();
 
   @Override
   public List<SubProject> getSubProjects(int projectId) {
@@ -35,7 +35,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
             new SubProject.SubProjectBuilder()
                 .subProjectId(rs.getInt("project_id"))
                 .name(rs.getString("name"))
-                .tasks(taskRepository.getTasks(rs.getInt("project_id")))
+                .tasks(TASK_REPOSITORY.getTasks(rs.getInt("project_id"))) //TODO kan laves som innerjoin istedet
                 .startDate(LocalDate.parse(rs.getString("start_date")))
                 .endDate(LocalDate.parse(rs.getString("end_date")))
                 .colorCode("#dc5b6e") // TODO rs.getString("color_id")
