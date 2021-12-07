@@ -10,8 +10,8 @@ public class ProjectService {
 
   private final ProjectRepository PROJECT_REPOSITORY;
 
-  public ProjectService(ProjectRepository projectRepositoryStub) {
-    this.PROJECT_REPOSITORY = projectRepositoryStub;
+  public ProjectService(ProjectRepository projectRepository) {
+    this.PROJECT_REPOSITORY = projectRepository;
   }
 
   public List<Project> getProjects() {
@@ -30,6 +30,15 @@ public class ProjectService {
 
   public Project createProject(
       String name, LocalDate startDate, LocalDate endDate, String projectColor) {
-    return PROJECT_REPOSITORY.createProject(name, startDate, endDate, projectColor);
+
+    Project project =
+        new Project.ProjectBuilder()
+            .projectName(name)
+            .startDate(startDate)
+            .endDate(endDate)
+            .colorCode(projectColor)
+            .build();
+
+    return PROJECT_REPOSITORY.createProject(project);
   }
 }
