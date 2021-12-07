@@ -35,7 +35,9 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
             new SubProject.SubProjectBuilder()
                 .subProjectId(rs.getInt("project_id"))
                 .name(rs.getString("name"))
-                .tasks(TASK_REPOSITORY.getTasks(rs.getInt("project_id"))) //TODO kan laves som innerjoin istedet
+                .tasks(
+                    TASK_REPOSITORY.getTasks(
+                        rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
                 .startDate(LocalDate.parse(rs.getString("start_date")))
                 .endDate(LocalDate.parse(rs.getString("end_date")))
                 .colorCode("#dc5b6e") // TODO rs.getString("color_id")

@@ -122,8 +122,12 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
                 .projectName(rs.getString("name"))
                 .startDate(LocalDate.parse(rs.getString("start_date")))
                 .endDate(LocalDate.parse(rs.getString("end_date")))
-                .tasks(TASK_REPOSITORY.getTasks(rs.getInt("project_id"))) //TODO kan laves som innerjoin istedet
-                .subProjects(SUBPROJECT_REPOSITORY.getSubProjects(rs.getInt("project_id"))) //TODO kan laves som innerjoin istedet
+                .tasks(
+                    TASK_REPOSITORY.getTasks(
+                        rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
+                .subProjects(
+                    SUBPROJECT_REPOSITORY.getSubProjects(
+                        rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
                 .colorCode(rs.getString("color_id")) // TODO: @Jackie
                 .build();
 
