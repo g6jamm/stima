@@ -41,17 +41,17 @@ public class TaskRepositoryImpl implements TaskRepository {
     try {
       String query =
           "SELECT task_id"
-              + ",t.name as task_name"
+              + ",t.name AS task_name"
               + ", hours"
               + ", r.resource_type_id"
               + ", project_id"
               + ", start_date"
               + ", end_date"
               + ", price_per_hour"
-              + ", r.name as resource_name \n"
-              + "FROM tasks t\n"
-              + "inner join resource_type_id r on t.resource_type_id = r.resource_type_id\n"
-              + "where task_id = ?";
+              + ", r.name AS resource_name"
+              + "FROM tasks t"
+              + "INNER JOIN resource_type r ON t.resource_type_id = r.resource_type_id\n"
+              + "WHERE task_id = ?";
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setInt(1, task_id);
       ResultSet resultSet = ps.executeQuery();
