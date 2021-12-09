@@ -49,18 +49,19 @@ public class Task {
   public ResourceType getResourceType() {
     return RESOURCE_TYPE;
   }
-  public double calculateWorkdays(){
+
+  public double calculateWorkdays() {
     double workday = 7.4;
     double workdaysNeeded = HOURS/workday;
     return Math.round(workdaysNeeded);
   }
 
-  public double calculateResources(){
-
+  public double calculateResources() {
     int workdaysAvailable = 5; //todo hvordan skal vi håndtere det?
     double resourcesNeeded = calculateWorkdays()/workdaysAvailable;
 
     return Math.round(resourcesNeeded);
+
   }
 
 

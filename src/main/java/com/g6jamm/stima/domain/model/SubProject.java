@@ -67,21 +67,18 @@ public class SubProject implements ProjectInterface {
     return totalPrice;
   }
 
-  public double calculateWorkdays(){
+  public double calculateWorkdays() {
     double workday = 7.4;
     double workdaysNeeded = calculateHours()/workday;
     return Math.round(workdaysNeeded);
   }
 
-  public double calculateResources(){
+  public double calculateResources() {
 
     int workdaysAvailable = 5; //todo hvordan skal vi håndtere det?
     double resourcesNeeded = calculateWorkdays()/workdaysAvailable;
-
     return Math.round(resourcesNeeded);
   }
-
-
 
   public String getColorCode() {
     return this.COLOR_CODE;
