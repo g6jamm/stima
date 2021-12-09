@@ -89,8 +89,8 @@ public class Project implements ProjectInterface {
   }
 
   public double calculateResources() {
-    int workdaysAvailable = 5; //todo hvordan skal vi håndtere det?
-    double resourcesNeeded = calculateWorkdays()/workdaysAvailable;
+    int workdaysAvailable = 5; // todo hvordan skal vi håndtere det?
+    double resourcesNeeded = calculateWorkdays() / workdaysAvailable;
 
     return Math.round(resourcesNeeded);
   }
