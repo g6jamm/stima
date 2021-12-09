@@ -76,7 +76,9 @@ public class SubProject implements ProjectInterface {
 
   public double calculateResources() {
     double result;
-    long workdaysAvailable = Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays() - 1; // todo hvordan skal vi håndtere det?
+    long workdaysAvailable =
+        Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays()
+            - 1; // todo hvordan skal vi håndtere det?
     result = calculateWorkdays() / (workdaysAvailable);
 
     return Math.round(result * 100) / 100;

@@ -4,9 +4,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * @auther Mathias
- */
+/** @auther Mathias */
 public class Project implements ProjectInterface {
 
   private final int PROJECT_ID;
@@ -93,7 +91,9 @@ public class Project implements ProjectInterface {
 
   public double calculateResources() {
     double result;
-    long workdaysAvailable = Duration.between(LocalDate.now().atStartOfDay(), END_DATE.atStartOfDay()).toDays() - 1; // todo hvordan skal vi håndtere det?
+    long workdaysAvailable =
+        Duration.between(LocalDate.now().atStartOfDay(), END_DATE.atStartOfDay()).toDays()
+            - 1; // todo hvordan skal vi håndtere det?
     result = calculateWorkdays() / (workdaysAvailable);
 
     return Math.round(result * 100.0) / 100.0;
