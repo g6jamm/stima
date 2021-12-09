@@ -52,16 +52,17 @@ public class Task {
   public double calculateWorkdays(){
     double workday = 7.4;
     double workdaysNeeded = HOURS/workday;
-    return Math.round(workdaysNeeded*100.0/100.0);
+    return Math.round(workdaysNeeded);
   }
 
   public double calculateResources(){
 
-    int workdaysAvailable = 5;
+    int workdaysAvailable = 5; //todo hvordan skal vi håndtere det?
     double resourcesNeeded = calculateWorkdays()/workdaysAvailable;
 
-    return Math.round(resourcesNeeded*100.0/100.0);
+    return Math.round(resourcesNeeded);
   }
+
 
   public static class TaskBuilder {
     private int id;
