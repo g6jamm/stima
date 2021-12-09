@@ -1,5 +1,6 @@
 package com.g6jamm.stima.domain.model;
 
+import java.time.Duration;
 import java.time.LocalDate;
 
 public class Task {
@@ -53,15 +54,23 @@ public class Task {
   public double calculateWorkdays() {
     double workday = 7.4;
     double workdaysNeeded = HOURS / workday;
-    return Math.round(workdaysNeeded);
+    return Math.round(workdaysNeeded*100.0)/100.0;
   }
-
   public double calculateResources() {
-    int workdaysAvailable = 5; // todo hvordan skal vi håndtere det?
-    double resourcesNeeded = calculateWorkdays() / workdaysAvailable;
+    double result = 0;
 
-    return Math.round(resourcesNeeded);
+    if (LocalDate.now().isAfter(START_DATE)) {
+      long workdaysAvailable = Duration.between(LocalDate.now().atStartOfDay(), END_DATE.atStartOfDay()).toDays() - 1; // todo hvordan skal vi håndtere det?
+      result = calculateWorkdays() / (workdaysAvailable);
+    }
+    else {
+      long workdaysAvailable = Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays()-1; // todo hvordan skal vi håndtere det?'
+      result = calculateWorkdays() / (workdaysAvailable);
+    }
+
+    return Math.round(result*100.0)/100.0;
   }
+
 
   public static class TaskBuilder {
     private int id;

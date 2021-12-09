@@ -1,5 +1,6 @@
 package com.g6jamm.stima.domain.model;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -70,15 +71,24 @@ public class SubProject implements ProjectInterface {
   public double calculateWorkdays() {
     double workday = 7.4;
     double workdaysNeeded = calculateHours() / workday;
-    return Math.round(workdaysNeeded);
+    return Math.round(workdaysNeeded*100)/100;
   }
 
   public double calculateResources() {
+    double result = 0;
 
-    int workdaysAvailable = 5; // todo hvordan skal vi håndtere det?
-    double resourcesNeeded = calculateWorkdays() / workdaysAvailable;
-    return Math.round(resourcesNeeded);
+    if (LocalDate.now().isAfter(START_DATE)) {
+      long workdaysAvailable = Duration.between(LocalDate.now().atStartOfDay(), END_DATE.atStartOfDay()).toDays()-1; // todo hvordan skal vi håndtere det?
+      result = calculateWorkdays() / (workdaysAvailable);
+    }
+    else {
+      long workdaysAvailable = Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays()-1; // todo hvordan skal vi håndtere det?
+      result = calculateWorkdays() / (workdaysAvailable);
+    }
+
+    return Math.round(result*100)/100;
   }
+
 
   public String getColorCode() {
     return this.COLOR_CODE;
