@@ -10,6 +10,8 @@
                 <p th:text="'Timer: ' + ${task.getHours}"></p>
                 <p th:text="'Pris: ' + ${task.getPrice} + ' DKK'"></p>
                 <p th:text="'Resource type: ' + ${task.resourceType.getName()}"></p>
+                <p th:text="'Estimerede arbejdsdage: ' + ${task.calculateWorkdays()}"></p>
+                <p th:text="'Estimerede resourcer: ' + ${task.calculateResources()}"></p>
             </div>
         </div>
     </a>
