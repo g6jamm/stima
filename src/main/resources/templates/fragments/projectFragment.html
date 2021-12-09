@@ -12,6 +12,8 @@
                 <p th:text="'Pris: ' + ${project.calculatePrice()} + ' DKK'"></p>
                 <p th:text="'Estimerede arbejdsdage: ' + ${project.calculateWorkdays()}"></p>
                 <p th:text="'Estimerede resourcer: ' + ${project.calculateResources()}"></p>
+                <p th:text="'Start date: ' + ${project.getStartDate()}"></p>
+                <p th:text="'End date: ' + ${project.getEndDate()}"></p>
             </div>
         </div>
     </a>
