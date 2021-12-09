@@ -85,7 +85,7 @@ public class Project implements ProjectInterface {
   public double calculateWorkdays(){
     double workday = 7.4;
     double workdaysNeeded = calculateHours()/workday;
-    return workdaysNeeded;
+    return Math.round(workdaysNeeded*100.0/100.0);
   }
 
   public double calculateResources(){
@@ -93,7 +93,7 @@ public class Project implements ProjectInterface {
     int workdaysAvailable = 5;
     double resourcesNeeded = calculateWorkdays()/workdaysAvailable;
 
-    return resourcesNeeded;
+    return Math.round(resourcesNeeded*100.0/100.0);
   }
 
 
