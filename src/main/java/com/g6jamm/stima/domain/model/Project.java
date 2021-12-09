@@ -92,7 +92,7 @@ public class Project implements ProjectInterface {
   }
 
   public double calculateResources() {
-    double result = 0;
+    double result;
     long workdaysAvailable = Duration.between(LocalDate.now().atStartOfDay(), END_DATE.atStartOfDay()).toDays() - 1; // todo hvordan skal vi håndtere det?
     result = calculateWorkdays() / (workdaysAvailable);
 
