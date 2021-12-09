@@ -67,6 +67,20 @@ public class SubProject implements ProjectInterface {
     return totalPrice;
   }
 
+  public double calculateWorkdays(){
+    double workday = 7.4;
+    double workdaysNeeded = calculateHours()/workday;
+    return workdaysNeeded;
+  }
+
+  public double calculateResources(){
+
+    int workdaysAvailable = 5;
+    double resourcesNeeded = calculateWorkdays()/workdaysAvailable;
+
+    return resourcesNeeded;
+  }
+
   public String getColorCode() {
     return this.COLOR_CODE;
   }

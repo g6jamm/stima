@@ -10,6 +10,8 @@
                 <p th:text="${project.getName}"></p>
                 <p th:text="'Timer: ' + ${project.calculateHours()}"></p>
                 <p th:text="'Pris: ' + ${project.calculatePrice()} + ' DKK'"></p>
+                <p th:text="'Pris: ' + ${project.calculateWorkdays()} + ' DKK'"></p>
+                <p th:text="'Pris: ' + ${project.calculateResources()} + ' DKK'"></p>
             </div>
         </div>
     </a>
