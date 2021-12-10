@@ -1,7 +1,7 @@
 package com.g6jamm.stima.domain.service;
 
 import com.g6jamm.stima.data.repository.ProjectRepository;
-import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.model.ProjectComposite;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,12 +14,12 @@ public class ProjectService {
     this.PROJECT_REPOSITORY = projectRepository;
   }
 
-  public List<Project> getProjects() {
+  public List<ProjectComposite> getProjects() {
     return PROJECT_REPOSITORY.getProjects();
   }
 
-  public Project getProjectById(int id) {
-    for (Project project : getProjects()) {
+  public ProjectComposite getProjectById(int id) {
+    for (ProjectComposite project : getProjects()) {
       if (id == project.getId()) {
         return project;
       }
@@ -28,11 +28,11 @@ public class ProjectService {
     return null;
   }
 
-  public Project createProject(
+  public ProjectComposite createProject(
       String name, LocalDate startDate, LocalDate endDate, String projectColor) {
 
-    Project project =
-        new Project.ProjectBuilder()
+    ProjectComposite project =
+        new ProjectComposite.ProjectBuilder()
             .projectName(name)
             .startDate(startDate)
             .endDate(endDate)

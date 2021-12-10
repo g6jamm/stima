@@ -1,8 +1,8 @@
 package com.g6jamm.stima.domain.service;
 
 import com.g6jamm.stima.data.repository.SubProjectRepository;
-import com.g6jamm.stima.domain.model.ProjectComponent;
-import com.g6jamm.stima.domain.model.SubProject;
+import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.model.ProjectLeaf;
 import com.g6jamm.stima.domain.model.Task;
 
 import java.time.LocalDate;
@@ -25,7 +25,7 @@ public class SubProjectService {
    * @return
    * @author Jackie
    */
-  public SubProject createSubProject(
+  public ProjectLeaf createSubProject(
       String name,
       LocalDate startDate,
       LocalDate endDate,
@@ -41,7 +41,7 @@ public class SubProjectService {
    * @return List of subprojects
    * @author Jackie
    */
-  public List<ProjectComponent> getSubprojects(int projectId) {
+  public List<Project> getSubprojects(int projectId) {
     return subProjectRepository.getSubProjects(projectId); // WIP
   }
 
@@ -51,7 +51,7 @@ public class SubProjectService {
    * @param subProjectId
    * @return a sub project
    */
-  public ProjectComponent getSubProject(int subProjectId) {
+  public Project getSubProject(int subProjectId) {
     return subProjectRepository.getSubproject(subProjectId);
   }
 

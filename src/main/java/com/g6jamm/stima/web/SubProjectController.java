@@ -2,8 +2,8 @@ package com.g6jamm.stima.web;
 
 import com.g6jamm.stima.data.repository.stub.*;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
+import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.Project;
-import com.g6jamm.stima.domain.model.ProjectComponent;
 import com.g6jamm.stima.domain.model.Task;
 import com.g6jamm.stima.domain.service.ProjectService;
 import com.g6jamm.stima.domain.service.SubProjectService;
@@ -38,10 +38,10 @@ public class SubProjectController {
   public String subProjectPage(
       Model model, @PathVariable int projectId, @PathVariable int subProjectId) {
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-    Project project = projectService.getProjectById(projectId);
+    ProjectComposite project = projectService.getProjectById(projectId);
 
-    ProjectComponent subProject = null; // todo move??
-    for (ProjectComponent sp : project.getSubProjects()) {
+    Project subProject = null; // todo move??
+    for (Project sp : project.getSubProjects()) {
       if (subProjectId == sp.getId()) {
         subProject = sp;
       }
@@ -49,10 +49,6 @@ public class SubProjectController {
     if (subProject != null) {
       List<Task> tasks = subProject.getTasks();
       // TODO need change remove hardcoded tasks when possible
-
-      //    for (Task t : tasks) {
-      //      SUBPROJECT_SERVICE.addTaskToSubProject(subProject.getId(), t);
-      //    } //TODO FIX!!
 
       model.addAttribute("tasks", tasks);
       model.addAttribute("subProject", subProject);
@@ -69,7 +65,7 @@ public class SubProjectController {
   public String createProjectTask(WebRequest webRequest, Model model, @PathVariable int projectId) {
 
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-    Project project = projectService.getProjectById(projectId);
+    ProjectComposite project = projectService.getProjectById(projectId);
 
     try {
       createTask(webRequest, project);
@@ -81,14 +77,14 @@ public class SubProjectController {
   }
 
   /**
-   * Post method for creating new tasks. Takes all input from the form and passes them to
+   * Method for creating new tasks. Takes all input from the form and passes them to
    * taskService which create a Task object. The newly created task is then added to the projects
    * list of tasks.
    *
    * @param webRequest
    * @author Andreas
    */
-  private void createTask(WebRequest webRequest, ProjectComponent project)
+  private void createTask(WebRequest webRequest, Project project)
       throws TaskCreationException {
 
     String taskNameParam = webRequest.getParameter("task-name");
@@ -128,10 +124,10 @@ public class SubProjectController {
       @PathVariable int subProjectId) {
 
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-    Project project = projectService.getProjectById(projectId);
+    ProjectComposite project = projectService.getProjectById(projectId);
 
-    ProjectComponent subProject = null;
-    for(ProjectComponent projectComponent : project.getSubProjects()){
+    Project subProject = null;
+    for(Project projectComponent : project.getSubProjects()){
       if(projectComponent.getId() ==  subProjectId){
         subProject = projectComponent;
       }
@@ -147,28 +143,5 @@ public class SubProjectController {
       }
     }
     return "redirect:/projects/" + projectId + "/" + subProjectId;
-  }
-
-  /**
-   * Initial Get method for displaying a task. @Author Andreas
-   *
-   * @param webRequest
-   * @param model
-   * @return
-   */
-  @GetMapping("/task")
-  public String task(WebRequest webRequest, Model model) {
-    if (model.getAttribute("Task") == null) {
-      try {
-        model.addAttribute(
-            "Task",
-            taskService.createtask(
-                "Placeholder", 1.0, "Senior Developer", "1990-01-01", "1991-01-01", 1));
-        model.addAttribute("ResourceTypes", taskService.getResourceTypes());
-      } catch (TaskCreationException e) {
-        model.addAttribute("error", e.getMessage());
-      }
-    }
-    return "Task";
   }
 }

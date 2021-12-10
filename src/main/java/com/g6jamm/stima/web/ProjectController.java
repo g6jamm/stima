@@ -1,9 +1,9 @@
 package com.g6jamm.stima.web;
 
 import com.g6jamm.stima.data.repository.stub.*;
+import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.Project;
-import com.g6jamm.stima.domain.model.ProjectComponent;
-import com.g6jamm.stima.domain.model.SubProject;
+import com.g6jamm.stima.domain.model.ProjectLeaf;
 import com.g6jamm.stima.domain.model.Task;
 import com.g6jamm.stima.domain.service.ProjectColorService;
 import com.g6jamm.stima.domain.service.ProjectService;
@@ -33,7 +33,7 @@ public class ProjectController {
   public String projects(Model model) {
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
 
-    List<Project> projects = projectService.getProjects();
+    List<ProjectComposite> projects = projectService.getProjects();
 
     model.addAttribute("projects", projects);
 
@@ -58,9 +58,9 @@ public class ProjectController {
         new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
     SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
 
-    Project project = projectService.getProjectById(projectId);
+    ProjectComposite project = projectService.getProjectById(projectId);
 
-    List<ProjectComponent> subProjects = project.getSubProjects();
+    List<Project> subProjects = project.getSubProjects();
     model.addAttribute("projects", subProjects);
 
     List<Task> tasks = project.getTasks();
@@ -90,11 +90,11 @@ public class ProjectController {
     // TODO check if date are inside project start and end
 
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-    Project project = projectService.getProjectById(projectId);
+    ProjectComposite project = projectService.getProjectById(projectId);
 
     SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
 
-    SubProject subProject =
+    ProjectLeaf subProject =
         subProjectService.createSubProject(
             subProjectNameParam,
             LocalDate.parse(startDateParam),
@@ -102,7 +102,7 @@ public class ProjectController {
             projectColorParam,
             projectId);
 
-    project.getSubProjects().add(subProject); // TODO skal fjernes
+    project.getSubProjects().add(subProject); // TODO skal fjernes - Mere object orienteret at gøre det?
 
     model.addAttribute("subProject", subProject); // TODO doesnt matter? we redirect?
 
@@ -121,7 +121,7 @@ public class ProjectController {
     // TODO check if date are inside project start and end
 
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-    Project project =
+    ProjectComposite project =
         projectService.createProject(
             projectNameParam,
             LocalDate.parse(startDateParam),

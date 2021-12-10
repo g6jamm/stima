@@ -2,7 +2,7 @@ package com.g6jamm.stima.domain.service;
 
 import org.junit.jupiter.api.Test;
 
-public class SubProjectTest {
+public class ProjectTestComposite {
 
   @Test
   public void createWrongSubProjectTest() {
