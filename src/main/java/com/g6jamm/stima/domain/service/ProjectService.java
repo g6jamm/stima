@@ -41,4 +41,22 @@ public class ProjectService {
 
     return PROJECT_REPOSITORY.createProject(project);
   }
+
+  public void editProject(int projectId, String name, LocalDate startDate, LocalDate endDate, String projectColor) {
+
+    ProjectComposite project =
+        new ProjectComposite.ProjectBuilder()
+            .projectId(projectId)
+            .projectName(name)
+            .startDate(startDate)
+            .endDate(endDate)
+            .colorCode("1") // TODO: @Jacky
+            .build();
+
+    PROJECT_REPOSITORY.editProject(project);
+  }
+
+  public void deleteProject(int projectId) {
+    PROJECT_REPOSITORY.deleteProject(projectId);
+  }
 }

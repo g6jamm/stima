@@ -82,10 +82,10 @@ public class ProjectController {
   @PostMapping("/projects/{projectId}/create-subproject")
   public String createSubProject(WebRequest webRequest, Model model, @PathVariable int projectId) {
 
-    String subProjectNameParam = webRequest.getParameter("subproject-name");
-    String startDateParam = webRequest.getParameter("subproject-start-date");
-    String endDateParam = webRequest.getParameter("subproject-end-date");
-    String projectColorParam = webRequest.getParameter("subproject-color");
+    String subProjectNameParam = webRequest.getParameter("create-subproject-name");
+    String startDateParam = webRequest.getParameter("create-subproject-start-date");
+    String endDateParam = webRequest.getParameter("create-subproject-end-date");
+    String projectColorParam = webRequest.getParameter("create-subproject-color");
 
     // TODO check if valid date
     // TODO check if date are inside project start and end
@@ -111,10 +111,10 @@ public class ProjectController {
   @PostMapping("/projects/create-project")
   public String createProject(WebRequest webRequest, Model model) {
 
-    String projectNameParam = webRequest.getParameter("project-name");
-    String startDateParam = webRequest.getParameter("project-start-date");
-    String endDateParam = webRequest.getParameter("project-end-date");
-    String projectColorParam = webRequest.getParameter("project-color");
+    String projectNameParam = webRequest.getParameter("create-project-name");
+    String startDateParam = webRequest.getParameter("create-project-start-date");
+    String endDateParam = webRequest.getParameter("create-project-end-date");
+    String projectColorParam = webRequest.getParameter("create-project-color");
 
     // TODO check if valid date
     // TODO check if date are inside project start and end
@@ -126,34 +126,36 @@ public class ProjectController {
             LocalDate.parse(endDateParam),
             projectColorParam);
 
-    model.addAttribute("project", project);
+    model.addAttribute("project", project); // TODO: no need to do this..
 
     return "redirect:/projects";
   }
 
-  /**
-   * Navigates the user to edit project page.
-   *
-   * @param webRequest WebRequest
-   * @param projectId int
-   * @return String
-   * @auther Mathias
-   */
-  @PostMapping("/edit-project/{projectId}")
-  public String editProject(WebRequest webRequest, @PathVariable int projectId) {
-    return "redirect:/project/edit-project"; // TODO: redirect?
+  @PostMapping("/projects/{projectId}/edit-project")
+  public String editProject(WebRequest webRequest, Model model, @PathVariable int projectId) {
+
+    String projectNameParam = webRequest.getParameter("edit-project-name");
+    String startDateParam = webRequest.getParameter("edit-project-start-date");
+    String endDateParam = webRequest.getParameter("edit-project-end-date");
+    String projectColorParam = webRequest.getParameter("edit-project-color");
+
+    // TODO check if valid date
+    // TODO check if date are inside project start and end
+
+    PROJECT_SERVICE.editProject(
+        projectId,
+        projectNameParam,
+        LocalDate.parse(startDateParam),
+        LocalDate.parse(endDateParam),
+        projectColorParam);
+
+    return "redirect:/projects";
   }
 
-  /**
-   * Deletes the project by id and navigate the user to the project page.
-   *
-   * @param webRequest WebRequest
-   * @param projectId int
-   * @return String
-   * @auther Mathias
-   */
-  @PostMapping("/delete-project/{projectId}")
-  public String deleteProject(WebRequest webRequest, @PathVariable int projectId) {
-    return "redirect:/project"; // TODO: redirect?
+  @PostMapping("/projects/{projectId}/delete-project")
+  public String deleteProject(@PathVariable int projectId) {
+    PROJECT_SERVICE.deleteProject(projectId);
+
+    return "redirect:/projects";
   }
 }

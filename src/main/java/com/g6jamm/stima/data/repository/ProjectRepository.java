@@ -7,11 +7,11 @@ import java.util.List;
 public interface ProjectRepository {
   ProjectComposite createProject(ProjectComposite project);
 
+  void editProject(ProjectComposite project);
+
   ProjectComposite getProject(int projectId);
 
   void deleteProject(int projectId);
-
-  void editProject(ProjectComposite project);
 
   List<ProjectComposite> getProjects();
 }

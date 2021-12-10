@@ -9,7 +9,8 @@ html, body {
 
 a, a:hover {
     text-decoration: none;
-    color: #000; <!-- #f5f5f5 -->
+    color: #000;
+<!-- #f5f5f5 -->
 }
 
 .card-text {
@@ -68,4 +69,21 @@ a, a:hover {
 
 .breadcrumb-container {
     padding-top: 30px;
+}
+
+.btn-edit {
+    color: gray;
+}
+
+.btn-delete {
+    color: #FF325A;
+}
+
+.btn-primary {
+    background-color: #59869d;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #8babbb;
 }
