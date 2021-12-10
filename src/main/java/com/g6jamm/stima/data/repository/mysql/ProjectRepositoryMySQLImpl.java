@@ -16,134 +16,134 @@ import java.util.List;
 
 public class ProjectRepositoryMySQLImpl implements ProjectRepository {
 
-    private final TaskRepository TASK_REPOSITORY = new TaskRepositoryImpl();
-    private final SubProjectRepository SUBPROJECT_REPOSITORY = new SubProjectRepositoryImpl();
+  private final TaskRepository TASK_REPOSITORY = new TaskRepositoryImpl();
+  private final SubProjectRepository SUBPROJECT_REPOSITORY = new SubProjectRepositoryImpl();
 
-    @Override
-    public ProjectComposite createProject(ProjectComposite project) {
+  @Override
+  public ProjectComposite createProject(ProjectComposite project) {
 
-        try {
-            String query =
-                    "INSERT INTO projects (name, start_date, end_date, color_id, parent_project_id) VALUES "
-                            + "(?, ?, ?, ?, ?)";
-            PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
+    try {
+      String query =
+          "INSERT INTO projects (name, start_date, end_date, color_id, parent_project_id) VALUES "
+              + "(?, ?, ?, ?, ?)";
+      PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
 
-            ps.setString(1, project.getName());
-            ps.setString(2, String.valueOf(Date.valueOf(project.getStartDate())));
-            ps.setString(3, String.valueOf(Date.valueOf(project.getEndDate())));
-            ps.setInt(4, 1); // TODO: @Jackie
-            ps.setString(5, null);
-            ps.execute();
-        } catch (SQLException e) {
-            e.printStackTrace(); // TODO
-        }
-
-        return project;
+      ps.setString(1, project.getName());
+      ps.setString(2, String.valueOf(Date.valueOf(project.getStartDate())));
+      ps.setString(3, String.valueOf(Date.valueOf(project.getEndDate())));
+      ps.setInt(4, 1); // TODO: @Jackie
+      ps.setString(5, null);
+      ps.execute();
+    } catch (SQLException e) {
+      e.printStackTrace(); // TODO
     }
 
-    @Override
-    public ProjectComposite getProject(int projectId) {
+    return project;
+  }
 
-        try {
-            String query = "SELECT * FROM projects WHERE project_id = ? AND project_parent_id is NULL";
+  @Override
+  public ProjectComposite getProject(int projectId) {
 
-            PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
-            ps.setInt(1, projectId);
+    try {
+      String query = "SELECT * FROM projects WHERE project_id = ? AND project_parent_id is NULL";
 
-            ResultSet rs = ps.executeQuery();
+      PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
+      ps.setInt(1, projectId);
 
-            if (rs.next()) {
-                return new ProjectComposite.ProjectBuilder()
-                        .projectId(projectId)
-                        .projectName(rs.getString("name"))
-                        .startDate(LocalDate.parse(rs.getString("start_date")))
-                        .endDate(LocalDate.parse(rs.getString("end_date")))
-                        .colorCode(rs.getString("color_id")) //  // TODO: @Jackie
-                        .tasks(
-                                TASK_REPOSITORY.getTasks(
-                                        rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
-                        .subProjects(
-                                SUBPROJECT_REPOSITORY.getSubProjects(
-                                        rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
-                        .build();
-            }
+      ResultSet rs = ps.executeQuery();
 
-        } catch (SQLException e) {
-            e.printStackTrace(); // TODO
-        }
+      if (rs.next()) {
+        return new ProjectComposite.ProjectBuilder()
+            .projectId(projectId)
+            .projectName(rs.getString("name"))
+            .startDate(LocalDate.parse(rs.getString("start_date")))
+            .endDate(LocalDate.parse(rs.getString("end_date")))
+            .colorCode(rs.getString("color_id")) //  // TODO: @Jackie
+            .tasks(
+                TASK_REPOSITORY.getTasks(
+                    rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
+            .subProjects(
+                SUBPROJECT_REPOSITORY.getSubProjects(
+                    rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
+            .build();
+      }
 
-        return null;
+    } catch (SQLException e) {
+      e.printStackTrace(); // TODO
     }
 
-    @Override
-    public void deleteProject(int projectId) {
+    return null;
+  }
 
-        try {
-            String query = "DELETE FROM projects WHERE project_id = ?";
-            PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
-            ps.setInt(1, projectId);
-            ps.executeQuery();
+  @Override
+  public void deleteProject(int projectId) {
 
-        } catch (SQLException e) {
-            e.printStackTrace(); // TODO
-        }
+    try {
+      String query = "DELETE FROM projects WHERE project_id = ?";
+      PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
+      ps.setInt(1, projectId);
+      ps.executeQuery();
+
+    } catch (SQLException e) {
+      e.printStackTrace(); // TODO
+    }
+  }
+
+  @Override
+  public void editProject(ProjectComposite project) {
+
+    try {
+      String query =
+          "UPDATE projects SET name = ?, start_date = ?, end_date = ?, color_id = ? WHERE"
+              + " project_id = ?";
+      PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
+      ps.setString(1, project.getName());
+      ps.setString(2, String.valueOf(Date.valueOf(project.getStartDate())));
+      ps.setString(3, String.valueOf(Date.valueOf(project.getEndDate())));
+      ps.setString(4, project.getColorCode()); // TODO: @Jackie
+      ps.setInt(5, project.getId());
+
+      ps.execute();
+
+    } catch (SQLException e) {
+      e.printStackTrace(); // TODO
+    }
+  }
+
+  @Override
+  public List<ProjectComposite> getProjects() {
+
+    List<ProjectComposite> projects = new ArrayList<>();
+    try {
+
+      String query = "SELECT * FROM projects WHERE parent_project_id IS NULL";
+      PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
+
+      ResultSet rs = ps.executeQuery();
+
+      while (rs.next()) {
+        ProjectComposite project =
+            new ProjectComposite.ProjectBuilder()
+                .projectId(rs.getInt("project_id"))
+                .projectName(rs.getString("name"))
+                .startDate(LocalDate.parse(rs.getString("start_date")))
+                .endDate(LocalDate.parse(rs.getString("end_date")))
+                .tasks(
+                    TASK_REPOSITORY.getTasks(
+                        rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
+                .subProjects(
+                    SUBPROJECT_REPOSITORY.getSubProjects(
+                        rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
+                .colorCode(rs.getString("color_id")) // TODO: @Jackie
+                .build();
+
+        projects.add(project);
+      }
+
+    } catch (SQLException e) {
+      e.printStackTrace(); // TODO
     }
 
-    @Override
-    public void editProject(ProjectComposite project) {
-
-        try {
-            String query =
-                    "UPDATE projects SET name = ?, start_date = ?, end_date = ?, color_id = ? WHERE"
-                            + " project_id = ?";
-            PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
-            ps.setString(1, project.getName());
-            ps.setString(2, String.valueOf(Date.valueOf(project.getStartDate())));
-            ps.setString(3, String.valueOf(Date.valueOf(project.getEndDate())));
-            ps.setString(4, project.getColorCode()); // TODO: @Jackie
-            ps.setInt(5, project.getId());
-
-            ps.execute();
-
-        } catch (SQLException e) {
-            e.printStackTrace(); // TODO
-        }
-    }
-
-    @Override
-    public List<ProjectComposite> getProjects() {
-
-        List<ProjectComposite> projects = new ArrayList<>();
-        try {
-
-            String query = "SELECT * FROM projects WHERE parent_project_id IS NULL";
-            PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
-
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                ProjectComposite project =
-                        new ProjectComposite.ProjectBuilder()
-                                .projectId(rs.getInt("project_id"))
-                                .projectName(rs.getString("name"))
-                                .startDate(LocalDate.parse(rs.getString("start_date")))
-                                .endDate(LocalDate.parse(rs.getString("end_date")))
-                                .tasks(
-                                        TASK_REPOSITORY.getTasks(
-                                                rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
-                                .subProjects(
-                                        SUBPROJECT_REPOSITORY.getSubProjects(
-                                                rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
-                                .colorCode(rs.getString("color_id")) // TODO: @Jackie
-                                .build();
-
-                projects.add(project);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace(); // TODO
-        }
-
-        return projects;
-    }
+    return projects;
+  }
 }

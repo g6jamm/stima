@@ -5,25 +5,25 @@ import java.util.List;
 
 public interface Project {
 
-    List<Task> getTasks();
+  List<Task> getTasks();
 
-    int getId();
+  int getId();
 
-    String getName();
+  String getName();
 
-    LocalDate getStartDate();
+  LocalDate getStartDate();
 
-    LocalDate getEndDate();
+  LocalDate getEndDate();
 
-    double calculateHours();
+  double calculateHours();
 
-    int calculatePrice();
+  int calculatePrice();
 
-    String getColorCode();
+  String getColorCode();
 
-    void addTask(Task task);
+  void addTask(Task task);
 
-    double calculateWorkdays();
+  double calculateWorkdays();
 
-    double calculateResources();
+  double calculateResources();
 }
