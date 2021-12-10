@@ -69,7 +69,7 @@ public class SubProject implements ProjectInterface {
   }
 
   public double calculateWorkdays() {
-    double workday = 7.4;
+    double workday = 7.4;  // Workday in denmark is 7,4 hours if a workweek is 5 days and a workweek is 37 hours
     double workdaysNeeded = calculateHours() / workday;
     return Math.round(workdaysNeeded * 100) / 100;
   }
