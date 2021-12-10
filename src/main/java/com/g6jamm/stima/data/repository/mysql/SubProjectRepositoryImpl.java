@@ -3,7 +3,8 @@ package com.g6jamm.stima.data.repository.mysql;
 import com.g6jamm.stima.data.repository.SubProjectRepository;
 import com.g6jamm.stima.data.repository.TaskRepository;
 import com.g6jamm.stima.data.repository.util.DbManager;
-import com.g6jamm.stima.domain.model.SubProject;
+import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.model.ProjectLeaf;
 import com.g6jamm.stima.domain.model.Task;
 
 import java.sql.Date;
@@ -19,9 +20,9 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   private final TaskRepository TASK_REPOSITORY = new TaskRepositoryImpl();
 
   @Override
-  public List<SubProject> getSubProjects(int projectId) {
+  public List<Project> getSubProjects(int projectId) {
 
-    List<SubProject> subProjects = new ArrayList<>();
+    List<Project> subProjects = new ArrayList<>();
     String query = "SELECT * FROM projects WHERE parent_project_id = ?";
 
     try {
@@ -31,8 +32,8 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       ResultSet rs = ps.executeQuery();
 
       while (rs.next()) {
-        SubProject subProject =
-            new SubProject.SubProjectBuilder()
+        ProjectLeaf subProject =
+            new ProjectLeaf.SubProjectBuilder()
                 .subProjectId(rs.getInt("project_id"))
                 .name(rs.getString("name"))
                 .tasks(
@@ -53,9 +54,9 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   }
 
   @Override
-  public SubProject getSubproject(int subProjectId) {
+  public Project getSubproject(int subProjectId) {
 
-    String query = "SELECT * FROM projects WHERE project_id = ?";
+    String query = "SELECT * FROM projects WHERE project_id  = ?";
 
     try {
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
@@ -64,7 +65,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       ResultSet rs = ps.executeQuery();
 
       if (rs.next()) {
-        return new SubProject.SubProjectBuilder()
+        return new ProjectLeaf.SubProjectBuilder()
             .subProjectId(rs.getInt("project_id"))
             .name(rs.getString("name"))
             .startDate(LocalDate.parse(rs.getString("start_date")))
@@ -82,7 +83,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   }
 
   @Override
-  public SubProject createSubProject(
+  public ProjectLeaf createSubProject(
       String name,
       LocalDate startDate,
       LocalDate endDate,
@@ -111,7 +112,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   }
 
   @Override
-  public SubProject deleteSubProject(int subProjectId) {
+  public ProjectLeaf deleteSubProject(int subProjectId) {
     return null;
   }
 
@@ -121,12 +122,12 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   }
 
   @Override
-  public double getTotalHours(SubProject subProject) {
+  public double getTotalHours(ProjectLeaf subProject) {
     return 0;
   }
 
   @Override
-  public int getTotalPrice(SubProject subProject) {
+  public int getTotalPrice(ProjectLeaf subProject) {
     return 0;
   }
 }

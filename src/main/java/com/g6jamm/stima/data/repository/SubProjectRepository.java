@@ -1,6 +1,7 @@
 package com.g6jamm.stima.data.repository;
 
-import com.g6jamm.stima.domain.model.SubProject;
+import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.model.ProjectLeaf;
 import com.g6jamm.stima.domain.model.Task;
 
 import java.time.LocalDate;
@@ -9,22 +10,22 @@ import java.util.List;
 /** @author Jackie */
 public interface SubProjectRepository {
 
-  List<SubProject> getSubProjects(int projectId);
+  List<Project> getSubProjects(int projectId);
 
-  SubProject getSubproject(int subProjectId);
+  Project getSubproject(int subProjectId);
 
-  SubProject createSubProject(
+  ProjectLeaf createSubProject(
       String name,
       LocalDate startDate,
       LocalDate endDate,
       String projectColorParam,
       int parentProjectId);
 
-  SubProject deleteSubProject(int subProjectId);
+  ProjectLeaf deleteSubProject(int subProjectId);
 
   boolean addTaskToSubProject(int subProjectId, Task task);
 
-  double getTotalHours(SubProject subProject);
+  double getTotalHours(ProjectLeaf subProject);
 
-  int getTotalPrice(SubProject subProject);
+  int getTotalPrice(ProjectLeaf subProject);
 }

@@ -4,7 +4,7 @@ import com.g6jamm.stima.data.repository.ProjectRepository;
 import com.g6jamm.stima.data.repository.SubProjectRepository;
 import com.g6jamm.stima.data.repository.TaskRepository;
 import com.g6jamm.stima.data.repository.util.DbManager;
-import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.model.ProjectComposite;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -20,7 +20,7 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
   private final SubProjectRepository SUBPROJECT_REPOSITORY = new SubProjectRepositoryImpl();
 
   @Override
-  public Project createProject(Project project) {
+  public ProjectComposite createProject(ProjectComposite project) {
 
     try {
       String query =
@@ -42,10 +42,10 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
   }
 
   @Override
-  public Project getProject(int projectId) {
+  public ProjectComposite getProject(int projectId) {
 
     try {
-      String query = "SELECT * FROM projects WHERE project_id = ?";
+      String query = "SELECT * FROM projects WHERE project_id = ? AND project_parent_id is NULL";
 
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setInt(1, projectId);
@@ -53,12 +53,18 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
       ResultSet rs = ps.executeQuery();
 
       if (rs.next()) {
-        return new Project.ProjectBuilder()
+        return new ProjectComposite.ProjectBuilder()
             .projectId(projectId)
             .projectName(rs.getString("name"))
             .startDate(LocalDate.parse(rs.getString("start_date")))
             .endDate(LocalDate.parse(rs.getString("end_date")))
             .colorCode(rs.getString("color_id")) //  // TODO: @Jackie
+            .tasks(
+                TASK_REPOSITORY.getTasks(
+                    rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
+            .subProjects(
+                SUBPROJECT_REPOSITORY.getSubProjects(
+                    rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
             .build();
       }
 
@@ -84,7 +90,7 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
   }
 
   @Override
-  public void editProject(Project project) {
+  public void editProject(ProjectComposite project) {
 
     try {
       String query =
@@ -105,9 +111,9 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
   }
 
   @Override
-  public List<Project> getProjects() {
+  public List<ProjectComposite> getProjects() {
 
-    List<Project> projects = new ArrayList<>();
+    List<ProjectComposite> projects = new ArrayList<>();
     try {
 
       String query = "SELECT * FROM projects WHERE parent_project_id IS NULL";
@@ -116,8 +122,8 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
       ResultSet rs = ps.executeQuery();
 
       while (rs.next()) {
-        Project project =
-            new Project.ProjectBuilder()
+        ProjectComposite project =
+            new ProjectComposite.ProjectBuilder()
                 .projectId(rs.getInt("project_id"))
                 .projectName(rs.getString("name"))
                 .startDate(LocalDate.parse(rs.getString("start_date")))

@@ -1,7 +1,8 @@
 package com.g6jamm.stima.data.repository.stub;
 
 import com.g6jamm.stima.data.repository.SubProjectRepository;
-import com.g6jamm.stima.domain.model.SubProject;
+import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.model.ProjectLeaf;
 import com.g6jamm.stima.domain.model.Task;
 
 import java.time.LocalDate;
@@ -10,12 +11,12 @@ import java.util.List;
 
 public class SubProjectRepositoryStub implements SubProjectRepository {
 
-  private static final List<SubProject> SUB_PROJECTS = new ArrayList<>();
+  private static final List<Project> SUB_PROJECTS = new ArrayList<>();
 
   public SubProjectRepositoryStub() {
     if (SUB_PROJECTS.isEmpty()) {
       SUB_PROJECTS.add(
-          new SubProject.SubProjectBuilder()
+          new ProjectLeaf.SubProjectBuilder()
               .subProjectId(SUB_PROJECTS.size() + 1)
               .name("example")
               .startDate(LocalDate.of(2020, 1, 1))
@@ -25,7 +26,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
               .build());
 
       SUB_PROJECTS.add(
-          new SubProject.SubProjectBuilder()
+          new ProjectLeaf.SubProjectBuilder()
               .subProjectId(SUB_PROJECTS.size() + 1)
               .name("example2")
               .startDate(LocalDate.of(2020, 1, 1))
@@ -35,7 +36,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
               .build());
 
       SUB_PROJECTS.add(
-          new SubProject.SubProjectBuilder()
+          new ProjectLeaf.SubProjectBuilder()
               .subProjectId(SUB_PROJECTS.size() + 1)
               .name("example3")
               .startDate(LocalDate.of(2020, 5, 1))
@@ -51,7 +52,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
    * @author Jackie
    */
   @Override
-  public List<SubProject> getSubProjects(int projectId) {
+  public List<Project> getSubProjects(int projectId) {
     return SUB_PROJECTS;
   }
 
@@ -63,9 +64,9 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
    * @author Jackie
    */
   @Override
-  public SubProject getSubproject(int subProjectId) {
+  public Project getSubproject(int subProjectId) {
 
-    for (SubProject sp : SUB_PROJECTS) {
+    for (Project sp : SUB_PROJECTS) {
       if (sp.getId() == subProjectId) {
         return sp;
       }
@@ -84,15 +85,15 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
    * @author Jackie
    */
   @Override
-  public SubProject createSubProject(
+  public ProjectLeaf createSubProject(
       String name,
       LocalDate startDate,
       LocalDate endDate,
       String projectColor,
       int parentProjectId) {
 
-    SubProject subProject =
-        new SubProject.SubProjectBuilder()
+    ProjectLeaf subProject =
+        new ProjectLeaf.SubProjectBuilder()
             .subProjectId(SUB_PROJECTS.size() + 1)
             .name(name)
             .tasks(new ArrayList<Task>())
@@ -105,7 +106,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
   }
 
   @Override
-  public SubProject deleteSubProject(int subProjectId) {
+  public ProjectLeaf deleteSubProject(int subProjectId) {
     return null;
   }
 
@@ -120,7 +121,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
   @Override
   public boolean addTaskToSubProject(int subProjectId, Task task) {
 
-    for (SubProject sp : SUB_PROJECTS) {
+    for (Project sp : SUB_PROJECTS) {
       if (sp.getId() == subProjectId) {
         sp.addTask(task);
         return true;
@@ -138,7 +139,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
    * @author Jackie
    */
   @Override
-  public double getTotalHours(SubProject subProject) {
+  public double getTotalHours(ProjectLeaf subProject) {
     int result = 0;
     List<Task> tasks = subProject.getTasks();
 
@@ -157,7 +158,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
    * @author Jackie
    */
   @Override
-  public int getTotalPrice(SubProject subProject) {
+  public int getTotalPrice(ProjectLeaf subProject) {
     int result = 0;
     List<Task> tasks = subProject.getTasks();
 

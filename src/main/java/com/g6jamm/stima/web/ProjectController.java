@@ -2,12 +2,11 @@ package com.g6jamm.stima.web;
 
 import com.g6jamm.stima.data.repository.mysql.ProjectRepositoryMySQLImpl;
 import com.g6jamm.stima.data.repository.mysql.SubProjectRepositoryImpl;
-import com.g6jamm.stima.data.repository.stub.ProjectColorStub;
-import com.g6jamm.stima.data.repository.stub.ResourceTypeRepositoryStub;
-import com.g6jamm.stima.data.repository.stub.SubProjectRepositoryStub;
-import com.g6jamm.stima.data.repository.stub.TaskRepositoryStub;
+import com.g6jamm.stima.data.repository.mysql.TaskRepositoryImpl;
+import com.g6jamm.stima.data.repository.stub.*;
+import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.Project;
-import com.g6jamm.stima.domain.model.SubProject;
+import com.g6jamm.stima.domain.model.ProjectLeaf;
 import com.g6jamm.stima.domain.model.Task;
 import com.g6jamm.stima.domain.service.ProjectColorService;
 import com.g6jamm.stima.domain.service.ProjectService;
@@ -25,6 +24,12 @@ import java.util.List;
 
 @Controller
 public class ProjectController {
+  private final ProjectService PROJECT_SERVICE =
+      new ProjectService(new ProjectRepositoryMySQLImpl());
+  private final TaskService TASK_SERVICE =
+      new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryStub());
+  private final SubProjectService SUBPROJECT_SERVICE =
+      new SubProjectService(new SubProjectRepositoryImpl());
 
   /**
    * View all projects.
@@ -35,9 +40,7 @@ public class ProjectController {
    */
   @GetMapping("/projects")
   public String projects(Model model) {
-    ProjectService projectService = new ProjectService(new ProjectRepositoryMySQLImpl());
-
-    List<Project> projects = projectService.getProjects();
+    List<ProjectComposite> projects = PROJECT_SERVICE.getProjects();
 
     model.addAttribute("projects", projects);
 
@@ -56,15 +59,9 @@ public class ProjectController {
    */
   @GetMapping("/projects/{projectId}")
   public String projectId(Model model, @PathVariable int projectId) {
+    ProjectComposite project = PROJECT_SERVICE.getProjectById(projectId);
 
-    ProjectService projectService = new ProjectService(new ProjectRepositoryMySQLImpl());
-    TaskService taskService =
-        new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
-    SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
-
-    Project project = projectService.getProjectById(projectId);
-
-    List<SubProject> subProjects = project.getSubProjects();
+    List<Project> subProjects = project.getSubProjects();
     model.addAttribute("projects", subProjects);
 
     List<Task> tasks = project.getTasks();
@@ -77,7 +74,7 @@ public class ProjectController {
 
     model.addAttribute("classActiveSettings", "active");
 
-    model.addAttribute("resourceTypes", taskService.getResourceTypes());
+    model.addAttribute("resourceTypes", TASK_SERVICE.getResourceTypes());
 
     return "project";
   }
@@ -92,21 +89,19 @@ public class ProjectController {
 
     // TODO check if valid date
     // TODO check if date are inside project start and end
+    ProjectComposite project = PROJECT_SERVICE.getProjectById(projectId);
 
-    ProjectService projectService = new ProjectService(new ProjectRepositoryMySQLImpl());
-    Project project = projectService.getProjectById(projectId);
-
-    SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryImpl());
-
-    SubProject subProject =
-        subProjectService.createSubProject(
+    ProjectLeaf subProject =
+        SUBPROJECT_SERVICE.createSubProject(
             subProjectNameParam,
             LocalDate.parse(startDateParam),
             LocalDate.parse(endDateParam),
             projectColorParam,
             projectId);
 
-    project.getSubProjects().add(subProject); // TODO skal fjernes
+    project
+        .getSubProjects()
+        .add(subProject); // TODO skal fjernes - Mere object orienteret at gøre det?
 
     model.addAttribute("subProject", subProject); // TODO doesnt matter? we redirect?
 
@@ -124,9 +119,8 @@ public class ProjectController {
     // TODO check if valid date
     // TODO check if date are inside project start and end
 
-    ProjectService projectService = new ProjectService(new ProjectRepositoryMySQLImpl());
-    Project project =
-        projectService.createProject(
+    ProjectComposite project =
+        PROJECT_SERVICE.createProject(
             projectNameParam,
             LocalDate.parse(startDateParam),
             LocalDate.parse(endDateParam),

@@ -1,163 +1,29 @@
 package com.g6jamm.stima.domain.model;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
 
-/** @auther Mathias */
-public class Project implements ProjectInterface {
+public interface Project {
 
-  private final int PROJECT_ID;
-  private final String PROJECT_NAME;
-  private final LocalDate START_DATE;
-  private final LocalDate END_DATE;
-  private final List<Task> TASKS;
-  private final List<SubProject> SUB_PROJECTS;
-  private final String COLOR_CODE;
+  List<Task> getTasks();
 
-  private Project(ProjectBuilder projectBuilder) {
-    this.PROJECT_ID = projectBuilder.projectId;
-    this.PROJECT_NAME = projectBuilder.projectName;
-    this.START_DATE = projectBuilder.startDate;
-    this.END_DATE = projectBuilder.endDate;
-    this.TASKS = projectBuilder.tasks;
-    this.SUB_PROJECTS = projectBuilder.subProjects;
-    this.COLOR_CODE = projectBuilder.colorCode;
-  }
+  int getId();
 
-  public int getId() {
-    return PROJECT_ID;
-  }
+  String getName();
 
-  public String getName() {
-    return PROJECT_NAME;
-  }
+  LocalDate getStartDate();
 
-  public LocalDate getStartDate() {
-    return START_DATE;
-  }
+  LocalDate getEndDate();
 
-  public LocalDate getEndDate() {
-    return END_DATE;
-  }
+  double calculateHours();
 
-  public List<Task> getTasks() {
-    return TASKS;
-  }
+  int calculatePrice();
 
-  public List<SubProject> getSubProjects() {
-    return SUB_PROJECTS;
-  }
+  String getColorCode();
 
-  public String getColorCode() {
-    return COLOR_CODE;
-  }
+  void addTask(Task task);
 
-  public double calculateHours() {
-    double totalHours = 0.0;
-    if (!SUB_PROJECTS.isEmpty()) {
-      for (SubProject subProject : SUB_PROJECTS) {
-        totalHours += subProject.calculateHours();
-      }
-    }
-    if (!TASKS.isEmpty()) {
-      for (Task t : TASKS) {
-        totalHours += t.getHours();
-      }
-    }
-    return totalHours;
-  }
+  double calculateWorkdays();
 
-  public double calculatePrice() {
-    int totalPrice = 0;
-    if (!SUB_PROJECTS.isEmpty()) {
-      for (SubProject subProject : SUB_PROJECTS) {
-        totalPrice += subProject.calculatePrice();
-      }
-    }
-    if (!TASKS.isEmpty()) {
-      for (Task t : TASKS) {
-        totalPrice += t.getPrice();
-      }
-    }
-    return totalPrice;
-  }
-
-  public double calculateWorkdays() {
-    double workday =
-        7.4; // Workday in denmark is 7,4 hours if a workweek is 5 days and a workweek is 37 hours
-    double workdaysNeeded = calculateHours() / workday;
-    return Math.round(workdaysNeeded * 100.0) / 100.0;
-  }
-
-  public double calculateResources() {
-
-    long workdaysAvailable =
-        Duration.between(LocalDate.now().atStartOfDay(), END_DATE.atStartOfDay()).toDays()
-            - 1; // todo hvordan skal vi håndtere det?
-    double result = calculateWorkdays() / (workdaysAvailable);
-
-    return Math.round(result * 100.0) / 100.0;
-  }
-
-  public static class ProjectBuilder {
-    private int projectId;
-    private String projectName;
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private List<Task> tasks;
-    private List<SubProject> subProjects;
-    private String colorCode;
-
-    public ProjectBuilder projectId(int projectId) {
-      this.projectId = projectId;
-      return this;
-    }
-
-    public ProjectBuilder projectName(String name) {
-      this.projectName = name;
-      return this;
-    }
-
-    public ProjectBuilder startDate(LocalDate startDate) {
-      this.startDate = startDate;
-      return this;
-    }
-
-    public ProjectBuilder endDate(LocalDate endDate) {
-      this.endDate = endDate;
-      return this;
-    }
-
-    public ProjectBuilder tasks(List<Task> tasks) {
-      this.tasks = tasks;
-      return this;
-    }
-
-    public ProjectBuilder subProjects(List<SubProject> subProjects) {
-      this.subProjects = subProjects;
-      return this;
-    }
-
-    public ProjectBuilder colorCode(String colorCode) {
-      this.colorCode = colorCode;
-      return this;
-    }
-
-    private void reset() {
-      this.projectId = 0;
-      this.projectName = null;
-      this.startDate = null;
-      this.endDate = null;
-      this.tasks = null;
-      this.subProjects = null;
-      this.colorCode = null;
-    }
-
-    public Project build() {
-      Project headProject = new Project(this);
-      reset();
-      return headProject;
-    }
-  }
+  double calculateResources();
 }

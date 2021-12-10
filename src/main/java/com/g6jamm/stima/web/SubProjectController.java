@@ -1,11 +1,12 @@
 package com.g6jamm.stima.web;
 
+import com.g6jamm.stima.data.repository.mysql.ProjectRepositoryMySQLImpl;
+import com.g6jamm.stima.data.repository.mysql.SubProjectRepositoryImpl;
 import com.g6jamm.stima.data.repository.mysql.TaskRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.*;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
+import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.Project;
-import com.g6jamm.stima.domain.model.ProjectInterface;
-import com.g6jamm.stima.domain.model.SubProject;
 import com.g6jamm.stima.domain.model.Task;
 import com.g6jamm.stima.domain.service.ProjectService;
 import com.g6jamm.stima.domain.service.SubProjectService;
@@ -23,9 +24,11 @@ import java.util.List;
 @Controller
 public class SubProjectController {
   private final SubProjectService SUBPROJECT_SERVICE =
-      new SubProjectService(new SubProjectRepositoryStub());
+      new SubProjectService(new SubProjectRepositoryImpl());
   TaskService taskService =
       new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryStub());
+  private final ProjectService PROJECT_SERVICE =
+      new ProjectService(new ProjectRepositoryMySQLImpl());
 
   /**
    * Get method for sub project page, shows all task for the sup project
@@ -39,28 +42,22 @@ public class SubProjectController {
   @GetMapping("/projects/{projectId}/{subProjectId}")
   public String subProjectPage(
       Model model, @PathVariable int projectId, @PathVariable int subProjectId) {
-    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-    Project project = projectService.getProjectById(projectId);
+    ProjectComposite project = PROJECT_SERVICE.getProjectById(projectId);
 
-    SubProject subProject = null; // todo move??
-    for (SubProject sp : project.getSubProjects()) {
+    Project subProject = null; // todo move??
+    for (Project sp : project.getSubProjects()) {
       if (subProjectId == sp.getId()) {
         subProject = sp;
       }
     }
     if (subProject != null) {
       List<Task> tasks = subProject.getTasks();
-      // TODO need change remove hardcoded tasks when possible
-
-      //    for (Task t : tasks) {
-      //      SUBPROJECT_SERVICE.addTaskToSubProject(subProject.getId(), t);
-      //    } //TODO FIX!!
 
       model.addAttribute("tasks", tasks);
       model.addAttribute("subProject", subProject);
       model.addAttribute("resourceTypes", taskService.getResourceTypes());
 
-      model.addAttribute("parentProject", projectService.getProjectById(projectId));
+      model.addAttribute("parentProject", PROJECT_SERVICE.getProjectById(projectId));
 
       return "subProject";
     }
@@ -69,9 +66,7 @@ public class SubProjectController {
 
   @PostMapping("/projects/{projectId}/create-task")
   public String createProjectTask(WebRequest webRequest, Model model, @PathVariable int projectId) {
-
-    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-    Project project = projectService.getProjectById(projectId);
+    ProjectComposite project = PROJECT_SERVICE.getProjectById(projectId);
 
     try {
       createTask(webRequest, project);
@@ -83,15 +78,13 @@ public class SubProjectController {
   }
 
   /**
-   * Post method for creating new tasks. Takes all input from the form and passes them to
-   * taskService which create a Task object. The newly created task is then added to the projects
-   * list of tasks.
+   * Method for creating new tasks. Takes all input from the form and passes them to taskService
+   * which create a Task object. The newly created task is then added to the projects list of tasks.
    *
    * @param webRequest
    * @author Andreas
    */
-  private void createTask(WebRequest webRequest, ProjectInterface project)
-      throws TaskCreationException {
+  private void createTask(WebRequest webRequest, Project project) throws TaskCreationException {
 
     String taskNameParam = webRequest.getParameter("task-name");
     String taskHoursParam = webRequest.getParameter("task-hours");
@@ -119,7 +112,7 @@ public class SubProjectController {
         taskService.createtask(
             taskNameParam, hours, resourceTypeParam, taskStartDate, taskEndDate, project.getId());
 
-    project.getTasks().add(newTask);
+    project.addTask(newTask);
   }
 
   @PostMapping("/projects/{projectId}/{subProjectId}/create-task")
@@ -129,38 +122,24 @@ public class SubProjectController {
       @PathVariable int projectId,
       @PathVariable int subProjectId) {
 
-    SubProject subProject = SUBPROJECT_SERVICE.getSubProject(projectId);
-    try {
-      createTask(webRequest, subProject);
-    } catch (TaskCreationException e) {
-      model.addAttribute(
-          "error",
-          e.getMessage()); // TODO Handle exceptions?????? if we redirect we dont see the error.
-    }
+    ProjectComposite project = PROJECT_SERVICE.getProjectById(projectId);
 
-    return "redirect:/projects/" + projectId + "/" + subProjectId;
-  }
-
-  /**
-   * Initial Get method for displaying a task. @Author Andreas
-   *
-   * @param webRequest
-   * @param model
-   * @return
-   */
-  @GetMapping("/task")
-  public String task(WebRequest webRequest, Model model) {
-    if (model.getAttribute("Task") == null) {
-      try {
-        model.addAttribute(
-            "Task",
-            taskService.createtask(
-                "Placeholder", 1.0, "Senior Developer", "1990-01-01", "1991-01-01", 1));
-        model.addAttribute("ResourceTypes", taskService.getResourceTypes());
-      } catch (TaskCreationException e) {
-        model.addAttribute("error", e.getMessage());
+    Project subProject = null;
+    for (Project projectComponent : project.getSubProjects()) {
+      if (projectComponent.getId() == subProjectId) {
+        subProject = projectComponent;
       }
     }
-    return "Task";
+
+    if (subProject != null) {
+      try {
+        createTask(webRequest, subProject);
+      } catch (TaskCreationException e) {
+        model.addAttribute(
+            "error",
+            e.getMessage()); // TODO Handle exceptions?????? if we redirect we dont see the error.
+      }
+    }
+    return "redirect:/projects/" + projectId + "/" + subProjectId;
   }
 }
