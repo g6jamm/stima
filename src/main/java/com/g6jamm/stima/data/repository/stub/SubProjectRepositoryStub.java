@@ -174,7 +174,5 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
   public void editProject(ProjectComposite project) {}
 
   @Override
-  public void deleteProject(int projectId) {
-
-  }
+  public void deleteProject(int projectId) {}
 }
