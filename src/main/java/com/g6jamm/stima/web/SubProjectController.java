@@ -1,5 +1,8 @@
 package com.g6jamm.stima.web;
 
+import com.g6jamm.stima.data.repository.mysql.ProjectRepositoryMySQLImpl;
+import com.g6jamm.stima.data.repository.mysql.SubProjectRepositoryImpl;
+import com.g6jamm.stima.data.repository.mysql.TaskRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.*;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.ProjectComposite;
@@ -21,10 +24,10 @@ import java.util.List;
 @Controller
 public class SubProjectController {
   private final SubProjectService SUBPROJECT_SERVICE =
-      new SubProjectService(new SubProjectRepositoryStub());
+      new SubProjectService(new SubProjectRepositoryImpl());
   TaskService taskService =
-      new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
-  private final ProjectService PROJECT_SERVICE = new ProjectService(new ProjectRepositoryStub());
+      new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryStub());
+  private final ProjectService PROJECT_SERVICE = new ProjectService(new ProjectRepositoryMySQLImpl());
 
   /**
    * Get method for sub project page, shows all task for the sup project
@@ -48,7 +51,6 @@ public class SubProjectController {
     }
     if (subProject != null) {
       List<Task> tasks = subProject.getTasks();
-      // TODO need change remove hardcoded tasks when possible
 
       model.addAttribute("tasks", tasks);
       model.addAttribute("subProject", subProject);
