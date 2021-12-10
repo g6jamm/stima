@@ -6,10 +6,14 @@
     <a th:href="${link}">
         <div class="card shadow-sm"
              th:style="'background-color: ' + ${project.getColorCode}">
-            <div class="card-body card-text card-text-size-lg" style="margin-top: 150px">
+            <div class="card-body card-text sm" style="margin-top: 150px">
                 <p th:text="${project.getName}"></p>
                 <p th:text="'Timer: ' + ${project.calculateHours()}"></p>
                 <p th:text="'Pris: ' + ${project.calculatePrice()} + ' DKK'"></p>
+                <p th:text="'Estimerede arbejdsdage: ' + ${project.calculateWorkdays()}"></p>
+                <p th:text="'Estimerede resourcer: ' + ${project.calculateResources()}"></p>
+                <p th:text="'Start date: ' + ${project.getStartDate()}"></p>
+                <p th:text="'End date: ' + ${project.getEndDate()}"></p>
             </div>
         </div>
     </a>

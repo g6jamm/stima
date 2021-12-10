@@ -22,5 +22,4 @@ public interface Project {
     String getColorCode();
 
     void addTask(Task task);
-
 }
