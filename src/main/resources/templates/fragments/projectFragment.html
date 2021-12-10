@@ -14,7 +14,7 @@
                             class="fas fa-pen"></i></a>
                 </div>
                 <div class="btn-group" role="group">
-                    <form method="POST" th:action="@{/projects/{id}/delete-project (id=${project.getId})}">
+                    <form method="POST" th:action=" @{{path}/delete-project (path=${link})}">
                         <button class="btn btn-delete" type="submit"><i class="fas fa-trash-alt"></i></button>
                     </form>
                 </div>
@@ -46,7 +46,7 @@
                             type="button"></button>
                 </div>
                 <form method="POST"
-                      th:action="@{/projects/{id}/edit-project (id=${project.getId})}">
+                      th:action="@{{path}/edit-project (path=${link})}">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="col-form-label" th:for="'edit-project-name-' + ${project.getId}">Navn:</label>

@@ -4,6 +4,7 @@ import com.g6jamm.stima.data.repository.SubProjectRepository;
 import com.g6jamm.stima.data.repository.TaskRepository;
 import com.g6jamm.stima.data.repository.util.DbManager;
 import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.ProjectLeaf;
 import com.g6jamm.stima.domain.model.Task;
 
@@ -129,5 +130,39 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   @Override
   public int getTotalPrice(ProjectLeaf subProject) {
     return 0;
+  }
+
+  @Override
+  public void editProject(ProjectComposite subProject) {
+
+    try {
+      String query =
+          "UPDATE projects SET name = ?, start_date = ?, end_date = ?, color_id = ? WHERE project_id = ?";
+      PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
+      ps.setString(1, subProject.getName());
+      ps.setString(2, String.valueOf(Date.valueOf(subProject.getStartDate())));
+      ps.setString(3, String.valueOf(Date.valueOf(subProject.getEndDate())));
+      ps.setString(4, subProject.getColorCode()); // TODO: @Jackie
+      ps.setInt(5, subProject.getId());
+
+      ps.execute();
+
+    } catch (SQLException e) {
+      e.printStackTrace(); // TODO
+    }
+  }
+
+  @Override
+  public void deleteProject(int projectId) {
+
+    try {
+      String query = "DELETE FROM projects WHERE project_id = ?";
+      PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
+      ps.setInt(1, projectId);
+      ps.execute();
+
+    } catch (SQLException e) {
+      e.printStackTrace(); // TODO
+    }
   }
 }

@@ -2,6 +2,7 @@ package com.g6jamm.stima.data.repository.stub;
 
 import com.g6jamm.stima.data.repository.SubProjectRepository;
 import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.ProjectLeaf;
 import com.g6jamm.stima.domain.model.Task;
 
@@ -167,5 +168,13 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
     }
 
     return result;
+  }
+
+  @Override
+  public void editProject(ProjectComposite project) {}
+
+  @Override
+  public void deleteProject(int projectId) {
+
   }
 }

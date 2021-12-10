@@ -45,8 +45,7 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
   public ProjectComposite getProject(int projectId) {
 
     try {
-      String query =
-          "SELECT * FROM projects WHERE project_id = ? AND projects.parent_project_id is NULL";
+      String query = "SELECT * FROM projects WHERE project_id = ? AND parent_project_id is NULL";
 
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setInt(1, projectId);
