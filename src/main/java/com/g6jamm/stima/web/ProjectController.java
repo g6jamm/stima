@@ -80,7 +80,7 @@ public class ProjectController {
   }
 
   @PostMapping("/projects/{projectId}/create-subproject")
-  public String createSubProject(WebRequest webRequest, Model model, @PathVariable int projectId) {
+  public String createSubProject(WebRequest webRequest, @PathVariable int projectId) {
 
     String subProjectNameParam = webRequest.getParameter("create-subproject-name");
     String startDateParam = webRequest.getParameter("create-subproject-start-date");
@@ -103,13 +103,11 @@ public class ProjectController {
         .getSubProjects()
         .add(subProject); // TODO skal fjernes - Mere object orienteret at gøre det?
 
-    model.addAttribute("subProject", subProject); // TODO doesnt matter? we redirect?
-
     return "redirect:/projects/" + projectId;
   }
 
   @PostMapping("/projects/create-project")
-  public String createProject(WebRequest webRequest, Model model) {
+  public String createProject(WebRequest webRequest) {
 
     String projectNameParam = webRequest.getParameter("create-project-name");
     String startDateParam = webRequest.getParameter("create-project-start-date");
@@ -119,14 +117,11 @@ public class ProjectController {
     // TODO check if valid date
     // TODO check if date are inside project start and end
 
-    ProjectComposite project =
-        PROJECT_SERVICE.createProject(
-            projectNameParam,
-            LocalDate.parse(startDateParam),
-            LocalDate.parse(endDateParam),
-            projectColorParam);
-
-    model.addAttribute("project", project); // TODO: no need to do this..
+    PROJECT_SERVICE.createProject(
+        projectNameParam,
+        LocalDate.parse(startDateParam),
+        LocalDate.parse(endDateParam),
+        projectColorParam);
 
     return "redirect:/projects";
   }

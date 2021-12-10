@@ -100,7 +100,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       ps.setString(1, name);
       ps.setDate(2, Date.valueOf(startDate));
       ps.setDate(3, Date.valueOf(endDate));
-      ps.setInt(4, 2); // TODO change to colorCodeId
+      ps.setInt(4, 1); // TODO change to colorCodeId
       ps.setInt(5, parentProjectId);
 
       ps.execute();

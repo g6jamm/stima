@@ -33,7 +33,7 @@ public class SubProjectService {
       String projectColor,
       int parentProjectId) {
     return SUB_PROJECT_REPOSITORY.createSubProject(
-        name, startDate, endDate, projectColor, parentProjectId); // TODO: send object med
+        name, startDate, endDate, "1", parentProjectId); // TODO: send object med & fix color
   }
 
   /**
