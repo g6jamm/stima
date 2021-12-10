@@ -1,5 +1,6 @@
 package com.g6jamm.stima.web;
 
+import com.g6jamm.stima.data.repository.mysql.ProjectRepositoryMySQLImpl;
 import com.g6jamm.stima.data.repository.stub.*;
 import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.Project;
@@ -21,141 +22,132 @@ import java.util.List;
 
 @Controller
 public class ProjectController {
+    private final ProjectService PROJECT_SERVICE = new ProjectService(new ProjectRepositoryMySQLImpl());
+    private final TaskService TASK_SERVICE =
+            new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
+    private final SubProjectService SUBPROJECT_SERVICE = new SubProjectService(new SubProjectRepositoryStub());
 
-  /**
-   * View all projects.
-   *
-   * @param model Model
-   * @return String
-   * @auther Mathias
-   */
-  @GetMapping("/projects")
-  public String projects(Model model) {
-    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
+    /**
+     * View all projects.
+     *
+     * @param model Model
+     * @return String
+     * @auther Mathias
+     */
+    @GetMapping("/projects")
+    public String projects(Model model) {
+        List<ProjectComposite> projects = PROJECT_SERVICE.getProjects();
 
-    List<ProjectComposite> projects = projectService.getProjects();
+        model.addAttribute("projects", projects);
 
-    model.addAttribute("projects", projects);
+        ProjectColorService projectColorService = new ProjectColorService(new ProjectColorStub());
+        model.addAttribute("projectColors", projectColorService.getProjectColors());
 
-    ProjectColorService projectColorService = new ProjectColorService(new ProjectColorStub());
-    model.addAttribute("projectColors", projectColorService.getProjectColors());
+        return "projects";
+    }
 
-    return "projects";
-  }
+    /**
+     * View a specific project.
+     *
+     * @param model Model
+     * @return String
+     * @auther Mathias
+     */
+    @GetMapping("/projects/{projectId}")
+    public String projectId(Model model, @PathVariable int projectId) {
+        ProjectComposite project = PROJECT_SERVICE.getProjectById(projectId);
 
-  /**
-   * View a specific project.
-   *
-   * @param model Model
-   * @return String
-   * @auther Mathias
-   */
-  @GetMapping("/projects/{projectId}")
-  public String projectId(Model model, @PathVariable int projectId) {
+        List<Project> subProjects = project.getSubProjects();
+        model.addAttribute("projects", subProjects);
 
-    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-    TaskService taskService =
-        new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
-    SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
+        List<Task> tasks = project.getTasks();
+        model.addAttribute("tasks", tasks);
 
-    ProjectComposite project = projectService.getProjectById(projectId);
+        model.addAttribute("parentproject", project);
 
-    List<Project> subProjects = project.getSubProjects();
-    model.addAttribute("projects", subProjects);
+        ProjectColorService projectColorService = new ProjectColorService(new ProjectColorStub());
+        model.addAttribute("projectColors", projectColorService.getProjectColors());
 
-    List<Task> tasks = project.getTasks();
-    model.addAttribute("tasks", tasks);
+        model.addAttribute("classActiveSettings", "active");
 
-    model.addAttribute("parentproject", project);
+        model.addAttribute("resourceTypes", TASK_SERVICE.getResourceTypes());
 
-    ProjectColorService projectColorService = new ProjectColorService(new ProjectColorStub());
-    model.addAttribute("projectColors", projectColorService.getProjectColors());
+        return "project";
+    }
 
-    model.addAttribute("classActiveSettings", "active");
+    @PostMapping("/projects/{projectId}/create-subproject")
+    public String createSubProject(WebRequest webRequest, Model model, @PathVariable int projectId) {
 
-    model.addAttribute("resourceTypes", taskService.getResourceTypes());
+        String subProjectNameParam = webRequest.getParameter("subproject-name");
+        String startDateParam = webRequest.getParameter("subproject-start-date");
+        String endDateParam = webRequest.getParameter("subproject-end-date");
+        String projectColorParam = webRequest.getParameter("subproject-color");
 
-    return "project";
-  }
+        // TODO check if valid date
+        // TODO check if date are inside project start and end
+        ProjectComposite project = PROJECT_SERVICE.getProjectById(projectId);
 
-  @PostMapping("/projects/{projectId}/create-subproject")
-  public String createSubProject(WebRequest webRequest, Model model, @PathVariable int projectId) {
+        ProjectLeaf subProject =
+                SUBPROJECT_SERVICE.createSubProject(
+                        subProjectNameParam,
+                        LocalDate.parse(startDateParam),
+                        LocalDate.parse(endDateParam),
+                        projectColorParam,
+                        projectId);
 
-    String subProjectNameParam = webRequest.getParameter("subproject-name");
-    String startDateParam = webRequest.getParameter("subproject-start-date");
-    String endDateParam = webRequest.getParameter("subproject-end-date");
-    String projectColorParam = webRequest.getParameter("subproject-color");
+        project.getSubProjects().add(subProject); // TODO skal fjernes - Mere object orienteret at gøre det?
 
-    // TODO check if valid date
-    // TODO check if date are inside project start and end
+        model.addAttribute("subProject", subProject); // TODO doesnt matter? we redirect?
 
-    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-    ProjectComposite project = projectService.getProjectById(projectId);
+        return "redirect:/projects/" + projectId;
+    }
 
-    SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
+    @PostMapping("/projects/create-project")
+    public String createProject(WebRequest webRequest, Model model) {
 
-    ProjectLeaf subProject =
-        subProjectService.createSubProject(
-            subProjectNameParam,
-            LocalDate.parse(startDateParam),
-            LocalDate.parse(endDateParam),
-            projectColorParam,
-            projectId);
+        String projectNameParam = webRequest.getParameter("project-name");
+        String startDateParam = webRequest.getParameter("project-start-date");
+        String endDateParam = webRequest.getParameter("project-end-date");
+        String projectColorParam = webRequest.getParameter("project-color");
 
-    project.getSubProjects().add(subProject); // TODO skal fjernes - Mere object orienteret at gøre det?
+        // TODO check if valid date
+        // TODO check if date are inside project start and end
 
-    model.addAttribute("subProject", subProject); // TODO doesnt matter? we redirect?
+        ProjectComposite project =
+                PROJECT_SERVICE.createProject(
+                        projectNameParam,
+                        LocalDate.parse(startDateParam),
+                        LocalDate.parse(endDateParam),
+                        projectColorParam);
 
-    return "redirect:/projects/" + projectId;
-  }
+        model.addAttribute("project", project);
 
-  @PostMapping("/projects/create-project")
-  public String createProject(WebRequest webRequest, Model model) {
+        return "redirect:/projects";
+    }
 
-    String projectNameParam = webRequest.getParameter("project-name");
-    String startDateParam = webRequest.getParameter("project-start-date");
-    String endDateParam = webRequest.getParameter("project-end-date");
-    String projectColorParam = webRequest.getParameter("project-color");
+    /**
+     * Navigates the user to edit project page.
+     *
+     * @param webRequest WebRequest
+     * @param projectId  int
+     * @return String
+     * @auther Mathias
+     */
+    @PostMapping("/edit-project/{projectId}")
+    public String editProject(WebRequest webRequest, @PathVariable int projectId) {
+        return "redirect:/project/edit-project"; // TODO: redirect?
+    }
 
-    // TODO check if valid date
-    // TODO check if date are inside project start and end
-
-    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-    ProjectComposite project =
-        projectService.createProject(
-            projectNameParam,
-            LocalDate.parse(startDateParam),
-            LocalDate.parse(endDateParam),
-            projectColorParam);
-
-    model.addAttribute("project", project);
-
-    return "redirect:/projects";
-  }
-
-  /**
-   * Navigates the user to edit project page.
-   *
-   * @param webRequest WebRequest
-   * @param projectId int
-   * @return String
-   * @auther Mathias
-   */
-  @PostMapping("/edit-project/{projectId}")
-  public String editProject(WebRequest webRequest, @PathVariable int projectId) {
-    return "redirect:/project/edit-project"; // TODO: redirect?
-  }
-
-  /**
-   * Deletes the project by id and navigate the user to the project page.
-   *
-   * @param webRequest WebRequest
-   * @param projectId int
-   * @return String
-   * @auther Mathias
-   */
-  @PostMapping("/delete-project/{projectId}")
-  public String deleteProject(WebRequest webRequest, @PathVariable int projectId) {
-    return "redirect:/project"; // TODO: redirect?
-  }
+    /**
+     * Deletes the project by id and navigate the user to the project page.
+     *
+     * @param webRequest WebRequest
+     * @param projectId  int
+     * @return String
+     * @auther Mathias
+     */
+    @PostMapping("/delete-project/{projectId}")
+    public String deleteProject(WebRequest webRequest, @PathVariable int projectId) {
+        return "redirect:/project"; // TODO: redirect?
+    }
 }
