@@ -31,7 +31,7 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
       ps.setString(1, project.getName());
       ps.setString(2, String.valueOf(Date.valueOf(project.getStartDate())));
       ps.setString(3, String.valueOf(Date.valueOf(project.getEndDate())));
-      ps.setInt(4, 1); // TODO: @Jackie
+      ps.setString(4, project.getColorCode()); // TODO: @Jackie
       ps.setString(5, null);
       ps.execute();
     } catch (SQLException e) {
@@ -45,7 +45,7 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
   public ProjectComposite getProject(int projectId) {
 
     try {
-      String query = "SELECT * FROM projects WHERE project_id = ? AND project_parent_id is NULL";
+      String query = "SELECT * FROM projects WHERE project_id = ? AND projects.parent_project_id is NULL";
 
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setInt(1, projectId);
