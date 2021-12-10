@@ -24,6 +24,7 @@ public class SubProjectController {
       new SubProjectService(new SubProjectRepositoryStub());
   TaskService taskService =
       new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
+  private final ProjectService PROJECT_SERVICE = new ProjectService(new ProjectRepositoryStub());
 
   /**
    * Get method for sub project page, shows all task for the sup project
@@ -37,8 +38,7 @@ public class SubProjectController {
   @GetMapping("/projects/{projectId}/{subProjectId}")
   public String subProjectPage(
       Model model, @PathVariable int projectId, @PathVariable int subProjectId) {
-    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-    ProjectComposite project = projectService.getProjectById(projectId);
+    ProjectComposite project = PROJECT_SERVICE.getProjectById(projectId);
 
     Project subProject = null; // todo move??
     for (Project sp : project.getSubProjects()) {
@@ -54,7 +54,7 @@ public class SubProjectController {
       model.addAttribute("subProject", subProject);
       model.addAttribute("resourceTypes", taskService.getResourceTypes());
 
-      model.addAttribute("parentProject", projectService.getProjectById(projectId));
+      model.addAttribute("parentProject", PROJECT_SERVICE.getProjectById(projectId));
 
       return "subProject";
     }
@@ -63,9 +63,7 @@ public class SubProjectController {
 
   @PostMapping("/projects/{projectId}/create-task")
   public String createProjectTask(WebRequest webRequest, Model model, @PathVariable int projectId) {
-
-    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-    ProjectComposite project = projectService.getProjectById(projectId);
+    ProjectComposite project = PROJECT_SERVICE.getProjectById(projectId);
 
     try {
       createTask(webRequest, project);
@@ -123,8 +121,7 @@ public class SubProjectController {
       @PathVariable int projectId,
       @PathVariable int subProjectId) {
 
-    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-    ProjectComposite project = projectService.getProjectById(projectId);
+    ProjectComposite project = PROJECT_SERVICE.getProjectById(projectId);
 
     Project subProject = null;
     for(Project projectComponent : project.getSubProjects()){
