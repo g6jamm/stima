@@ -71,7 +71,7 @@ public class SubProjectController {
             }
             return "redirect:/projects/" + projectId;
         }
-        return "index";
+        return "redirect:/";
     }
 
     @PostMapping("/projects/{projectId}/create-task")
@@ -88,7 +88,7 @@ public class SubProjectController {
 
             return "redirect:/projects/" + projectId;
         }
-        return "index";
+        return "redirect:/";
     }
 
     /**
@@ -160,6 +160,6 @@ public class SubProjectController {
             }
             return "redirect:/projects/" + projectId + "/" + subProjectId;
         }
-        return "index";
+        return "redirect:/";
     }
 }

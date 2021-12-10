@@ -6,7 +6,7 @@ import com.g6jamm.stima.domain.model.User;
 import java.util.List;
 
 public interface ProjectRepository {
-  ProjectComposite createProject(ProjectComposite project);
+  ProjectComposite createProject(ProjectComposite project, User user);
 
   ProjectComposite getProject(int projectId);
 

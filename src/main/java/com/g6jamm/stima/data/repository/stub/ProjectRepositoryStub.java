@@ -67,7 +67,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
   }
 
   @Override
-  public ProjectComposite createProject(ProjectComposite project) {
+  public ProjectComposite createProject(ProjectComposite project, User user) {
 
     ProjectComposite newProject =
         new ProjectComposite.ProjectBuilder()

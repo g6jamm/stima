@@ -30,7 +30,7 @@ public class ProjectService {
   }
 
   public ProjectComposite createProject(
-      String name, LocalDate startDate, LocalDate endDate, String projectColor) {
+      String name, LocalDate startDate, LocalDate endDate, String projectColor, User user) {
 
     ProjectComposite project =
         new ProjectComposite.ProjectBuilder()
@@ -40,6 +40,6 @@ public class ProjectService {
             .colorCode(projectColor)
             .build();
 
-    return PROJECT_REPOSITORY.createProject(project);
+    return PROJECT_REPOSITORY.createProject(project, user);
   }
 }

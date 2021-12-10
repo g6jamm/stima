@@ -47,7 +47,7 @@ public class ProjectController {
 
             return "projects";
         }
-        return "redirect:/index";
+        return "redirect:/";
     }
 
     /**
@@ -80,7 +80,7 @@ public class ProjectController {
 
             return "project";
         }
-        return "index";
+        return "redirect:/";
     }
 
     @PostMapping("/projects/{projectId}/create-subproject")
@@ -113,11 +113,13 @@ public class ProjectController {
 
             return "redirect:/projects/" + projectId;
         }
-        return "index";
+        return "redirect:/";
     }
 
     @PostMapping("/projects/create-project")
     public String createProject(WebRequest webRequest, Model model) {
+        if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
+            User user = USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
 
         String projectNameParam = webRequest.getParameter("project-name");
         String startDateParam = webRequest.getParameter("project-start-date");
@@ -132,11 +134,13 @@ public class ProjectController {
                         projectNameParam,
                         LocalDate.parse(startDateParam),
                         LocalDate.parse(endDateParam),
-                        projectColorParam);
+                        projectColorParam,user);
 
         model.addAttribute("project", project);
 
         return "redirect:/projects";
+    }
+        return "redirect:/";
     }
 
     /**
