@@ -2,6 +2,7 @@ package com.g6jamm.stima.data.repository.stub;
 
 import com.g6jamm.stima.data.repository.ProjectRepository;
 import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.model.ProjectC;
 import com.g6jamm.stima.domain.model.SubProject;
 import com.g6jamm.stima.domain.model.Task;
 
@@ -26,7 +27,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
               .startDate(LocalDate.of(2021, 1, 1))
               .endDate(LocalDate.of(2021, 1, 2))
               .tasks(taskRepositoryStub.getTasks(1))
-              .subProjects(subProjectRepositoryStub.getSubProjects(projects.size() + 1))
+              .subProjects(subProjectRepositoryStub.getSubProjects(1))
               .colorCode("pink")
               .build());
 
@@ -37,7 +38,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
               .startDate(LocalDate.of(2021, 1, 1))
               .endDate(LocalDate.of(2021, 1, 2))
               .tasks(new ArrayList<Task>())
-              .subProjects(new ArrayList<SubProject>())
+              .subProjects(new ArrayList<ProjectC>())
               .colorCode("purple")
               .build());
 
@@ -48,7 +49,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
               .startDate(LocalDate.of(2021, 1, 1))
               .endDate(LocalDate.of(2021, 1, 2))
               .tasks(new ArrayList<Task>())
-              .subProjects(new ArrayList<SubProject>())
+              .subProjects(new ArrayList<ProjectC>())
               .colorCode("green")
               .build());
 
@@ -59,7 +60,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
               .startDate(LocalDate.of(2021, 1, 1))
               .endDate(LocalDate.of(2021, 1, 2))
               .tasks(new ArrayList<Task>())
-              .subProjects(new ArrayList<SubProject>())
+              .subProjects(new ArrayList<ProjectC>())
               .colorCode("brown")
               .build());
     }
@@ -76,7 +77,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
             .endDate(project.getEndDate())
             .colorCode(project.getColorCode())
             .tasks(new ArrayList<Task>())
-            .subProjects(new ArrayList<SubProject>())
+            .subProjects(new ArrayList<ProjectC>())
             .build();
 
     projects.add(newProject);

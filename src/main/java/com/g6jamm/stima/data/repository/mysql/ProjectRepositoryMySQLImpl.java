@@ -45,7 +45,7 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
   public Project getProject(int projectId) {
 
     try {
-      String query = "SELECT * FROM projects WHERE project_id = ?";
+      String query = "SELECT * FROM projects WHERE project_id  OR parent_id = ?";
 
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setInt(1, projectId);

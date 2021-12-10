@@ -2,11 +2,9 @@ package com.g6jamm.stima.web;
 
 import com.g6jamm.stima.data.repository.mysql.ProjectRepositoryMySQLImpl;
 import com.g6jamm.stima.data.repository.mysql.SubProjectRepositoryImpl;
-import com.g6jamm.stima.data.repository.stub.ProjectColorStub;
-import com.g6jamm.stima.data.repository.stub.ResourceTypeRepositoryStub;
-import com.g6jamm.stima.data.repository.stub.SubProjectRepositoryStub;
-import com.g6jamm.stima.data.repository.stub.TaskRepositoryStub;
+import com.g6jamm.stima.data.repository.stub.*;
 import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.model.ProjectC;
 import com.g6jamm.stima.domain.model.SubProject;
 import com.g6jamm.stima.domain.model.Task;
 import com.g6jamm.stima.domain.service.ProjectColorService;
@@ -35,7 +33,7 @@ public class ProjectController {
    */
   @GetMapping("/projects")
   public String projects(Model model) {
-    ProjectService projectService = new ProjectService(new ProjectRepositoryMySQLImpl());
+    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
 
     List<Project> projects = projectService.getProjects();
 
@@ -57,14 +55,14 @@ public class ProjectController {
   @GetMapping("/projects/{projectId}")
   public String projectId(Model model, @PathVariable int projectId) {
 
-    ProjectService projectService = new ProjectService(new ProjectRepositoryMySQLImpl());
+    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
     TaskService taskService =
         new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
     SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
 
     Project project = projectService.getProjectById(projectId);
 
-    List<SubProject> subProjects = project.getSubProjects();
+    List<ProjectC> subProjects = project.getSubProjects();
     model.addAttribute("projects", subProjects);
 
     List<Task> tasks = project.getTasks();
@@ -93,10 +91,10 @@ public class ProjectController {
     // TODO check if valid date
     // TODO check if date are inside project start and end
 
-    ProjectService projectService = new ProjectService(new ProjectRepositoryMySQLImpl());
+    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
     Project project = projectService.getProjectById(projectId);
 
-    SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryImpl());
+    SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
 
     SubProject subProject =
         subProjectService.createSubProject(
@@ -124,7 +122,7 @@ public class ProjectController {
     // TODO check if valid date
     // TODO check if date are inside project start and end
 
-    ProjectService projectService = new ProjectService(new ProjectRepositoryMySQLImpl());
+    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
     Project project =
         projectService.createProject(
             projectNameParam,

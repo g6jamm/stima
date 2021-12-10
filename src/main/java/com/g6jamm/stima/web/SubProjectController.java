@@ -4,7 +4,7 @@ import com.g6jamm.stima.data.repository.mysql.TaskRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.*;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.Project;
-import com.g6jamm.stima.domain.model.ProjectInterface;
+import com.g6jamm.stima.domain.model.ProjectC;
 import com.g6jamm.stima.domain.model.SubProject;
 import com.g6jamm.stima.domain.model.Task;
 import com.g6jamm.stima.domain.service.ProjectService;
@@ -25,7 +25,7 @@ public class SubProjectController {
   private final SubProjectService SUBPROJECT_SERVICE =
       new SubProjectService(new SubProjectRepositoryStub());
   TaskService taskService =
-      new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryStub());
+      new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
 
   /**
    * Get method for sub project page, shows all task for the sup project
@@ -42,8 +42,8 @@ public class SubProjectController {
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
     Project project = projectService.getProjectById(projectId);
 
-    SubProject subProject = null; // todo move??
-    for (SubProject sp : project.getSubProjects()) {
+    ProjectC subProject = null; // todo move??
+    for (ProjectC sp : project.getSubProjects()) {
       if (subProjectId == sp.getId()) {
         subProject = sp;
       }
@@ -90,7 +90,7 @@ public class SubProjectController {
    * @param webRequest
    * @author Andreas
    */
-  private void createTask(WebRequest webRequest, ProjectInterface project)
+  private void createTask(WebRequest webRequest, ProjectC project)
       throws TaskCreationException {
 
     String taskNameParam = webRequest.getParameter("task-name");
@@ -119,7 +119,7 @@ public class SubProjectController {
         taskService.createtask(
             taskNameParam, hours, resourceTypeParam, taskStartDate, taskEndDate, project.getId());
 
-    project.getTasks().add(newTask);
+    project.addTask(newTask);
   }
 
   @PostMapping("/projects/{projectId}/{subProjectId}/create-task")
@@ -129,15 +129,25 @@ public class SubProjectController {
       @PathVariable int projectId,
       @PathVariable int subProjectId) {
 
-    SubProject subProject = SUBPROJECT_SERVICE.getSubProject(projectId);
-    try {
-      createTask(webRequest, subProject);
-    } catch (TaskCreationException e) {
-      model.addAttribute(
-          "error",
-          e.getMessage()); // TODO Handle exceptions?????? if we redirect we dont see the error.
+    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
+    Project project = projectService.getProjectById(projectId);
+
+    ProjectC subProject = null;
+    for(ProjectC projectC : project.getSubProjects()){
+      if(projectC.getId() ==  subProjectId){
+        subProject = projectC;
+      }
     }
 
+    if(subProject != null) {
+      try {
+        createTask(webRequest, subProject);
+      } catch (TaskCreationException e) {
+        model.addAttribute(
+                "error",
+                e.getMessage()); // TODO Handle exceptions?????? if we redirect we dont see the error.
+      }
+    }
     return "redirect:/projects/" + projectId + "/" + subProjectId;
   }
 

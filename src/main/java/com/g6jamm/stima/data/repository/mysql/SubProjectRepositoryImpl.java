@@ -3,6 +3,7 @@ package com.g6jamm.stima.data.repository.mysql;
 import com.g6jamm.stima.data.repository.SubProjectRepository;
 import com.g6jamm.stima.data.repository.TaskRepository;
 import com.g6jamm.stima.data.repository.util.DbManager;
+import com.g6jamm.stima.domain.model.ProjectC;
 import com.g6jamm.stima.domain.model.SubProject;
 import com.g6jamm.stima.domain.model.Task;
 
@@ -19,9 +20,9 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   private final TaskRepository TASK_REPOSITORY = new TaskRepositoryImpl();
 
   @Override
-  public List<SubProject> getSubProjects(int projectId) {
+  public List<ProjectC> getSubProjects(int projectId) {
 
-    List<SubProject> subProjects = new ArrayList<>();
+    List<ProjectC> subProjects = new ArrayList<>();
     String query = "SELECT * FROM projects WHERE parent_project_id = ?";
 
     try {
@@ -53,9 +54,9 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   }
 
   @Override
-  public SubProject getSubproject(int subProjectId) {
+  public ProjectC getSubproject(int subProjectId) {
 
-    String query = "SELECT * FROM projects WHERE project_id = ?";
+    String query = "SELECT * FROM projects WHERE project_id  = ?";
 
     try {
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);

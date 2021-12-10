@@ -1,6 +1,7 @@
 package com.g6jamm.stima.web;
 
 import com.g6jamm.stima.data.repository.mysql.UserRepositoryImpl;
+import com.g6jamm.stima.data.repository.stub.UserRepositoryStub;
 import com.g6jamm.stima.domain.exception.LoginException;
 import com.g6jamm.stima.domain.exception.SignUpException;
 import com.g6jamm.stima.domain.model.User;
@@ -16,7 +17,7 @@ import org.springframework.web.context.request.WebRequest;
 @Controller
 public class UserController { // TODO change name to Login controller?
 
-  UserService userService = new UserService(new UserRepositoryImpl());
+  UserService userService = new UserService(new UserRepositoryStub());
 
   @GetMapping("/")
   public String goToHomepage(WebRequest webRequest) {
