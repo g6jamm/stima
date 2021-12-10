@@ -1,11 +1,9 @@
 package com.g6jamm.stima.web;
 
-import com.g6jamm.stima.data.repository.mysql.TaskRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.*;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.Project;
-import com.g6jamm.stima.domain.model.ProjectC;
-import com.g6jamm.stima.domain.model.SubProject;
+import com.g6jamm.stima.domain.model.ProjectComponent;
 import com.g6jamm.stima.domain.model.Task;
 import com.g6jamm.stima.domain.service.ProjectService;
 import com.g6jamm.stima.domain.service.SubProjectService;
@@ -42,8 +40,8 @@ public class SubProjectController {
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
     Project project = projectService.getProjectById(projectId);
 
-    ProjectC subProject = null; // todo move??
-    for (ProjectC sp : project.getSubProjects()) {
+    ProjectComponent subProject = null; // todo move??
+    for (ProjectComponent sp : project.getSubProjects()) {
       if (subProjectId == sp.getId()) {
         subProject = sp;
       }
@@ -90,7 +88,7 @@ public class SubProjectController {
    * @param webRequest
    * @author Andreas
    */
-  private void createTask(WebRequest webRequest, ProjectC project)
+  private void createTask(WebRequest webRequest, ProjectComponent project)
       throws TaskCreationException {
 
     String taskNameParam = webRequest.getParameter("task-name");
@@ -132,10 +130,10 @@ public class SubProjectController {
     ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
     Project project = projectService.getProjectById(projectId);
 
-    ProjectC subProject = null;
-    for(ProjectC projectC : project.getSubProjects()){
-      if(projectC.getId() ==  subProjectId){
-        subProject = projectC;
+    ProjectComponent subProject = null;
+    for(ProjectComponent projectComponent : project.getSubProjects()){
+      if(projectComponent.getId() ==  subProjectId){
+        subProject = projectComponent;
       }
     }
 

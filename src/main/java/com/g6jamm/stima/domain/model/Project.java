@@ -6,14 +6,14 @@ import java.util.List;
 /**
  * @auther Mathias
  */
-public class Project implements ProjectC {
+public class Project implements ProjectComponent {
 
     private final int PROJECT_ID;
     private final String PROJECT_NAME;
     private final LocalDate START_DATE;
     private final LocalDate END_DATE;
     private final List<Task> TASKS;
-    private final List<ProjectC> SUB_PROJECTS;
+    private final List<ProjectComponent> SUB_PROJECTS;
     private final String COLOR_CODE;
 
     private Project(ProjectBuilder projectBuilder) {
@@ -46,7 +46,7 @@ public class Project implements ProjectC {
         return TASKS;
     }
 
-    public List<ProjectC> getSubProjects() {
+    public List<ProjectComponent> getSubProjects() {
         return SUB_PROJECTS;
     }
 
@@ -57,7 +57,7 @@ public class Project implements ProjectC {
     public double calculateHours() {
         double totalHours = 0.0;
         if (!SUB_PROJECTS.isEmpty()) {
-            for (ProjectC subProject : SUB_PROJECTS) {
+            for (ProjectComponent subProject : SUB_PROJECTS) {
                 totalHours += subProject.calculateHours();
             }
         }
@@ -72,7 +72,7 @@ public class Project implements ProjectC {
     public int calculatePrice() {
         int totalPrice = 0;
         if (!SUB_PROJECTS.isEmpty()) {
-            for (ProjectC subProject : SUB_PROJECTS) {
+            for (ProjectComponent subProject : SUB_PROJECTS) {
                 totalPrice += subProject.calculatePrice();
             }
         }
@@ -88,13 +88,17 @@ public class Project implements ProjectC {
         TASKS.add(task);
     }
 
+    public void addSubProject(ProjectComponent project){
+        SUB_PROJECTS.add(project);
+    }
+
     public static class ProjectBuilder {
         private int projectId;
         private String projectName;
         private LocalDate startDate;
         private LocalDate endDate;
         private List<Task> tasks;
-        private List<ProjectC> subProjects;
+        private List<ProjectComponent> subProjects;
         private String colorCode;
 
         public ProjectBuilder projectId(int projectId) {
@@ -122,7 +126,7 @@ public class Project implements ProjectC {
             return this;
         }
 
-        public ProjectBuilder subProjects(List<ProjectC> subProjects) {
+        public ProjectBuilder subProjects(List<ProjectComponent> subProjects) {
             this.subProjects = subProjects;
             return this;
         }

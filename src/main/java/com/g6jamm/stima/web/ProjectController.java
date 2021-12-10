@@ -1,10 +1,8 @@
 package com.g6jamm.stima.web;
 
-import com.g6jamm.stima.data.repository.mysql.ProjectRepositoryMySQLImpl;
-import com.g6jamm.stima.data.repository.mysql.SubProjectRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.*;
 import com.g6jamm.stima.domain.model.Project;
-import com.g6jamm.stima.domain.model.ProjectC;
+import com.g6jamm.stima.domain.model.ProjectComponent;
 import com.g6jamm.stima.domain.model.SubProject;
 import com.g6jamm.stima.domain.model.Task;
 import com.g6jamm.stima.domain.service.ProjectColorService;
@@ -62,7 +60,7 @@ public class ProjectController {
 
     Project project = projectService.getProjectById(projectId);
 
-    List<ProjectC> subProjects = project.getSubProjects();
+    List<ProjectComponent> subProjects = project.getSubProjects();
     model.addAttribute("projects", subProjects);
 
     List<Task> tasks = project.getTasks();

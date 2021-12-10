@@ -1,6 +1,6 @@
 package com.g6jamm.stima.data.repository;
 
-import com.g6jamm.stima.domain.model.ProjectC;
+import com.g6jamm.stima.domain.model.ProjectComponent;
 import com.g6jamm.stima.domain.model.SubProject;
 import com.g6jamm.stima.domain.model.Task;
 
@@ -10,9 +10,9 @@ import java.util.List;
 /** @author Jackie */
 public interface SubProjectRepository {
 
-  List<ProjectC> getSubProjects(int projectId);
+  List<ProjectComponent> getSubProjects(int projectId);
 
-  ProjectC getSubproject(int subProjectId);
+  ProjectComponent getSubproject(int subProjectId);
 
   SubProject createSubProject(
       String name,

@@ -3,7 +3,7 @@ package com.g6jamm.stima.domain.model;
 import java.time.LocalDate;
 import java.util.List;
 
-public class SubProject implements ProjectC {
+public class SubProject implements ProjectComponent {
 
   /**
    * Model for subproject

@@ -2,8 +2,7 @@ package com.g6jamm.stima.data.repository.stub;
 
 import com.g6jamm.stima.data.repository.ProjectRepository;
 import com.g6jamm.stima.domain.model.Project;
-import com.g6jamm.stima.domain.model.ProjectC;
-import com.g6jamm.stima.domain.model.SubProject;
+import com.g6jamm.stima.domain.model.ProjectComponent;
 import com.g6jamm.stima.domain.model.Task;
 
 import java.time.LocalDate;
@@ -38,7 +37,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
               .startDate(LocalDate.of(2021, 1, 1))
               .endDate(LocalDate.of(2021, 1, 2))
               .tasks(new ArrayList<Task>())
-              .subProjects(new ArrayList<ProjectC>())
+              .subProjects(new ArrayList<ProjectComponent>())
               .colorCode("purple")
               .build());
 
@@ -49,7 +48,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
               .startDate(LocalDate.of(2021, 1, 1))
               .endDate(LocalDate.of(2021, 1, 2))
               .tasks(new ArrayList<Task>())
-              .subProjects(new ArrayList<ProjectC>())
+              .subProjects(new ArrayList<ProjectComponent>())
               .colorCode("green")
               .build());
 
@@ -60,7 +59,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
               .startDate(LocalDate.of(2021, 1, 1))
               .endDate(LocalDate.of(2021, 1, 2))
               .tasks(new ArrayList<Task>())
-              .subProjects(new ArrayList<ProjectC>())
+              .subProjects(new ArrayList<ProjectComponent>())
               .colorCode("brown")
               .build());
     }
@@ -77,7 +76,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
             .endDate(project.getEndDate())
             .colorCode(project.getColorCode())
             .tasks(new ArrayList<Task>())
-            .subProjects(new ArrayList<ProjectC>())
+            .subProjects(new ArrayList<ProjectComponent>())
             .build();
 
     projects.add(newProject);

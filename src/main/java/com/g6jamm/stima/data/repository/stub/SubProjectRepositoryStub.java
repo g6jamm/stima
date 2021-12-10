@@ -1,7 +1,7 @@
 package com.g6jamm.stima.data.repository.stub;
 
 import com.g6jamm.stima.data.repository.SubProjectRepository;
-import com.g6jamm.stima.domain.model.ProjectC;
+import com.g6jamm.stima.domain.model.ProjectComponent;
 import com.g6jamm.stima.domain.model.SubProject;
 import com.g6jamm.stima.domain.model.Task;
 
@@ -11,7 +11,7 @@ import java.util.List;
 
 public class SubProjectRepositoryStub implements SubProjectRepository {
 
-  private static final List<ProjectC> SUB_PROJECTS = new ArrayList<>();
+  private static final List<ProjectComponent> SUB_PROJECTS = new ArrayList<>();
 
   public SubProjectRepositoryStub() {
     if (SUB_PROJECTS.isEmpty()) {
@@ -52,7 +52,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
    * @author Jackie
    */
   @Override
-  public List<ProjectC> getSubProjects(int projectId) {
+  public List<ProjectComponent> getSubProjects(int projectId) {
     return SUB_PROJECTS;
   }
 
@@ -64,9 +64,9 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
    * @author Jackie
    */
   @Override
-  public ProjectC getSubproject(int subProjectId) {
+  public ProjectComponent getSubproject(int subProjectId) {
 
-    for (ProjectC sp : SUB_PROJECTS) {
+    for (ProjectComponent sp : SUB_PROJECTS) {
       if (sp.getId() == subProjectId) {
         return sp;
       }
@@ -121,7 +121,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
   @Override
   public boolean addTaskToSubProject(int subProjectId, Task task) {
 
-    for (ProjectC sp : SUB_PROJECTS) {
+    for (ProjectComponent sp : SUB_PROJECTS) {
       if (sp.getId() == subProjectId) {
         sp.addTask(task);
         return true;

@@ -3,7 +3,7 @@ package com.g6jamm.stima.domain.model;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface ProjectC {
+public interface ProjectComponent {
 
     List<Task> getTasks();
 

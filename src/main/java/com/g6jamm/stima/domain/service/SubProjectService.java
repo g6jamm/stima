@@ -1,7 +1,7 @@
 package com.g6jamm.stima.domain.service;
 
 import com.g6jamm.stima.data.repository.SubProjectRepository;
-import com.g6jamm.stima.domain.model.ProjectC;
+import com.g6jamm.stima.domain.model.ProjectComponent;
 import com.g6jamm.stima.domain.model.SubProject;
 import com.g6jamm.stima.domain.model.Task;
 
@@ -41,7 +41,7 @@ public class SubProjectService {
    * @return List of subprojects
    * @author Jackie
    */
-  public List<ProjectC> getSubprojects(int projectId) {
+  public List<ProjectComponent> getSubprojects(int projectId) {
     return subProjectRepository.getSubProjects(projectId); // WIP
   }
 
@@ -51,7 +51,7 @@ public class SubProjectService {
    * @param subProjectId
    * @return a sub project
    */
-  public ProjectC getSubProject(int subProjectId) {
+  public ProjectComponent getSubProject(int subProjectId) {
     return subProjectRepository.getSubproject(subProjectId);
   }
 
