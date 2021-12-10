@@ -1,5 +1,6 @@
 package com.g6jamm.stima.domain.model;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -65,6 +66,23 @@ public class SubProject implements ProjectInterface {
       }
     }
     return totalPrice;
+  }
+
+  public double calculateWorkdays() {
+    double workday =
+        7.4; // Workday in denmark is 7,4 hours if a workweek is 5 days and a workweek is 37 hours
+    double workdaysNeeded = calculateHours() / workday;
+    return Math.round(workdaysNeeded * 100) / 100;
+  }
+
+  public double calculateResources() {
+
+    long workdaysAvailable =
+        Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays()
+            - 1; // todo hvordan skal vi håndtere det?
+    double result = calculateWorkdays() / (workdaysAvailable);
+
+    return Math.round(result * 100) / 100;
   }
 
   public String getColorCode() {
