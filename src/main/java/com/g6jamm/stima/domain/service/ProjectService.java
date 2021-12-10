@@ -42,7 +42,8 @@ public class ProjectService {
     return PROJECT_REPOSITORY.createProject(project);
   }
 
-  public void editProject(int projectId, String name, LocalDate startDate, LocalDate endDate, String projectColor) {
+  public void editProject(
+      int projectId, String name, LocalDate startDate, LocalDate endDate, String projectColor) {
 
     ProjectComposite project =
         new ProjectComposite.ProjectBuilder()
