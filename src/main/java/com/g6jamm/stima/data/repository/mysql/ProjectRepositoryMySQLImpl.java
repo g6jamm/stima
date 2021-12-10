@@ -5,6 +5,7 @@ import com.g6jamm.stima.data.repository.SubProjectRepository;
 import com.g6jamm.stima.data.repository.TaskRepository;
 import com.g6jamm.stima.data.repository.util.DbManager;
 import com.g6jamm.stima.domain.model.ProjectComposite;
+import com.g6jamm.stima.domain.model.User;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -111,14 +112,14 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
   }
 
   @Override
-  public List<ProjectComposite> getProjects() {
+  public List<ProjectComposite> getProjects(User user) {
 
     List<ProjectComposite> projects = new ArrayList<>();
     try {
 
-      String query = "SELECT * FROM projects WHERE parent_project_id IS NULL";
+      String query = "SELECT * FROM project_users pu INNER JOIN projects p ON pu.project_id = p.project_id WHERE user_id = ?";
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
-
+      ps.setInt(1, user.getId());
       ResultSet rs = ps.executeQuery();
 
       while (rs.next()) {

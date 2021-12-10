@@ -2,6 +2,7 @@ package com.g6jamm.stima.domain.service;
 
 import com.g6jamm.stima.data.repository.ProjectRepository;
 import com.g6jamm.stima.domain.model.ProjectComposite;
+import com.g6jamm.stima.domain.model.User;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,13 +15,13 @@ public class ProjectService {
     this.PROJECT_REPOSITORY = projectRepository;
   }
 
-  public List<ProjectComposite> getProjects() {
-    return PROJECT_REPOSITORY.getProjects();
+  public List<ProjectComposite> getProjects(User user) {
+    return PROJECT_REPOSITORY.getProjects(user);
   }
 
-  public ProjectComposite getProjectById(int id) {
-    for (ProjectComposite project : getProjects()) {
-      if (id == project.getId()) {
+  public ProjectComposite getProjectById(User user, int projectID) {
+    for (ProjectComposite project : getProjects(user)) {
+      if (projectID == project.getId()) {
         return project;
       }
     }

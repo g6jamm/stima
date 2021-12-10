@@ -1,6 +1,7 @@
 package com.g6jamm.stima.data.repository;
 
 import com.g6jamm.stima.domain.model.ProjectComposite;
+import com.g6jamm.stima.domain.model.User;
 
 import java.util.List;
 
@@ -13,5 +14,5 @@ public interface ProjectRepository {
 
   void editProject(ProjectComposite project);
 
-  List<ProjectComposite> getProjects();
+  List<ProjectComposite> getProjects(User user);
 }
