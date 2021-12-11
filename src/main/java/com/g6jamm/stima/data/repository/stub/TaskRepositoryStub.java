@@ -61,6 +61,11 @@ public class TaskRepositoryStub implements TaskRepository {
   }
 
   @Override
+  public void editTask(Task task) {
+
+  }
+
+  @Override
   public Task getTask(int task_id) {
     Task result = null;
     for (Task t : taskListStub) {
