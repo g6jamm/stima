@@ -61,9 +61,7 @@ public class TaskRepositoryStub implements TaskRepository {
   }
 
   @Override
-  public void editTask(Task task) {
-
-  }
+  public void editTask(Task task) {}
 
   @Override
   public Task getTask(int task_id) {
