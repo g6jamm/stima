@@ -3,6 +3,7 @@ package com.g6jamm.stima.domain.service;
 import com.g6jamm.stima.data.repository.stub.UserRepositoryStub;
 import com.g6jamm.stima.domain.exception.LoginException;
 import com.g6jamm.stima.domain.exception.SignUpException;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ class UserServiceTest {
    * constructor @Author Andreas
    */
   @Test
-  void createUserUserIdIncrements() throws SignUpException {
+  void createUserUserIdIncrements() throws SignUpException, SystemException {
     UserService userService = new UserService(new UserRepositoryStub());
     String firstName = "Bobby";
     String lastName = "Olsen";
@@ -30,7 +31,7 @@ class UserServiceTest {
   }
 
   @Test
-  void loginSuccessfullyReturnCorrectUserTest() throws LoginException {
+  void loginSuccessfullyReturnCorrectUserTest() throws LoginException, SystemException {
     UserService userService = new UserService(new UserRepositoryStub());
     String email = "demo@demo.com";
     String password = "demo";
@@ -40,7 +41,7 @@ class UserServiceTest {
   }
 
   @Test
-  void loginFailReturnCorrectUserTest() throws LoginException {
+  void loginFailReturnCorrectUserTest() throws LoginException, SystemException {
     UserService userService = new UserService(new UserRepositoryStub());
     String email = "demo@demo.com";
     String password = "demo";
@@ -50,7 +51,7 @@ class UserServiceTest {
   }
 
   @Test
-  void createNewUserSuccessfullyTest() throws SignUpException {
+  void createNewUserSuccessfullyTest() throws SignUpException, SystemException {
     UserService userService = new UserService(new UserRepositoryStub());
     String firstName = "Bob";
     String lastName = "Marley";
@@ -73,21 +74,21 @@ class UserServiceTest {
   //  }
 
   @Test
-  void getUserByIdSuccessfullTest() {
+  void getUserByIdSuccessfullTest() throws SystemException {
     UserService userService = new UserService(new UserRepositoryStub());
     User actualUser = userService.getUser(1);
     assertEquals(1, actualUser.getId());
   }
 
   @Test
-  void getUserByIdFailTest() {
+  void getUserByIdFailTest() throws SystemException {
     UserService userService = new UserService(new UserRepositoryStub());
     User actualUser = userService.getUser(1);
     assertNotEquals(0, actualUser.getId());
   }
 
   @Test
-  void userExistsSuccessfullyTest() {
+  void userExistsSuccessfullyTest() throws SystemException {
     UserService userService = new UserService(new UserRepositoryStub());
     boolean doesUserExist = userService.userExists(1);
 
@@ -95,7 +96,7 @@ class UserServiceTest {
   }
 
   @Test
-  void userExistsFailTest() {
+  void userExistsFailTest() throws SystemException {
     UserService userService = new UserService(new UserRepositoryStub());
     boolean doesUserExist = userService.userExists(68);
 

@@ -5,6 +5,7 @@ import com.g6jamm.stima.data.repository.mysql.SubProjectRepositoryImpl;
 import com.g6jamm.stima.data.repository.mysql.TaskRepositoryImpl;
 import com.g6jamm.stima.data.repository.mysql.UserRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.*;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.*;
 import com.g6jamm.stima.domain.service.*;
 import org.springframework.stereotype.Controller;
@@ -35,7 +36,7 @@ public class ProjectController {
    * @auther Mathias
    */
   @GetMapping("/projects")
-  public String projects(WebRequest webRequest, Model model) {
+  public String projects(WebRequest webRequest, Model model) throws SystemException {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       User user =
           USER_SERVICE.getUser(
@@ -60,7 +61,7 @@ public class ProjectController {
    * @auther Mathias
    */
   @GetMapping("/projects/{projectId}")
-  public String projectId(WebRequest webRequest, Model model, @PathVariable int projectId) {
+  public String projectId(WebRequest webRequest, Model model, @PathVariable int projectId) throws SystemException {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       User user =
           USER_SERVICE.getUser(
@@ -88,7 +89,7 @@ public class ProjectController {
   }
 
   @PostMapping("/projects/{projectId}/create-subproject")
-  public String createSubProject(WebRequest webRequest, Model model, @PathVariable int projectId) {
+  public String createSubProject(WebRequest webRequest, Model model, @PathVariable int projectId) throws SystemException {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       User user =
           USER_SERVICE.getUser(
@@ -123,7 +124,7 @@ public class ProjectController {
   }
 
   @PostMapping("/projects/create-project")
-  public String createProject(WebRequest webRequest, Model model) {
+  public String createProject(WebRequest webRequest, Model model) throws SystemException {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       User user =
           USER_SERVICE.getUser(

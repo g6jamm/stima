@@ -5,6 +5,7 @@ import com.g6jamm.stima.data.repository.mysql.SubProjectRepositoryImpl;
 import com.g6jamm.stima.data.repository.mysql.TaskRepositoryImpl;
 import com.g6jamm.stima.data.repository.mysql.UserRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.*;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.Project;
@@ -48,7 +49,7 @@ public class SubProjectController {
       WebRequest webRequest,
       Model model,
       @PathVariable int projectId,
-      @PathVariable int subProjectId) {
+      @PathVariable int subProjectId) throws SystemException {
 
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       User user =
@@ -80,7 +81,7 @@ public class SubProjectController {
   }
 
   @PostMapping("/projects/{projectId}/create-task")
-  public String createProjectTask(WebRequest webRequest, Model model, @PathVariable int projectId) {
+  public String createProjectTask(WebRequest webRequest, Model model, @PathVariable int projectId) throws SystemException {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       User user =
           USER_SERVICE.getUser(
@@ -141,7 +142,7 @@ public class SubProjectController {
       WebRequest webRequest,
       Model model,
       @PathVariable int projectId,
-      @PathVariable int subProjectId) {
+      @PathVariable int subProjectId) throws SystemException {
 
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       User user =
