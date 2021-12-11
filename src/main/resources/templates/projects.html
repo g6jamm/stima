@@ -15,7 +15,7 @@
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-3">
                 <div class="col">
-                    <a data-bs-target="#projectModal" data-bs-toggle="modal" href="#">
+                    <a data-bs-target="#createProjectModal" data-bs-toggle="modal" href="#">
                         <div class="card shadow-sm align-items-center justify-content-center card-btn">
                             <div class="card-body card-text card-text-size-sm card-icon">
                                 +
@@ -33,13 +33,13 @@
 
 <footer th:replace="fragments/footerFragtment :: footer"></footer>
 
-<div aria-hidden="true" aria-labelledby="projectModalLabel" class="modal fade"
-     id="projectModal"
+<div aria-hidden="true" aria-labelledby="createProjectModalLabel" class="modal fade"
+     id="createProjectModal"
      tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="projectModalLabel">Tilføj nyt underprojekt</h5>
+                <h5 class="modal-title" id="createProjectModalLabel">Tilføj nyt underprojekt</h5>
                 <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
                         type="button"></button>
             </div>
@@ -47,22 +47,22 @@
                   th:action="@{/projects/create-project}">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="col-form-label" for="project-name">Navn:</label>
-                        <input class="form-control" id="project-name" name="project-name" type="text">
+                        <label class="col-form-label" for="create-project-name">Navn:</label>
+                        <input class="form-control" id="create-project-name" name="create-project-name" type="text">
                     </div>
                     <div class="mb-3">
-                        <label class="col-form-label" for="project-start-date">Start dag:</label>
-                        <input class="form-control" id="project-start-date" name="project-start-date"
+                        <label class="col-form-label" for="create-project-start-date">Start dag:</label>
+                        <input class="form-control" id="create-project-start-date" name="create-project-start-date"
                                type="date">
                     </div>
                     <div class="mb-3">
-                        <label class="col-form-label" for="project-end-date">Slut dag:</label>
-                        <input class="form-control" id="project-end-date" name="project-end-date"
+                        <label class="col-form-label" for="create-project-end-date">Slut dag:</label>
+                        <input class="form-control" id="create-project-end-date" name="create-project-end-date"
                                type="date">
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label">Farve:</label>
-                        <select class="form-select" name="project-color">
+                        <select class="form-select" name="create-project-color">
                             <option th:each="color : ${projectColors}"
                                     th:style="'color: #fff; background-color: ' + ${color.value}"
                                     th:text="${color.key}"
@@ -80,6 +80,7 @@
         </div>
     </div>
 </div>
+
 
 </body>
 </html>

@@ -57,8 +57,9 @@ CREATE TABLE permissions
 );
 CREATE TABLE colors
 (
-    color_id int(10)    NOT NULL AUTO_INCREMENT,
-    code     varchar(7) NOT NULL UNIQUE,
+    color_id int(10)     NOT NULL AUTO_INCREMENT,
+    code     varchar(7)  NOT NULL UNIQUE,
+    name     varchar(50) NOT NULL UNIQUE,
     PRIMARY KEY (color_id)
 );
 CREATE TABLE project_users

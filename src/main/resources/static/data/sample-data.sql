@@ -1,7 +1,7 @@
 USE stima;
 
 INSERT INTO permissions (permission_id, name) VALUES (1,'ADMIN'),(2,'ADMIN');
-INSERT INTO colors (color_id, code) VALUES (1,'pink');
+INSERT INTO colors (color_id, code, name) VALUES (1,'#dc5b6e', 'pink');
 INSERT INTO roles (role_id, name) VALUES (1,'Project Manager'),(2,'Employee');
 INSERT INTO resource_type (price_per_hour, name) VALUES (1250,'Senior developer'),(800,'Junior developer'),(1000,'Project Manager');
 

@@ -94,10 +94,10 @@ public class ProjectController {
           USER_SERVICE.getUser(
               (Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
 
-      String subProjectNameParam = webRequest.getParameter("subproject-name");
-      String startDateParam = webRequest.getParameter("subproject-start-date");
-      String endDateParam = webRequest.getParameter("subproject-end-date");
-      String projectColorParam = webRequest.getParameter("subproject-color");
+      String subProjectNameParam = webRequest.getParameter("create-subproject-name");
+      String startDateParam = webRequest.getParameter("create-subproject-start-date");
+      String endDateParam = webRequest.getParameter("create-subproject-end-date");
+      String projectColorParam = webRequest.getParameter("create-subproject-color");
 
       // TODO check if valid date
       // TODO check if date are inside project start and end
@@ -129,10 +129,10 @@ public class ProjectController {
           USER_SERVICE.getUser(
               (Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
 
-      String projectNameParam = webRequest.getParameter("project-name");
-      String startDateParam = webRequest.getParameter("project-start-date");
-      String endDateParam = webRequest.getParameter("project-end-date");
-      String projectColorParam = webRequest.getParameter("project-color");
+      String projectNameParam = webRequest.getParameter("create-project-name");
+      String startDateParam = webRequest.getParameter("create-project-start-date");
+      String endDateParam = webRequest.getParameter("create-project-end-date");
+      String projectColorParam = webRequest.getParameter("create-project-color");
 
       // TODO check if valid date
       // TODO check if date are inside project start and end
@@ -152,29 +152,60 @@ public class ProjectController {
     return "redirect:/";
   }
 
-  /**
-   * Navigates the user to edit project page.
-   *
-   * @param webRequest WebRequest
-   * @param projectId int
-   * @return String
-   * @auther Mathias
-   */
-  @PostMapping("/edit-project/{projectId}")
-  public String editProject(WebRequest webRequest, @PathVariable int projectId) {
-    return "redirect:/project/edit-project"; // TODO: redirect?
+  @PostMapping("/projects/{projectId}/{subprojectId}/edit-project")
+  public String editSubProject(
+      WebRequest webRequest, @PathVariable int projectId, @PathVariable int subprojectId) {
+
+    String projectNameParam = webRequest.getParameter("edit-project-name");
+    String startDateParam = webRequest.getParameter("edit-project-start-date");
+    String endDateParam = webRequest.getParameter("edit-project-end-date");
+    String projectColorParam = webRequest.getParameter("edit-project-color");
+
+    // TODO check if valid date
+    // TODO check if date are inside project start and end
+
+    SUBPROJECT_SERVICE.editProject(
+        subprojectId,
+        projectNameParam,
+        LocalDate.parse(startDateParam),
+        LocalDate.parse(endDateParam),
+        projectColorParam);
+
+    return "redirect:/projects/" + projectId;
   }
 
-  /**
-   * Deletes the project by id and navigate the user to the project page.
-   *
-   * @param webRequest WebRequest
-   * @param projectId int
-   * @return String
-   * @auther Mathias
-   */
-  @PostMapping("/delete-project/{projectId}")
-  public String deleteProject(WebRequest webRequest, @PathVariable int projectId) {
-    return "redirect:/project"; // TODO: redirect?
+  @PostMapping("/projects/{projectId}/edit-project")
+  public String editProject(WebRequest webRequest, @PathVariable int projectId) {
+
+    String projectNameParam = webRequest.getParameter("edit-project-name");
+    String startDateParam = webRequest.getParameter("edit-project-start-date");
+    String endDateParam = webRequest.getParameter("edit-project-end-date");
+    String projectColorParam = webRequest.getParameter("edit-project-color");
+
+    // TODO check if valid date
+    // TODO check if date are inside project start and end
+
+    PROJECT_SERVICE.editProject(
+        projectId,
+        projectNameParam,
+        LocalDate.parse(startDateParam),
+        LocalDate.parse(endDateParam),
+        projectColorParam);
+
+    return "redirect:/projects";
+  }
+
+  @PostMapping("/projects/{projectId}/delete-project")
+  public String deleteProject(@PathVariable int projectId) {
+    PROJECT_SERVICE.deleteProject(projectId);
+
+    return "redirect:/projects";
+  }
+
+  @PostMapping("/projects/{projectId}/{subprojectId}/delete-project")
+  public String deleteSubProject(@PathVariable int projectId, @PathVariable int subprojectId) {
+    SUBPROJECT_SERVICE.deleteProject(subprojectId);
+
+    return "redirect:/projects/" + projectId;
   }
 }
