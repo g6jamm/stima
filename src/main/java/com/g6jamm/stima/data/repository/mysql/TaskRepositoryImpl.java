@@ -5,6 +5,7 @@ import com.g6jamm.stima.data.repository.util.DbManager;
 import com.g6jamm.stima.domain.model.ResourceType;
 import com.g6jamm.stima.domain.model.Task;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,8 +27,8 @@ public class TaskRepositoryImpl implements TaskRepository {
       ps.setDouble(2, task.getHours());
       ps.setInt(3, task.getResourceType().getId());
       ps.setInt(4, projectId);
-      ps.setString(5, task.getStartDate().toString());
-      ps.setString(6, task.getEndDate().toString());
+      ps.setDate(5, Date.valueOf(task.getStartDate()));
+      ps.setDate(6, Date.valueOf(task.getEndDate()));
 
       ps.executeUpdate();
       return task;
