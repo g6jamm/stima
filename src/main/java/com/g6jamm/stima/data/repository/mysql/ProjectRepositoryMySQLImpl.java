@@ -173,7 +173,7 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
     System.out.println("YAY");
     String query =
         "INSERT INTO project_users (project_id, user_id, role_id) VALUES (?, ?, 1)"; // 1 is for
-                                                                                     // role_id;
+    // role_id;
     PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
     ps.setInt(1, project.getId());
     ps.setInt(2, user.getId());

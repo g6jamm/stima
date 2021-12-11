@@ -94,10 +94,10 @@ public class ProjectController {
           USER_SERVICE.getUser(
               (Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
 
-    String subProjectNameParam = webRequest.getParameter("create-subproject-name");
-    String startDateParam = webRequest.getParameter("create-subproject-start-date");
-    String endDateParam = webRequest.getParameter("create-subproject-end-date");
-    String projectColorParam = webRequest.getParameter("create-subproject-color");
+      String subProjectNameParam = webRequest.getParameter("create-subproject-name");
+      String startDateParam = webRequest.getParameter("create-subproject-start-date");
+      String endDateParam = webRequest.getParameter("create-subproject-end-date");
+      String projectColorParam = webRequest.getParameter("create-subproject-color");
 
       // TODO check if valid date
       // TODO check if date are inside project start and end
@@ -128,11 +128,11 @@ public class ProjectController {
       User user =
           USER_SERVICE.getUser(
               (Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
-      
-    String projectNameParam = webRequest.getParameter("create-project-name");
-    String startDateParam = webRequest.getParameter("create-project-start-date");
-    String endDateParam = webRequest.getParameter("create-project-end-date");
-    String projectColorParam = webRequest.getParameter("create-project-color");
+
+      String projectNameParam = webRequest.getParameter("create-project-name");
+      String startDateParam = webRequest.getParameter("create-project-start-date");
+      String endDateParam = webRequest.getParameter("create-project-end-date");
+      String projectColorParam = webRequest.getParameter("create-project-color");
 
       // TODO check if valid date
       // TODO check if date are inside project start and end
