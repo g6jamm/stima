@@ -90,7 +90,8 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       LocalDate startDate,
       LocalDate endDate,
       String projectColorParam,
-      int parentProjectId) throws SystemException {
+      int parentProjectId)
+      throws SystemException {
     // TODO change colorcode to id
     String query =
         "INSERT INTO projects(name, start_date, end_date, color_id, parent_project_id) values"

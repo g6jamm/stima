@@ -62,7 +62,8 @@ public class ProjectController {
    * @auther Mathias
    */
   @GetMapping("/projects/{projectId}")
-  public String projectId(WebRequest webRequest, Model model, @PathVariable int projectId) throws SystemException {
+  public String projectId(WebRequest webRequest, Model model, @PathVariable int projectId)
+      throws SystemException {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       User user =
           USER_SERVICE.getUser(
@@ -90,7 +91,8 @@ public class ProjectController {
   }
 
   @PostMapping("/projects/{projectId}/create-subproject")
-  public String createSubProject(WebRequest webRequest, Model model, @PathVariable int projectId) throws SystemException {
+  public String createSubProject(WebRequest webRequest, Model model, @PathVariable int projectId)
+      throws SystemException {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       User user =
           USER_SERVICE.getUser(
@@ -156,7 +158,8 @@ public class ProjectController {
 
   @PostMapping("/projects/{projectId}/{subprojectId}/edit-project")
   public String editSubProject(
-      WebRequest webRequest, @PathVariable int projectId, @PathVariable int subprojectId) throws SystemException {
+      WebRequest webRequest, @PathVariable int projectId, @PathVariable int subprojectId)
+      throws SystemException {
 
     String projectNameParam = webRequest.getParameter("edit-project-name");
     String startDateParam = webRequest.getParameter("edit-project-start-date");
@@ -177,7 +180,8 @@ public class ProjectController {
   }
 
   @PostMapping("/projects/{projectId}/edit-project")
-  public String editProject(WebRequest webRequest, @PathVariable int projectId) throws SystemException {
+  public String editProject(WebRequest webRequest, @PathVariable int projectId)
+      throws SystemException {
 
     String projectNameParam = webRequest.getParameter("edit-project-name");
     String startDateParam = webRequest.getParameter("edit-project-start-date");
@@ -205,7 +209,8 @@ public class ProjectController {
   }
 
   @PostMapping("/projects/{projectId}/{subprojectId}/delete-project")
-  public String deleteSubProject(@PathVariable int projectId, @PathVariable int subprojectId) throws SystemException {
+  public String deleteSubProject(@PathVariable int projectId, @PathVariable int subprojectId)
+      throws SystemException {
     SUBPROJECT_SERVICE.deleteProject(subprojectId);
 
     return "redirect:/projects/" + projectId;

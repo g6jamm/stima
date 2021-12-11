@@ -20,7 +20,8 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
   private final SubProjectRepository SUBPROJECT_REPOSITORY = new SubProjectRepositoryImpl();
 
   @Override
-  public ProjectComposite createProject(ProjectComposite project, User user) throws SystemException {
+  public ProjectComposite createProject(ProjectComposite project, User user)
+      throws SystemException {
 
     try {
       String query =
@@ -132,7 +133,7 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
   }
 
   @Override
-  public List<ProjectComposite> getProjects(User user) throws SystemException{
+  public List<ProjectComposite> getProjects(User user) throws SystemException {
 
     List<ProjectComposite> projects = new ArrayList<>();
     try {

@@ -21,7 +21,8 @@ public interface SubProjectRepository {
       LocalDate startDate,
       LocalDate endDate,
       String projectColorParam,
-      int parentProjectId) throws SystemException;
+      int parentProjectId)
+      throws SystemException;
 
   ProjectLeaf deleteSubProject(int subProjectId);
 

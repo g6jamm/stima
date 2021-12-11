@@ -50,7 +50,8 @@ public class SubProjectController {
       WebRequest webRequest,
       Model model,
       @PathVariable int projectId,
-      @PathVariable int subProjectId) throws SystemException {
+      @PathVariable int subProjectId)
+      throws SystemException {
 
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       User user =
@@ -82,7 +83,8 @@ public class SubProjectController {
   }
 
   @PostMapping("/projects/{projectId}/create-task")
-  public String createProjectTask(WebRequest webRequest, Model model, @PathVariable int projectId) throws SystemException {
+  public String createProjectTask(WebRequest webRequest, Model model, @PathVariable int projectId)
+      throws SystemException {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       User user =
           USER_SERVICE.getUser(
@@ -107,7 +109,8 @@ public class SubProjectController {
    * @param webRequest
    * @author Andreas
    */
-  private void createTask(WebRequest webRequest, Project project) throws TaskCreationException, SystemException {
+  private void createTask(WebRequest webRequest, Project project)
+      throws TaskCreationException, SystemException {
 
     String taskNameParam = webRequest.getParameter("task-name");
     String taskHoursParam = webRequest.getParameter("task-hours");
@@ -143,7 +146,8 @@ public class SubProjectController {
       WebRequest webRequest,
       Model model,
       @PathVariable int projectId,
-      @PathVariable int subProjectId) throws SystemException {
+      @PathVariable int subProjectId)
+      throws SystemException {
 
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       User user =

@@ -22,7 +22,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testPriceCalculation() throws SystemException{
+  public void testPriceCalculation() throws SystemException {
     TaskService taskService =
         new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
     Task task = taskService.getTasks(1).get(0);

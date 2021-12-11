@@ -20,7 +20,7 @@ public class ProjectService {
     return PROJECT_REPOSITORY.getProjects(user);
   }
 
-  public ProjectComposite getProjectById(User user, int projectID) throws SystemException{
+  public ProjectComposite getProjectById(User user, int projectID) throws SystemException {
     for (ProjectComposite project : getProjects(user)) {
       if (projectID == project.getId()) {
         return project;
@@ -31,7 +31,8 @@ public class ProjectService {
   }
 
   public ProjectComposite createProject(
-      String name, LocalDate startDate, LocalDate endDate, String projectColor, User user) throws SystemException {
+      String name, LocalDate startDate, LocalDate endDate, String projectColor, User user)
+      throws SystemException {
 
     ProjectComposite project =
         new ProjectComposite.ProjectBuilder()
@@ -45,7 +46,8 @@ public class ProjectService {
   }
 
   public void editProject(
-      int projectId, String name, LocalDate startDate, LocalDate endDate, String projectColor) throws SystemException {
+      int projectId, String name, LocalDate startDate, LocalDate endDate, String projectColor)
+      throws SystemException {
 
     ProjectComposite project =
         new ProjectComposite.ProjectBuilder()

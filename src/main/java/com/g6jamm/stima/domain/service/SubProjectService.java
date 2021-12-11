@@ -28,11 +28,8 @@ public class SubProjectService {
    * @author Jackie
    */
   public ProjectLeaf createSubProject(
-      String name,
-      LocalDate startDate,
-      LocalDate endDate,
-      String projectColor,
-      int parentProjectId) throws SystemException {
+      String name, LocalDate startDate, LocalDate endDate, String projectColor, int parentProjectId)
+      throws SystemException {
     return SUB_PROJECT_REPOSITORY.createSubProject(
         name, startDate, endDate, "1", parentProjectId); // TODO: send object med & fix color
   }
@@ -53,7 +50,7 @@ public class SubProjectService {
    * @param subProjectId
    * @return a sub project
    */
-  public Project getSubProject(int subProjectId) throws SystemException{
+  public Project getSubProject(int subProjectId) throws SystemException {
     return SUB_PROJECT_REPOSITORY.getSubproject(subProjectId);
   }
 
@@ -70,7 +67,8 @@ public class SubProjectService {
   }
 
   public void editProject(
-      int projectId, String name, LocalDate startDate, LocalDate endDate, String projectColor) throws SystemException {
+      int projectId, String name, LocalDate startDate, LocalDate endDate, String projectColor)
+      throws SystemException {
 
     ProjectComposite subproject =
         new ProjectComposite.ProjectBuilder()
