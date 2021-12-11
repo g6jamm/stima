@@ -74,7 +74,7 @@
                                             type="button"></button>
                                 </div>
                                 <form method="POST"
-                                      th:action="@{/projects/{projectId}/{subprojectId} (projectId=${parentProject.getId}, subprojectId=${subProject.getId})}">
+                                      th:action="@{/projects/{projectId}/{subprojectId}/edit-task (projectId=${parentProject.getId}, subprojectId=${subProject.getId})}">
                                     <div class="modal-body">
                                         <div class="mb-3">
                                             <label class="col-form-label" th:for="'edit-task-name-' + ${task.getId}">Navn:</label>
