@@ -30,11 +30,15 @@
                     <a href="#">
                         <div class="card shadow-sm"
                              th:style="'background-color: ' + ${subProject.getColorCode}">
-                            <div class="card-body card-text card-text-size-sm">
+                            <div class="card-body card-text card-text-size-xxsm">
                                 <p th:text="${task.getName}"></p>
                                 <p th:text="'Timer: ' + ${task.getHours}"></p>
                                 <p th:text="'Pris: ' + ${task.getPrice} + ' DKK'"></p>
-                                <p th:text="'Resource type: ' + ${task.resourceType.getName}"></p>
+                                <p th:text="'Resource type: ' + ${task.resourceType.getName()}"></p>
+                                <p th:text="'Estimerede arbejdsdage: ' + ${task.calculateWorkdays()}"></p>
+                                <p th:text="'Estimerede resourcer: ' + ${task.calculateResources()}"></p>
+                                <p th:text="'Start date: ' + ${task.getStartDate()}"></p>
+                                <p th:text="'End date: ' + ${task.getEndDate()}"></p>
                             </div>
                         </div>
                     </a>
