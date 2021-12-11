@@ -47,7 +47,7 @@
                                 </div>
                             </a>
                         </div>
-                        <div th:replace="fragments/taskFragment"></div>
+                        <div th:replace="fragments/taskFragment :: task (@{/projects/{projectId} (projectId=${parentproject.getId})})"></div>
                     </div>
                 </div>
             </div>
