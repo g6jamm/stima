@@ -2,6 +2,7 @@ package com.g6jamm.stima.data.repository.mysql;
 
 import com.g6jamm.stima.data.repository.TaskRepository;
 import com.g6jamm.stima.data.repository.util.DbManager;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.ResourceType;
 import com.g6jamm.stima.domain.model.Task;
 
@@ -14,11 +15,11 @@ import java.util.List;
 
 public class TaskRepositoryImpl implements TaskRepository {
   @Override
-  public Task createTask(Task task, int projectId) {
+  public Task createTask(Task task, int projectId) throws SystemException {
 
     try {
       String query =
-          "INSERT INTO tasks(name, hours, resource_type_id, project_id, start_date, end_date)"
+          "INSERT INTO tasks(name, hours, resourdaqce_type_id, project_id, start_date, end_date)"
               + " VALUES(?,?,?,?,?,?)";
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
 
@@ -32,9 +33,8 @@ public class TaskRepositoryImpl implements TaskRepository {
       ps.executeUpdate();
       return task;
     } catch (SQLException e) {
-      System.out.println(e.getMessage());
+      throw new SystemException("Please contact system administrator");
     }
-    return null;
   }
 
   @Override

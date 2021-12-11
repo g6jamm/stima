@@ -10,6 +10,7 @@ import com.g6jamm.stima.domain.model.*;
 import com.g6jamm.stima.domain.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -208,5 +209,11 @@ public class ProjectController {
     SUBPROJECT_SERVICE.deleteProject(subprojectId);
 
     return "redirect:/projects/" + projectId;
+  }
+
+  @ExceptionHandler(Exception.class)
+  public String error(Model model, Exception exception) {
+    model.addAttribute("message", exception.getMessage());
+    return "error";
   }
 }
