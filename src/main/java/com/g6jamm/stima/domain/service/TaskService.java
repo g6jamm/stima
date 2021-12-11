@@ -45,7 +45,7 @@ public class TaskService {
     return LocalDate.parse(stringDate);
   }
 
-  public List<Task> getTasks(int projectId) {
+  public List<Task> getTasks(int projectId) throws SystemException {
     return taskRepository.getTasks(projectId);
   }
 

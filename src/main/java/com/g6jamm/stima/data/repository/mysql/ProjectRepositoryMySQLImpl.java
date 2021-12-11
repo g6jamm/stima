@@ -4,6 +4,7 @@ import com.g6jamm.stima.data.repository.ProjectRepository;
 import com.g6jamm.stima.data.repository.SubProjectRepository;
 import com.g6jamm.stima.data.repository.TaskRepository;
 import com.g6jamm.stima.data.repository.util.DbManager;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.User;
@@ -62,7 +63,7 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
   }
 
   @Override
-  public ProjectComposite getProject(int projectId) {
+  public ProjectComposite getProject(int projectId) throws SystemException {
 
     try {
       String query = "SELECT * FROM projects WHERE project_id = ? AND parent_project_id is NULL";
@@ -131,7 +132,7 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
   }
 
   @Override
-  public List<ProjectComposite> getProjects(User user) {
+  public List<ProjectComposite> getProjects(User user) throws SystemException{
 
     List<ProjectComposite> projects = new ArrayList<>();
     try {

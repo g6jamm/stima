@@ -19,7 +19,7 @@ public class TaskRepositoryImpl implements TaskRepository {
 
     try {
       String query =
-          "INSERT INTO tasks(name, hours, resourdaqce_type_id, project_id, start_date, end_date)"
+          "INSERT INTO tasks(name, hours, resource_type_id, project_id, start_date, end_date)"
               + " VALUES(?,?,?,?,?,?)";
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
 
@@ -38,7 +38,7 @@ public class TaskRepositoryImpl implements TaskRepository {
   }
 
   @Override
-  public Task getTask(int task_id) {
+  public Task getTask(int task_id) throws SystemException {
     try {
       String query =
           "SELECT task_id"
@@ -76,13 +76,13 @@ public class TaskRepositoryImpl implements TaskRepository {
             .build();
       }
     } catch (SQLException e) {
-      System.out.println(e.getMessage()); // TODO
+      throw new SystemException("Please contact system administrator");
     }
     return null;
   }
 
   @Override
-  public List<Task> getTasks(int projectId) {
+  public List<Task> getTasks(int projectId) throws SystemException {
     List<Task> result = new ArrayList<>();
 
     try {
@@ -124,7 +124,7 @@ public class TaskRepositoryImpl implements TaskRepository {
                 .build());
       }
     } catch (SQLException e) {
-      System.out.println(e.getMessage()); // TODO
+      throw new SystemException("Please contact system administrator");
     }
     return result;
   }

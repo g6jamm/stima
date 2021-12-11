@@ -3,6 +3,7 @@ package com.g6jamm.stima.data.repository.mysql;
 import com.g6jamm.stima.data.repository.SubProjectRepository;
 import com.g6jamm.stima.data.repository.TaskRepository;
 import com.g6jamm.stima.data.repository.util.DbManager;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.ProjectLeaf;
@@ -21,7 +22,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   private final TaskRepository TASK_REPOSITORY = new TaskRepositoryImpl();
 
   @Override
-  public List<Project> getSubProjects(int projectId) {
+  public List<Project> getSubProjects(int projectId) throws SystemException {
 
     List<Project> subProjects = new ArrayList<>();
     String query = "SELECT * FROM projects WHERE parent_project_id = ?";
@@ -48,14 +49,14 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       }
 
     } catch (SQLException e) {
-      System.out.println(e.getMessage()); // TODO FIX
+      throw new SystemException("Please contact system administrator");
     }
 
     return subProjects;
   }
 
   @Override
-  public Project getSubproject(int subProjectId) {
+  public Project getSubproject(int subProjectId) throws SystemException {
 
     String query = "SELECT * FROM projects WHERE project_id  = ?";
 
@@ -77,7 +78,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       }
 
     } catch (SQLException e) {
-      System.out.println(e.getMessage()); // TODO FIX
+      throw new SystemException("Please contact system administrator");
     }
 
     return null;
@@ -89,7 +90,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       LocalDate startDate,
       LocalDate endDate,
       String projectColorParam,
-      int parentProjectId) {
+      int parentProjectId) throws SystemException {
     // TODO change colorcode to id
     String query =
         "INSERT INTO projects(name, start_date, end_date, color_id, parent_project_id) values"
@@ -106,7 +107,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       ps.execute();
 
     } catch (SQLException e) {
-      System.out.println(e.getMessage()); // TODO FIX
+      throw new SystemException("Please contact system administrator");
     }
 
     return null;
@@ -133,7 +134,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   }
 
   @Override
-  public void editProject(ProjectComposite subProject) {
+  public void editProject(ProjectComposite subProject) throws SystemException {
 
     try {
       String query =
@@ -149,12 +150,12 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       ps.execute();
 
     } catch (SQLException e) {
-      e.printStackTrace(); // TODO
+      throw new SystemException("Please contact system administrator");
     }
   }
 
   @Override
-  public void deleteProject(int projectId) {
+  public void deleteProject(int projectId) throws SystemException {
 
     try {
       String query = "DELETE FROM projects WHERE project_id = ?";
@@ -163,7 +164,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       ps.execute();
 
     } catch (SQLException e) {
-      e.printStackTrace(); // TODO
+      throw new SystemException("Please contact system administrator");
     }
   }
 }

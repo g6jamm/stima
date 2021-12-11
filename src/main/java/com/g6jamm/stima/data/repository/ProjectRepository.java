@@ -1,5 +1,6 @@
 package com.g6jamm.stima.data.repository;
 
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.User;
 
@@ -10,9 +11,9 @@ public interface ProjectRepository {
 
   void editProject(ProjectComposite project);
 
-  ProjectComposite getProject(int projectId);
+  ProjectComposite getProject(int projectId) throws SystemException;
 
   void deleteProject(int projectId);
 
-  List<ProjectComposite> getProjects(User user);
+  List<ProjectComposite> getProjects(User user) throws SystemException;
 }
