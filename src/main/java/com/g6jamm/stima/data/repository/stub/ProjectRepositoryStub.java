@@ -4,6 +4,7 @@ import com.g6jamm.stima.data.repository.ProjectRepository;
 import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.Task;
+import com.g6jamm.stima.domain.model.User;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
   }
 
   @Override
-  public ProjectComposite createProject(ProjectComposite project) {
+  public ProjectComposite createProject(ProjectComposite project, User user) {
 
     ProjectComposite newProject =
         new ProjectComposite.ProjectBuilder()
@@ -88,7 +89,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
     return null;
   }
 
-  public List<ProjectComposite> getProjects() {
+  public List<ProjectComposite> getProjects(User user) {
     return projects;
   }
 
