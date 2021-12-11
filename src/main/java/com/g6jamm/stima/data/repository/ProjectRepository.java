@@ -14,7 +14,5 @@ public interface ProjectRepository {
 
   void deleteProject(int projectId);
 
-  void editProject(ProjectComposite project);
-
   List<ProjectComposite> getProjects(User user);
 }
