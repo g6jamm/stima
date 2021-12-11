@@ -31,7 +31,7 @@ public class ProjectService {
   }
 
   public ProjectComposite createProject(
-      String name, LocalDate startDate, LocalDate endDate, String projectColor, User user) {
+      String name, LocalDate startDate, LocalDate endDate, String projectColor, User user) throws SystemException {
 
     ProjectComposite project =
         new ProjectComposite.ProjectBuilder()
@@ -45,7 +45,7 @@ public class ProjectService {
   }
 
   public void editProject(
-      int projectId, String name, LocalDate startDate, LocalDate endDate, String projectColor) {
+      int projectId, String name, LocalDate startDate, LocalDate endDate, String projectColor) throws SystemException {
 
     ProjectComposite project =
         new ProjectComposite.ProjectBuilder()
@@ -59,7 +59,7 @@ public class ProjectService {
     PROJECT_REPOSITORY.editProject(project);
   }
 
-  public void deleteProject(int projectId) {
+  public void deleteProject(int projectId) throws SystemException {
     PROJECT_REPOSITORY.deleteProject(projectId);
   }
 }

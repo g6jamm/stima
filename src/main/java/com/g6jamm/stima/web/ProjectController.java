@@ -177,7 +177,7 @@ public class ProjectController {
   }
 
   @PostMapping("/projects/{projectId}/edit-project")
-  public String editProject(WebRequest webRequest, @PathVariable int projectId) {
+  public String editProject(WebRequest webRequest, @PathVariable int projectId) throws SystemException {
 
     String projectNameParam = webRequest.getParameter("edit-project-name");
     String startDateParam = webRequest.getParameter("edit-project-start-date");
@@ -198,7 +198,7 @@ public class ProjectController {
   }
 
   @PostMapping("/projects/{projectId}/delete-project")
-  public String deleteProject(@PathVariable int projectId) {
+  public String deleteProject(@PathVariable int projectId) throws SystemException {
     PROJECT_SERVICE.deleteProject(projectId);
 
     return "redirect:/projects";

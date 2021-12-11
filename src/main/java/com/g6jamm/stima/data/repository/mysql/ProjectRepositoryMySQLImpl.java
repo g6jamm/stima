@@ -20,7 +20,7 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
   private final SubProjectRepository SUBPROJECT_REPOSITORY = new SubProjectRepositoryImpl();
 
   @Override
-  public ProjectComposite createProject(ProjectComposite project, User user) {
+  public ProjectComposite createProject(ProjectComposite project, User user) throws SystemException {
 
     try {
       String query =
@@ -56,7 +56,7 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
       }
 
     } catch (SQLException e) {
-      e.printStackTrace(); // TODO
+      throw new SystemException("Please contact system administrator");
     }
 
     return project;
@@ -90,14 +90,14 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
       }
 
     } catch (SQLException e) {
-      e.printStackTrace(); // TODO
+      throw new SystemException("Please contact system administrator");
     }
 
     return null;
   }
 
   @Override
-  public void deleteProject(int projectId) {
+  public void deleteProject(int projectId) throws SystemException {
 
     try {
       String query = "DELETE FROM projects WHERE project_id = ?";
@@ -106,12 +106,12 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
       ps.execute();
 
     } catch (SQLException e) {
-      e.printStackTrace(); // TODO
+      throw new SystemException("Please contact system administrator");
     }
   }
 
   @Override
-  public void editProject(ProjectComposite project) {
+  public void editProject(ProjectComposite project) throws SystemException {
 
     try {
       String query =
@@ -127,7 +127,7 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
       ps.execute();
 
     } catch (SQLException e) {
-      e.printStackTrace(); // TODO
+      throw new SystemException("Please contact system administrator");
     }
   }
 
@@ -164,14 +164,13 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
       }
 
     } catch (SQLException e) {
-      e.printStackTrace(); // TODO
+      throw new SystemException("Please contact system administrator");
     }
 
     return projects;
   }
 
   private boolean linkProjectAndUser(Project project, User user) throws SQLException {
-    System.out.println("YAY");
     String query =
         "INSERT INTO project_users (project_id, user_id, role_id) VALUES (?, ?, 1)"; // 1 is for
     // role_id;
