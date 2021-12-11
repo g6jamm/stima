@@ -5,6 +5,7 @@ import com.g6jamm.stima.data.repository.mysql.SubProjectRepositoryImpl;
 import com.g6jamm.stima.data.repository.mysql.TaskRepositoryImpl;
 import com.g6jamm.stima.data.repository.mysql.UserRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.*;
+import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.*;
 import com.g6jamm.stima.domain.service.*;
 import org.springframework.stereotype.Controller;
@@ -208,4 +209,33 @@ public class ProjectController {
 
     return "redirect:/projects/" + projectId;
   }
+
+  @PostMapping("/projects/{projectId}/edit-task")
+  public String editProjectTask(WebRequest webRequest, @PathVariable int projectId) {
+
+    String nameParam = webRequest.getParameter("edit-task-name");
+    String hoursParam = webRequest.getParameter("edit-task-hours");
+    String resourceTypeParam = webRequest.getParameter("edit-task-resource-type");
+    String startDateParam = webRequest.getParameter("edit-task-start-date");
+    String endDateParam = webRequest.getParameter("edit-task-end-date");
+    String taskIdParam = webRequest.getParameter("task-id");
+
+    // TODO check if valid date
+    // TODO check if date are inside project start and end
+
+    try {
+      TASK_SERVICE.editTask(
+          nameParam,
+          Double.parseDouble(hoursParam),
+          resourceTypeParam,
+          startDateParam,
+          endDateParam,
+          Integer.parseInt(taskIdParam));
+    } catch (TaskCreationException e) {
+      e.printStackTrace(); // TODO @Mohamad
+    }
+
+    return "redirect:/projects/" + projectId;
+  }
+
 }
