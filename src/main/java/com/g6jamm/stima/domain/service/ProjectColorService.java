@@ -1,6 +1,7 @@
 package com.g6jamm.stima.domain.service;
 
 import com.g6jamm.stima.data.repository.ProjectColorRepository;
+import com.g6jamm.stima.domain.exception.SystemException;
 
 import java.util.Map;
 
@@ -11,7 +12,7 @@ public class ProjectColorService {
     this.PROJECT_COLOR_REPOSITORY_STUB = projectColorRepositoryStub;
   }
 
-  public Map<String, String> getProjectColors() {
-    return PROJECT_COLOR_REPOSITORY_STUB.getProjectColors(); // TODO this will need a refactor
+  public Map<String, String> getProjectColors() throws SystemException {
+    return PROJECT_COLOR_REPOSITORY_STUB.getProjectColors();
   }
 }

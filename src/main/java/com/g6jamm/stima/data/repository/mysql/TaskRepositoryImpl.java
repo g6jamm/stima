@@ -145,7 +145,7 @@ public class TaskRepositoryImpl implements TaskRepository {
       ps.setString(5, String.valueOf(Date.valueOf(task.getEndDate())));
       ps.setInt(6, task.getId());
 
-      System.out.println(ps.execute());
+      ps.execute();
 
     } catch (SQLException e) {
       e.printStackTrace(); // TODO
