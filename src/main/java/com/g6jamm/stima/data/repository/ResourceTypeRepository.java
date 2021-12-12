@@ -9,5 +9,5 @@ public interface ResourceTypeRepository {
 
   public List<ResourceType> getResourceTypes();
 
-  public ResourceType findByName(String resourceTypeName) throws ResourceTypeNotFoundException;
+  public void findByName(String resourceTypeName) throws ResourceTypeNotFoundException;
 }
