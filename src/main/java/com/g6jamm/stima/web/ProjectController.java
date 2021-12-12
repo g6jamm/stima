@@ -35,18 +35,18 @@ public class ProjectController {
    */
   @GetMapping("/projects")
   public String projects(WebRequest webRequest, Model model) throws SystemException {
-    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
-      User user =
-          USER_SERVICE.getUser(
-              (Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
-      List<ProjectComposite> projects = PROJECT_SERVICE.getProjects(user);
-
-      model.addAttribute("projects", projects);
-      model.addAttribute("projectColors", COLOR_SERVICE.getProjectColors());
-
-      return "projects";
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+      return "redirect:/";
     }
-    return "redirect:/";
+
+    User user =
+        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
+    List<ProjectComposite> projects = PROJECT_SERVICE.getProjects(user);
+
+    model.addAttribute("projects", projects);
+    model.addAttribute("projectColors", COLOR_SERVICE.getProjectColors());
+
+    return "projects";
   }
 
   /**
@@ -59,95 +59,80 @@ public class ProjectController {
   @GetMapping("/projects/{projectId}")
   public String projectId(WebRequest webRequest, Model model, @PathVariable int projectId)
       throws SystemException {
-    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
-      User user =
-          USER_SERVICE.getUser(
-              (Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
-      ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
-
-      List<Project> subProjects = project.getSubProjects();
-      model.addAttribute("projects", subProjects);
-
-      List<Task> tasks = project.getTasks();
-      model.addAttribute("tasks", tasks);
-
-      model.addAttribute("parentproject", project);
-
-      model.addAttribute("projectColors", COLOR_SERVICE.getProjectColors());
-
-      model.addAttribute("classActiveSettings", "active");
-
-      model.addAttribute("resourceTypes", TASK_SERVICE.getResourceTypes());
-
-      return "project";
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+      return "redirect:/";
     }
-    return "redirect:/";
+
+    User user =
+        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
+    ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
+
+    List<Project> subProjects = project.getSubProjects();
+    model.addAttribute("projects", subProjects);
+
+    List<Task> tasks = project.getTasks();
+    model.addAttribute("tasks", tasks);
+    model.addAttribute("parentproject", project);
+    model.addAttribute("projectColors", COLOR_SERVICE.getProjectColors());
+    model.addAttribute("classActiveSettings", "active");
+    model.addAttribute("resourceTypes", TASK_SERVICE.getResourceTypes());
+
+    return "project";
   }
 
   @PostMapping("/projects/{projectId}/create-subproject")
-  public String createSubProject(WebRequest webRequest, Model model, @PathVariable int projectId)
+  public String createSubProject(WebRequest webRequest, @PathVariable int projectId)
       throws SystemException {
-    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
-      User user =
-          USER_SERVICE.getUser(
-              (Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
-
-      String subProjectNameParam = webRequest.getParameter("create-subproject-name");
-      String startDateParam = webRequest.getParameter("create-subproject-start-date");
-      String endDateParam = webRequest.getParameter("create-subproject-end-date");
-      String projectColorParam = webRequest.getParameter("create-subproject-color");
-
-      // TODO check if valid date
-      // TODO check if date are inside project start and end
-      ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
-
-      ProjectLeaf subProject =
-          SUBPROJECT_SERVICE.createSubProject(
-              subProjectNameParam,
-              LocalDate.parse(startDateParam),
-              LocalDate.parse(endDateParam),
-              projectColorParam,
-              projectId);
-
-      project
-          .getSubProjects()
-          .add(subProject); // TODO skal fjernes - Mere object orienteret at gøre det?
-
-      model.addAttribute("subProject", subProject); // TODO doesnt matter? we redirect?
-
-      return "redirect:/projects/" + projectId;
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+      return "redirect:/";
     }
-    return "redirect:/";
+
+    User user =
+        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
+
+    String subProjectNameParam = webRequest.getParameter("create-subproject-name");
+    String startDateParam = webRequest.getParameter("create-subproject-start-date");
+    String endDateParam = webRequest.getParameter("create-subproject-end-date");
+    String projectColorParam = webRequest.getParameter("create-subproject-color");
+
+    ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
+
+    ProjectLeaf subProject =
+        SUBPROJECT_SERVICE.createSubProject(
+            subProjectNameParam,
+            LocalDate.parse(startDateParam),
+            LocalDate.parse(endDateParam),
+            projectColorParam,
+            projectId);
+
+    project.getSubProjects().add(subProject);
+
+    return "redirect:/projects/" + projectId;
   }
 
   @PostMapping("/projects/create-project")
   public String createProject(WebRequest webRequest, Model model) throws SystemException {
-    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
-      User user =
-          USER_SERVICE.getUser(
-              (Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
-
-      String projectNameParam = webRequest.getParameter("create-project-name");
-      String startDateParam = webRequest.getParameter("create-project-start-date");
-      String endDateParam = webRequest.getParameter("create-project-end-date");
-      String projectColorParam = webRequest.getParameter("create-project-color");
-
-      // TODO check if valid date
-      // TODO check if date are inside project start and end
-
-      ProjectComposite project =
-          PROJECT_SERVICE.createProject(
-              projectNameParam,
-              LocalDate.parse(startDateParam),
-              LocalDate.parse(endDateParam),
-              projectColorParam,
-              user);
-
-      model.addAttribute("project", project);
-
-      return "redirect:/projects";
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+      return "redirect:/";
     }
-    return "redirect:/";
+
+    User user =
+        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
+
+    String projectNameParam = webRequest.getParameter("create-project-name");
+    String startDateParam = webRequest.getParameter("create-project-start-date");
+    String endDateParam = webRequest.getParameter("create-project-end-date");
+    String projectColorParam = webRequest.getParameter("create-project-color");
+
+    ProjectComposite project =
+        PROJECT_SERVICE.createProject(
+            projectNameParam,
+            LocalDate.parse(startDateParam),
+            LocalDate.parse(endDateParam),
+            projectColorParam,
+            user);
+
+    return "redirect:/projects";
   }
 
   @PostMapping("/projects/{projectId}/{subprojectId}/edit-project")
@@ -159,9 +144,6 @@ public class ProjectController {
     String startDateParam = webRequest.getParameter("edit-project-start-date");
     String endDateParam = webRequest.getParameter("edit-project-end-date");
     String projectColorParam = webRequest.getParameter("edit-project-color");
-
-    // TODO check if valid date
-    // TODO check if date are inside project start and end
 
     SUBPROJECT_SERVICE.editProject(
         subprojectId,
@@ -181,9 +163,6 @@ public class ProjectController {
     String startDateParam = webRequest.getParameter("edit-project-start-date");
     String endDateParam = webRequest.getParameter("edit-project-end-date");
     String projectColorParam = webRequest.getParameter("edit-project-color");
-
-    // TODO check if valid date
-    // TODO check if date are inside project start and end
 
     PROJECT_SERVICE.editProject(
         projectId,
@@ -226,9 +205,6 @@ public class ProjectController {
     String endDateParam = webRequest.getParameter("edit-task-end-date");
     String taskIdParam = webRequest.getParameter("task-id");
 
-    // TODO check if valid date
-    // TODO check if date are inside project start and end
-
     try {
       TASK_SERVICE.editTask(
           nameParam,
@@ -254,9 +230,6 @@ public class ProjectController {
     String startDateParam = webRequest.getParameter("edit-task-start-date");
     String endDateParam = webRequest.getParameter("edit-task-end-date");
     String taskIdParam = webRequest.getParameter("task-id");
-
-    // TODO check if valid date
-    // TODO check if date are inside project start and end
 
     try {
       TASK_SERVICE.editTask(

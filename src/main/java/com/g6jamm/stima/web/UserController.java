@@ -49,8 +49,7 @@ public class UserController { // TODO change name to Login controller?
       String password = webRequest.getParameter("password");
       User user = USER_SERVICE.login(email, password);
 
-      webRequest.setAttribute(
-          "user", user.getId(), WebRequest.SCOPE_SESSION); // if user is null null pointer exception
+      webRequest.setAttribute("user", user.getId(), WebRequest.SCOPE_SESSION);
       return "redirect:/projects";
 
     } catch (LoginException e) {
