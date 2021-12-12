@@ -87,16 +87,17 @@ public class ProjectComposite implements Project {
     double workday =
         7.4; // Workday in denmark is 7,4 hours if a workweek is 5 days and a workweek is 37 hours
     double workdaysNeeded = calculateHours() / workday;
+    System.out.println("workdays needed" + workdaysNeeded);
     return Math.round(workdaysNeeded * 100.0) / 100.0;
   }
 
   public double calculateResources() {
 
     long workdaysAvailable =
-        Duration.between(LocalDate.now().atStartOfDay(), END_DATE.atStartOfDay()).toDays()
-            - 1; // todo hvordan skal vi håndtere det?
+        Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays()
+            ; // todo hvordan skal vi håndtere det?
     double result = calculateWorkdays() / (workdaysAvailable);
-
+    System.out.println("avialable" + workdaysAvailable);
     return Math.round(result * 100.0) / 100.0;
   }
 
