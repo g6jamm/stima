@@ -69,15 +69,20 @@ public class UserRepositoryImpl implements UserRepository {
   public int getNewUserId(User user) throws SystemException {
 
     try {
-      String query = "INSERT INTO users(first_name, last_name, email, password, resource_type_id, permission_id) VALUES(?,?,?,?,?,?)";
-      PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+      String query =
+          "INSERT INTO users(first_name, last_name, email, password, resource_type_id,"
+              + " permission_id) VALUES(?,?,?,?,?,?)";
+      PreparedStatement ps =
+          DbManager.getInstance()
+              .getConnection()
+              .prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
       ps.setString(1, user.getFirstName());
       ps.setString(2, user.getLastName());
       ps.setString(3, user.getEmail());
       ps.setBytes(4, user.getPassword().getBytes());
-      ps.setInt(5, 1); //implementeres i senere iteration
-      ps.setInt(6,1); //implementeres i senere iteration
+      ps.setInt(5, 1); // implementeres i senere iteration
+      ps.setInt(6, 1); // implementeres i senere iteration
 
       ps.executeUpdate();
       ResultSet resultSet = ps.getGeneratedKeys();
