@@ -134,16 +134,15 @@ public class TaskRepositoryImpl implements TaskRepository {
   public void editTask(Task task) {
     try {
       String query =
-          "UPDATE tasks SET name = ?, hours = ?, resource_type_id = ?, start_date = ?, end_date = ?"
+          "UPDATE tasks SET name = ?, hours = ?, start_date = ?, end_date = ?"
               + " WHERE task_id = ?";
 
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setString(1, task.getName());
       ps.setDouble(2, task.getHours());
-      ps.setInt(3, task.getResourceType().getId());
-      ps.setString(4, String.valueOf(Date.valueOf(task.getStartDate())));
-      ps.setString(5, String.valueOf(Date.valueOf(task.getEndDate())));
-      ps.setInt(6, task.getId());
+      ps.setString(3, String.valueOf(Date.valueOf(task.getStartDate())));
+      ps.setString(4, String.valueOf(Date.valueOf(task.getEndDate())));
+      ps.setInt(5, task.getId());
 
       ps.execute();
 
