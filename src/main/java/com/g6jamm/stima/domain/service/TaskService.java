@@ -62,4 +62,21 @@ public class TaskService {
       throw new TaskCreationException(e.getMessage());
     }
   }
+
+  public void editTask(
+      String taskName, double hours, String resourceType, String startDate, String endDate, int id)
+      throws TaskCreationException {
+
+    Task task =
+        new Task.TaskBuilder()
+            .name(taskName)
+            .hours(hours)
+            .resourceType(findResourceTypeByName(resourceType))
+            .startDate(convertStringToDate(startDate))
+            .endDate(convertStringToDate(endDate))
+            .id(id)
+            .build();
+
+    taskRepository.editTask(task);
+  }
 }

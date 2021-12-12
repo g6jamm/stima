@@ -6,6 +6,7 @@ import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.ResourceType;
 import com.g6jamm.stima.domain.model.Task;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,8 +28,8 @@ public class TaskRepositoryImpl implements TaskRepository {
       ps.setDouble(2, task.getHours());
       ps.setInt(3, task.getResourceType().getId());
       ps.setInt(4, projectId);
-      ps.setString(5, task.getStartDate().toString());
-      ps.setString(6, task.getEndDate().toString());
+      ps.setDate(5, Date.valueOf(task.getStartDate()));
+      ps.setDate(6, Date.valueOf(task.getEndDate()));
 
       ps.executeUpdate();
       return task;
@@ -127,5 +128,27 @@ public class TaskRepositoryImpl implements TaskRepository {
       throw new SystemException("Please contact system administrator");
     }
     return result;
+  }
+
+  @Override
+  public void editTask(Task task) {
+    try {
+      String query =
+          "UPDATE tasks SET name = ?, hours = ?, resource_type_id = ?, start_date = ?, end_date = ?"
+              + " WHERE task_id = ?";
+
+      PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
+      ps.setString(1, task.getName());
+      ps.setDouble(2, task.getHours());
+      ps.setInt(3, task.getResourceType().getId());
+      ps.setString(4, String.valueOf(Date.valueOf(task.getStartDate())));
+      ps.setString(5, String.valueOf(Date.valueOf(task.getEndDate())));
+      ps.setInt(6, task.getId());
+
+      System.out.println(ps.execute());
+
+    } catch (SQLException e) {
+      e.printStackTrace(); // TODO
+    }
   }
 }

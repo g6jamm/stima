@@ -14,15 +14,38 @@
     <div class="py-5 bg-light">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-3">
+
                 <div class="col">
                     <a data-bs-target="#createProjectModal" data-bs-toggle="modal" href="#">
-                        <div class="card shadow-sm align-items-center justify-content-center card-btn">
-                            <div class="card-body card-text card-text-size-sm card-icon">
-                                +
+                        <div class="card shadow-sm card-btn">
+                            <div class="mt-2 mx-2 blur no-select">
+                                <div class="btn-toolbar float-end" role="toolbar">
+                                    <div class="btn-group" role="group">
+                                    <span class="btn btn-edit">
+                                        <i aria-hidden="true" class="fas fa-pen" style="color: #000"></i>
+                                    </span>
+                                    </div>
+                                    <div class="btn-group" role="group">
+                                    <span class="btn btn-delete">
+                                        <i aria-hidden="true" class="fas fa-trash-alt" style="color: #000"></i>
+                                    </span>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="card-body card-text sm blur no-select" style="margin-top: 50px; color: #000">
+                                <p>This is demo</p>
+                                <p>Timer: 1024.0</p>
+                                <p>Pris: 1174000 DKK</p>
+                                <p>Estimerede arbejdsdage: 138.38</p>
+                                <p>Estimerede resourcer: -0.4</p>
+                                <p>Start date: 2021-01-01</p>
+                                <p>End date: 2021-01-02</p>
+                            </div>
+                            <span class="btn-plus-icon"><i aria-hidden="true" class="fas fa-plus"></i></span>
                         </div>
                     </a>
                 </div>
+
                 <div class="col" th:each="project : ${projects}">
                     <div th:replace="fragments/projectFragment :: project (@{/projects/{id} (id=${project.getId})})"></div>
                 </div>

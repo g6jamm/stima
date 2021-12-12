@@ -1,10 +1,27 @@
 <!DOCTYPE html>
 <html lang="da" xmlns:th="http://www.thymeleaf.org">
 
-<div class="col" th:each="task : ${tasks}">
+<div class="col" th:each="task : ${tasks}" th:fragment="task (link)">
     <a href="#">
         <div class="card shadow-sm"
              th:style="'background-color: ' + ${parentproject.getColorCode}">
+
+            <div class="mt-2 mx-2">
+                <div class="btn-toolbar float-end" role="toolbar">
+                    <div class="btn-group" role="group">
+                        <a class="btn btn-edit" data-bs-toggle="modal"
+                           href="#" th:data-bs-target="'#editTaskModal' + ${task.getId}"
+                           type="button"><i
+                                class="fas fa-pen"></i></a>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <form method="POST" th:action="@{{path}/delete-task (path=${link})}">
+                            <button class="btn btn-delete" type="submit"><i class="fas fa-trash-alt"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <div class="card-body card-text card-text-size-xxsm">
                 <p th:text="${task.getName}"></p>
                 <p th:text="'Timer: ' + ${task.getHours}"></p>
@@ -17,6 +34,64 @@
             </div>
         </div>
     </a>
+
+    <div aria-hidden="true" class="modal fade" tabindex="-1"
+         th:aria-labelledby="'editTaskModalLabel' + ${task.getId}"
+         th:id="'editTaskModal' + ${task.getId}">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" th:id="'editTaskModalLabel' + ${task.getId}">Redigér opgave</h5>
+                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
+                            type="button"></button>
+                </div>
+                <form method="POST"
+                      th:action="@{{path}/edit-task (path=${link})}">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="col-form-label" th:for="'edit-task-name-' + ${task.getId}">Navn:</label>
+                            <input class="form-control" name="edit-task-name"
+                                   th:id="'edit-task-name-' + ${task.getId}" th:value="${task.getName}"
+                                   type="text">
+                        </div>
+                        <div class="mb-3">
+                            <label class="col-form-label" th:for="'edit-task-hours-' + ${task.getId}">Timer:</label>
+                            <input class="form-control" name="edit-task-hours"
+                                   th:id="'edit-task-hours-' + ${task.getId}" th:value="${task.getHours}"
+                                   type="text">
+                        </div>
+                        <div class="mb-3">
+                            <label class="col-form-label">Resurcetype:</label>
+                            <select class="form-select" name="edit-task-resource-type">
+                                <option th:each="resourceType : ${resourceTypes}"
+                                        th:selected="${task.resourceType.getName}"
+                                        th:text="${resourceType.getName}"
+                                        th:value="${resourceType.getName}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="col-form-label" for="edit-task-start-date">Start dag:</label>
+                            <input class="form-control" id="edit-task-start-date" name="edit-task-start-date"
+                                   th:value="${task.getStartDate}" type="date">
+                        </div>
+                        <div class="mb-3">
+                            <label class="col-form-label" for="edit-task-end-date">Slut dag:</label>
+                            <input class="form-control" id="edit-task-end-date" name="edit-task-end-date"
+                                   th:value="${task.getEndDate}" type="date">
+                        </div>
+                        <input hidden name="task-id" th:value="${task.getId}"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">
+                            Luk
+                        </button>
+                        <button class="btn btn-primary" type="submit">Gem</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 </html>

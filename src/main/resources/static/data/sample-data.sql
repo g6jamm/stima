@@ -1,16 +1,45 @@
 USE stima;
 
-INSERT INTO permissions (permission_id, name) VALUES (1,'ADMIN'),(2,'ADMIN');
-INSERT INTO colors (color_id, code, name) VALUES (1,'#dc5b6e', 'pink');
-INSERT INTO roles (role_id, name) VALUES (1,'Project Manager'),(2,'Employee');
-INSERT INTO resource_type (price_per_hour, name) VALUES (1250,'Senior developer'),(800,'Junior developer'),(1000,'Project Manager');
+INSERT INTO permissions (permission_id, name)
+VALUES (1, 'ADMIN'),
+       (2, 'ADMIN');
+
+INSERT INTO colors (color_id, code, name)
+VALUES (1, '#dc5b6e', 'pink');
+
+INSERT INTO roles (role_id, name)
+VALUES (1, 'Project Manager'),
+       (2, 'Employee');
+
+INSERT INTO resource_type (price_per_hour, name)
+VALUES (1250, 'Senior developer'),
+       (800, 'Junior developer'),
+       (1000, 'Project Manager');
 
 INSERT INTO projects (name, start_date, end_date, color_id, parent_project_id)
-VALUES ('Demo1', '2021-01-01', '2021-01-02', 1, null),
-       ('Demo2', '2021-01-01', '2021-01-02', 1, null),
-       ('Demo3', '2021-01-01', '2021-01-02', 1, null),
-       ('Demo4', '2021-01-01', '2021-01-02', 1, null),
-       ('Project Pink','2021-12-01','2021-12-01',1,1);
+VALUES ('Thor', '2021-01-01', '2021-01-02', 1, null),
+       ('Micro', '2021-01-01', '2021-01-02', 1, null),
+       ('Sharp', '2021-01-01', '2021-01-02', 1, null),
+       ('Dive', '2021-01-01', '2021-01-02', 1, null),
+       ('Lust', '2021-12-01', '2021-12-01', 1, 1),
+       ('Tanner', '2021-12-01', '2021-12-01', 1, 1),
+       ('Global', '2021-12-01', '2021-12-01', 1, 1),
+       ('Yantra', '2021-12-01', '2021-12-01', 1, 1),
+       ('Ace', '2021-12-01', '2021-12-01', 1, 1);
 
-INSERT INTO users (first_name, last_name, email, password, resource_type_id, permission_id) VALUES ('John','Doe','demo@demo.com',_binary 'Demo',1,1);
-INSERT INTO tasks (name, hours, resource_type_id, project_id, start_date, end_date) VALUES ('Demo task',200,1,1,'2021-12-02','2021-12-03');
+INSERT INTO users (first_name, last_name, email, password, resource_type_id, permission_id)
+VALUES ('John', 'Doe', 'demo@demo.com', _binary 'Demo', 1, 1),
+       ('John', 'Doe', '', _binary '', 1, 1);
+
+INSERT INTO tasks (name, hours, resource_type_id, project_id, start_date, end_date)
+VALUES ('Sprite', 200, 1, 1, '2021-01-01', '2021-01-02'),
+       ('Wired', 200, 1, 1, '2021-01-01', '2021-01-02'),
+       ('Bea', 200, 1, 1, '2021-01-01', '2021-01-02'),
+       ('Sunset', 200, 1, 1, '2021-01-01', '2021-01-02');
+
+INSERT INTO project_users (project_id, user_id, role_id)
+VALUES (1, 2, 1),
+       (2, 2, 1),
+       (3, 2, 1),
+       (4, 2, 1),
+       (5, 2, 1);
