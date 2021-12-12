@@ -1,6 +1,7 @@
 package com.g6jamm.stima.data.repository.stub;
 
 import com.g6jamm.stima.data.repository.SubProjectRepository;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.ProjectLeaf;
@@ -53,7 +54,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
    * @author Jackie
    */
   @Override
-  public List<Project> getSubProjects(int projectId) {
+  public List<Project> getSubProjects(int projectId) throws SystemException {
     return SUB_PROJECTS;
   }
 
@@ -65,14 +66,13 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
    * @author Jackie
    */
   @Override
-  public Project getSubproject(int subProjectId) {
+  public Project getSubproject(int subProjectId) throws SystemException {
 
     for (Project sp : SUB_PROJECTS) {
       if (sp.getId() == subProjectId) {
         return sp;
       }
     }
-    // TODO exception
     return null;
   }
 
@@ -91,7 +91,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
       LocalDate startDate,
       LocalDate endDate,
       String projectColor,
-      int parentProjectId) {
+      int parentProjectId) throws SystemException {
 
     ProjectLeaf subProject =
         new ProjectLeaf.SubProjectBuilder()
@@ -107,7 +107,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
   }
 
   @Override
-  public ProjectLeaf deleteSubProject(int subProjectId) {
+  public ProjectLeaf deleteSubProject(int subProjectId) throws SystemException {
     return null;
   }
 
@@ -120,7 +120,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
    * @author Jackie
    */
   @Override
-  public boolean addTaskToSubProject(int subProjectId, Task task) {
+  public boolean addTaskToSubProject(int subProjectId, Task task) throws SystemException {
 
     for (Project sp : SUB_PROJECTS) {
       if (sp.getId() == subProjectId) {
@@ -171,8 +171,8 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
   }
 
   @Override
-  public void editProject(ProjectComposite project) {}
+  public void editProject(ProjectComposite project) throws SystemException {}
 
   @Override
-  public void deleteProject(int projectId) {}
+  public void deleteProject(int projectId) throws SystemException {}
 }

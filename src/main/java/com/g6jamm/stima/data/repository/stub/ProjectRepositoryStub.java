@@ -1,6 +1,8 @@
 package com.g6jamm.stima.data.repository.stub;
 
 import com.g6jamm.stima.data.repository.ProjectRepository;
+import com.g6jamm.stima.domain.exception.ResourceTypeNotFoundException;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.Task;
@@ -14,7 +16,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
 
   private static final List<ProjectComposite> projects = new ArrayList<>();
 
-  public ProjectRepositoryStub() {
+  public ProjectRepositoryStub() throws SystemException, ResourceTypeNotFoundException {
     if (projects.isEmpty()) {
 
       TaskRepositoryStub taskRepositoryStub = new TaskRepositoryStub();
@@ -67,7 +69,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
   }
 
   @Override
-  public ProjectComposite createProject(ProjectComposite project, User user) {
+  public ProjectComposite createProject(ProjectComposite project, User user) throws SystemException {
 
     ProjectComposite newProject =
         new ProjectComposite.ProjectBuilder()
@@ -85,17 +87,17 @@ public class ProjectRepositoryStub implements ProjectRepository {
   }
 
   @Override
-  public ProjectComposite getProject(int projectId) {
+  public ProjectComposite getProject(int projectId) throws SystemException {
     return null;
   }
 
-  public List<ProjectComposite> getProjects(User user) {
+  public List<ProjectComposite> getProjects(User user) throws SystemException {
     return projects;
   }
 
   @Override
-  public void deleteProject(int projectId) {}
+  public void deleteProject(int projectId) throws SystemException {}
 
   @Override
-  public void editProject(ProjectComposite project) {}
+  public void editProject(ProjectComposite project) throws SystemException {}
 }

@@ -2,6 +2,7 @@ package com.g6jamm.stima.web;
 
 import com.g6jamm.stima.data.repository.mysql.*;
 import com.g6jamm.stima.data.repository.stub.*;
+import com.g6jamm.stima.domain.exception.ResourceTypeNotFoundException;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.*;
@@ -61,7 +62,7 @@ public class ProjectController {
    */
   @GetMapping("/projects/{projectId}")
   public String projectId(WebRequest webRequest, Model model, @PathVariable int projectId)
-      throws SystemException {
+      throws SystemException, ResourceTypeNotFoundException {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       User user =
           USER_SERVICE.getUser(
@@ -221,7 +222,7 @@ public class ProjectController {
   }
 
   @PostMapping("/projects/{projectId}/edit-task")
-  public String editProjectTask(WebRequest webRequest, @PathVariable int projectId) {
+  public String editProjectTask(WebRequest webRequest, @PathVariable int projectId) throws TaskCreationException, SystemException {
 
     String nameParam = webRequest.getParameter("edit-task-name");
     String hoursParam = webRequest.getParameter("edit-task-hours");
@@ -233,7 +234,7 @@ public class ProjectController {
     // TODO check if valid date
     // TODO check if date are inside project start and end
 
-    try {
+
       TASK_SERVICE.editTask(
           nameParam,
           Double.parseDouble(hoursParam),
@@ -241,16 +242,13 @@ public class ProjectController {
           startDateParam,
           endDateParam,
           Integer.parseInt(taskIdParam));
-    } catch (TaskCreationException e) {
-      e.printStackTrace(); // TODO @Mohamad
-    }
 
     return "redirect:/projects/" + projectId;
   }
 
   @PostMapping("/projects/{projectId}/{subprojectId}/edit-task")
   public String editSubProjectTask(
-      WebRequest webRequest, @PathVariable int projectId, @PathVariable int subprojectId) {
+      WebRequest webRequest, @PathVariable int projectId, @PathVariable int subprojectId) throws TaskCreationException, SystemException {
 
     String nameParam = webRequest.getParameter("edit-task-name");
     String hoursParam = webRequest.getParameter("edit-task-hours");
@@ -262,7 +260,6 @@ public class ProjectController {
     // TODO check if valid date
     // TODO check if date are inside project start and end
 
-    try {
       TASK_SERVICE.editTask(
           nameParam,
           Double.parseDouble(hoursParam),
@@ -270,9 +267,7 @@ public class ProjectController {
           startDateParam,
           endDateParam,
           Integer.parseInt(taskIdParam));
-    } catch (TaskCreationException e) {
-      e.printStackTrace(); // TODO @Mohamad
-    }
+
 
     return "redirect:/projects/" + projectId + "/" + subprojectId;
   }

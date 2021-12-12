@@ -2,6 +2,8 @@ package com.g6jamm.stima.data.repository.stub;
 
 import com.g6jamm.stima.data.repository.ResourceTypeRepository;
 import com.g6jamm.stima.data.repository.TaskRepository;
+import com.g6jamm.stima.domain.exception.ResourceTypeNotFoundException;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.Task;
 
 import java.time.LocalDate;
@@ -13,7 +15,7 @@ public class TaskRepositoryStub implements TaskRepository {
   private static ResourceTypeRepository resourceTypeRepository = new ResourceTypeRepositoryStub();
   private static List<Task> taskListStub = new ArrayList<>();
 
-  public TaskRepositoryStub() {
+  public TaskRepositoryStub() throws ResourceTypeNotFoundException {
     if (taskListStub.isEmpty()) {
       Task task =
           new Task.TaskBuilder()
@@ -41,7 +43,7 @@ public class TaskRepositoryStub implements TaskRepository {
   }
 
   @Override
-  public Task createTask(Task task, int projectId) {
+  public Task createTask(Task task, int projectId) throws SystemException {
     task =
         new Task.TaskBuilder()
             .name(task.getName())
@@ -56,15 +58,15 @@ public class TaskRepositoryStub implements TaskRepository {
   }
 
   @Override
-  public List<Task> getTasks(int projectId) {
+  public List<Task> getTasks(int projectId) throws SystemException {
     return taskListStub;
   }
 
   @Override
-  public void editTask(Task task) {}
+  public void editTask(Task task) throws SystemException {}
 
   @Override
-  public Task getTask(int task_id) {
+  public Task getTask(int task_id) throws SystemException {
     Task result = null;
     for (Task t : taskListStub) {
       if (t.getId() == task_id) {

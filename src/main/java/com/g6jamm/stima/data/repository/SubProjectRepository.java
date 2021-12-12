@@ -24,11 +24,11 @@ public interface SubProjectRepository {
       int parentProjectId)
       throws SystemException;
 
-  ProjectLeaf deleteSubProject(int subProjectId);
+  ProjectLeaf deleteSubProject(int subProjectId) throws SystemException;
 
-  boolean addTaskToSubProject(int subProjectId, Task task);
+  boolean addTaskToSubProject(int subProjectId, Task task) throws SystemException;
 
-  double getTotalHours(ProjectLeaf subProject);
+  double getTotalHours(ProjectLeaf subProject) ;
 
   int getTotalPrice(ProjectLeaf subProject);
 

@@ -2,6 +2,7 @@ package com.g6jamm.stima.test.TaskService;
 
 import com.g6jamm.stima.data.repository.stub.ResourceTypeRepositoryStub;
 import com.g6jamm.stima.data.repository.stub.TaskRepositoryStub;
+import com.g6jamm.stima.domain.exception.ResourceTypeNotFoundException;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.Task;
@@ -12,7 +13,7 @@ import org.junit.jupiter.api.Test;
 public class TaskServiceTest {
 
   @Test
-  public void createValidTaskTest() throws TaskCreationException, SystemException {
+  public void createValidTaskTest() throws TaskCreationException, SystemException, ResourceTypeNotFoundException {
     TaskService taskService =
         new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
     Task task =
@@ -22,7 +23,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testPriceCalculation() throws SystemException {
+  public void testPriceCalculation() throws SystemException, ResourceTypeNotFoundException {
     TaskService taskService =
         new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
     Task task = taskService.getTasks(1).get(0);
@@ -31,7 +32,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testPriceCalculationOnCreateTask() throws TaskCreationException, SystemException {
+  public void testPriceCalculationOnCreateTask() throws TaskCreationException, SystemException, ResourceTypeNotFoundException {
     TaskService taskService =
         new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
     Task task =
@@ -41,7 +42,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testExceptionOnNonExistingResourceType() {
+  public void testExceptionOnNonExistingResourceType() throws ResourceTypeNotFoundException {
     TaskService taskService =
         new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
     String resourceName = "This does not exist";

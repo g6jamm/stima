@@ -62,7 +62,7 @@ public class SubProjectService {
    * @return
    * @author Jackie
    */
-  public boolean addTaskToSubProject(int subProjectId, Task task) {
+  public boolean addTaskToSubProject(int subProjectId, Task task) throws SystemException {
     return SUB_PROJECT_REPOSITORY.addTaskToSubProject(subProjectId, task);
   }
 

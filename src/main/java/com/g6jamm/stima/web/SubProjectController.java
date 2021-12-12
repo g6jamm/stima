@@ -5,6 +5,7 @@ import com.g6jamm.stima.data.repository.mysql.SubProjectRepositoryImpl;
 import com.g6jamm.stima.data.repository.mysql.TaskRepositoryImpl;
 import com.g6jamm.stima.data.repository.mysql.UserRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.*;
+import com.g6jamm.stima.domain.exception.ResourceTypeNotFoundException;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.ProjectComposite;
@@ -51,7 +52,7 @@ public class SubProjectController {
       Model model,
       @PathVariable int projectId,
       @PathVariable int subProjectId)
-      throws SystemException {
+      throws SystemException, ResourceTypeNotFoundException {
 
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       User user =

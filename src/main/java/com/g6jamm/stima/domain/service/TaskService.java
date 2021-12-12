@@ -49,7 +49,7 @@ public class TaskService {
     return taskRepository.getTasks(projectId);
   }
 
-  public List<ResourceType> getResourceTypes() {
+  public List<ResourceType> getResourceTypes() throws ResourceTypeNotFoundException {
     return resourceTypeRepository.getResourceTypes();
   }
 
@@ -65,7 +65,7 @@ public class TaskService {
 
   public void editTask(
       String taskName, double hours, String resourceType, String startDate, String endDate, int id)
-      throws TaskCreationException {
+      throws TaskCreationException, SystemException {
 
     Task task =
         new Task.TaskBuilder()

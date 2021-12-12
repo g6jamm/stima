@@ -35,7 +35,7 @@ public class ResourceTypeRepositoryStub implements ResourceTypeRepository {
     }
   }
 
-  public List<ResourceType> getResourceTypes() {
+  public List<ResourceType> getResourceTypes() throws ResourceTypeNotFoundException {
     return resourceTypes;
   }
 

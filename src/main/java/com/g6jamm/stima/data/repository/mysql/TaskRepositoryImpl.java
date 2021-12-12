@@ -131,7 +131,7 @@ public class TaskRepositoryImpl implements TaskRepository {
   }
 
   @Override
-  public void editTask(Task task) {
+  public void editTask(Task task) throws SystemException {
     try {
       String query =
           "UPDATE tasks SET name = ?, hours = ?, resource_type_id = ?, start_date = ?, end_date = ?"
@@ -148,7 +148,7 @@ public class TaskRepositoryImpl implements TaskRepository {
       ps.execute();
 
     } catch (SQLException e) {
-      e.printStackTrace(); // TODO
+      throw new SystemException(e);
     }
   }
 }
