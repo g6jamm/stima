@@ -222,7 +222,7 @@ public class ProjectController {
     model.addAttribute("message", exception.getMessage());
     return "error";
   }
-  
+
   @PostMapping("/projects/{projectId}/edit-task")
   public String editProjectTask(WebRequest webRequest, @PathVariable int projectId) {
 
