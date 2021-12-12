@@ -87,11 +87,8 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
    */
   @Override
   public ProjectLeaf createSubProject(
-      String name,
-      LocalDate startDate,
-      LocalDate endDate,
-      String projectColor,
-      int parentProjectId) throws SystemException {
+      String name, LocalDate startDate, LocalDate endDate, String projectColor, int parentProjectId)
+      throws SystemException {
 
     ProjectLeaf subProject =
         new ProjectLeaf.SubProjectBuilder()

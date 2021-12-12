@@ -68,7 +68,7 @@ public class UserRepositoryStub implements UserRepository {
    * @author Mohamad
    */
   @Override
-  public User createUser(User user) throws SignUpException,SystemException {
+  public User createUser(User user) throws SignUpException, SystemException {
     if (emailExists(user.getEmail())) {
       throw new SignUpException("Email already in use");
     }
@@ -127,7 +127,7 @@ public class UserRepositoryStub implements UserRepository {
    * @author Mohamad
    */
   @Override
-  public User getUser(int id) throws SystemException{
+  public User getUser(int id) throws SystemException {
     User result = null;
 
     for (User u : userListStub) {

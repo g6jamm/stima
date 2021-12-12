@@ -13,7 +13,8 @@ import org.junit.jupiter.api.Test;
 public class TaskServiceTest {
 
   @Test
-  public void createValidTaskTest() throws TaskCreationException, SystemException, ResourceTypeNotFoundException {
+  public void createValidTaskTest()
+      throws TaskCreationException, SystemException, ResourceTypeNotFoundException {
     TaskService taskService =
         new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
     Task task =
@@ -32,7 +33,8 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testPriceCalculationOnCreateTask() throws TaskCreationException, SystemException, ResourceTypeNotFoundException {
+  public void testPriceCalculationOnCreateTask()
+      throws TaskCreationException, SystemException, ResourceTypeNotFoundException {
     TaskService taskService =
         new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
     Task task =

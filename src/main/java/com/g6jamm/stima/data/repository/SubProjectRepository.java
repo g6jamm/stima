@@ -28,7 +28,7 @@ public interface SubProjectRepository {
 
   boolean addTaskToSubProject(int subProjectId, Task task) throws SystemException;
 
-  double getTotalHours(ProjectLeaf subProject) ;
+  double getTotalHours(ProjectLeaf subProject);
 
   int getTotalPrice(ProjectLeaf subProject);
 
