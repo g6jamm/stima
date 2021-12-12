@@ -4,7 +4,7 @@ import com.g6jamm.stima.data.repository.ProjectColorRepository;
 
 import java.util.Map;
 
-public class ProjectColorStub implements ProjectColorRepository {
+public class ProjectColorImpl implements ProjectColorRepository {
 
   private static final Map<String, String> PROJECT_COLORS =
       Map.of(

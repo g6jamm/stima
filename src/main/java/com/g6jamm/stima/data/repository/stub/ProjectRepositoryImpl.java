@@ -2,23 +2,21 @@ package com.g6jamm.stima.data.repository.stub;
 
 import com.g6jamm.stima.data.repository.ProjectRepository;
 import com.g6jamm.stima.domain.model.ProjectComposite;
-import com.g6jamm.stima.domain.model.Project;
-import com.g6jamm.stima.domain.model.Task;
 import com.g6jamm.stima.domain.model.User;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectRepositoryStub implements ProjectRepository {
+public class ProjectRepositoryImpl implements ProjectRepository {
 
   private static final List<ProjectComposite> projects = new ArrayList<>();
 
-  public ProjectRepositoryStub() {
+  public ProjectRepositoryImpl() {
     if (projects.isEmpty()) {
 
-      TaskRepositoryStub taskRepositoryStub = new TaskRepositoryStub();
-      SubProjectRepositoryStub subProjectRepositoryStub = new SubProjectRepositoryStub();
+      TaskRepositoryImpl taskRepositoryImpl = new TaskRepositoryImpl();
+      SubProjectRepositoryImpl subProjectRepositoryStub = new SubProjectRepositoryImpl();
 
       projects.add(
           new ProjectComposite.ProjectBuilder()
@@ -26,7 +24,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
               .projectName("Projekt pink")
               .startDate(LocalDate.of(2021, 1, 1))
               .endDate(LocalDate.of(2021, 1, 2))
-              .tasks(taskRepositoryStub.getTasks(1))
+              .tasks(taskRepositoryImpl.getTasks(1))
               .subProjects(subProjectRepositoryStub.getSubProjects(1))
               .colorCode("pink")
               .build());
@@ -37,8 +35,8 @@ public class ProjectRepositoryStub implements ProjectRepository {
               .projectName("Projekt lilla")
               .startDate(LocalDate.of(2021, 1, 1))
               .endDate(LocalDate.of(2021, 1, 2))
-              .tasks(new ArrayList<Task>())
-              .subProjects(new ArrayList<Project>())
+              .tasks(new ArrayList<>())
+              .subProjects(new ArrayList<>())
               .colorCode("purple")
               .build());
 
@@ -48,8 +46,8 @@ public class ProjectRepositoryStub implements ProjectRepository {
               .projectName("Projekt grøn")
               .startDate(LocalDate.of(2021, 1, 1))
               .endDate(LocalDate.of(2021, 1, 2))
-              .tasks(new ArrayList<Task>())
-              .subProjects(new ArrayList<Project>())
+              .tasks(new ArrayList<>())
+              .subProjects(new ArrayList<>())
               .colorCode("green")
               .build());
 
@@ -59,8 +57,8 @@ public class ProjectRepositoryStub implements ProjectRepository {
               .projectName("Projekt brun")
               .startDate(LocalDate.of(2021, 1, 1))
               .endDate(LocalDate.of(2021, 1, 2))
-              .tasks(new ArrayList<Task>())
-              .subProjects(new ArrayList<Project>())
+              .tasks(new ArrayList<>())
+              .subProjects(new ArrayList<>())
               .colorCode("brown")
               .build());
     }
@@ -76,8 +74,8 @@ public class ProjectRepositoryStub implements ProjectRepository {
             .startDate(project.getStartDate())
             .endDate(project.getEndDate())
             .colorCode(project.getColorCode())
-            .tasks(new ArrayList<Task>())
-            .subProjects(new ArrayList<Project>())
+            .tasks(new ArrayList<>())
+            .subProjects(new ArrayList<>())
             .build();
 
     projects.add(newProject);
@@ -89,6 +87,7 @@ public class ProjectRepositoryStub implements ProjectRepository {
     return null;
   }
 
+  @Override
   public List<ProjectComposite> getProjects(User user) {
     return projects;
   }

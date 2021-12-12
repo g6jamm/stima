@@ -8,35 +8,36 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskRepositoryStub implements TaskRepository {
+public class TaskRepositoryImpl implements TaskRepository {
 
-  private static ResourceTypeRepository resourceTypeRepository = new ResourceTypeRepositoryStub();
-  private static List<Task> taskListStub = new ArrayList<>();
+  private static final ResourceTypeRepository RESOURCE_TYPE_REPOSITORY =
+      new ResourceTypeRepositoryImpl();
+  private static final List<Task> TASK_LIST = new ArrayList<>();
 
-  public TaskRepositoryStub() {
-    if (taskListStub.isEmpty()) {
+  public TaskRepositoryImpl() {
+    if (TASK_LIST.isEmpty()) {
       Task task =
           new Task.TaskBuilder()
               .name("Task one")
-              .resourceType(resourceTypeRepository.getResourceTypes().get(1))
+              .resourceType(RESOURCE_TYPE_REPOSITORY.getResourceTypes().get(1))
               .hours(5)
               .startDate(LocalDate.parse("1990-01-01"))
               .endDate(LocalDate.parse("1990-01-02"))
-              .id(taskListStub.size() + 1)
+              .id(TASK_LIST.size() + 1)
               .build();
 
       Task task2 =
           new Task.TaskBuilder()
               .name("Task one")
-              .resourceType(resourceTypeRepository.getResourceTypes().get(2))
+              .resourceType(RESOURCE_TYPE_REPOSITORY.getResourceTypes().get(2))
               .hours(5)
               .startDate(LocalDate.parse("1990-01-01"))
               .endDate(LocalDate.parse("1990-01-02"))
-              .id(taskListStub.size() + 1)
+              .id(TASK_LIST.size() + 1)
               .build();
 
-      taskListStub.add(task);
-      taskListStub.add(task2);
+      TASK_LIST.add(task);
+      TASK_LIST.add(task2);
     }
   }
 
@@ -49,7 +50,7 @@ public class TaskRepositoryStub implements TaskRepository {
             .hours(task.getHours())
             .startDate(task.getStartDate())
             .endDate(task.getEndDate())
-            .id(taskListStub.size() + 1)
+            .id(TASK_LIST.size() + 1)
             .build();
 
     return task;
@@ -57,7 +58,7 @@ public class TaskRepositoryStub implements TaskRepository {
 
   @Override
   public List<Task> getTasks(int projectId) {
-    return taskListStub;
+    return TASK_LIST;
   }
 
   @Override
@@ -66,7 +67,7 @@ public class TaskRepositoryStub implements TaskRepository {
   @Override
   public Task getTask(int task_id) {
     Task result = null;
-    for (Task t : taskListStub) {
+    for (Task t : TASK_LIST) {
       if (t.getId() == task_id) {
         result = t;
       }

@@ -7,12 +7,12 @@ class UserRepositoryStubTest {
 
   @Test
   void login() {
-    UserRepositoryStub userRepositoryStub = new UserRepositoryStub();
+    UserRepositoryImpl userRepositoryImpl = new UserRepositoryImpl();
     String email = "demo@demo.com";
     String password = "demo";
     String expectedName = "John";
 
-    Assertions.assertEquals(expectedName, userRepositoryStub.login(email, password).getFirstName());
+    Assertions.assertEquals(expectedName, userRepositoryImpl.login(email, password).getFirstName());
   }
 
   @Test

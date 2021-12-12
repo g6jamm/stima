@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectRepositoryMySQLImpl implements ProjectRepository {
+public class ProjectRepositoryImpl implements ProjectRepository {
 
   private final TaskRepository TASK_REPOSITORY = new TaskRepositoryImpl();
   private final SubProjectRepository SUBPROJECT_REPOSITORY = new SubProjectRepositoryImpl();
