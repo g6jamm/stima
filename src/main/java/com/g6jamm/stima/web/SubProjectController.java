@@ -126,8 +126,8 @@ public class SubProjectController {
         !taskEndDateParam.isEmpty()
             ? taskEndDateParam
             : project
-                .getStartDate()
-                .format(DateTimeFormatter.ofPattern("YYYY-MM-DD")); // TODO More validation
+            .getStartDate()
+            .format(DateTimeFormatter.ofPattern("YYYY-MM-DD")); // TODO More validation
 
     Task task =
         TASK_SERVICE.createtask(
@@ -142,7 +142,7 @@ public class SubProjectController {
       Model model,
       @PathVariable int projectId,
       @PathVariable int subProjectId)
-      throws SystemException {
+      throws SystemException, TaskCreationException {
 
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       User user =
@@ -159,13 +159,9 @@ public class SubProjectController {
       }
 
       if (subProject != null) {
-        try {
-          createTask(webRequest, subProject);
-        } catch (TaskCreationException e) {
-          model.addAttribute(
-              "error",
-              e.getMessage()); // TODO Handle exceptions?????? if we redirect we dont see the error.
-        }
+
+        createTask(webRequest, subProject);
+
       }
       return "redirect:/projects/" + projectId + "/" + subProjectId;
     }

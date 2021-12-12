@@ -210,14 +210,8 @@ public class ProjectController {
     return "redirect:/projects/" + projectId;
   }
 
-  @ExceptionHandler(Exception.class)
-  public String error(Model model, Exception exception) {
-    model.addAttribute("message", exception.getMessage());
-    return "error";
-  }
-
   @PostMapping("/projects/{projectId}/edit-task")
-  public String editProjectTask(WebRequest webRequest, @PathVariable int projectId) {
+  public String editProjectTask(WebRequest webRequest, @PathVariable int projectId) throws TaskCreationException {
 
     String nameParam = webRequest.getParameter("edit-task-name");
     String hoursParam = webRequest.getParameter("edit-task-hours");
@@ -229,7 +223,6 @@ public class ProjectController {
     // TODO check if valid date
     // TODO check if date are inside project start and end
 
-    try {
       TASK_SERVICE.editTask(
           nameParam,
           Double.parseDouble(hoursParam),
@@ -237,16 +230,14 @@ public class ProjectController {
           startDateParam,
           endDateParam,
           Integer.parseInt(taskIdParam));
-    } catch (TaskCreationException e) {
-      e.printStackTrace(); // TODO @Mohamad
-    }
+
 
     return "redirect:/projects/" + projectId;
   }
 
   @PostMapping("/projects/{projectId}/{subprojectId}/edit-task")
   public String editSubProjectTask(
-      WebRequest webRequest, @PathVariable int projectId, @PathVariable int subprojectId) {
+      WebRequest webRequest, @PathVariable int projectId, @PathVariable int subprojectId) throws TaskCreationException {
 
     String nameParam = webRequest.getParameter("edit-task-name");
     String hoursParam = webRequest.getParameter("edit-task-hours");
@@ -258,7 +249,6 @@ public class ProjectController {
     // TODO check if valid date
     // TODO check if date are inside project start and end
 
-    try {
       TASK_SERVICE.editTask(
           nameParam,
           Double.parseDouble(hoursParam),
@@ -266,10 +256,14 @@ public class ProjectController {
           startDateParam,
           endDateParam,
           Integer.parseInt(taskIdParam));
-    } catch (TaskCreationException e) {
-      e.printStackTrace(); // TODO @Mohamad
-    }
 
     return "redirect:/projects/" + projectId + "/" + subprojectId;
   }
+
+  @ExceptionHandler(Exception.class)
+  public String error(Model model, Exception exception) {
+    model.addAttribute("message", exception.getMessage());
+    return "error";
+  }
+
 }

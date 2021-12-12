@@ -2,6 +2,7 @@ package com.g6jamm.stima.data.repository.stub;
 
 import com.g6jamm.stima.data.repository.UserRepository;
 import com.g6jamm.stima.domain.exception.SignUpException;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.Role;
 import com.g6jamm.stima.domain.model.User;
 
@@ -51,7 +52,7 @@ public class UserRepositoryImpl implements UserRepository {
    * @author Mohamad
    */
   @Override
-  public User login(String email, String password) {
+  public User login(String email, String password) throws SystemException {
 
     for (User u : USER_LIST) {
       if (u.getEmail().equals(email) && u.getPassword().equals(password)) {
@@ -67,7 +68,7 @@ public class UserRepositoryImpl implements UserRepository {
    * @author Mohamad
    */
   @Override
-  public User createUser(User user) throws SignUpException {
+  public User createUser(User user) throws SignUpException, SystemException {
     if (emailExists(user.getEmail())) {
       throw new SignUpException("Email already in use");
     }
@@ -91,7 +92,7 @@ public class UserRepositoryImpl implements UserRepository {
    * @author Mohamad
    */
   @Override
-  public boolean userExists(int id) {
+  public boolean userExists(int id) throws SystemException {
     return USER_LIST.stream().anyMatch(user -> id == user.getId());
   }
 
@@ -105,7 +106,7 @@ public class UserRepositoryImpl implements UserRepository {
    * @author Mohamad
    */
   @Override
-  public int getNewUserId(User user) {
+  public int getNewUserId(User user) throws SystemException{
 
     user =
         new User.UserBuilder()
@@ -126,7 +127,7 @@ public class UserRepositoryImpl implements UserRepository {
    * @author Mohamad
    */
   @Override
-  public User getUser(int id) {
+  public User getUser(int id) throws SystemException{
     User result = null;
 
     for (User u : USER_LIST) {

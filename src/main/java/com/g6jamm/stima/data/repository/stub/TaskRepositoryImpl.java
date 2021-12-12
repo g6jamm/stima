@@ -43,7 +43,7 @@ public class TaskRepositoryImpl implements TaskRepository {
   }
 
   @Override
-  public Task createTask(Task task, int projectId) {
+  public Task createTask(Task task, int projectId) throws SystemException {
     task =
         new Task.TaskBuilder()
             .name(task.getName())
@@ -58,15 +58,15 @@ public class TaskRepositoryImpl implements TaskRepository {
   }
 
   @Override
-  public List<Task> getTasks(int projectId) {
+  public List<Task> getTasks(int projectId) throws SystemException {
     return TASK_LIST;
   }
 
   @Override
-  public void editTask(Task task) {}
+  public void editTask(Task task) throws SystemException{}
 
   @Override
-  public Task getTask(int task_id) {
+  public Task getTask(int task_id) throws SystemException{
     Task result = null;
     for (Task t : TASK_LIST) {
       if (t.getId() == task_id) {

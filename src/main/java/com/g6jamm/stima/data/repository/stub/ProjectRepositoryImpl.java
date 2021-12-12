@@ -70,7 +70,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
   }
 
   @Override
-  public ProjectComposite createProject(ProjectComposite project, User user) {
+  public ProjectComposite createProject(ProjectComposite project, User user) throws SystemException {
 
     ProjectComposite newProject =
         new ProjectComposite.ProjectBuilder()
@@ -88,18 +88,18 @@ public class ProjectRepositoryImpl implements ProjectRepository {
   }
 
   @Override
-  public ProjectComposite getProject(int projectId) {
+  public ProjectComposite getProject(int projectId) throws SystemException {
     return null;
   }
 
   @Override
-  public List<ProjectComposite> getProjects(User user) {
+  public List<ProjectComposite> getProjects(User user) throws SystemException {
     return projects;
   }
 
   @Override
-  public void deleteProject(int projectId) {}
+  public void deleteProject(int projectId) throws SystemException {}
 
   @Override
-  public void editProject(ProjectComposite project) {}
+  public void editProject(ProjectComposite project) throws SystemException {}
 }

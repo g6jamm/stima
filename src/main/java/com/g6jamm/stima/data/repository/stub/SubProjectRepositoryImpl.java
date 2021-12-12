@@ -1,6 +1,7 @@
 package com.g6jamm.stima.data.repository.stub;
 
 import com.g6jamm.stima.data.repository.SubProjectRepository;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.ProjectLeaf;
@@ -53,7 +54,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
    * @author Jackie
    */
   @Override
-  public List<Project> getSubProjects(int projectId) {
+  public List<Project> getSubProjects(int projectId) throws SystemException {
     return SUB_PROJECTS;
   }
 
@@ -65,14 +66,13 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
    * @author Jackie
    */
   @Override
-  public Project getSubproject(int subProjectId) {
+  public Project getSubproject(int subProjectId) throws SystemException {
 
     for (Project sp : SUB_PROJECTS) {
       if (sp.getId() == subProjectId) {
         return sp;
       }
     }
-    // TODO exception
     return null;
   }
 
@@ -91,7 +91,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       LocalDate startDate,
       LocalDate endDate,
       String projectColor,
-      int parentProjectId) {
+      int parentProjectId) throws SystemException {
 
     ProjectLeaf subProject =
         new ProjectLeaf.SubProjectBuilder()
@@ -171,8 +171,8 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   }
 
   @Override
-  public void editProject(ProjectComposite project) {}
+  public void editProject(ProjectComposite project) throws SystemException {}
 
   @Override
-  public void deleteProject(int projectId) {}
+  public void deleteProject(int projectId) throws SystemException {}
 }
