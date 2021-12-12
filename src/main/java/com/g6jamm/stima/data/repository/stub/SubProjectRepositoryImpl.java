@@ -10,11 +10,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubProjectRepositoryStub implements SubProjectRepository {
+public class SubProjectRepositoryImpl implements SubProjectRepository {
 
   private static final List<Project> SUB_PROJECTS = new ArrayList<>();
 
-  public SubProjectRepositoryStub() {
+  public SubProjectRepositoryImpl() {
     if (SUB_PROJECTS.isEmpty()) {
       SUB_PROJECTS.add(
           new ProjectLeaf.SubProjectBuilder()

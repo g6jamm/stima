@@ -17,7 +17,7 @@ import org.springframework.web.context.request.WebRequest;
 @Controller
 public class UserController { // TODO change name to Login controller?
 
-  UserService userService = new UserService(new UserRepositoryImpl());
+  private final UserService USER_SERVICE = new UserService(new UserRepositoryImpl());
 
   @GetMapping("/")
   public String goToHomepage(WebRequest webRequest) {
@@ -47,7 +47,7 @@ public class UserController { // TODO change name to Login controller?
     try {
       String email = webRequest.getParameter("email");
       String password = webRequest.getParameter("password");
-      User user = userService.login(email, password);
+      User user = USER_SERVICE.login(email, password);
 
       webRequest.setAttribute(
           "user", user.getId(), WebRequest.SCOPE_SESSION); // if user is null null pointer exception
@@ -69,7 +69,7 @@ public class UserController { // TODO change name to Login controller?
 
     try {
       if (validatePassword(password1, password2)) {
-        User user = userService.createUser(firstName, lastName, email, password1);
+        User user = USER_SERVICE.createUser(firstName, lastName, email, password1);
         webRequest.setAttribute("user", user.getId(), WebRequest.SCOPE_SESSION);
         return "redirect:/projects";
       }
@@ -82,10 +82,7 @@ public class UserController { // TODO change name to Login controller?
   }
 
   private boolean validatePassword(String password1, String password2) {
-    if (password1.equals(password2)) {
-      return true;
-    }
-    return false;
+    return password1.equals(password2);
   }
 
   @ExceptionHandler(Exception.class)

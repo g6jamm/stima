@@ -1,6 +1,6 @@
 package com.g6jamm.stima.domain.service;
 
-import com.g6jamm.stima.data.repository.stub.UserRepositoryStub;
+import com.g6jamm.stima.data.repository.stub.UserRepositoryImpl;
 import com.g6jamm.stima.domain.exception.LoginException;
 import com.g6jamm.stima.domain.exception.SignUpException;
 import com.g6jamm.stima.domain.exception.SystemException;
@@ -20,7 +20,7 @@ class UserServiceTest {
    */
   @Test
   void createUserUserIdIncrements() throws SignUpException, SystemException {
-    UserService userService = new UserService(new UserRepositoryStub());
+    UserService userService = new UserService(new UserRepositoryImpl());
     String firstName = "Bobby";
     String lastName = "Olsen";
     String email = "newtest@demo.com";
@@ -32,7 +32,7 @@ class UserServiceTest {
 
   @Test
   void loginSuccessfullyReturnCorrectUserTest() throws LoginException, SystemException {
-    UserService userService = new UserService(new UserRepositoryStub());
+    UserService userService = new UserService(new UserRepositoryImpl());
     String email = "demo@demo.com";
     String password = "demo";
     String expectedName = "John";
@@ -42,7 +42,7 @@ class UserServiceTest {
 
   @Test
   void loginFailReturnCorrectUserTest() throws LoginException, SystemException {
-    UserService userService = new UserService(new UserRepositoryStub());
+    UserService userService = new UserService(new UserRepositoryImpl());
     String email = "demo@demo.com";
     String password = "demo";
     String expectedName = "Bo";
@@ -52,7 +52,7 @@ class UserServiceTest {
 
   @Test
   void createNewUserSuccessfullyTest() throws SignUpException, SystemException {
-    UserService userService = new UserService(new UserRepositoryStub());
+    UserService userService = new UserService(new UserRepositoryImpl());
     String firstName = "Bob";
     String lastName = "Marley";
     String email = "demo420@demo.com";
@@ -75,21 +75,21 @@ class UserServiceTest {
 
   @Test
   void getUserByIdSuccessfullTest() throws SystemException {
-    UserService userService = new UserService(new UserRepositoryStub());
+    UserService userService = new UserService(new UserRepositoryImpl());
     User actualUser = userService.getUser(1);
     assertEquals(1, actualUser.getId());
   }
 
   @Test
   void getUserByIdFailTest() throws SystemException {
-    UserService userService = new UserService(new UserRepositoryStub());
+    UserService userService = new UserService(new UserRepositoryImpl());
     User actualUser = userService.getUser(1);
     assertNotEquals(0, actualUser.getId());
   }
 
   @Test
   void userExistsSuccessfullyTest() throws SystemException {
-    UserService userService = new UserService(new UserRepositoryStub());
+    UserService userService = new UserService(new UserRepositoryImpl());
     boolean doesUserExist = userService.userExists(1);
 
     Assertions.assertEquals(true, doesUserExist);
@@ -97,7 +97,7 @@ class UserServiceTest {
 
   @Test
   void userExistsFailTest() throws SystemException {
-    UserService userService = new UserService(new UserRepositoryStub());
+    UserService userService = new UserService(new UserRepositoryImpl());
     boolean doesUserExist = userService.userExists(68);
 
     Assertions.assertNotEquals(true, doesUserExist);

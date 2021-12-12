@@ -1,18 +1,16 @@
 package com.g6jamm.stima.web;
 
-import com.g6jamm.stima.data.repository.mysql.ProjectRepositoryMySQLImpl;
-import com.g6jamm.stima.data.repository.mysql.SubProjectRepositoryImpl;
+import com.g6jamm.stima.data.repository.mysql.ProjectRepositoryImpl;
+import com.g6jamm.stima.data.repository.mysql.ResourceTypeRepositoryImpl;
 import com.g6jamm.stima.data.repository.mysql.TaskRepositoryImpl;
 import com.g6jamm.stima.data.repository.mysql.UserRepositoryImpl;
-import com.g6jamm.stima.data.repository.stub.*;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
-import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.Task;
 import com.g6jamm.stima.domain.model.User;
 import com.g6jamm.stima.domain.service.ProjectService;
-import com.g6jamm.stima.domain.service.SubProjectService;
 import com.g6jamm.stima.domain.service.TaskService;
 import com.g6jamm.stima.domain.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -28,12 +26,9 @@ import java.util.List;
 
 @Controller
 public class SubProjectController {
-  private final SubProjectService SUBPROJECT_SERVICE =
-      new SubProjectService(new SubProjectRepositoryImpl());
-  TaskService taskService =
-      new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryStub());
-  private final ProjectService PROJECT_SERVICE =
-      new ProjectService(new ProjectRepositoryMySQLImpl());
+  private final TaskService TASK_SERVICE =
+      new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryImpl());
+  private final ProjectService PROJECT_SERVICE = new ProjectService(new ProjectRepositoryImpl());
   private final UserService USER_SERVICE = new UserService(new UserRepositoryImpl());
 
   /**
@@ -71,7 +66,7 @@ public class SubProjectController {
 
         model.addAttribute("tasks", tasks);
         model.addAttribute("subProject", subProject);
-        model.addAttribute("resourceTypes", taskService.getResourceTypes());
+        model.addAttribute("resourceTypes", TASK_SERVICE.getResourceTypes());
 
         model.addAttribute("parentProject", project);
 
@@ -134,11 +129,11 @@ public class SubProjectController {
                 .getStartDate()
                 .format(DateTimeFormatter.ofPattern("YYYY-MM-DD")); // TODO More validation
 
-    Task newTask =
-        taskService.createtask(
+    Task task =
+        TASK_SERVICE.createtask(
             taskNameParam, hours, resourceTypeParam, taskStartDate, taskEndDate, project.getId());
 
-    project.addTask(newTask);
+    project.addTask(task);
   }
 
   @PostMapping("/projects/{projectId}/{subProjectId}/create-task")
