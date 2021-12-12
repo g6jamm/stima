@@ -43,7 +43,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
                         rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
                 .startDate(LocalDate.parse(rs.getString("start_date")))
                 .endDate(LocalDate.parse(rs.getString("end_date")))
-                .colorCode("#dc5b6e") // TODO rs.getString("color_id")
+                .colorCode(rs.getString("colorscode"))
                 .build();
         subProjects.add(subProject);
       }
@@ -71,7 +71,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
             .name(rs.getString("name"))
             .startDate(LocalDate.parse(rs.getString("start_date")))
             .endDate(LocalDate.parse(rs.getString("end_date")))
-            .colorCode(rs.getString("color_code")) // TODO add rs.getString("color_id")
+            .colorCode(rs.getString("colorscode"))
             .build();
         // TODO colorcode handel,
       }
@@ -91,9 +91,8 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       String projectColorParam,
       int parentProjectId)
       throws SystemException {
-    // TODO change colorcode to id
     String query =
-        "INSERT INTO projects(name, start_date, end_date, color_id, parent_project_id) values"
+        "INSERT INTO projects(name, start_date, end_date, colorscode, parent_project_id) values"
             + " (?,?,?,?,?)";
 
     try {
@@ -101,7 +100,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       ps.setString(1, name);
       ps.setDate(2, Date.valueOf(startDate));
       ps.setDate(3, Date.valueOf(endDate));
-      ps.setString(4, projectColorParam); // TODO change to colorCodeId
+      ps.setString(4, projectColorParam);
       ps.setInt(5, parentProjectId);
 
       ps.execute();
@@ -138,13 +137,13 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
 
     try {
       String query =
-          "UPDATE projects SET name = ?, start_date = ?, end_date = ?, color_id = ? WHERE"
+          "UPDATE projects SET name = ?, start_date = ?, end_date = ?, colorscode = ? WHERE"
               + " project_id = ?";
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setString(1, subProject.getName());
       ps.setString(2, String.valueOf(Date.valueOf(subProject.getStartDate())));
       ps.setString(3, String.valueOf(Date.valueOf(subProject.getEndDate())));
-      ps.setString(4, subProject.getColorCode()); // TODO: @Jackie
+      ps.setString(4, subProject.getColorCode());
       ps.setInt(5, subProject.getId());
 
       ps.execute();

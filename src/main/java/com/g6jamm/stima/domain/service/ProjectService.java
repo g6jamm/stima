@@ -55,7 +55,7 @@ public class ProjectService {
             .projectName(name)
             .startDate(startDate)
             .endDate(endDate)
-            .colorCode("1") // TODO: @Jacky
+            .colorCode(projectColor)
             .build();
 
     PROJECT_REPOSITORY.editProject(project);
