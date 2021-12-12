@@ -5,6 +5,7 @@ import com.g6jamm.stima.data.repository.mysql.SubProjectRepositoryImpl;
 import com.g6jamm.stima.data.repository.mysql.TaskRepositoryImpl;
 import com.g6jamm.stima.data.repository.mysql.UserRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.*;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.Project;
@@ -16,6 +17,7 @@ import com.g6jamm.stima.domain.service.TaskService;
 import com.g6jamm.stima.domain.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,7 +50,8 @@ public class SubProjectController {
       WebRequest webRequest,
       Model model,
       @PathVariable int projectId,
-      @PathVariable int subProjectId) {
+      @PathVariable int subProjectId)
+      throws SystemException {
 
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       User user =
@@ -80,7 +83,8 @@ public class SubProjectController {
   }
 
   @PostMapping("/projects/{projectId}/create-task")
-  public String createProjectTask(WebRequest webRequest, Model model, @PathVariable int projectId) {
+  public String createProjectTask(WebRequest webRequest, Model model, @PathVariable int projectId)
+      throws SystemException {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       User user =
           USER_SERVICE.getUser(
@@ -105,7 +109,8 @@ public class SubProjectController {
    * @param webRequest
    * @author Andreas
    */
-  private void createTask(WebRequest webRequest, Project project) throws TaskCreationException {
+  private void createTask(WebRequest webRequest, Project project)
+      throws TaskCreationException, SystemException {
 
     String taskNameParam = webRequest.getParameter("task-name");
     String taskHoursParam = webRequest.getParameter("task-hours");
@@ -141,7 +146,8 @@ public class SubProjectController {
       WebRequest webRequest,
       Model model,
       @PathVariable int projectId,
-      @PathVariable int subProjectId) {
+      @PathVariable int subProjectId)
+      throws SystemException {
 
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       User user =
@@ -169,5 +175,11 @@ public class SubProjectController {
       return "redirect:/projects/" + projectId + "/" + subProjectId;
     }
     return "redirect:/";
+  }
+
+  @ExceptionHandler(Exception.class)
+  public String error(Model model, Exception exception) {
+    model.addAttribute("message", exception.getMessage());
+    return "error";
   }
 }

@@ -2,6 +2,7 @@ package com.g6jamm.stima.data.repository.mysql;
 
 import com.g6jamm.stima.data.repository.TaskRepository;
 import com.g6jamm.stima.data.repository.util.DbManager;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.ResourceType;
 import com.g6jamm.stima.domain.model.Task;
 
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class TaskRepositoryImpl implements TaskRepository {
   @Override
-  public Task createTask(Task task, int projectId) {
+  public Task createTask(Task task, int projectId) throws SystemException {
 
     try {
       String query =
@@ -33,13 +34,12 @@ public class TaskRepositoryImpl implements TaskRepository {
       ps.executeUpdate();
       return task;
     } catch (SQLException e) {
-      System.out.println(e.getMessage());
+      throw new SystemException("Please contact system administrator");
     }
-    return null;
   }
 
   @Override
-  public Task getTask(int task_id) {
+  public Task getTask(int task_id) throws SystemException {
     try {
       String query =
           "SELECT task_id"
@@ -77,13 +77,13 @@ public class TaskRepositoryImpl implements TaskRepository {
             .build();
       }
     } catch (SQLException e) {
-      System.out.println(e.getMessage()); // TODO
+      throw new SystemException("Please contact system administrator");
     }
     return null;
   }
 
   @Override
-  public List<Task> getTasks(int projectId) {
+  public List<Task> getTasks(int projectId) throws SystemException {
     List<Task> result = new ArrayList<>();
 
     try {
@@ -125,7 +125,7 @@ public class TaskRepositoryImpl implements TaskRepository {
                 .build());
       }
     } catch (SQLException e) {
-      System.out.println(e.getMessage()); // TODO
+      throw new SystemException("Please contact system administrator");
     }
     return result;
   }

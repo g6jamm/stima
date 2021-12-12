@@ -2,6 +2,7 @@ package com.g6jamm.stima.test.TaskService;
 
 import com.g6jamm.stima.data.repository.stub.ResourceTypeRepositoryStub;
 import com.g6jamm.stima.data.repository.stub.TaskRepositoryStub;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.Task;
 import com.g6jamm.stima.domain.service.TaskService;
@@ -11,7 +12,7 @@ import org.junit.jupiter.api.Test;
 public class TaskServiceTest {
 
   @Test
-  public void createValidTaskTest() throws TaskCreationException {
+  public void createValidTaskTest() throws TaskCreationException, SystemException {
     TaskService taskService =
         new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
     Task task =
@@ -21,7 +22,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testPriceCalculation() {
+  public void testPriceCalculation() throws SystemException {
     TaskService taskService =
         new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
     Task task = taskService.getTasks(1).get(0);
@@ -30,7 +31,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testPriceCalculationOnCreateTask() throws TaskCreationException {
+  public void testPriceCalculationOnCreateTask() throws TaskCreationException, SystemException {
     TaskService taskService =
         new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
     Task task =

@@ -4,6 +4,7 @@ import com.g6jamm.stima.data.repository.ProjectRepository;
 import com.g6jamm.stima.data.repository.SubProjectRepository;
 import com.g6jamm.stima.data.repository.TaskRepository;
 import com.g6jamm.stima.data.repository.util.DbManager;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.User;
@@ -19,7 +20,8 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
   private final SubProjectRepository SUBPROJECT_REPOSITORY = new SubProjectRepositoryImpl();
 
   @Override
-  public ProjectComposite createProject(ProjectComposite project, User user) {
+  public ProjectComposite createProject(ProjectComposite project, User user)
+      throws SystemException {
 
     try {
       String query =
@@ -55,14 +57,14 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
       }
 
     } catch (SQLException e) {
-      e.printStackTrace(); // TODO
+      throw new SystemException("Please contact system administrator");
     }
 
     return project;
   }
 
   @Override
-  public ProjectComposite getProject(int projectId) {
+  public ProjectComposite getProject(int projectId) throws SystemException {
 
     try {
       String query = "SELECT * FROM projects WHERE project_id = ? AND parent_project_id is NULL";
@@ -89,14 +91,14 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
       }
 
     } catch (SQLException e) {
-      e.printStackTrace(); // TODO
+      throw new SystemException("Please contact system administrator");
     }
 
     return null;
   }
 
   @Override
-  public void deleteProject(int projectId) {
+  public void deleteProject(int projectId) throws SystemException {
 
     try {
       String query = "DELETE FROM projects WHERE project_id = ?";
@@ -105,12 +107,12 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
       ps.execute();
 
     } catch (SQLException e) {
-      e.printStackTrace(); // TODO
+      throw new SystemException("Please contact system administrator");
     }
   }
 
   @Override
-  public void editProject(ProjectComposite project) {
+  public void editProject(ProjectComposite project) throws SystemException {
 
     try {
       String query =
@@ -126,12 +128,12 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
       ps.execute();
 
     } catch (SQLException e) {
-      e.printStackTrace(); // TODO
+      throw new SystemException("Please contact system administrator");
     }
   }
 
   @Override
-  public List<ProjectComposite> getProjects(User user) {
+  public List<ProjectComposite> getProjects(User user) throws SystemException {
 
     List<ProjectComposite> projects = new ArrayList<>();
     try {
@@ -163,14 +165,13 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
       }
 
     } catch (SQLException e) {
-      e.printStackTrace(); // TODO
+      throw new SystemException("Please contact system administrator");
     }
 
     return projects;
   }
 
   private boolean linkProjectAndUser(Project project, User user) throws SQLException {
-    System.out.println("YAY");
     String query =
         "INSERT INTO project_users (project_id, user_id, role_id) VALUES (?, ?, 1)"; // 1 is for
     // role_id;

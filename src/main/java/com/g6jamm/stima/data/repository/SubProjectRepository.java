@@ -1,5 +1,6 @@
 package com.g6jamm.stima.data.repository;
 
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.ProjectLeaf;
@@ -11,16 +12,17 @@ import java.util.List;
 /** @author Jackie */
 public interface SubProjectRepository {
 
-  List<Project> getSubProjects(int projectId);
+  List<Project> getSubProjects(int projectId) throws SystemException;
 
-  Project getSubproject(int subProjectId);
+  Project getSubproject(int subProjectId) throws SystemException;
 
   ProjectLeaf createSubProject(
       String name,
       LocalDate startDate,
       LocalDate endDate,
       String projectColorParam,
-      int parentProjectId);
+      int parentProjectId)
+      throws SystemException;
 
   ProjectLeaf deleteSubProject(int subProjectId);
 
@@ -30,7 +32,7 @@ public interface SubProjectRepository {
 
   int getTotalPrice(ProjectLeaf subProject);
 
-  void editProject(ProjectComposite project);
+  void editProject(ProjectComposite project) throws SystemException;
 
-  void deleteProject(int projectId);
+  void deleteProject(int projectId) throws SystemException;
 }

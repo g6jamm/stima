@@ -3,6 +3,7 @@ package com.g6jamm.stima.domain.service;
 import com.g6jamm.stima.data.repository.UserRepository;
 import com.g6jamm.stima.domain.exception.LoginException;
 import com.g6jamm.stima.domain.exception.SignUpException;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.User;
 
 /** @author Mohamad */
@@ -21,7 +22,7 @@ public class UserService {
    * @throws LoginException
    * @author Mohamad
    */
-  public User login(String email, String password) throws LoginException {
+  public User login(String email, String password) throws LoginException, SystemException {
     User user = userRepository.login(email, password);
     if (user != null) {
       return user;
@@ -39,7 +40,7 @@ public class UserService {
    * @author Mohamad
    */
   public User createUser(String firstName, String lastName, String email, String password)
-      throws SignUpException {
+      throws SignUpException, SystemException {
     User user =
         new User.UserBuilder()
             .firstName(firstName)
@@ -55,7 +56,7 @@ public class UserService {
    * @return User if exists
    * @author Mohamad
    */
-  public User getUser(int userId) {
+  public User getUser(int userId) throws SystemException {
     return userRepository.getUser(userId);
   }
 
@@ -64,7 +65,7 @@ public class UserService {
    * @return true if user exists
    * @author Mohamad
    */
-  public boolean userExists(int userId) {
+  public boolean userExists(int userId) throws SystemException {
     return userRepository.userExists(userId);
   }
 }

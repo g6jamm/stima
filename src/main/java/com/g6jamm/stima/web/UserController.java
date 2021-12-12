@@ -3,6 +3,7 @@ package com.g6jamm.stima.web;
 import com.g6jamm.stima.data.repository.mysql.UserRepositoryImpl;
 import com.g6jamm.stima.domain.exception.LoginException;
 import com.g6jamm.stima.domain.exception.SignUpException;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.User;
 import com.g6jamm.stima.domain.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -42,7 +43,7 @@ public class UserController { // TODO change name to Login controller?
   }
 
   @PostMapping("/login")
-  public String logIn(WebRequest webRequest, Model model) {
+  public String logIn(WebRequest webRequest, Model model) throws SystemException {
     try {
       String email = webRequest.getParameter("email");
       String password = webRequest.getParameter("password");
@@ -59,7 +60,7 @@ public class UserController { // TODO change name to Login controller?
   }
 
   @PostMapping("/signup")
-  public String createUser(WebRequest webRequest, Model model) {
+  public String createUser(WebRequest webRequest, Model model) throws SystemException {
     String firstName = webRequest.getParameter("firstname");
     String lastName = webRequest.getParameter("lastname");
     String email = webRequest.getParameter("email");

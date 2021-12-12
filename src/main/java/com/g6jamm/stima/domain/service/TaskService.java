@@ -3,6 +3,7 @@ package com.g6jamm.stima.domain.service;
 import com.g6jamm.stima.data.repository.ResourceTypeRepository;
 import com.g6jamm.stima.data.repository.TaskRepository;
 import com.g6jamm.stima.domain.exception.ResourceTypeNotFoundException;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.ResourceType;
 import com.g6jamm.stima.domain.model.Task;
@@ -27,7 +28,7 @@ public class TaskService {
       String startDate,
       String endDate,
       int projectId)
-      throws TaskCreationException {
+      throws TaskCreationException, SystemException {
 
     Task newTask =
         new Task.TaskBuilder()
@@ -44,7 +45,7 @@ public class TaskService {
     return LocalDate.parse(stringDate);
   }
 
-  public List<Task> getTasks(int projectId) {
+  public List<Task> getTasks(int projectId) throws SystemException {
     return taskRepository.getTasks(projectId);
   }
 

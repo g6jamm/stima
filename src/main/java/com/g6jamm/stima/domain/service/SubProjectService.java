@@ -1,6 +1,7 @@
 package com.g6jamm.stima.domain.service;
 
 import com.g6jamm.stima.data.repository.SubProjectRepository;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.ProjectLeaf;
@@ -27,11 +28,8 @@ public class SubProjectService {
    * @author Jackie
    */
   public ProjectLeaf createSubProject(
-      String name,
-      LocalDate startDate,
-      LocalDate endDate,
-      String projectColor,
-      int parentProjectId) {
+      String name, LocalDate startDate, LocalDate endDate, String projectColor, int parentProjectId)
+      throws SystemException {
     return SUB_PROJECT_REPOSITORY.createSubProject(
         name, startDate, endDate, "1", parentProjectId); // TODO: send object med & fix color
   }
@@ -42,7 +40,7 @@ public class SubProjectService {
    * @return List of subprojects
    * @author Jackie
    */
-  public List<Project> getSubprojects(int projectId) {
+  public List<Project> getSubprojects(int projectId) throws SystemException {
     return SUB_PROJECT_REPOSITORY.getSubProjects(projectId); // WIP
   }
 
@@ -52,7 +50,7 @@ public class SubProjectService {
    * @param subProjectId
    * @return a sub project
    */
-  public Project getSubProject(int subProjectId) {
+  public Project getSubProject(int subProjectId) throws SystemException {
     return SUB_PROJECT_REPOSITORY.getSubproject(subProjectId);
   }
 
@@ -69,7 +67,8 @@ public class SubProjectService {
   }
 
   public void editProject(
-      int projectId, String name, LocalDate startDate, LocalDate endDate, String projectColor) {
+      int projectId, String name, LocalDate startDate, LocalDate endDate, String projectColor)
+      throws SystemException {
 
     ProjectComposite subproject =
         new ProjectComposite.ProjectBuilder()
@@ -83,7 +82,7 @@ public class SubProjectService {
     SUB_PROJECT_REPOSITORY.editProject(subproject);
   }
 
-  public void deleteProject(int projectId) {
+  public void deleteProject(int projectId) throws SystemException {
     SUB_PROJECT_REPOSITORY.deleteProject(projectId);
   }
 }

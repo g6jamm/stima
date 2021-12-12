@@ -1,6 +1,7 @@
 package com.g6jamm.stima.domain.service;
 
 import com.g6jamm.stima.data.repository.ProjectRepository;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.User;
 
@@ -15,11 +16,11 @@ public class ProjectService {
     this.PROJECT_REPOSITORY = projectRepository;
   }
 
-  public List<ProjectComposite> getProjects(User user) {
+  public List<ProjectComposite> getProjects(User user) throws SystemException {
     return PROJECT_REPOSITORY.getProjects(user);
   }
 
-  public ProjectComposite getProjectById(User user, int projectID) {
+  public ProjectComposite getProjectById(User user, int projectID) throws SystemException {
     for (ProjectComposite project : getProjects(user)) {
       if (projectID == project.getId()) {
         return project;
@@ -30,7 +31,8 @@ public class ProjectService {
   }
 
   public ProjectComposite createProject(
-      String name, LocalDate startDate, LocalDate endDate, String projectColor, User user) {
+      String name, LocalDate startDate, LocalDate endDate, String projectColor, User user)
+      throws SystemException {
 
     ProjectComposite project =
         new ProjectComposite.ProjectBuilder()
@@ -44,7 +46,8 @@ public class ProjectService {
   }
 
   public void editProject(
-      int projectId, String name, LocalDate startDate, LocalDate endDate, String projectColor) {
+      int projectId, String name, LocalDate startDate, LocalDate endDate, String projectColor)
+      throws SystemException {
 
     ProjectComposite project =
         new ProjectComposite.ProjectBuilder()
@@ -58,7 +61,7 @@ public class ProjectService {
     PROJECT_REPOSITORY.editProject(project);
   }
 
-  public void deleteProject(int projectId) {
+  public void deleteProject(int projectId) throws SystemException {
     PROJECT_REPOSITORY.deleteProject(projectId);
   }
 }

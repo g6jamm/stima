@@ -3,6 +3,7 @@ package com.g6jamm.stima.data.repository.mysql;
 import com.g6jamm.stima.data.repository.UserRepository;
 import com.g6jamm.stima.data.repository.util.DbManager;
 import com.g6jamm.stima.domain.exception.SignUpException;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.User;
 
 import java.sql.PreparedStatement;
@@ -12,7 +13,7 @@ import java.sql.SQLException;
 public class UserRepositoryImpl implements UserRepository {
 
   @Override
-  public User login(String email, String password) {
+  public User login(String email, String password) throws SystemException {
     try {
       String query = "SELECT * FROM users WHERE email = ? AND password = ?";
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
@@ -31,13 +32,13 @@ public class UserRepositoryImpl implements UserRepository {
             .build();
       }
     } catch (SQLException e) {
-      System.out.println(e.getMessage()); // TODO
+      throw new SystemException("Please contact system administrator");
     }
     return null;
   }
 
   @Override
-  public User createUser(User user) throws SignUpException {
+  public User createUser(User user) throws SignUpException, SystemException {
     int userId = getNewUserId(user);
     return new User.UserBuilder()
         .firstName(user.getFirstName())
@@ -49,7 +50,7 @@ public class UserRepositoryImpl implements UserRepository {
   }
 
   @Override
-  public boolean userExists(int id) {
+  public boolean userExists(int id) throws SystemException {
     try {
       String query = "SELECT * FROM users WHERE user_id = ?";
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
@@ -58,13 +59,13 @@ public class UserRepositoryImpl implements UserRepository {
       return ps.executeQuery().next();
 
     } catch (SQLException e) {
-      System.out.println(e.getMessage()); // TODO
+
+      throw new SystemException("Please contact system administrator");
     }
-    return false;
   }
 
   @Override
-  public int getNewUserId(User user) {
+  public int getNewUserId(User user) throws SystemException {
 
     try {
       String query = "INSERT INTO users(first_name, last_name, email, password) VALUES(?,?,?,?)";
@@ -82,13 +83,13 @@ public class UserRepositoryImpl implements UserRepository {
       }
 
     } catch (SQLException e) {
-      System.out.println(e.getMessage()); // TODO
+      throw new SystemException("Please contact system administrator");
     }
     return 0;
   }
 
   @Override
-  public User getUser(int id) {
+  public User getUser(int id) throws SystemException {
     try {
       String query = "SELECT * FROM users WHERE user_id = ?";
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
@@ -106,7 +107,7 @@ public class UserRepositoryImpl implements UserRepository {
       }
 
     } catch (SQLException e) {
-      System.out.println(e.getMessage()); // TODO
+      throw new SystemException("Please contact system administrator");
     }
     return null;
   }

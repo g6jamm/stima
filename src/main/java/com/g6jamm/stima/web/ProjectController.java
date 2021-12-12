@@ -5,11 +5,13 @@ import com.g6jamm.stima.data.repository.mysql.SubProjectRepositoryImpl;
 import com.g6jamm.stima.data.repository.mysql.TaskRepositoryImpl;
 import com.g6jamm.stima.data.repository.mysql.UserRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.*;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.*;
 import com.g6jamm.stima.domain.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,7 +38,7 @@ public class ProjectController {
    * @auther Mathias
    */
   @GetMapping("/projects")
-  public String projects(WebRequest webRequest, Model model) {
+  public String projects(WebRequest webRequest, Model model) throws SystemException {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       User user =
           USER_SERVICE.getUser(
@@ -61,7 +63,8 @@ public class ProjectController {
    * @auther Mathias
    */
   @GetMapping("/projects/{projectId}")
-  public String projectId(WebRequest webRequest, Model model, @PathVariable int projectId) {
+  public String projectId(WebRequest webRequest, Model model, @PathVariable int projectId)
+      throws SystemException {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       User user =
           USER_SERVICE.getUser(
@@ -89,7 +92,8 @@ public class ProjectController {
   }
 
   @PostMapping("/projects/{projectId}/create-subproject")
-  public String createSubProject(WebRequest webRequest, Model model, @PathVariable int projectId) {
+  public String createSubProject(WebRequest webRequest, Model model, @PathVariable int projectId)
+      throws SystemException {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       User user =
           USER_SERVICE.getUser(
@@ -124,7 +128,7 @@ public class ProjectController {
   }
 
   @PostMapping("/projects/create-project")
-  public String createProject(WebRequest webRequest, Model model) {
+  public String createProject(WebRequest webRequest, Model model) throws SystemException {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
       User user =
           USER_SERVICE.getUser(
@@ -155,7 +159,8 @@ public class ProjectController {
 
   @PostMapping("/projects/{projectId}/{subprojectId}/edit-project")
   public String editSubProject(
-      WebRequest webRequest, @PathVariable int projectId, @PathVariable int subprojectId) {
+      WebRequest webRequest, @PathVariable int projectId, @PathVariable int subprojectId)
+      throws SystemException {
 
     String projectNameParam = webRequest.getParameter("edit-project-name");
     String startDateParam = webRequest.getParameter("edit-project-start-date");
@@ -176,7 +181,8 @@ public class ProjectController {
   }
 
   @PostMapping("/projects/{projectId}/edit-project")
-  public String editProject(WebRequest webRequest, @PathVariable int projectId) {
+  public String editProject(WebRequest webRequest, @PathVariable int projectId)
+      throws SystemException {
 
     String projectNameParam = webRequest.getParameter("edit-project-name");
     String startDateParam = webRequest.getParameter("edit-project-start-date");
@@ -197,17 +203,24 @@ public class ProjectController {
   }
 
   @PostMapping("/projects/{projectId}/delete-project")
-  public String deleteProject(@PathVariable int projectId) {
+  public String deleteProject(@PathVariable int projectId) throws SystemException {
     PROJECT_SERVICE.deleteProject(projectId);
 
     return "redirect:/projects";
   }
 
   @PostMapping("/projects/{projectId}/{subprojectId}/delete-project")
-  public String deleteSubProject(@PathVariable int projectId, @PathVariable int subprojectId) {
+  public String deleteSubProject(@PathVariable int projectId, @PathVariable int subprojectId)
+      throws SystemException {
     SUBPROJECT_SERVICE.deleteProject(subprojectId);
 
     return "redirect:/projects/" + projectId;
+  }
+
+  @ExceptionHandler(Exception.class)
+  public String error(Model model, Exception exception) {
+    model.addAttribute("message", exception.getMessage());
+    return "error";
   }
 
   @PostMapping("/projects/{projectId}/edit-task")
