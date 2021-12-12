@@ -106,7 +106,7 @@ public class UserRepositoryImpl implements UserRepository {
    * @author Mohamad
    */
   @Override
-  public int getNewUserId(User user) throws SystemException{
+  public int getNewUserId(User user) throws SystemException {
 
     user =
         new User.UserBuilder()
@@ -127,7 +127,7 @@ public class UserRepositoryImpl implements UserRepository {
    * @author Mohamad
    */
   @Override
-  public User getUser(int id) throws SystemException{
+  public User getUser(int id) throws SystemException {
     User result = null;
 
     for (User u : USER_LIST) {

@@ -126,8 +126,8 @@ public class SubProjectController {
         !taskEndDateParam.isEmpty()
             ? taskEndDateParam
             : project
-            .getStartDate()
-            .format(DateTimeFormatter.ofPattern("YYYY-MM-DD")); // TODO More validation
+                .getStartDate()
+                .format(DateTimeFormatter.ofPattern("YYYY-MM-DD")); // TODO More validation
 
     Task task =
         TASK_SERVICE.createtask(
@@ -161,7 +161,6 @@ public class SubProjectController {
       if (subProject != null) {
 
         createTask(webRequest, subProject);
-
       }
       return "redirect:/projects/" + projectId + "/" + subProjectId;
     }

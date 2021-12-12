@@ -63,10 +63,10 @@ public class TaskRepositoryImpl implements TaskRepository {
   }
 
   @Override
-  public void editTask(Task task) throws SystemException{}
+  public void editTask(Task task) throws SystemException {}
 
   @Override
-  public Task getTask(int task_id) throws SystemException{
+  public Task getTask(int task_id) throws SystemException {
     Task result = null;
     for (Task t : TASK_LIST) {
       if (t.getId() == task_id) {

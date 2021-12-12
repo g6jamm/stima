@@ -94,8 +94,8 @@ public class ProjectComposite implements Project {
   public double calculateResources() {
 
     long workdaysAvailable =
-        Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays()
-            ; // todo hvordan skal vi håndtere det?
+        Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay())
+            .toDays(); // todo hvordan skal vi håndtere det?
     double result = calculateWorkdays() / (workdaysAvailable);
     System.out.println("avialable" + workdaysAvailable);
     return Math.round(result * 100.0) / 100.0;
