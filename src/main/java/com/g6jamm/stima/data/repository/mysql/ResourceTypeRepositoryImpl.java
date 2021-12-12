@@ -23,10 +23,12 @@ public class ResourceTypeRepositoryImpl implements ResourceTypeRepository {
       ResultSet rs = DbManager.getInstance().getConnection().prepareStatement(query).executeQuery();
 
       while (rs.next()) {
+
         ResourceType resourceType =
             new ResourceType.ResourceTypeBuilder()
-                .name(rs.getString("name"))
+                .id(rs.getInt("resource_type_id"))
                 .pricePrHour(rs.getInt("price_per_hour"))
+                .name(rs.getString("name"))
                 .build();
 
         resourceTypes.add(resourceType);
@@ -51,6 +53,7 @@ public class ResourceTypeRepositoryImpl implements ResourceTypeRepository {
 
       if (rs.next()) {
         return new ResourceType.ResourceTypeBuilder()
+            .id(rs.getInt("resource_type_id"))
             .name(rs.getString("name"))
             .pricePrHour(rs.getInt("price_per_hour"))
             .build();
