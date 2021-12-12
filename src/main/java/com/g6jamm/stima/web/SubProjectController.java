@@ -144,7 +144,7 @@ public class SubProjectController {
       Model model,
       @PathVariable int projectId,
       @PathVariable int subProjectId)
-      throws SystemException {
+      throws SystemException, TaskCreationException {
 
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
       return "redirect:/";
@@ -163,13 +163,7 @@ public class SubProjectController {
     }
 
     if (subProject != null) {
-      try {
-        createTask(webRequest, subProject);
-      } catch (TaskCreationException e) {
-        model.addAttribute(
-            "error",
-            e.getMessage()); // TODO: @Mohamad
-      }
+      createTask(webRequest, subProject);
     }
 
     return "redirect:/projects/" + projectId + "/" + subProjectId;

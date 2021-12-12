@@ -61,7 +61,7 @@ public class Task {
   public double calculateResources() {
 
     long workdaysAvailable =
-        Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays() - 1;
+        Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays();
     double result = calculateWorkdays() / (workdaysAvailable);
 
     return Math.round(result * 100.0) / 100.0;
@@ -95,7 +95,8 @@ public class Task {
       if (this.resourceType == null) {
         this.price = 0;
       } else {
-        this.price = (int) this.hours * this.resourceType.getPricePrHour(); // TODO: Fix rounding issue.
+        this.price =
+            (int) this.hours * this.resourceType.getPricePrHour(); // TODO: Fix rounding issue.
       }
     }
 
