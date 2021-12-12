@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS project_users;
 DROP TABLE IF EXISTS projects;
 DROP TABLE IF EXISTS colors;
 DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS resourcetypes;
+DROP TABLE IF EXISTS resource_types;
 DROP TABLE IF EXISTS permissions;
 DROP TABLE IF EXISTS roles;
 
