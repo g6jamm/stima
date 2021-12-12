@@ -28,12 +28,12 @@ public class UserController { // TODO change name to Login controller?
     return "index";
   }
 
-  @GetMapping("/signup")
+  @GetMapping("/createuser")
   public String signUp(WebRequest webRequest) {
-    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
-      return "redirect:/projects";
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+      return "redirect:/";
     }
-    return "signup";
+    return "createUser";
   }
 
   @GetMapping("/logout")
@@ -59,7 +59,7 @@ public class UserController { // TODO change name to Login controller?
     }
   }
 
-  @PostMapping("/signup")
+  @PostMapping("/create_user")
   public String createUser(WebRequest webRequest, Model model) throws SystemException {
     String firstName = webRequest.getParameter("firstname");
     String lastName = webRequest.getParameter("lastname");
@@ -74,10 +74,10 @@ public class UserController { // TODO change name to Login controller?
         return "redirect:/projects";
       }
       model.addAttribute("signupFail", "The passwords do not match");
-      return "signup";
+      return "createUser";
     } catch (SignUpException e) {
       model.addAttribute("signupFail", e.getMessage());
-      return "signup";
+      return "createUser";
     }
   }
 

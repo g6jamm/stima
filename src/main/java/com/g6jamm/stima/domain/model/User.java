@@ -8,6 +8,7 @@ public class User {
   private final String EMAIL;
   private final String PASSWORD;
   private final Role ROLE; // TODO skal vi stadig bruge den?
+  private final Permission PERMISSION; // TODO skal vi stadig bruge den?
 
   private User(UserBuilder userBuilder) {
     this.ID = userBuilder.id;
@@ -16,6 +17,7 @@ public class User {
     this.EMAIL = userBuilder.email;
     this.PASSWORD = userBuilder.password;
     this.ROLE = userBuilder.role;
+    this.PERMISSION = userBuilder.permission;
   }
 
   public int getId() {
@@ -49,6 +51,7 @@ public class User {
     private String email;
     private String password;
     private Role role; // TODO skal vi stadig bruge den?
+    private Permission permission;
 
     public UserBuilder id(int id) {
       this.id = id;
@@ -79,6 +82,13 @@ public class User {
       this.role = role;
       return this;
     }
+
+    public UserBuilder role(Permission permission) {
+      this.permission = permission;
+      return this;
+    }
+
+
 
     public User build() {
       User result = new User(this);
