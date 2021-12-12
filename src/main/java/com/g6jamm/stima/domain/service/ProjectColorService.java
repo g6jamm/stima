@@ -1,7 +1,6 @@
 package com.g6jamm.stima.domain.service;
 
 import com.g6jamm.stima.data.repository.ProjectColorRepository;
-import com.g6jamm.stima.data.repository.stub.ProjectColorStub;
 
 import java.util.Map;
 
@@ -13,6 +12,6 @@ public class ProjectColorService {
   }
 
   public Map<String, String> getProjectColors() {
-    return new ProjectColorStub().getProjectColors();
+    return PROJECT_COLOR_REPOSITORY_STUB.getProjectColors(); // TODO this will need a refactor
   }
 }

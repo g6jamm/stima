@@ -57,8 +57,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
 
   @Override
   public Project getSubproject(int subProjectId) throws SystemException {
-
-    String query = "SELECT * FROM projects WHERE project_id  = ?";
+    String query = "SELECT * FROM projects WHERE project_id = ?";
 
     try {
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
@@ -72,7 +71,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
             .name(rs.getString("name"))
             .startDate(LocalDate.parse(rs.getString("start_date")))
             .endDate(LocalDate.parse(rs.getString("end_date")))
-            .colorCode("#dc5b6e") // TODO add rs.getString("color_id")
+            .colorCode(rs.getString("color_code")) // TODO add rs.getString("color_id")
             .build();
         // TODO colorcode handel,
       }
@@ -102,7 +101,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       ps.setString(1, name);
       ps.setDate(2, Date.valueOf(startDate));
       ps.setDate(3, Date.valueOf(endDate));
-      ps.setInt(4, 1); // TODO change to colorCodeId
+      ps.setString(4, projectColorParam); // TODO change to colorCodeId
       ps.setInt(5, parentProjectId);
 
       ps.execute();

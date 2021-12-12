@@ -1,9 +1,6 @@
 package com.g6jamm.stima.web;
 
-import com.g6jamm.stima.data.repository.mysql.ProjectRepositoryMySQLImpl;
-import com.g6jamm.stima.data.repository.mysql.SubProjectRepositoryImpl;
-import com.g6jamm.stima.data.repository.mysql.TaskRepositoryImpl;
-import com.g6jamm.stima.data.repository.mysql.UserRepositoryImpl;
+import com.g6jamm.stima.data.repository.mysql.*;
 import com.g6jamm.stima.data.repository.stub.*;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
@@ -47,7 +44,7 @@ public class ProjectController {
 
       model.addAttribute("projects", projects);
 
-      ProjectColorService projectColorService = new ProjectColorService(new ProjectColorStub());
+      ProjectColorService projectColorService = new ProjectColorService(new ProjectColorImpl());
       model.addAttribute("projectColors", projectColorService.getProjectColors());
 
       return "projects";

@@ -31,7 +31,7 @@ public class SubProjectService {
       String name, LocalDate startDate, LocalDate endDate, String projectColor, int parentProjectId)
       throws SystemException {
     return SUB_PROJECT_REPOSITORY.createSubProject(
-        name, startDate, endDate, "1", parentProjectId); // TODO: send object med & fix color
+        name, startDate, endDate, projectColor, parentProjectId); // TODO: send object med & fix color
   }
 
   /**

@@ -4,28 +4,33 @@ INSERT INTO permissions (permission_id, name)
 VALUES (1, 'ADMIN'),
        (2, 'ADMIN');
 
-INSERT INTO colors (color_id, code, name)
-VALUES (1, '#dc5b6e', 'pink');
+INSERT INTO colors (code, name)
+VALUES ('#dc5b6e', 'Light Carmine Pink'),
+       ('#f19748', 'Royal Orange'),
+       ('#ead04b', 'Sandstorm'),
+       ('#55a973', 'Crayola\'s Forest Green'),
+       ('#2d8fb6', 'Cyan Cornflower Blue'),
+       ('#6a54b4', 'Royal Purple');
 
 INSERT INTO roles (role_id, name)
 VALUES (1, 'Project Manager'),
        (2, 'Employee');
 
-INSERT INTO resource_type (price_per_hour, name)
+INSERT INTO resource_types (price_per_hour, name)
 VALUES (1250, 'Senior developer'),
        (800, 'Junior developer'),
        (1000, 'Project Manager');
 
-INSERT INTO projects (name, start_date, end_date, color_id, parent_project_id)
-VALUES ('Thor', '2021-01-01', '2021-01-02', 1, null),
-       ('Micro', '2021-01-01', '2021-01-02', 1, null),
-       ('Sharp', '2021-01-01', '2021-01-02', 1, null),
-       ('Dive', '2021-01-01', '2021-01-02', 1, null),
-       ('Lust', '2021-12-01', '2021-12-01', 1, 1),
-       ('Tanner', '2021-12-01', '2021-12-01', 1, 1),
-       ('Global', '2021-12-01', '2021-12-01', 1, 1),
-       ('Yantra', '2021-12-01', '2021-12-01', 1, 1),
-       ('Ace', '2021-12-01', '2021-12-01', 1, 1);
+INSERT INTO projects (name, start_date, end_date, colorscode, parent_project_id)
+VALUES ('Thor', '2021-01-01', '2021-01-02', '#dc5b6e', null),
+       ('Micro', '2021-01-01', '2021-01-02', '#f19748', null),
+       ('Sharp', '2021-01-01', '2021-01-02', '#ead04b', null),
+       ('Dive', '2021-01-01', '2021-01-02', '#55a973', null),
+       ('Lust', '2021-12-01', '2021-12-01', '#dc5b6e', 1),
+       ('Tanner', '2021-12-01', '2021-12-01', '#dc5b6e', 1),
+       ('Global', '2021-12-01', '2021-12-01', '#dc5b6e', 1),
+       ('Yantra', '2021-12-01', '2021-12-01', '#dc5b6e', 1),
+       ('Ace', '2021-12-01', '2021-12-01', '#dc5b6e', 1);
 
 INSERT INTO users (first_name, last_name, email, password, resource_type_id, permission_id)
 VALUES ('John', 'Doe', 'demo@demo.com', _binary 'Demo', 1, 1),
