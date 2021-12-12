@@ -27,7 +27,7 @@ public class UserRepositoryImpl implements UserRepository {
               .email("demo@demo.com")
               .password("demo")
               .id(USER_LIST.size() + 1)
-              .role(new Role())
+              .role(new Role.RoleBuilder().name("Employe").build())
               .build();
 
       User user2 =
@@ -37,7 +37,7 @@ public class UserRepositoryImpl implements UserRepository {
               .email("maill@mail.com")
               .password("123")
               .id(USER_LIST.size() + 1)
-              .role(new Role())
+              .role(new Role.RoleBuilder().name("Project Manager").build())
               .build();
 
       USER_LIST.add(user);
@@ -115,7 +115,7 @@ public class UserRepositoryImpl implements UserRepository {
             .email("demo@demo.com")
             .password("demo")
             .id(USER_LIST.size() + 1)
-            .role(new Role())
+            .role(new Role.RoleBuilder().name("Employe").build())
             .build();
 
     return user.getId();
