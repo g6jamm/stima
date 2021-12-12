@@ -1,7 +1,6 @@
 package com.g6jamm.stima.web;
 
 import com.g6jamm.stima.data.repository.mysql.*;
-import com.g6jamm.stima.data.repository.stub.ResourceTypeRepositoryImpl;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.*;
