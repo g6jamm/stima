@@ -2,7 +2,6 @@ package com.g6jamm.stima.domain.model;
 
 public class Role {
 
-
   private final String NAME;
   private int ID;
 
@@ -44,6 +43,4 @@ public class Role {
       return role;
     }
   }
-
-
 }
