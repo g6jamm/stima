@@ -43,13 +43,13 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
                         rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
                 .startDate(LocalDate.parse(rs.getString("start_date")))
                 .endDate(LocalDate.parse(rs.getString("end_date")))
-                .colorCode("#dc5b6e") // TODO rs.getString("color_id")
+                .colorCode(rs.getString("colorscode"))
                 .build();
         subProjects.add(subProject);
       }
 
     } catch (SQLException e) {
-      throw new SystemException("Please contact system administrator");
+      throw new SystemException(e);
     }
 
     return subProjects;
@@ -57,8 +57,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
 
   @Override
   public Project getSubproject(int subProjectId) throws SystemException {
-
-    String query = "SELECT * FROM projects WHERE project_id  = ?";
+    String query = "SELECT * FROM projects WHERE project_id = ?";
 
     try {
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
@@ -72,13 +71,13 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
             .name(rs.getString("name"))
             .startDate(LocalDate.parse(rs.getString("start_date")))
             .endDate(LocalDate.parse(rs.getString("end_date")))
-            .colorCode("#dc5b6e") // TODO add rs.getString("color_id")
+            .colorCode(rs.getString("colorscode"))
             .build();
         // TODO colorcode handel,
       }
 
     } catch (SQLException e) {
-      throw new SystemException("Please contact system administrator");
+      throw new SystemException(e);
     }
 
     return null;
@@ -92,9 +91,8 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       String projectColorParam,
       int parentProjectId)
       throws SystemException {
-    // TODO change colorcode to id
     String query =
-        "INSERT INTO projects(name, start_date, end_date, color_id, parent_project_id) values"
+        "INSERT INTO projects(name, start_date, end_date, colorscode, parent_project_id) values"
             + " (?,?,?,?,?)";
 
     try {
@@ -102,13 +100,13 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       ps.setString(1, name);
       ps.setDate(2, Date.valueOf(startDate));
       ps.setDate(3, Date.valueOf(endDate));
-      ps.setInt(4, 1); // TODO change to colorCodeId
+      ps.setString(4, projectColorParam);
       ps.setInt(5, parentProjectId);
 
       ps.execute();
 
     } catch (SQLException e) {
-      throw new SystemException("Please contact system administrator");
+      throw new SystemException(e);
     }
 
     return null;
@@ -139,19 +137,19 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
 
     try {
       String query =
-          "UPDATE projects SET name = ?, start_date = ?, end_date = ?, color_id = ? WHERE"
+          "UPDATE projects SET name = ?, start_date = ?, end_date = ?, colorscode = ? WHERE"
               + " project_id = ?";
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setString(1, subProject.getName());
       ps.setString(2, String.valueOf(Date.valueOf(subProject.getStartDate())));
       ps.setString(3, String.valueOf(Date.valueOf(subProject.getEndDate())));
-      ps.setString(4, subProject.getColorCode()); // TODO: @Jackie
+      ps.setString(4, subProject.getColorCode());
       ps.setInt(5, subProject.getId());
 
       ps.execute();
 
     } catch (SQLException e) {
-      throw new SystemException("Please contact system administrator");
+      throw new SystemException(e);
     }
   }
 
@@ -165,7 +163,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       ps.execute();
 
     } catch (SQLException e) {
-      throw new SystemException("Please contact system administrator");
+      throw new SystemException(e);
     }
   }
 }

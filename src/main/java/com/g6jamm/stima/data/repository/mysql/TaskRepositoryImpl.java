@@ -34,7 +34,7 @@ public class TaskRepositoryImpl implements TaskRepository {
       ps.executeUpdate();
       return task;
     } catch (SQLException e) {
-      throw new SystemException("Please contact system administrator");
+      throw new SystemException(e);
     }
   }
 
@@ -77,7 +77,7 @@ public class TaskRepositoryImpl implements TaskRepository {
             .build();
       }
     } catch (SQLException e) {
-      throw new SystemException("Please contact system administrator");
+      throw new SystemException(e);
     }
     return null;
   }
@@ -98,7 +98,7 @@ public class TaskRepositoryImpl implements TaskRepository {
               + ", price_per_hour"
               + ", r.name as resource_name \n"
               + "FROM tasks t\n"
-              + "inner join resource_type r on t.resource_type_id = r.resource_type_id\n"
+              + "inner join resource_types r on t.resource_type_id = r.resource_type_id\n"
               + "where project_id = ?";
 
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
@@ -125,7 +125,7 @@ public class TaskRepositoryImpl implements TaskRepository {
                 .build());
       }
     } catch (SQLException e) {
-      throw new SystemException("Please contact system administrator");
+      throw new SystemException(e);
     }
     return result;
   }
@@ -145,7 +145,7 @@ public class TaskRepositoryImpl implements TaskRepository {
       ps.setString(5, String.valueOf(Date.valueOf(task.getEndDate())));
       ps.setInt(6, task.getId());
 
-      System.out.println(ps.execute());
+      ps.execute();
 
     } catch (SQLException e) {
       e.printStackTrace(); // TODO

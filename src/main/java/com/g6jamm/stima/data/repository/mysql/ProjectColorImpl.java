@@ -1,26 +1,31 @@
 package com.g6jamm.stima.data.repository.mysql;
 
 import com.g6jamm.stima.data.repository.ProjectColorRepository;
+import com.g6jamm.stima.data.repository.util.DbManager;
+import com.g6jamm.stima.domain.exception.SystemException;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ProjectColorImpl implements ProjectColorRepository {
-  private static final Map<String, String> PROJECT_COLORS =
-      Map.of(
-          "Light Carmine Pink",
-          "#dc5b6e",
-          "Royal Orange",
-          "#f19748",
-          "Sandstorm",
-          "#ead04b",
-          "Crayola's Forest Green",
-          "#55a973",
-          "Cyan Cornflower Blue",
-          "#2d8fb6",
-          "Royal Purple",
-          "#6a54b4");
+  public Map<String, String> getProjectColors() throws SystemException {
 
-  public Map<String, String> getProjectColors() {
-    return PROJECT_COLORS;
+    try {
+      String query = "SELECT * FROM colors";
+
+      ResultSet rs = DbManager.getInstance().getConnection().prepareStatement(query).executeQuery();
+
+      Map<String, String> colors = new HashMap<>();
+
+      while (rs.next()) {
+        colors.put(rs.getString("name"), rs.getString("code"));
+      }
+
+      return colors;
+    } catch (SQLException e) {
+      throw new SystemException(e);
+    }
   }
 }

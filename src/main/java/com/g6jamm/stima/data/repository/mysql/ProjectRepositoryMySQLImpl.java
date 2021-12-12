@@ -25,7 +25,7 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
 
     try {
       String query =
-          "INSERT INTO projects (name, start_date, end_date, color_id, parent_project_id) VALUES "
+          "INSERT INTO projects (name, start_date, end_date, colorscode, parent_project_id) VALUES "
               + "(?, ?, ?, ?, ?)";
       PreparedStatement ps =
           DbManager.getInstance()
@@ -35,7 +35,7 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
       ps.setString(1, project.getName());
       ps.setString(2, String.valueOf(Date.valueOf(project.getStartDate())));
       ps.setString(3, String.valueOf(Date.valueOf(project.getEndDate())));
-      ps.setString(4, "1"); // TODO: @Jackie
+      ps.setString(4, project.getColorCode());
       ps.setString(5, null);
 
       ps.executeUpdate();
@@ -48,7 +48,7 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
                 .projectName(project.getName())
                 .startDate(project.getStartDate())
                 .endDate(project.getEndDate())
-                .colorCode(project.getColorCode()) //  // TODO: @Jackie
+                .colorCode(project.getColorCode())
                 .tasks(project.getTasks())
                 .subProjects(project.getSubProjects())
                 .build();
@@ -57,7 +57,7 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
       }
 
     } catch (SQLException e) {
-      throw new SystemException("Please contact system administrator");
+      throw new SystemException(e);
     }
 
     return project;
@@ -80,7 +80,7 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
             .projectName(rs.getString("name"))
             .startDate(LocalDate.parse(rs.getString("start_date")))
             .endDate(LocalDate.parse(rs.getString("end_date")))
-            .colorCode(rs.getString("color_id")) //  // TODO: @Jackie
+            .colorCode(rs.getString("colorscode"))
             .tasks(
                 TASK_REPOSITORY.getTasks(
                     rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
@@ -91,7 +91,7 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
       }
 
     } catch (SQLException e) {
-      throw new SystemException("Please contact system administrator");
+      throw new SystemException(e);
     }
 
     return null;
@@ -107,7 +107,7 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
       ps.execute();
 
     } catch (SQLException e) {
-      throw new SystemException("Please contact system administrator");
+      throw new SystemException(e);
     }
   }
 
@@ -116,19 +116,19 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
 
     try {
       String query =
-          "UPDATE projects SET name = ?, start_date = ?, end_date = ?, color_id = ? WHERE"
+          "UPDATE projects SET name = ?, start_date = ?, end_date = ?, colorscode = ? WHERE"
               + " project_id = ?";
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setString(1, project.getName());
       ps.setString(2, String.valueOf(Date.valueOf(project.getStartDate())));
       ps.setString(3, String.valueOf(Date.valueOf(project.getEndDate())));
-      ps.setString(4, project.getColorCode()); // TODO: @Jackie
+      ps.setString(4, project.getColorCode());
       ps.setInt(5, project.getId());
 
       ps.execute();
 
     } catch (SQLException e) {
-      throw new SystemException("Please contact system administrator");
+      throw new SystemException(e);
     }
   }
 
@@ -158,14 +158,14 @@ public class ProjectRepositoryMySQLImpl implements ProjectRepository {
                 .subProjects(
                     SUBPROJECT_REPOSITORY.getSubProjects(
                         rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
-                .colorCode(rs.getString("color_id")) // TODO: @Jackie
+                .colorCode(rs.getString("colorscode"))
                 .build();
 
         projects.add(project);
       }
 
     } catch (SQLException e) {
-      throw new SystemException("Please contact system administrator");
+      throw new SystemException(e);
     }
 
     return projects;
