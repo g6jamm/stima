@@ -1,7 +1,6 @@
 package com.g6jamm.stima.web;
 
 import com.g6jamm.stima.data.repository.mysql.*;
-import com.g6jamm.stima.data.repository.mysql.ProjectRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.ResourceTypeRepositoryImpl;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
@@ -21,9 +20,12 @@ import java.util.List;
 @Controller
 public class ProjectController {
   private final ProjectService PROJECT_SERVICE = new ProjectService(new ProjectRepositoryImpl());
-  private final TaskService TASK_SERVICE = new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryImpl());
-  private final SubProjectService SUBPROJECT_SERVICE = new SubProjectService(new SubProjectRepositoryImpl());
+  private final TaskService TASK_SERVICE =
+      new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryImpl());
+  private final SubProjectService SUBPROJECT_SERVICE =
+      new SubProjectService(new SubProjectRepositoryImpl());
   private final UserService USER_SERVICE = new UserService(new UserRepositoryImpl());
+  private final ProjectColorService COLOR_SERVICE = new ProjectColorService(new ProjectColorImpl());
 
   /**
    * View all projects.
@@ -41,9 +43,7 @@ public class ProjectController {
       List<ProjectComposite> projects = PROJECT_SERVICE.getProjects(user);
 
       model.addAttribute("projects", projects);
-
-      ProjectColorService projectColorService = new ProjectColorService(new com.g6jamm.stima.data.repository.mysql.ProjectColorImpl());
-      model.addAttribute("projectColors", projectColorService.getProjectColors());
+      model.addAttribute("projectColors", COLOR_SERVICE.getProjectColors());
 
       return "projects";
     }
@@ -74,8 +74,7 @@ public class ProjectController {
 
       model.addAttribute("parentproject", project);
 
-      ProjectColorService projectColorService = new ProjectColorService(new ProjectColorImpl());
-      model.addAttribute("projectColors", projectColorService.getProjectColors());
+      model.addAttribute("projectColors", COLOR_SERVICE.getProjectColors());
 
       model.addAttribute("classActiveSettings", "active");
 

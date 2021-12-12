@@ -6,8 +6,8 @@ import com.g6jamm.stima.data.repository.mysql.UserRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.ResourceTypeRepositoryImpl;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
-import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.Task;
 import com.g6jamm.stima.domain.model.User;
 import com.g6jamm.stima.domain.service.ProjectService;
@@ -129,11 +129,11 @@ public class SubProjectController {
                 .getStartDate()
                 .format(DateTimeFormatter.ofPattern("YYYY-MM-DD")); // TODO More validation
 
-    Task newTask =
+    Task task =
         TASK_SERVICE.createtask(
             taskNameParam, hours, resourceTypeParam, taskStartDate, taskEndDate, project.getId());
 
-    project.addTask(newTask);
+    project.addTask(task);
   }
 
   @PostMapping("/projects/{projectId}/{subProjectId}/create-task")
