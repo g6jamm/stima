@@ -140,8 +140,7 @@ public class TaskRepositoryImpl implements TaskRepository {
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setString(1, task.getName());
       ps.setDouble(2, task.getHours());
-      ps.setInt(
-          3, task.getResourceType().getId());
+      ps.setInt(3, task.getResourceType().getId());
       ps.setString(4, String.valueOf(Date.valueOf(task.getStartDate())));
       ps.setString(5, String.valueOf(Date.valueOf(task.getEndDate())));
       ps.setInt(6, task.getId());
