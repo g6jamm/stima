@@ -21,8 +21,10 @@ import java.util.List;
 @Controller
 public class ProjectController {
   private final ProjectService PROJECT_SERVICE = new ProjectService(new ProjectRepositoryImpl());
-  private final TaskService TASK_SERVICE = new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryImpl());
-  private final SubProjectService SUBPROJECT_SERVICE = new SubProjectService(new SubProjectRepositoryImpl());
+  private final TaskService TASK_SERVICE =
+      new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryImpl());
+  private final SubProjectService SUBPROJECT_SERVICE =
+      new SubProjectService(new SubProjectRepositoryImpl());
   private final UserService USER_SERVICE = new UserService(new UserRepositoryImpl());
 
   /**
@@ -42,7 +44,8 @@ public class ProjectController {
 
       model.addAttribute("projects", projects);
 
-      ProjectColorService projectColorService = new ProjectColorService(new com.g6jamm.stima.data.repository.mysql.ProjectColorImpl());
+      ProjectColorService projectColorService =
+          new ProjectColorService(new com.g6jamm.stima.data.repository.mysql.ProjectColorImpl());
       model.addAttribute("projectColors", projectColorService.getProjectColors());
 
       return "projects";
