@@ -72,22 +72,22 @@
                     <div class="mb-3">
                         <label class="col-form-label" for="create-subproject-name">Navn:</label>
                         <input class="form-control" id="create-subproject-name" name="create-subproject-name"
-                               type="text">
+                               required type="text">
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label" for="create-subproject-start-date">Start dag:</label>
                         <input class="form-control" id="create-subproject-start-date"
                                name="create-subproject-start-date"
-                               type="date">
+                               required type="date">
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label" for="create-subproject-end-date">Slut dag:</label>
                         <input class="form-control" id="create-subproject-end-date" name="create-subproject-end-date"
-                               type="date">
+                               required type="date">
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label">Farve:</label>
-                        <select class="form-select" name="create-subproject-color">
+                        <select class="form-select" name="create-subproject-color" required>
                             <option th:each="color : ${projectColors}"
                                     th:style="'color: #fff; background-color: ' + ${color.value}"
                                     th:text="${color.key}"
@@ -122,22 +122,22 @@
                     <div class="mb-3">
                         <label class="col-form-label" for="edit-subproject-name">Navn:</label>
                         <input class="form-control" id="edit-subproject-name" name="edit-subproject-name"
-                               type="text">
+                               required type="text">
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label" for="edit-subproject-start-date">Start dag:</label>
                         <input class="form-control" id="edit-subproject-start-date"
                                name="edit-subproject-start-date"
-                               type="date">
+                               required type="date">
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label" for="edit-subproject-end-date">Slut dag:</label>
                         <input class="form-control" id="edit-subproject-end-date" name="edit-subproject-end-date"
-                               type="date">
+                               required type="date">
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label">Farve:</label>
-                        <select class="form-select" name="edit-subproject-color">
+                        <select class="form-select" name="edit-subproject-color" required>
                             <option th:each="color : ${projectColors}"
                                     th:style="'color: #fff; background-color: ' + ${color.value}"
                                     th:text="${color.key}"
