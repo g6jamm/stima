@@ -2,6 +2,7 @@ package com.g6jamm.stima.data.repository.stub;
 
 import com.g6jamm.stima.data.repository.ResourceTypeRepository;
 import com.g6jamm.stima.data.repository.TaskRepository;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.Task;
 
 import java.time.LocalDate;
@@ -14,7 +15,7 @@ public class TaskRepositoryImpl implements TaskRepository {
       new ResourceTypeRepositoryImpl();
   private static final List<Task> TASK_LIST = new ArrayList<>();
 
-  public TaskRepositoryImpl() {
+  public TaskRepositoryImpl() throws SystemException {
     if (TASK_LIST.isEmpty()) {
       Task task =
           new Task.TaskBuilder()

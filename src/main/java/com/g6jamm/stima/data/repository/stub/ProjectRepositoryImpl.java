@@ -1,6 +1,9 @@
 package com.g6jamm.stima.data.repository.stub;
 
 import com.g6jamm.stima.data.repository.ProjectRepository;
+import com.g6jamm.stima.data.repository.SubProjectRepository;
+import com.g6jamm.stima.data.repository.TaskRepository;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.User;
 
@@ -11,21 +14,23 @@ import java.util.List;
 public class ProjectRepositoryImpl implements ProjectRepository {
 
   private static final List<ProjectComposite> projects = new ArrayList<>();
+  private final TaskRepository TASK_REPOSITORY = new TaskRepositoryImpl();
+  private final SubProjectRepository SUBPROJECT_REPOSITORY = new SubProjectRepositoryImpl();
 
-  public ProjectRepositoryImpl() {
+  public ProjectRepositoryImpl() throws SystemException {
+    createTestData();
+  }
+
+  public void createTestData() throws SystemException {
     if (projects.isEmpty()) {
-
-      TaskRepositoryImpl taskRepositoryImpl = new TaskRepositoryImpl();
-      SubProjectRepositoryImpl subProjectRepositoryStub = new SubProjectRepositoryImpl();
-
       projects.add(
           new ProjectComposite.ProjectBuilder()
               .projectId(projects.size() + 1)
               .projectName("Projekt pink")
               .startDate(LocalDate.of(2021, 1, 1))
               .endDate(LocalDate.of(2021, 1, 2))
-              .tasks(taskRepositoryImpl.getTasks(1))
-              .subProjects(subProjectRepositoryStub.getSubProjects(1))
+              .tasks(TASK_REPOSITORY.getTasks(1))
+              .subProjects(SUBPROJECT_REPOSITORY.getSubProjects(1))
               .colorCode("pink")
               .build());
 
@@ -35,8 +40,8 @@ public class ProjectRepositoryImpl implements ProjectRepository {
               .projectName("Projekt lilla")
               .startDate(LocalDate.of(2021, 1, 1))
               .endDate(LocalDate.of(2021, 1, 2))
-              .tasks(new ArrayList<>())
-              .subProjects(new ArrayList<>())
+              .tasks(TASK_REPOSITORY.getTasks(1))
+              .subProjects(SUBPROJECT_REPOSITORY.getSubProjects(1))
               .colorCode("purple")
               .build());
 
@@ -46,8 +51,8 @@ public class ProjectRepositoryImpl implements ProjectRepository {
               .projectName("Projekt grøn")
               .startDate(LocalDate.of(2021, 1, 1))
               .endDate(LocalDate.of(2021, 1, 2))
-              .tasks(new ArrayList<>())
-              .subProjects(new ArrayList<>())
+              .tasks(TASK_REPOSITORY.getTasks(1))
+              .subProjects(SUBPROJECT_REPOSITORY.getSubProjects(1))
               .colorCode("green")
               .build());
 
@@ -57,8 +62,8 @@ public class ProjectRepositoryImpl implements ProjectRepository {
               .projectName("Projekt brun")
               .startDate(LocalDate.of(2021, 1, 1))
               .endDate(LocalDate.of(2021, 1, 2))
-              .tasks(new ArrayList<>())
-              .subProjects(new ArrayList<>())
+              .tasks(TASK_REPOSITORY.getTasks(1))
+              .subProjects(SUBPROJECT_REPOSITORY.getSubProjects(1))
               .colorCode("brown")
               .build());
     }

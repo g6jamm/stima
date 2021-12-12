@@ -41,7 +41,7 @@ public class TaskServiceTest {
   }
 
   @Test
-  public void testExceptionOnNonExistingResourceType() {
+  public void testExceptionOnNonExistingResourceType() throws SystemException {
     TaskService taskService =
         new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryImpl());
     String resourceName = "This does not exist";

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ResourceTypeRepositoryImpl implements ResourceTypeRepository {
 
-  private static final List<ResourceType> RESOURCE_TYPES = new ArrayList();
+  private static final List<ResourceType> RESOURCE_TYPES = new ArrayList<>();
 
   public ResourceTypeRepositoryImpl() {
     if (RESOURCE_TYPES.isEmpty()) {
@@ -41,7 +41,7 @@ public class ResourceTypeRepositoryImpl implements ResourceTypeRepository {
   }
 
   @Override
-  public void findByName(String resourceTypeName) throws ResourceTypeNotFoundException {
+  public ResourceType findByName(String resourceTypeName) throws ResourceTypeNotFoundException {
     for (ResourceType resourceType : RESOURCE_TYPES) {
       if (resourceType.getName().equals(resourceTypeName)) return resourceType;
     }

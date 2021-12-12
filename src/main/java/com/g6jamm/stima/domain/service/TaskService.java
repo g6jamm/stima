@@ -13,12 +13,12 @@ import java.util.List;
 
 public class TaskService {
 
-  private TaskRepository taskRepository;
-  private ResourceTypeRepository resourceTypeRepository;
+  private final TaskRepository TASK_REPOSITORY;
+  private final ResourceTypeRepository RESOURCE_TYPE_REPOSITORY;
 
   public TaskService(TaskRepository taskRepository, ResourceTypeRepository resourceTypeRepository) {
-    this.taskRepository = taskRepository;
-    this.resourceTypeRepository = resourceTypeRepository;
+    this.TASK_REPOSITORY = taskRepository;
+    this.RESOURCE_TYPE_REPOSITORY = resourceTypeRepository;
   }
 
   public Task createtask(
@@ -38,7 +38,7 @@ public class TaskService {
             .startDate(convertStringToDate(startDate))
             .endDate(convertStringToDate(endDate))
             .build();
-    return taskRepository.createTask(newTask, projectId);
+    return TASK_REPOSITORY.createTask(newTask, projectId);
   }
 
   private LocalDate convertStringToDate(String stringDate) {
@@ -46,17 +46,17 @@ public class TaskService {
   }
 
   public List<Task> getTasks(int projectId) throws SystemException {
-    return taskRepository.getTasks(projectId);
+    return TASK_REPOSITORY.getTasks(projectId);
   }
 
-  public List<ResourceType> getResourceTypes() {
-    return resourceTypeRepository.getResourceTypes();
+  public List<ResourceType> getResourceTypes() throws SystemException {
+    return RESOURCE_TYPE_REPOSITORY.getResourceTypes();
   }
 
   private ResourceType findResourceTypeByName(String resourceTypeName)
       throws TaskCreationException {
     try {
-      ResourceType resourceType = resourceTypeRepository.findByName(resourceTypeName);
+      ResourceType resourceType = RESOURCE_TYPE_REPOSITORY.findByName(resourceTypeName);
       return resourceType;
     } catch (ResourceTypeNotFoundException e) {
       throw new TaskCreationException(e.getMessage());
@@ -77,6 +77,6 @@ public class TaskService {
             .id(id)
             .build();
 
-    taskRepository.editTask(task);
+    TASK_REPOSITORY.editTask(task);
   }
 }
