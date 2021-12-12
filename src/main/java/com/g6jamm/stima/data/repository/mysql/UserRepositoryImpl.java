@@ -32,7 +32,7 @@ public class UserRepositoryImpl implements UserRepository {
             .build();
       }
     } catch (SQLException e) {
-      throw new SystemException("Please contact system administrator");
+      throw new SystemException(e);
     }
     return null;
   }
@@ -60,7 +60,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     } catch (SQLException e) {
 
-      throw new SystemException("Please contact system administrator");
+      throw new SystemException(e);
     }
   }
 
@@ -83,7 +83,7 @@ public class UserRepositoryImpl implements UserRepository {
       }
 
     } catch (SQLException e) {
-      throw new SystemException("Please contact system administrator");
+      throw new SystemException(e);
     }
     return 0;
   }
@@ -107,7 +107,7 @@ public class UserRepositoryImpl implements UserRepository {
       }
 
     } catch (SQLException e) {
-      throw new SystemException("Please contact system administrator");
+      throw new SystemException(e);
     }
     return null;
   }

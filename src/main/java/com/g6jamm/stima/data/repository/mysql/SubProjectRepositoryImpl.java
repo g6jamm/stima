@@ -49,7 +49,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       }
 
     } catch (SQLException e) {
-      throw new SystemException("Please contact system administrator");
+      throw new SystemException(e);
     }
 
     return subProjects;
@@ -77,7 +77,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       }
 
     } catch (SQLException e) {
-      throw new SystemException("Please contact system administrator");
+      throw new SystemException(e);
     }
 
     return null;
@@ -107,7 +107,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       ps.execute();
 
     } catch (SQLException e) {
-      throw new SystemException("Please contact system administrator");
+      throw new SystemException(e);
     }
 
     return null;
@@ -150,7 +150,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       ps.execute();
 
     } catch (SQLException e) {
-      throw new SystemException("Please contact system administrator");
+      throw new SystemException(e);
     }
   }
 
@@ -164,7 +164,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       ps.execute();
 
     } catch (SQLException e) {
-      throw new SystemException("Please contact system administrator");
+      throw new SystemException(e);
     }
   }
 }
