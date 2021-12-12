@@ -211,7 +211,7 @@ public class ProjectController {
   }
 
   @PostMapping("/projects/{projectId}/edit-task")
-  public String editProjectTask(WebRequest webRequest, @PathVariable int projectId) throws TaskCreationException {
+  public String editProjectTask(WebRequest webRequest, @PathVariable int projectId) throws TaskCreationException, SystemException {
 
     String nameParam = webRequest.getParameter("edit-task-name");
     String hoursParam = webRequest.getParameter("edit-task-hours");
@@ -237,7 +237,7 @@ public class ProjectController {
 
   @PostMapping("/projects/{projectId}/{subprojectId}/edit-task")
   public String editSubProjectTask(
-      WebRequest webRequest, @PathVariable int projectId, @PathVariable int subprojectId) throws TaskCreationException {
+      WebRequest webRequest, @PathVariable int projectId, @PathVariable int subprojectId) throws TaskCreationException, SystemException {
 
     String nameParam = webRequest.getParameter("edit-task-name");
     String hoursParam = webRequest.getParameter("edit-task-hours");

@@ -1,6 +1,6 @@
 package com.g6jamm.stima.web;
 
-import com.g6jamm.stima.data.repository.stub.UserRepositoryImpl;
+import com.g6jamm.stima.data.repository.mysql.UserRepositoryImpl;
 import com.g6jamm.stima.domain.exception.LoginException;
 import com.g6jamm.stima.domain.exception.SignUpException;
 import com.g6jamm.stima.domain.exception.SystemException;
@@ -48,6 +48,7 @@ public class UserController { // TODO change name to Login controller?
       String email = webRequest.getParameter("email");
       String password = webRequest.getParameter("password");
       User user = USER_SERVICE.login(email, password);
+
 
       webRequest.setAttribute(
           "user", user.getId(), WebRequest.SCOPE_SESSION); // if user is null null pointer exception

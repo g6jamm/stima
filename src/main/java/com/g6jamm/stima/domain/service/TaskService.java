@@ -65,7 +65,7 @@ public class TaskService {
 
   public void editTask(
       String taskName, double hours, String resourceType, String startDate, String endDate, int id)
-      throws TaskCreationException {
+      throws TaskCreationException, SystemException {
 
     Task task =
         new Task.TaskBuilder()
