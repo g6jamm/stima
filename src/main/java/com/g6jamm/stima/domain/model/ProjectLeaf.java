@@ -79,7 +79,7 @@ public class ProjectLeaf implements Project {
 
     long workdaysAvailable =
         Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays()
-            - 1; // todo hvordan skal vi håndtere det?
+            + 1; // todo hvordan skal vi håndtere det?
     double result = calculateWorkdays() / (workdaysAvailable);
 
     return Math.round(result * 100) / 100;
