@@ -7,7 +7,7 @@ public class User {
   private final String LAST_NAME;
   private final String EMAIL;
   private final String PASSWORD;
-  private final Role ROLE; // TODO skal vi stadig bruge den?
+  private final ResourceType RESOURCETYPE; // TODO skal vi stadig bruge den?
   private final Permission PERMISSION; // TODO skal vi stadig bruge den?
 
   private User(UserBuilder userBuilder) {
@@ -16,7 +16,7 @@ public class User {
     this.LAST_NAME = userBuilder.lastName;
     this.EMAIL = userBuilder.email;
     this.PASSWORD = userBuilder.password;
-    this.ROLE = userBuilder.role;
+    this.RESOURCETYPE = userBuilder.resourceType;
     this.PERMISSION = userBuilder.permission;
   }
 
@@ -40,8 +40,12 @@ public class User {
     return PASSWORD;
   }
 
-  public Role getRole() {
-    return ROLE;
+  public ResourceType getResourceType() {
+    return RESOURCETYPE;
+  }
+
+  public Permission getPermission() {
+    return PERMISSION;
   }
 
   public static class UserBuilder {
@@ -50,7 +54,7 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    private Role role; // TODO skal vi stadig bruge den?
+    private ResourceType resourceType;
     private Permission permission;
 
     public UserBuilder id(int id) {
@@ -78,12 +82,12 @@ public class User {
       return this;
     }
 
-    public UserBuilder role(Role role) {
-      this.role = role;
+    public UserBuilder resourceType(ResourceType resourceType) {
+      this.resourceType = resourceType;
       return this;
     }
 
-    public UserBuilder role(Permission permission) {
+    public UserBuilder permission(Permission permission) {
       this.permission = permission;
       return this;
     }
