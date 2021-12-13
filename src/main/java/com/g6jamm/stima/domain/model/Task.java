@@ -67,6 +67,10 @@ public class Task {
     return Math.round(result * 100.0) / 100.0;
   }
 
+  public long calculateDays() {
+    return Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays() + 1;
+  }
+
   public static class TaskBuilder {
     private int id;
     private String name;

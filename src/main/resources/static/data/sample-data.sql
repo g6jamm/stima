@@ -1,8 +1,8 @@
 USE stima;
 
 INSERT INTO permissions (permission_id, name)
-VALUES (1, 'ADMIN'),
-       (2, 'ADMIN');
+VALUES (1, 'admin'),
+       (2, 'user');
 
 INSERT INTO colors (code, name)
 VALUES ('#dc5b6e', 'Light Carmine Pink'),
@@ -26,15 +26,16 @@ VALUES ('Thor', '2021-01-01', '2021-01-02', '#dc5b6e', null),
        ('Micro', '2021-01-01', '2021-01-02', '#f19748', null),
        ('Sharp', '2021-01-01', '2021-01-02', '#ead04b', null),
        ('Dive', '2021-01-01', '2021-01-02', '#55a973', null),
-       ('Lust', '2021-12-01', '2021-12-01', '#dc5b6e', 1),
-       ('Tanner', '2021-12-01', '2021-12-01', '#dc5b6e', 1),
-       ('Global', '2021-12-01', '2021-12-01', '#dc5b6e', 1),
-       ('Yantra', '2021-12-01', '2021-12-01', '#dc5b6e', 1),
-       ('Ace', '2021-12-01', '2021-12-01', '#dc5b6e', 1);
+       ('Lust', '2021-12-01', '2021-12-01', '#6a54b4', 1),
+       ('Tanner', '2021-12-01', '2021-12-01', '#f19748', 1),
+       ('Global', '2021-12-01', '2021-12-01', '#55a973', 1),
+       ('Yantra', '2021-12-01', '2021-12-01', '#2d8fb6', 1),
+       ('Ace', '2021-12-01', '2021-12-01', '#ead04b', 1);
 
 INSERT INTO users (first_name, last_name, email, password, resource_type_id, permission_id)
-VALUES ('John', 'Doe', 'demo@demo.com', _binary 'Demo', 1, 1),
-       ('John', 'Doe', '', _binary '', 1, 1);
+VALUES ('John', 'Doe', 'demo@demo.com', _binary 'Demo', 1, 2),
+       ('John', 'Doe', '', _binary '', 1, 1), #tmp dev account
+       ('Admin', 'Admin', 'admin@stima.com', _binary 'admin', 1, 1);
 
 INSERT INTO tasks (name, hours, resource_type_id, project_id, start_date, end_date)
 VALUES ('Sprite', 200, 1, 1, '2021-01-01', '2021-01-02'),

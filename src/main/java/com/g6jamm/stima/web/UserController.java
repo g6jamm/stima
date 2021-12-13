@@ -97,8 +97,9 @@ public class UserController { // TODO change name to Login controller?
   }
 
   @ExceptionHandler(Exception.class)
-  public String error(Model model, Exception exception) {
-    model.addAttribute("message", exception.getMessage());
+  public String error(Model model, Exception e) {
+    model.addAttribute("message", e.getMessage());
+    e.printStackTrace();
     return "error";
   }
 }

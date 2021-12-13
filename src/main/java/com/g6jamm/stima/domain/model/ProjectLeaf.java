@@ -84,6 +84,10 @@ public class ProjectLeaf implements Project {
     return Math.round(result * 100) / 100;
   }
 
+  public long calculateDays() {
+    return Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays() + 1;
+  }
+
   public String getColorCode() {
     return this.COLOR_CODE;
   }
