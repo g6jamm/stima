@@ -77,15 +77,6 @@ CREATE TABLE roles
     PRIMARY KEY (role_id)
 );
 
-TRUNCATE TABLE tasks;
-TRUNCATE TABLE project_users;
-TRUNCATE TABLE projects;
-TRUNCATE TABLE colors;
-TRUNCATE TABLE users;
-TRUNCATE TABLE resource_types;
-TRUNCATE TABLE permissions;
-TRUNCATE TABLE roles;
-
 ALTER TABLE users
     ADD CONSTRAINT FKusers426032 FOREIGN KEY (permission_id) REFERENCES permissions (permission_id);
 ALTER TABLE project_users
