@@ -1,7 +1,10 @@
 package com.g6jamm.stima.domain.service;
 
+import com.g6jamm.stima.data.repository.mysql.ResourceTypeRepositoryImpl;
+import com.g6jamm.stima.data.repository.stub.PermissionRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.UserRepositoryImpl;
 import com.g6jamm.stima.domain.exception.LoginException;
+import com.g6jamm.stima.domain.exception.ResourceTypeNotFoundException;
 import com.g6jamm.stima.domain.exception.SignUpException;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.User;
@@ -11,7 +14,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-/** @author Mohamd */
+/**
+ * @author Mohamd
+ */
 class UserServiceTest {
 
   /**
@@ -19,20 +24,22 @@ class UserServiceTest {
    * constructor @Author Andreas
    */
   @Test
-  void createUserUserIdIncrements() throws SignUpException, SystemException {
-    UserService userService = new UserService(new UserRepositoryImpl());
+  void createUserUserIdIncrements() throws SignUpException, SystemException, ResourceTypeNotFoundException {
+    UserService userService = new UserService(new UserRepositoryImpl(), new ResourceTypeRepositoryImpl(), new PermissionRepositoryImpl());
     String firstName = "Bobby";
     String lastName = "Olsen";
     String email = "newtest@demo.com";
     String password = "demo";
-    User actual = userService.createUser(firstName, lastName, email, password);
+    String resourceType = "Junior Developer";
+    String permission = "user";
+    User actual = userService.createUser(firstName, lastName, email, password, resourceType, permission);
 
     Assertions.assertEquals(3, actual.getId());
   }
 
   @Test
   void loginSuccessfullyReturnCorrectUserTest() throws LoginException, SystemException {
-    UserService userService = new UserService(new UserRepositoryImpl());
+    UserService userService = new UserService(new UserRepositoryImpl(), new ResourceTypeRepositoryImpl(), new PermissionRepositoryImpl());
     String email = "demo@demo.com";
     String password = "demo";
     String expectedName = "John";
@@ -42,7 +49,7 @@ class UserServiceTest {
 
   @Test
   void loginFailReturnCorrectUserTest() throws LoginException, SystemException {
-    UserService userService = new UserService(new UserRepositoryImpl());
+    UserService userService = new UserService(new UserRepositoryImpl(), new ResourceTypeRepositoryImpl(), new PermissionRepositoryImpl());
     String email = "demo@demo.com";
     String password = "demo";
     String expectedName = "Bo";
@@ -51,13 +58,15 @@ class UserServiceTest {
   }
 
   @Test
-  void createNewUserSuccessfullyTest() throws SignUpException, SystemException {
-    UserService userService = new UserService(new UserRepositoryImpl());
+  void createNewUserSuccessfullyTest() throws SignUpException, SystemException, ResourceTypeNotFoundException {
+    UserService userService = new UserService(new UserRepositoryImpl(), new ResourceTypeRepositoryImpl(), new PermissionRepositoryImpl());
     String firstName = "Bob";
     String lastName = "Marley";
     String email = "demo420@demo.com";
     String password = "demo";
-    User actual = userService.createUser(firstName, lastName, email, password);
+    String resourceType = "Junior Developer";
+    String permission = "user";
+    User actual = userService.createUser(firstName, lastName, email, password, resourceType, permission);
     Assertions.assertEquals("demo420@demo.com", actual.getEmail());
   }
 
@@ -75,21 +84,21 @@ class UserServiceTest {
 
   @Test
   void getUserByIdSuccessfullTest() throws SystemException {
-    UserService userService = new UserService(new UserRepositoryImpl());
+    UserService userService = new UserService(new UserRepositoryImpl(), new ResourceTypeRepositoryImpl(), new PermissionRepositoryImpl());
     User actualUser = userService.getUser(1);
     assertEquals(1, actualUser.getId());
   }
 
   @Test
   void getUserByIdFailTest() throws SystemException {
-    UserService userService = new UserService(new UserRepositoryImpl());
+    UserService userService = new UserService(new UserRepositoryImpl(), new ResourceTypeRepositoryImpl(), new PermissionRepositoryImpl());
     User actualUser = userService.getUser(1);
     assertNotEquals(0, actualUser.getId());
   }
 
   @Test
   void userExistsSuccessfullyTest() throws SystemException {
-    UserService userService = new UserService(new UserRepositoryImpl());
+    UserService userService = new UserService(new UserRepositoryImpl(), new ResourceTypeRepositoryImpl(), new PermissionRepositoryImpl());
     boolean doesUserExist = userService.userExists(1);
 
     Assertions.assertEquals(true, doesUserExist);
@@ -97,7 +106,7 @@ class UserServiceTest {
 
   @Test
   void userExistsFailTest() throws SystemException {
-    UserService userService = new UserService(new UserRepositoryImpl());
+    UserService userService = new UserService(new UserRepositoryImpl(), new ResourceTypeRepositoryImpl(), new PermissionRepositoryImpl());
     boolean doesUserExist = userService.userExists(68);
 
     Assertions.assertNotEquals(true, doesUserExist);

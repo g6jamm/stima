@@ -23,7 +23,7 @@ public class ProjectController {
       new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryImpl());
   private final SubProjectService SUBPROJECT_SERVICE =
       new SubProjectService(new SubProjectRepositoryImpl());
-  private final UserService USER_SERVICE = new UserService(new UserRepositoryImpl());
+  private final UserService USER_SERVICE = new UserService(new UserRepositoryImpl(), new ResourceTypeRepositoryImpl(), new PermissionRepositoryImpl());
   private final ProjectColorService COLOR_SERVICE = new ProjectColorService(new ProjectColorImpl());
 
   /**

@@ -46,6 +46,8 @@ public class UserRepositoryImpl implements UserRepository {
         .lastName(user.getLastName())
         .email(user.getEmail())
         .password(user.getPassword())
+        .resourceType(user.getResourceType())
+        .permission(user.getPermission())
         .id(userId)
         .build();
   }
@@ -81,8 +83,8 @@ public class UserRepositoryImpl implements UserRepository {
       ps.setString(2, user.getLastName());
       ps.setString(3, user.getEmail());
       ps.setBytes(4, user.getPassword().getBytes());
-      ps.setInt(5, 1); // implementeres i senere iteration
-      ps.setInt(6, 1); // implementeres i senere iteration
+      ps.setInt(5, user.getResourceType().getId()); // implementeres i senere iteration
+      ps.setInt(6, user.getPermission().getId()); // implementeres i senere iteration
 
       ps.executeUpdate();
       ResultSet resultSet = ps.getGeneratedKeys();

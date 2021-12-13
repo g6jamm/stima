@@ -1,5 +1,6 @@
 package com.g6jamm.stima.web;
 
+import com.g6jamm.stima.data.repository.mysql.PermissionRepositoryImpl;
 import com.g6jamm.stima.data.repository.mysql.ProjectRepositoryImpl;
 import com.g6jamm.stima.data.repository.mysql.ResourceTypeRepositoryImpl;
 import com.g6jamm.stima.data.repository.mysql.TaskRepositoryImpl;
@@ -29,7 +30,7 @@ public class SubProjectController {
   private final TaskService TASK_SERVICE =
       new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryImpl());
   private final ProjectService PROJECT_SERVICE = new ProjectService(new ProjectRepositoryImpl());
-  private final UserService USER_SERVICE = new UserService(new UserRepositoryImpl());
+  private final UserService USER_SERVICE = new UserService(new UserRepositoryImpl(), new ResourceTypeRepositoryImpl(), new PermissionRepositoryImpl());
 
   /**
    * Get method for sub project page, shows all task for the sup project
