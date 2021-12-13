@@ -9,6 +9,7 @@ import com.g6jamm.stima.domain.model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class UserRepositoryImpl implements UserRepository {
 
@@ -45,6 +46,8 @@ public class UserRepositoryImpl implements UserRepository {
         .lastName(user.getLastName())
         .email(user.getEmail())
         .password(user.getPassword())
+        .resourceType(user.getResourceType())
+        .permission(user.getPermission())
         .id(userId)
         .build();
   }
@@ -68,18 +71,26 @@ public class UserRepositoryImpl implements UserRepository {
   public int getNewUserId(User user) throws SystemException {
 
     try {
-      String query = "INSERT INTO users(first_name, last_name, email, password) VALUES(?,?,?,?)";
-      PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
+      String query =
+          "INSERT INTO users(first_name, last_name, email, password, resource_type_id,"
+              + " permission_id) VALUES(?,?,?,?,?,?)";
+      PreparedStatement ps =
+          DbManager.getInstance()
+              .getConnection()
+              .prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
       ps.setString(1, user.getFirstName());
       ps.setString(2, user.getLastName());
       ps.setString(3, user.getEmail());
       ps.setBytes(4, user.getPassword().getBytes());
+      ps.setInt(5, user.getResourceType().getId()); // implementeres i senere iteration
+      ps.setInt(6, user.getPermission().getId()); // implementeres i senere iteration
 
+      ps.executeUpdate();
       ResultSet resultSet = ps.getGeneratedKeys();
 
       if (resultSet.next()) {
-        return resultSet.getInt("user_id");
+        return resultSet.getInt(1);
       }
 
     } catch (SQLException e) {

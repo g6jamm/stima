@@ -3,7 +3,8 @@ package com.g6jamm.stima.data.repository.stub;
 import com.g6jamm.stima.data.repository.UserRepository;
 import com.g6jamm.stima.domain.exception.SignUpException;
 import com.g6jamm.stima.domain.exception.SystemException;
-import com.g6jamm.stima.domain.model.Role;
+import com.g6jamm.stima.domain.model.Permission;
+import com.g6jamm.stima.domain.model.ResourceType;
 import com.g6jamm.stima.domain.model.User;
 
 import java.util.ArrayList;
@@ -27,7 +28,8 @@ public class UserRepositoryImpl implements UserRepository {
               .email("demo@demo.com")
               .password("demo")
               .id(USER_LIST.size() + 1)
-              .role(new Role())
+              .resourceType(new ResourceType.ResourceTypeBuilder().name("Junior Developer").build())
+              .permission(new Permission.PermissionBuilder().name("user").build())
               .build();
 
       User user2 =
@@ -37,7 +39,8 @@ public class UserRepositoryImpl implements UserRepository {
               .email("maill@mail.com")
               .password("123")
               .id(USER_LIST.size() + 1)
-              .role(new Role())
+              .resourceType(new ResourceType.ResourceTypeBuilder().name("Junior Developer").build())
+              .permission(new Permission.PermissionBuilder().name("user").build())
               .build();
 
       USER_LIST.add(user);
@@ -79,7 +82,8 @@ public class UserRepositoryImpl implements UserRepository {
             .email(user.getEmail())
             .password(user.getPassword())
             .id(USER_LIST.size() + 1)
-            .role(user.getRole())
+            .resourceType(new ResourceType.ResourceTypeBuilder().name("Junior Developer").build())
+            .permission(new Permission.PermissionBuilder().name("user").build())
             .build();
     USER_LIST.add(user);
 
@@ -115,7 +119,8 @@ public class UserRepositoryImpl implements UserRepository {
             .email("demo@demo.com")
             .password("demo")
             .id(USER_LIST.size() + 1)
-            .role(new Role())
+            .resourceType(new ResourceType.ResourceTypeBuilder().name("Junior Developer").build())
+            .permission(new Permission.PermissionBuilder().name("user").build())
             .build();
 
     return user.getId();
