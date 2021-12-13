@@ -94,6 +94,7 @@ public class User {
 
     public User build() {
       User result = new User(this);
+      // todo: reset
       return result;
     }
   }

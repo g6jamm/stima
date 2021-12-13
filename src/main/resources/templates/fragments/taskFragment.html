@@ -27,10 +27,11 @@
                 <p th:text="'Timer: ' + ${task.getHours}"></p>
                 <p th:text="'Pris: ' + ${task.getPrice} + ' DKK'"></p>
                 <p th:text="'Resource type: ' + ${task.resourceType.getName()}"></p>
-                <p th:text="'Estimerede arbejdsdage: ' + ${task.calculateWorkdays()}"></p>
-                <p th:text="'Estimerede resourcer: ' + ${task.calculateResources()}"></p>
+                <p th:text="'Nødvendige arbejdsdage: ' + ${task.calculateWorkdays()} + ' dage'"></p>
+                <p th:text="'Nødvendige antal medarbejdere: ' + ${task.calculateResources()}"></p>
                 <p th:text="'Start date: ' + ${task.getStartDate()}"></p>
                 <p th:text="'End date: ' + ${task.getEndDate()}"></p>
+                <p th:text="'Dage tilgængelige i perioden: ' + ${task.calculateDays} + ' dage'"></p>
             </div>
         </div>
     </a>
