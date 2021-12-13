@@ -5,7 +5,6 @@ import com.g6jamm.stima.domain.exception.SignUpException;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.Permission;
 import com.g6jamm.stima.domain.model.ResourceType;
-import com.g6jamm.stima.domain.model.Role;
 import com.g6jamm.stima.domain.model.User;
 
 import java.util.ArrayList;

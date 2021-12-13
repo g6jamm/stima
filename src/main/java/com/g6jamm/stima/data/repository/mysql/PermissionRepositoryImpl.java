@@ -4,7 +4,6 @@ import com.g6jamm.stima.data.repository.PermissionRepository;
 import com.g6jamm.stima.data.repository.util.DbManager;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.Permission;
-import com.g6jamm.stima.domain.model.Role;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

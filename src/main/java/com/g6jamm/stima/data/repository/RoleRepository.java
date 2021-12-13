@@ -10,5 +10,4 @@ public interface RoleRepository {
   public List<Role> getRoles() throws SystemException;
 
   public Role findByName(String roleName) throws SystemException;
-
 }
