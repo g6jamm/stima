@@ -1,6 +1,6 @@
 package com.g6jamm.stima.domain.service;
 
-import com.g6jamm.stima.data.repository.mysql.ResourceTypeRepositoryImpl;
+import com.g6jamm.stima.data.repository.stub.ResourceTypeRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.PermissionRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.UserRepositoryImpl;
 import com.g6jamm.stima.domain.exception.LoginException;
