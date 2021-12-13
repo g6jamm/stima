@@ -53,53 +53,55 @@ public class SubProjectController {
       @PathVariable int subProjectId)
       throws SystemException {
 
-    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
-      User user =
-          USER_SERVICE.getUser(
-              (Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
-
-      ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
-
-      Project subProject = null; // todo move??
-      for (Project sp : project.getSubProjects()) {
-        if (subProjectId == sp.getId()) {
-          subProject = sp;
-        }
-      }
-      if (subProject != null) {
-        List<Task> tasks = subProject.getTasks();
-
-        model.addAttribute("tasks", tasks);
-        model.addAttribute("subProject", subProject);
-        model.addAttribute("resourceTypes", TASK_SERVICE.getResourceTypes());
-
-        model.addAttribute("parentProject", project);
-
-        return "subProject";
-      }
-      return "redirect:/projects/" + projectId;
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+      return "redirect:/";
     }
-    return "redirect:/";
+
+    User user =
+        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
+
+    ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
+
+    Project subProject = null; // TODO: move
+    for (Project sp : project.getSubProjects()) {
+      if (subProjectId == sp.getId()) {
+        subProject = sp;
+      }
+    }
+
+    if (subProject != null) {
+      List<Task> tasks = subProject.getTasks();
+      model.addAttribute("tasks", tasks);
+      model.addAttribute("subProject", subProject);
+      model.addAttribute("resourceTypes", TASK_SERVICE.getResourceTypes());
+      model.addAttribute("parentProject", project);
+
+      return "subProject";
+    }
+
+    return "redirect:/projects/" + projectId;
   }
 
   @PostMapping("/projects/{projectId}/create-task")
   public String createProjectTask(WebRequest webRequest, Model model, @PathVariable int projectId)
       throws SystemException {
+
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
-      User user =
-          USER_SERVICE.getUser(
-              (Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
-      ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
 
-      try {
-        createTask(webRequest, project);
-      } catch (TaskCreationException e) {
-        model.addAttribute("error", e.getMessage());
-      }
-
-      return "redirect:/projects/" + projectId;
+      return "redirect:/";
     }
-    return "redirect:/";
+
+    User user =
+        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
+    ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
+
+    try {
+      createTask(webRequest, project);
+    } catch (TaskCreationException e) {
+      model.addAttribute("error", e.getMessage());
+    }
+
+    return "redirect:/projects/" + projectId;
   }
 
   /**
@@ -125,14 +127,14 @@ public class SubProjectController {
     String taskStartDate =
         !taskStartDateParam.isEmpty()
             ? taskStartDateParam
-            : project.getStartDate().format(DateTimeFormatter.ofPattern("YYYY-MM-DD"));
+            : project.getStartDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
     String taskEndDate =
         !taskEndDateParam.isEmpty()
             ? taskEndDateParam
             : project
                 .getStartDate()
-                .format(DateTimeFormatter.ofPattern("YYYY-MM-DD")); // TODO More validation
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")); // TODO: More validation
 
     Task task =
         TASK_SERVICE.createtask(
@@ -149,27 +151,27 @@ public class SubProjectController {
       @PathVariable int subProjectId)
       throws SystemException, TaskCreationException {
 
-    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
-      User user =
-          USER_SERVICE.getUser(
-              (Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
-
-      ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
-
-      Project subProject = null;
-      for (Project projectComponent : project.getSubProjects()) {
-        if (projectComponent.getId() == subProjectId) {
-          subProject = projectComponent;
-        }
-      }
-
-      if (subProject != null) {
-
-        createTask(webRequest, subProject);
-      }
-      return "redirect:/projects/" + projectId + "/" + subProjectId;
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+      return "redirect:/";
     }
-    return "redirect:/";
+
+    User user =
+        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
+
+    ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
+
+    Project subProject = null; // TODO: move
+    for (Project projectComponent : project.getSubProjects()) {
+      if (projectComponent.getId() == subProjectId) {
+        subProject = projectComponent;
+      }
+    }
+
+    if (subProject != null) {
+      createTask(webRequest, subProject);
+    }
+
+    return "redirect:/projects/" + projectId + "/" + subProjectId;
   }
 
   @ExceptionHandler(Exception.class)

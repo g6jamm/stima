@@ -44,17 +44,14 @@ public class TaskRepositoryImpl implements TaskRepository {
 
   @Override
   public Task createTask(Task task, int projectId) throws SystemException {
-    task =
-        new Task.TaskBuilder()
-            .name(task.getName())
-            .resourceType(task.getResourceType()) // TODO Lookup value from form
-            .hours(task.getHours())
-            .startDate(task.getStartDate())
-            .endDate(task.getEndDate())
-            .id(TASK_LIST.size() + 1)
-            .build();
-
-    return task;
+    return new Task.TaskBuilder()
+        .name(task.getName())
+        .resourceType(task.getResourceType())
+        .hours(task.getHours())
+        .startDate(task.getStartDate())
+        .endDate(task.getEndDate())
+        .id(TASK_LIST.size() + 1)
+        .build();
   }
 
   @Override

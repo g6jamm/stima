@@ -49,14 +49,14 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="col-form-label" th:for="'edit-project-name-' + ${project.getId}">Navn:</label>
-                            <input class="form-control" name="edit-project-name"
+                            <input class="form-control" name="edit-project-name" required
                                    th:id="'edit-project-name-' + ${project.getId}" th:value="${project.getName}"
                                    type="text">
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label" th:for="'edit-project-start-date' + ${project.getId}">Start
                                 dag:</label>
-                            <input class="form-control" name="edit-project-start-date"
+                            <input class="form-control" name="edit-project-start-date" required
                                    th:id="'edit-project-start-date' + ${project.getId}"
                                    th:value="${project.getStartDate}"
                                    type="date">
@@ -64,13 +64,13 @@
                         <div class="mb-3">
                             <label class="col-form-label" th:for="'edit-project-end-date' + ${project.getId}">Slut
                                 dag:</label>
-                            <input class="form-control" name="edit-project-end-date"
+                            <input class="form-control" name="edit-project-end-date" required
                                    th:id="'edit-project-end-date' + ${project.getId}" th:value="${project.getEndDate}"
                                    type="date">
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label">Farve:</label>
-                            <select class="form-select" name="edit-project-color">
+                            <select class="form-select" name="edit-project-color" required>
                                 <option th:each="color : ${projectColors}"
                                         th:selected="${project.getColorCode}"
                                         th:style="'color: #fff; background-color: ' + ${color.value}"

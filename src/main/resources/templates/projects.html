@@ -71,25 +71,27 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="col-form-label" for="create-project-name">Navn:</label>
-                        <input class="form-control" id="create-project-name" name="create-project-name" type="text">
+                        <input class="form-control" id="create-project-name" name="create-project-name" required
+                               type="text">
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label" for="create-project-start-date">Start dag:</label>
                         <input class="form-control" id="create-project-start-date" name="create-project-start-date"
-                               type="date">
+                               required type="date">
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label" for="create-project-end-date">Slut dag:</label>
                         <input class="form-control" id="create-project-end-date" name="create-project-end-date"
-                               type="date">
+                               required type="date">
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label">Farve:</label>
-                        <select class="form-select" name="create-project-color">
+                        <select class="form-select" name="create-project-color" required>
                             <option th:each="color : ${projectColors}"
                                     th:style="'color: #fff; background-color: ' + ${color.value}"
                                     th:text="${color.key}"
-                                    th:value="${color.value}"></option>
+                                    th:value="${color.value}"
+                            ></option>
                         </select>
                     </div>
                 </div>
@@ -97,13 +99,24 @@
                     <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">
                         Luk
                     </button>
-                    <button class="btn btn-primary" type="submit">Opret</button>
+                    <button class="btn btn-primary" id="submit-create-product" type="submit">Opret</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
-
+<script>
+    const submitButton = document.getElementById('submit-create-product');
+    submitButton.addEventListener("click", (e) => {
+        let startDateInput = document.getElementById("create-project-start-date").value;
+        let endDateInput = document.getElementById("create-project-end-date").value;
+        let startDate = Date.parse(startDateInput);
+        let endDate = Date.parse(endDateInput);
+        if (startDate > endDate) {
+            alert("Start datoen skal ligge før slutdatoen");
+            e.preventDefault();
+        }
+    });
+</script>
 </body>
 </html>

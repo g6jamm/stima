@@ -73,7 +73,6 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
             .endDate(LocalDate.parse(rs.getString("end_date")))
             .colorCode(rs.getString("colorscode"))
             .build();
-        // TODO colorcode handel,
       }
 
     } catch (SQLException e) {
