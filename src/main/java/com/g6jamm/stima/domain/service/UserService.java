@@ -1,17 +1,28 @@
 package com.g6jamm.stima.domain.service;
 
+import com.g6jamm.stima.data.repository.PermissionRepository;
+import com.g6jamm.stima.data.repository.ResourceTypeRepository;
 import com.g6jamm.stima.data.repository.UserRepository;
 import com.g6jamm.stima.domain.exception.LoginException;
+import com.g6jamm.stima.domain.exception.ResourceTypeNotFoundException;
 import com.g6jamm.stima.domain.exception.SignUpException;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.User;
 
 /** @author Mohamad */
 public class UserService {
 
-  UserRepository userRepository;
+  private final UserRepository USER_REPOSITORY;
+  private final ResourceTypeRepository RESOURCE_TYPE_REPOSITORY;
+  private final PermissionRepository PERMISSION_REPOSITORY;
 
-  public UserService(UserRepository userRepository) {
-    this.userRepository = userRepository;
+  public UserService(
+      UserRepository userRepository,
+      ResourceTypeRepository resourceTypeRepository,
+      PermissionRepository permissionRepository) {
+    this.USER_REPOSITORY = userRepository;
+    this.RESOURCE_TYPE_REPOSITORY = resourceTypeRepository;
+    this.PERMISSION_REPOSITORY = permissionRepository;
   }
 
   /**
@@ -21,8 +32,8 @@ public class UserService {
    * @throws LoginException
    * @author Mohamad
    */
-  public User login(String email, String password) throws LoginException {
-    User user = userRepository.login(email, password);
+  public User login(String email, String password) throws LoginException, SystemException {
+    User user = USER_REPOSITORY.login(email, password);
     if (user != null) {
       return user;
     }
@@ -38,16 +49,24 @@ public class UserService {
    * @throws SignUpException
    * @author Mohamad
    */
-  public User createUser(String firstName, String lastName, String email, String password)
-      throws SignUpException {
+  public User createUser(
+      String firstName,
+      String lastName,
+      String email,
+      String password,
+      String resourceType,
+      String permission)
+      throws SignUpException, SystemException, ResourceTypeNotFoundException {
     User user =
         new User.UserBuilder()
             .firstName(firstName)
             .lastName(lastName)
             .email(email)
+            .resourceType(RESOURCE_TYPE_REPOSITORY.findByName(resourceType))
+            .permission(PERMISSION_REPOSITORY.findByName(permission))
             .password(password)
             .build();
-    return userRepository.createUser(user);
+    return USER_REPOSITORY.createUser(user);
   }
 
   /**
@@ -55,8 +74,8 @@ public class UserService {
    * @return User if exists
    * @author Mohamad
    */
-  public User getUser(int userId) {
-    return userRepository.getUser(userId);
+  public User getUser(int userId) throws SystemException {
+    return USER_REPOSITORY.getUser(userId);
   }
 
   /**
@@ -64,7 +83,7 @@ public class UserService {
    * @return true if user exists
    * @author Mohamad
    */
-  public boolean userExists(int userId) {
-    return userRepository.userExists(userId);
+  public boolean userExists(int userId) throws SystemException {
+    return USER_REPOSITORY.userExists(userId);
   }
 }

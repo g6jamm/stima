@@ -1,7 +1,10 @@
 package com.g6jamm.stima.domain.service;
 
 import com.g6jamm.stima.data.repository.SubProjectRepository;
-import com.g6jamm.stima.domain.model.SubProject;
+import com.g6jamm.stima.domain.exception.SystemException;
+import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.model.ProjectComposite;
+import com.g6jamm.stima.domain.model.ProjectLeaf;
 import com.g6jamm.stima.domain.model.Task;
 
 import java.time.LocalDate;
@@ -9,10 +12,10 @@ import java.util.List;
 
 public class SubProjectService {
 
-  private final SubProjectRepository subProjectRepository;
+  private final SubProjectRepository SUB_PROJECT_REPOSITORY;
 
   public SubProjectService(SubProjectRepository subProjectRepository) {
-    this.subProjectRepository = subProjectRepository;
+    this.SUB_PROJECT_REPOSITORY = subProjectRepository;
   }
 
   /**
@@ -24,9 +27,11 @@ public class SubProjectService {
    * @return
    * @author Jackie
    */
-  public SubProject createSubProject(
-      String name, LocalDate startDate, LocalDate endDate, String projectColor) {
-    return subProjectRepository.createSubProject(name, startDate, endDate, projectColor);
+  public ProjectLeaf createSubProject(
+      String name, LocalDate startDate, LocalDate endDate, String projectColor, int parentProjectId)
+      throws SystemException {
+    return SUB_PROJECT_REPOSITORY.createSubProject(
+        name, startDate, endDate, projectColor, parentProjectId); // TODO: send object med
   }
 
   /**
@@ -35,8 +40,8 @@ public class SubProjectService {
    * @return List of subprojects
    * @author Jackie
    */
-  public List<SubProject> getSubprojects() { // TODO add reference to project
-    return subProjectRepository.getSubProjects(); // WIP
+  public List<Project> getSubprojects(int projectId) throws SystemException {
+    return SUB_PROJECT_REPOSITORY.getSubProjects(projectId); // WIP
   }
 
   /**
@@ -45,8 +50,8 @@ public class SubProjectService {
    * @param subProjectId
    * @return a sub project
    */
-  public SubProject getSubProject(int subProjectId) {
-    return subProjectRepository.getSubproject(subProjectId);
+  public Project getSubProject(int subProjectId) throws SystemException {
+    return SUB_PROJECT_REPOSITORY.getSubproject(subProjectId);
   }
 
   /**
@@ -58,6 +63,26 @@ public class SubProjectService {
    * @author Jackie
    */
   public boolean addTaskToSubProject(int subProjectId, Task task) {
-    return subProjectRepository.addTaskToSubProject(subProjectId, task);
+    return SUB_PROJECT_REPOSITORY.addTaskToSubProject(subProjectId, task);
+  }
+
+  public void editProject(
+      int projectId, String name, LocalDate startDate, LocalDate endDate, String projectColor)
+      throws SystemException {
+
+    ProjectComposite subproject =
+        new ProjectComposite.ProjectBuilder()
+            .projectId(projectId)
+            .projectName(name)
+            .startDate(startDate)
+            .endDate(endDate)
+            .colorCode(projectColor)
+            .build();
+
+    SUB_PROJECT_REPOSITORY.editProject(subproject);
+  }
+
+  public void deleteProject(int projectId) throws SystemException {
+    SUB_PROJECT_REPOSITORY.deleteProject(projectId);
   }
 }

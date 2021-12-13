@@ -1,6 +1,9 @@
 package com.g6jamm.stima.data.repository;
 
-import com.g6jamm.stima.domain.model.SubProject;
+import com.g6jamm.stima.domain.exception.SystemException;
+import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.model.ProjectComposite;
+import com.g6jamm.stima.domain.model.ProjectLeaf;
 import com.g6jamm.stima.domain.model.Task;
 
 import java.time.LocalDate;
@@ -9,18 +12,27 @@ import java.util.List;
 /** @author Jackie */
 public interface SubProjectRepository {
 
-  List<SubProject> getSubProjects();
+  List<Project> getSubProjects(int projectId) throws SystemException;
 
-  SubProject getSubproject(int subProjectId);
+  Project getSubproject(int subProjectId) throws SystemException;
 
-  SubProject createSubProject(
-      String name, LocalDate startDate, LocalDate endDate, String projectColorParam);
+  ProjectLeaf createSubProject(
+      String name,
+      LocalDate startDate,
+      LocalDate endDate,
+      String projectColorParam,
+      int parentProjectId)
+      throws SystemException;
 
-  SubProject deleteSubProject(SubProject subProject);
+  ProjectLeaf deleteSubProject(int subProjectId);
 
   boolean addTaskToSubProject(int subProjectId, Task task);
 
-  double getTotalHours(SubProject subProject);
+  double getTotalHours(ProjectLeaf subProject);
 
-  int getTotalPrice(SubProject subProject);
+  int getTotalPrice(ProjectLeaf subProject);
+
+  void editProject(ProjectComposite project) throws SystemException;
+
+  void deleteProject(int projectId) throws SystemException;
 }

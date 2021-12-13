@@ -1,13 +1,13 @@
 package com.g6jamm.stima.domain.model;
 
-public class Role {
+public class Permission {
 
   private final String NAME;
   private int ID;
 
-  public Role(RoleBuilder roleBuilder) {
-    this.ID = roleBuilder.id;
-    this.NAME = roleBuilder.name;
+  public Permission(PermissionBuilder permissionBuilder) {
+    this.ID = permissionBuilder.id;
+    this.NAME = permissionBuilder.name;
   }
 
   public int getId() {
@@ -18,16 +18,16 @@ public class Role {
     return NAME;
   }
 
-  public static class RoleBuilder {
+  public static class PermissionBuilder {
     private String name;
     private int id;
 
-    public RoleBuilder name(String name) {
+    public PermissionBuilder name(String name) {
       this.name = name;
       return this;
     }
 
-    public RoleBuilder id(int id) {
+    public PermissionBuilder id(int id) {
       this.id = id;
       return this;
     }
@@ -37,10 +37,10 @@ public class Role {
       this.id = 0;
     }
 
-    public Role build() {
-      Role role = new Role(this);
+    public Permission build() {
+      Permission permission = new Permission(this);
       reset();
-      return role;
+      return permission;
     }
   }
 }

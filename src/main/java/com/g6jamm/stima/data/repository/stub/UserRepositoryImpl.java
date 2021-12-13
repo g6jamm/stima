@@ -2,31 +2,34 @@ package com.g6jamm.stima.data.repository.stub;
 
 import com.g6jamm.stima.data.repository.UserRepository;
 import com.g6jamm.stima.domain.exception.SignUpException;
-import com.g6jamm.stima.domain.model.Role;
+import com.g6jamm.stima.domain.exception.SystemException;
+import com.g6jamm.stima.domain.model.Permission;
+import com.g6jamm.stima.domain.model.ResourceType;
 import com.g6jamm.stima.domain.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserRepositoryStub implements UserRepository {
+public class UserRepositoryImpl implements UserRepository {
 
-  public static List<User> userListStub = new ArrayList<>();
+  public static List<User> USER_LIST = new ArrayList<>();
 
   /**
    * Creates stub data when instantiated and adds to userListStub List.
    *
    * @author Mohamad
    */
-  public UserRepositoryStub() {
-    if (userListStub.isEmpty()) {
+  public UserRepositoryImpl() {
+    if (USER_LIST.isEmpty()) {
       User user =
           new User.UserBuilder()
               .firstName("John")
               .lastName("Doe")
               .email("demo@demo.com")
               .password("demo")
-              .id(userListStub.size() + 1)
-              .role(new Role())
+              .id(USER_LIST.size() + 1)
+              .resourceType(new ResourceType.ResourceTypeBuilder().name("Junior Developer").build())
+              .permission(new Permission.PermissionBuilder().name("user").build())
               .build();
 
       User user2 =
@@ -35,12 +38,13 @@ public class UserRepositoryStub implements UserRepository {
               .lastName("Doe")
               .email("maill@mail.com")
               .password("123")
-              .id(userListStub.size() + 1)
-              .role(new Role())
+              .id(USER_LIST.size() + 1)
+              .resourceType(new ResourceType.ResourceTypeBuilder().name("Junior Developer").build())
+              .permission(new Permission.PermissionBuilder().name("user").build())
               .build();
 
-      userListStub.add(user);
-      userListStub.add(user2);
+      USER_LIST.add(user);
+      USER_LIST.add(user2);
     }
   }
 
@@ -51,9 +55,9 @@ public class UserRepositoryStub implements UserRepository {
    * @author Mohamad
    */
   @Override
-  public User login(String email, String password) {
+  public User login(String email, String password) throws SystemException {
 
-    for (User u : userListStub) {
+    for (User u : USER_LIST) {
       if (u.getEmail().equals(email) && u.getPassword().equals(password)) {
         return u;
       }
@@ -67,7 +71,7 @@ public class UserRepositoryStub implements UserRepository {
    * @author Mohamad
    */
   @Override
-  public User createUser(User user) throws SignUpException {
+  public User createUser(User user) throws SignUpException, SystemException {
     if (emailExists(user.getEmail())) {
       throw new SignUpException("Email already in use");
     }
@@ -77,10 +81,11 @@ public class UserRepositoryStub implements UserRepository {
             .lastName(user.getLastName())
             .email(user.getEmail())
             .password(user.getPassword())
-            .id(userListStub.size() + 1)
-            .role(user.getRole())
+            .id(USER_LIST.size() + 1)
+            .resourceType(new ResourceType.ResourceTypeBuilder().name("Junior Developer").build())
+            .permission(new Permission.PermissionBuilder().name("user").build())
             .build();
-    userListStub.add(user);
+    USER_LIST.add(user);
 
     return user;
   }
@@ -91,12 +96,12 @@ public class UserRepositoryStub implements UserRepository {
    * @author Mohamad
    */
   @Override
-  public boolean userExists(int id) {
-    return userListStub.stream().anyMatch(user -> id == user.getId());
+  public boolean userExists(int id) throws SystemException {
+    return USER_LIST.stream().anyMatch(user -> id == user.getId());
   }
 
   private boolean emailExists(String email) {
-    return userListStub.stream().anyMatch(user -> email == user.getEmail());
+    return USER_LIST.stream().anyMatch(user -> email == user.getEmail());
   }
 
   /**
@@ -105,7 +110,7 @@ public class UserRepositoryStub implements UserRepository {
    * @author Mohamad
    */
   @Override
-  public int getNewUserId(User user) {
+  public int getNewUserId(User user) throws SystemException {
 
     user =
         new User.UserBuilder()
@@ -113,8 +118,9 @@ public class UserRepositoryStub implements UserRepository {
             .lastName("Doe")
             .email("demo@demo.com")
             .password("demo")
-            .id(userListStub.size() + 1)
-            .role(new Role())
+            .id(USER_LIST.size() + 1)
+            .resourceType(new ResourceType.ResourceTypeBuilder().name("Junior Developer").build())
+            .permission(new Permission.PermissionBuilder().name("user").build())
             .build();
 
     return user.getId();
@@ -126,10 +132,10 @@ public class UserRepositoryStub implements UserRepository {
    * @author Mohamad
    */
   @Override
-  public User getUser(int id) {
+  public User getUser(int id) throws SystemException {
     User result = null;
 
-    for (User u : userListStub) {
+    for (User u : USER_LIST) {
       if (u.getId() == id) {
         result = u;
       }

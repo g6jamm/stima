@@ -1,10 +1,11 @@
 package com.g6jamm.stima.data.repository.stub;
 
 import com.g6jamm.stima.data.repository.ProjectColorRepository;
+import com.g6jamm.stima.domain.exception.SystemException;
 
 import java.util.Map;
 
-public class ProjectColorStub implements ProjectColorRepository {
+public class ProjectColorImpl implements ProjectColorRepository {
 
   private static final Map<String, String> PROJECT_COLORS =
       Map.of(
@@ -21,7 +22,7 @@ public class ProjectColorStub implements ProjectColorRepository {
           "Royal Purple",
           "#6a54b4");
 
-  public Map<String, String> getProjectColors() {
+  public Map<String, String> getProjectColors() throws SystemException {
     return PROJECT_COLORS;
   }
 }

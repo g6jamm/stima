@@ -14,17 +14,41 @@
     <div class="py-5 bg-light">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-3">
+
                 <div class="col">
-                    <a data-bs-target="#projectModal" data-bs-toggle="modal" href="#">
-                        <div class="card shadow-sm align-items-center justify-content-center card-btn">
-                            <div class="card-body card-text card-text-size-sm card-icon">
-                                +
+                    <a data-bs-target="#createProjectModal" data-bs-toggle="modal" href="#">
+                        <div class="card shadow-sm card-btn">
+                            <div class="mt-2 mx-2 blur no-select">
+                                <div class="btn-toolbar float-end" role="toolbar">
+                                    <div class="btn-group" role="group">
+                                    <span class="btn btn-edit">
+                                        <i aria-hidden="true" class="fas fa-pen" style="color: #000"></i>
+                                    </span>
+                                    </div>
+                                    <div class="btn-group" role="group">
+                                    <span class="btn btn-delete">
+                                        <i aria-hidden="true" class="fas fa-trash-alt" style="color: #000"></i>
+                                    </span>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="card-body card-text sm blur no-select" style="margin-top: 43px; color: #000">
+                                <p>Projekt</p>
+                                <p>Timer: 800.0</p>
+                                <p>Pris: 1000000 DKK</p>
+                                <p>Nødvendige arbejdsdage: 108.11</p>
+                                <p>Nødvendige antal medarbejdere: 54.06</p>
+                                <p>Start date: 2021-01-01</p>
+                                <p>End date: 2021-01-02</p>
+                                <p>Dage tilgængelige i perioden: 2</p>
+                            </div>
+                            <span class="btn-plus-icon"><i aria-hidden="true" class="fas fa-plus"></i></span>
                         </div>
                     </a>
                 </div>
+
                 <div class="col" th:each="project : ${projects}">
-                    <div th:replace="fragments/projectFragment :: link (@{/projects/{id} (id=${project.getId})})"></div>
+                    <div th:replace="fragments/projectFragment :: project (@{/projects/{id} (id=${project.getId})})"></div>
                 </div>
             </div>
         </div>
@@ -33,13 +57,13 @@
 
 <footer th:replace="fragments/footerFragtment :: footer"></footer>
 
-<div aria-hidden="true" aria-labelledby="projectModalLabel" class="modal fade"
-     id="projectModal"
+<div aria-hidden="true" aria-labelledby="createProjectModalLabel" class="modal fade"
+     id="createProjectModal"
      tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="projectModalLabel">Tilføj nyt underprojekt</h5>
+                <h5 class="modal-title" id="createProjectModalLabel">Tilføj nyt underprojekt</h5>
                 <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
                         type="button"></button>
             </div>
@@ -47,26 +71,28 @@
                   th:action="@{/projects/create-project}">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="col-form-label" for="project-name">Navn:</label>
-                        <input class="form-control" id="project-name" name="project-name" type="text">
+                        <label class="col-form-label" for="create-project-name">Navn:</label>
+                        <input class="form-control" id="create-project-name" name="create-project-name" required
+                               type="text">
                     </div>
                     <div class="mb-3">
-                        <label class="col-form-label" for="project-start-date">Start dag:</label>
-                        <input class="form-control" id="project-start-date" name="project-start-date"
-                               type="date">
+                        <label class="col-form-label" for="create-project-start-date">Start dag:</label>
+                        <input class="form-control" id="create-project-start-date" name="create-project-start-date"
+                               required type="date">
                     </div>
                     <div class="mb-3">
-                        <label class="col-form-label" for="project-end-date">Slut dag:</label>
-                        <input class="form-control" id="project-end-date" name="project-end-date"
-                               type="date">
+                        <label class="col-form-label" for="create-project-end-date">Slut dag:</label>
+                        <input class="form-control" id="create-project-end-date" name="create-project-end-date"
+                               required type="date">
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label">Farve:</label>
-                        <select class="form-select" name="project-color">
+                        <select class="form-select" name="create-project-color" required>
                             <option th:each="color : ${projectColors}"
                                     th:style="'color: #fff; background-color: ' + ${color.value}"
                                     th:text="${color.key}"
-                                    th:value="${color.value}"></option>
+                                    th:value="${color.value}"
+                            ></option>
                         </select>
                     </div>
                 </div>
@@ -74,12 +100,24 @@
                     <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">
                         Luk
                     </button>
-                    <button class="btn btn-primary" type="submit">Opret</button>
+                    <button class="btn btn-primary" id="submit-create-product" type="submit">Opret</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
+<script>
+    const submitButton = document.getElementById('submit-create-product');
+    submitButton.addEventListener("click", (e) => {
+        let startDateInput = document.getElementById("create-project-start-date").value;
+        let endDateInput = document.getElementById("create-project-end-date").value;
+        let startDate = Date.parse(startDateInput);
+        let endDate = Date.parse(endDateInput);
+        if (startDate > endDate) {
+            alert("Start datoen skal ligge før slutdatoen");
+            e.preventDefault();
+        }
+    });
+</script>
 </body>
 </html>

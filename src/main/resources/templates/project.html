@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="da" xmlns:th="https://www.thymeleaf.org">
 
-<head th:replace="fragments/headFragment :: head (title=${project.getName})"></head>
+<head th:replace="fragments/headFragment :: head (title=${parentproject.getName})"></head>
 
 <body>
 <nav th:replace="fragments/navFragment :: nav"></nav>
@@ -9,20 +9,20 @@
 <nav class="container breadcrumb-container">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a th:href="@{/projects}">Projects</a></li>
-        <li class="breadcrumb-item active" th:text="${project.getName}"></li>
+        <li class="breadcrumb-item active" th:text="${parentproject.getName}"></li>
     </ol>
 </nav>
 
 <main>
     <div class="py-5 bg-light">
         <div class="container">
-            <h1 th:text="${project.getName}"></h1>
+            <h1 th:text="${parentproject.getName}"></h1>
             <div class="row row-cols-2 row-cols-sm-2 row-cols-md-2 g-3">
                 <div class="container">
                     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 g-3">
                         <h2>Underprojekter</h2>
                         <div class="col">
-                            <a data-bs-target="#subprojectModal" data-bs-toggle="modal" href="#">
+                            <a data-bs-target="#createSubprojectModal" data-bs-toggle="modal" href="#">
                                 <div class="card shadow-sm align-items-center justify-content-center card-btn">
                                     <div class="card-body card-text card-text-size-sm card-icon">
                                         +
@@ -30,8 +30,8 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="col" th:each="project : ${subprojects}">
-                            <div th:replace="fragments/projectFragment :: link (@{/projects/{projectId}/{subProjectId}(projectId=${project.getId}, subProjectId=${project.getId})})"></div>
+                        <div class="col" th:each="project : ${projects}">
+                            <div th:replace="fragments/projectFragment :: project (@{/projects/{projectId}/{subProjectId}(projectId=${parentproject.getId}, subProjectId=${project.getId()})})"></div>
                         </div>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                                 </div>
                             </a>
                         </div>
-                        <div th:replace="fragments/taskFragment"></div>
+                        <div th:replace="fragments/taskFragment :: task (@{/projects/{projectId} (projectId=${parentproject.getId})})"></div>
                     </div>
                 </div>
             </div>
@@ -56,36 +56,38 @@
 </main>
 <footer th:replace="fragments/footerFragtment :: footer"></footer>
 
-<div aria-hidden="true" aria-labelledby="subprojectModalLabel" class="modal fade"
-     id="subprojectModal"
+<div aria-hidden="true" aria-labelledby="createSubprojectModalLabel" class="modal fade"
+     id="createSubprojectModal"
      tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="subprojectModalLabel">Tilføj nyt underprojekt</h5>
+                <h5 class="modal-title" id="createSubprojectModalLabel">Tilføj nyt underprojekt</h5>
                 <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
                         type="button"></button>
             </div>
             <form method="POST"
-                  th:action="@{/projects/{projectId}/create-subproject (projectId=${project.getId})}">
+                  th:action="@{/projects/{projectId}/create-subproject (projectId=${parentproject.getId})}">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="col-form-label" for="subproject-name">Navn:</label>
-                        <input class="form-control" id="subproject-name" name="subproject-name" type="text">
+                        <label class="col-form-label" for="create-subproject-name">Navn:</label>
+                        <input class="form-control" id="create-subproject-name" name="create-subproject-name"
+                               required type="text">
                     </div>
                     <div class="mb-3">
-                        <label class="col-form-label" for="subproject-start-date">Start dag:</label>
-                        <input class="form-control" id="subproject-start-date" name="subproject-start-date"
-                               type="date">
+                        <label class="col-form-label" for="create-subproject-start-date">Start dag:</label>
+                        <input class="form-control" id="create-subproject-start-date"
+                               name="create-subproject-start-date"
+                               required type="date">
                     </div>
                     <div class="mb-3">
-                        <label class="col-form-label" for="subproject-end-date">Slut dag:</label>
-                        <input class="form-control" id="subproject-end-date" name="subproject-end-date"
-                               type="date">
+                        <label class="col-form-label" for="create-subproject-end-date">Slut dag:</label>
+                        <input class="form-control" id="create-subproject-end-date" name="create-subproject-end-date"
+                               required type="date">
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label">Farve:</label>
-                        <select class="form-select" name="subproject-color">
+                        <select class="form-select" name="create-subproject-color" required>
                             <option th:each="color : ${projectColors}"
                                     th:style="'color: #fff; background-color: ' + ${color.value}"
                                     th:text="${color.key}"
@@ -104,7 +106,57 @@
     </div>
 </div>
 
-<div th:replace="fragments/taskModalFragment :: actinLink (@{/projects/{projectId}/create-task (projectId=${project.getId})})"></div>
+<div aria-hidden="true" aria-labelledby="editSubprojectModalLabel" class="modal fade"
+     id="editSubprojectModal"
+     tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editSubprojectModalLabel">Redigér nyt underprojekt</h5>
+                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
+                        type="button"></button>
+            </div>
+            <form method="POST"
+                  th:action="@{/projects/{projectId}/edit-subproject (projectId=${parentproject.getId})}">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="col-form-label" for="edit-subproject-name">Navn:</label>
+                        <input class="form-control" id="edit-subproject-name" name="edit-subproject-name"
+                               required type="text">
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label" for="edit-subproject-start-date">Start dag:</label>
+                        <input class="form-control" id="edit-subproject-start-date"
+                               name="edit-subproject-start-date"
+                               required type="date">
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label" for="edit-subproject-end-date">Slut dag:</label>
+                        <input class="form-control" id="edit-subproject-end-date" name="edit-subproject-end-date"
+                               required type="date">
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Farve:</label>
+                        <select class="form-select" name="edit-subproject-color" required>
+                            <option th:each="color : ${projectColors}"
+                                    th:style="'color: #fff; background-color: ' + ${color.value}"
+                                    th:text="${color.key}"
+                                    th:value="${color.value}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">
+                        Luk
+                    </button>
+                    <button class="btn btn-primary" type="submit">Opret</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/taskModalFragment :: actinLink (@{/projects/{projectId}/create-task (projectId=${parentproject.getId})})"></div>
 
 </body>
 </html>

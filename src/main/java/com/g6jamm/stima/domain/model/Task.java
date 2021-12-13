@@ -1,5 +1,6 @@
 package com.g6jamm.stima.domain.model;
 
+import java.time.Duration;
 import java.time.LocalDate;
 
 public class Task {
@@ -50,6 +51,26 @@ public class Task {
     return RESOURCE_TYPE;
   }
 
+  public double calculateWorkdays() {
+    double workday =
+        7.4; // Workday in denmark is 7,4 hours if a workweek is 5 days and a workweek is 37 hours
+    double workdaysNeeded = HOURS / workday;
+    return Math.round(workdaysNeeded * 100.0) / 100.0;
+  }
+
+  public double calculateResources() {
+
+    long workdaysAvailable =
+        Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays();
+    double result = calculateWorkdays() / (workdaysAvailable);
+
+    return Math.round(result * 100.0) / 100.0;
+  }
+
+  public long calculateDays() {
+    return Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays() + 1;
+  }
+
   public static class TaskBuilder {
     private int id;
     private String name;
@@ -74,13 +95,13 @@ public class Task {
       return this;
     }
 
-    private TaskBuilder price() {
+    private void price() {
       if (this.resourceType == null) {
         this.price = 0;
       } else {
-        this.price = (int) this.hours * this.resourceType.getPricePrHour(); // TODO rounding??
+        this.price =
+            (int) this.hours * this.resourceType.getPricePrHour(); // TODO: Fix rounding issue.
       }
-      return this;
     }
 
     public TaskBuilder startDate(LocalDate startDate) {

@@ -75,16 +75,6 @@ set_properties() {
   read -r -e -i "$db_password" -p "$(echo -e "${CYAN}Db password: ${NC}")" input
   db_password="${input:-$db_password}"
 
-  # Webserver host
-  get_webserver_host=$(get_property_value "baseUrl" | cut -d'/' -f3 | cut -d':' -f1)
-  if [ -z "$get_webserver_host" ]; then
-    webserver_host="127.0.0.1"
-  else
-    webserver_host="$get_webserver_host"
-  fi
-  read -r -e -i "$webserver_host" -p "$(echo -e "${CYAN}Webserver host: ${NC}")" input
-  webserver_host="${input:-$webserver_host}"
-
   # Webserver port
   get_webserver_port=$(get_property_value "port")
   if [ -z "$get_webserver_port" ]; then
@@ -99,8 +89,7 @@ set_properties() {
 password=$db_password
 url=jdbc:mysql://$db_localhost:$db_port/stima
 connection=LOCAL
-port=$webserver_port
-baseUrl=http://$webserver_host:$webserver_port/" >"$PROPERTY_FILE"
+port=$webserver_port" >"$PROPERTY_FILE"
 }
 
 # Create menu

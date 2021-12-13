@@ -1,9 +1,10 @@
 package com.g6jamm.stima.domain.model;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
 
-public class SubProject {
+public class ProjectLeaf implements Project {
 
   /**
    * Model for subproject
@@ -13,18 +14,14 @@ public class SubProject {
   private final int SUB_PROJECT_ID;
 
   private final String SUB_PROJECT_NAME;
-  private final double TOTAL_HOURS;
-  private final int TOTAL_PRICE;
   private final List<Task> SUB_PROJECT_TASKS;
   private final LocalDate START_DATE;
   private final LocalDate END_DATE;
   private final String COLOR_CODE;
 
-  public SubProject(SubProjectBuilder subProjectBuilder) {
+  public ProjectLeaf(SubProjectBuilder subProjectBuilder) {
     this.SUB_PROJECT_ID = subProjectBuilder.subProjectId;
     this.SUB_PROJECT_NAME = subProjectBuilder.subProjectName;
-    this.TOTAL_HOURS = subProjectBuilder.totalHours;
-    this.TOTAL_PRICE = subProjectBuilder.totalPrice;
     this.SUB_PROJECT_TASKS = subProjectBuilder.subProjectTasks;
     this.START_DATE = subProjectBuilder.startDate;
     this.END_DATE = subProjectBuilder.endDate;
@@ -51,19 +48,50 @@ public class SubProject {
     return this.END_DATE;
   }
 
-  public double getHours() {
-    return this.TOTAL_HOURS;
+  public double calculateHours() {
+    double totalHours = 0.0;
+    if (!SUB_PROJECT_TASKS.isEmpty()) {
+      for (Task t : SUB_PROJECT_TASKS) {
+        totalHours += t.getHours();
+      }
+    }
+    return totalHours;
   }
 
-  public int getPrice() {
-    return this.TOTAL_PRICE;
+  public int calculatePrice() {
+    int totalPrice = 0;
+    if (!SUB_PROJECT_TASKS.isEmpty()) {
+      for (Task t : SUB_PROJECT_TASKS) {
+        totalPrice += t.getPrice();
+      }
+    }
+    return totalPrice;
+  }
+
+  public double calculateWorkdays() {
+    double workday =
+        7.4; // Workday in denmark is 7,4 hours if a workweek is 5 days and a workweek is 37 hours
+    double workdaysNeeded = calculateHours() / workday;
+    return Math.round(workdaysNeeded * 100) / 100;
+  }
+
+  public double calculateResources() {
+
+    long workdaysAvailable =
+        Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays() + 1;
+    double result = calculateWorkdays() / (workdaysAvailable);
+
+    return Math.round(result * 100) / 100;
+  }
+
+  public long calculateDays() {
+    return Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays() + 1;
   }
 
   public String getColorCode() {
     return this.COLOR_CODE;
   }
 
-  // TODO skal måske laves om
   public void addTask(Task task) {
     SUB_PROJECT_TASKS.add(task);
   }
@@ -71,8 +99,6 @@ public class SubProject {
   public static class SubProjectBuilder {
     private int subProjectId;
     private String subProjectName;
-    private double totalHours;
-    private int totalPrice;
     private List<Task> subProjectTasks;
     private LocalDate startDate;
     private LocalDate endDate;
@@ -85,16 +111,6 @@ public class SubProject {
 
     public SubProjectBuilder name(String name) {
       this.subProjectName = name;
-      return this;
-    }
-
-    public SubProjectBuilder hours(double hours) {
-      this.totalHours = hours;
-      return this;
-    }
-
-    public SubProjectBuilder price(int price) {
-      this.totalPrice = price;
       return this;
     }
 
@@ -121,16 +137,14 @@ public class SubProject {
     private void reset() {
       this.subProjectId = 0;
       this.subProjectName = null;
-      this.totalHours = 0.0;
-      this.totalPrice = 0;
       this.subProjectTasks = null;
       this.startDate = null;
       this.endDate = null;
       this.colorCode = null;
     }
 
-    public SubProject build() {
-      SubProject newSubProject = new SubProject(this);
+    public ProjectLeaf build() {
+      ProjectLeaf newSubProject = new ProjectLeaf(this);
       reset();
       return newSubProject;
     }

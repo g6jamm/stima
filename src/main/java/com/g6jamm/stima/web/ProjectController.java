@@ -1,15 +1,13 @@
 package com.g6jamm.stima.web;
 
-import com.g6jamm.stima.data.repository.stub.*;
-import com.g6jamm.stima.domain.model.Project;
-import com.g6jamm.stima.domain.model.SubProject;
-import com.g6jamm.stima.domain.model.Task;
-import com.g6jamm.stima.domain.service.ProjectColorService;
-import com.g6jamm.stima.domain.service.ProjectService;
-import com.g6jamm.stima.domain.service.SubProjectService;
-import com.g6jamm.stima.domain.service.TaskService;
+import com.g6jamm.stima.data.repository.mysql.*;
+import com.g6jamm.stima.domain.exception.SystemException;
+import com.g6jamm.stima.domain.exception.TaskCreationException;
+import com.g6jamm.stima.domain.model.*;
+import com.g6jamm.stima.domain.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,25 +18,37 @@ import java.util.List;
 
 @Controller
 public class ProjectController {
+  private final ProjectService PROJECT_SERVICE = new ProjectService(new ProjectRepositoryImpl());
+  private final TaskService TASK_SERVICE =
+      new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryImpl());
+  private final SubProjectService SUBPROJECT_SERVICE =
+      new SubProjectService(new SubProjectRepositoryImpl());
+  private final UserService USER_SERVICE =
+      new UserService(
+          new UserRepositoryImpl(),
+          new ResourceTypeRepositoryImpl(),
+          new PermissionRepositoryImpl());
+  private final ProjectColorService COLOR_SERVICE = new ProjectColorService(new ProjectColorImpl());
 
   /**
    * View all projects.
    *
-   * @param webRequest WebRequest
    * @param model Model
    * @return String
    * @auther Mathias
    */
   @GetMapping("/projects")
-  public String projects(WebRequest webRequest, Model model) {
-    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
+  public String projects(WebRequest webRequest, Model model) throws SystemException {
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+      return "redirect:/";
+    }
 
-    List<Project> projects = projectService.getProjects();
+    User user =
+        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
+    List<ProjectComposite> projects = PROJECT_SERVICE.getProjects(user);
 
     model.addAttribute("projects", projects);
-
-    ProjectColorService projectColorService = new ProjectColorService(new ProjectColorStub());
-    model.addAttribute("projectColors", projectColorService.getProjectColors());
+    model.addAttribute("projectColors", COLOR_SERVICE.getProjectColors());
 
     return "projects";
   }
@@ -51,103 +61,189 @@ public class ProjectController {
    * @auther Mathias
    */
   @GetMapping("/projects/{projectId}")
-  public String projectId(Model model, @PathVariable int projectId) {
+  public String projectId(WebRequest webRequest, Model model, @PathVariable int projectId)
+      throws SystemException {
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+      return "redirect:/";
+    }
 
-    SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
-    List<SubProject> subProjects = subProjectService.getSubprojects();
-    model.addAttribute("subprojects", subProjects);
+    User user =
+        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
+    ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
 
-    TaskService taskService =
-        new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
-    List<Task> tasks = taskService.getTasks();
+    List<Project> subProjects = project.getSubProjects();
+    model.addAttribute("projects", subProjects);
+
+    List<Task> tasks = project.getTasks();
     model.addAttribute("tasks", tasks);
-
-    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-    Project project = projectService.getProjectById(projectId);
-
-    model.addAttribute("project", project);
-
-    ProjectColorService projectColorService = new ProjectColorService(new ProjectColorStub());
-    model.addAttribute("projectColors", projectColorService.getProjectColors());
-
+    model.addAttribute("parentproject", project);
+    model.addAttribute("projectColors", COLOR_SERVICE.getProjectColors());
     model.addAttribute("classActiveSettings", "active");
-
-    model.addAttribute("resourceTypes", taskService.getResourceTypes());
+    model.addAttribute("resourceTypes", TASK_SERVICE.getResourceTypes());
 
     return "project";
   }
 
   @PostMapping("/projects/{projectId}/create-subproject")
-  public String createSubProject(WebRequest webRequest, Model model, @PathVariable int projectId) {
+  public String createSubProject(WebRequest webRequest, @PathVariable int projectId)
+      throws SystemException {
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+      return "redirect:/";
+    }
 
-    String subProjectNameParam = webRequest.getParameter("subproject-name");
-    String startDateParam = webRequest.getParameter("subproject-start-date");
-    String endDateParam = webRequest.getParameter("subproject-end-date");
-    String projectColorParam = webRequest.getParameter("subproject-color");
+    User user =
+        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
 
-    // TODO check if valid date
-    // TODO check if date are inside project start and end
+    String subProjectNameParam = webRequest.getParameter("create-subproject-name");
+    String startDateParam = webRequest.getParameter("create-subproject-start-date");
+    String endDateParam = webRequest.getParameter("create-subproject-end-date");
+    String projectColorParam = webRequest.getParameter("create-subproject-color");
 
-    SubProjectService subProjectService = new SubProjectService(new SubProjectRepositoryStub());
-    SubProject subProject =
-        subProjectService.createSubProject(
+    ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
+
+    ProjectLeaf subProject =
+        SUBPROJECT_SERVICE.createSubProject(
             subProjectNameParam,
             LocalDate.parse(startDateParam),
             LocalDate.parse(endDateParam),
-            projectColorParam);
+            projectColorParam,
+            projectId);
 
-    model.addAttribute("subProject", subProject);
+    project.getSubProjects().add(subProject);
 
     return "redirect:/projects/" + projectId;
   }
 
   @PostMapping("/projects/create-project")
-  public String createProject(WebRequest webRequest, Model model) {
+  public String createProject(WebRequest webRequest, Model model) throws SystemException {
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+      return "redirect:/";
+    }
 
-    String projectNameParam = webRequest.getParameter("project-name");
-    String startDateParam = webRequest.getParameter("project-start-date");
-    String endDateParam = webRequest.getParameter("project-end-date");
-    String projectColorParam = webRequest.getParameter("project-color");
+    User user =
+        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
 
-    // TODO check if valid date
-    // TODO check if date are inside project start and end
+    String projectNameParam = webRequest.getParameter("create-project-name");
+    String startDateParam = webRequest.getParameter("create-project-start-date");
+    String endDateParam = webRequest.getParameter("create-project-end-date");
+    String projectColorParam = webRequest.getParameter("create-project-color");
 
-    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
-    Project project =
-        projectService.createProject(
+    ProjectComposite project =
+        PROJECT_SERVICE.createProject(
             projectNameParam,
             LocalDate.parse(startDateParam),
             LocalDate.parse(endDateParam),
-            projectColorParam);
-
-    model.addAttribute("project", project);
+            projectColorParam,
+            user);
 
     return "redirect:/projects";
   }
 
-  /**
-   * Navigates the user to edit project page.
-   *
-   * @param webRequest WebRequest
-   * @param projectId int
-   * @return String
-   * @auther Mathias
-   */
-  @PostMapping("/edit-project/{projectId}")
-  public String editProject(WebRequest webRequest, @PathVariable int projectId) {
-    return "redirect:/project/edit-project"; // TODO: redirect?
+  @PostMapping("/projects/{projectId}/{subprojectId}/edit-project")
+  public String editSubProject(
+      WebRequest webRequest, @PathVariable int projectId, @PathVariable int subprojectId)
+      throws SystemException {
+
+    String projectNameParam = webRequest.getParameter("edit-project-name");
+    String startDateParam = webRequest.getParameter("edit-project-start-date");
+    String endDateParam = webRequest.getParameter("edit-project-end-date");
+    String projectColorParam = webRequest.getParameter("edit-project-color");
+
+    SUBPROJECT_SERVICE.editProject(
+        subprojectId,
+        projectNameParam,
+        LocalDate.parse(startDateParam),
+        LocalDate.parse(endDateParam),
+        projectColorParam);
+
+    return "redirect:/projects/" + projectId;
   }
 
-  /**
-   * Deletes the project by id and navigate the user to the project page.
-   *
-   * @param webRequest WebRequest
-   * @param projectId int
-   * @return String
-   * @auther Mathias
-   */
-  @PostMapping("/delete-project/{projectId}")
-  public String deleteProject(WebRequest webRequest, @PathVariable int projectId) {
-    return "redirect:/project"; // TODO: redirect?
+  @PostMapping("/projects/{projectId}/edit-project")
+  public String editProject(WebRequest webRequest, @PathVariable int projectId)
+      throws SystemException {
+
+    String projectNameParam = webRequest.getParameter("edit-project-name");
+    String startDateParam = webRequest.getParameter("edit-project-start-date");
+    String endDateParam = webRequest.getParameter("edit-project-end-date");
+    String projectColorParam = webRequest.getParameter("edit-project-color");
+
+    PROJECT_SERVICE.editProject(
+        projectId,
+        projectNameParam,
+        LocalDate.parse(startDateParam),
+        LocalDate.parse(endDateParam),
+        projectColorParam);
+
+    return "redirect:/projects";
+  }
+
+  @PostMapping("/projects/{projectId}/delete-project")
+  public String deleteProject(@PathVariable int projectId) throws SystemException {
+    PROJECT_SERVICE.deleteProject(projectId);
+
+    return "redirect:/projects";
+  }
+
+  @PostMapping("/projects/{projectId}/{subprojectId}/delete-project")
+  public String deleteSubProject(@PathVariable int projectId, @PathVariable int subprojectId)
+      throws SystemException {
+    SUBPROJECT_SERVICE.deleteProject(subprojectId);
+
+    return "redirect:/projects/" + projectId;
+  }
+
+  @PostMapping("/projects/{projectId}/edit-task")
+  public String editProjectTask(WebRequest webRequest, @PathVariable int projectId)
+      throws TaskCreationException, SystemException {
+
+    String nameParam = webRequest.getParameter("edit-task-name");
+    String hoursParam = webRequest.getParameter("edit-task-hours");
+    String resourceTypeParam = webRequest.getParameter("edit-task-resource-type");
+    String startDateParam = webRequest.getParameter("edit-task-start-date");
+    String endDateParam = webRequest.getParameter("edit-task-end-date");
+    String taskIdParam = webRequest.getParameter("task-id");
+
+    TASK_SERVICE.editTask(
+        nameParam,
+        Double.parseDouble(hoursParam),
+        resourceTypeParam,
+        startDateParam,
+        endDateParam,
+        Integer.parseInt(taskIdParam));
+
+    return "redirect:/projects/" + projectId;
+  }
+
+  @PostMapping("/projects/{projectId}/{subprojectId}/edit-task")
+  public String editSubProjectTask(
+      WebRequest webRequest, @PathVariable int projectId, @PathVariable int subprojectId)
+      throws TaskCreationException, SystemException {
+
+    String nameParam = webRequest.getParameter("edit-task-name");
+    String hoursParam = webRequest.getParameter("edit-task-hours");
+    String resourceTypeParam = webRequest.getParameter("edit-task-resource-type");
+    String startDateParam = webRequest.getParameter("edit-task-start-date");
+    String endDateParam = webRequest.getParameter("edit-task-end-date");
+    String taskIdParam = webRequest.getParameter("task-id");
+
+    // TODO check if valid date
+    // TODO check if date are inside project start and end
+
+    TASK_SERVICE.editTask(
+        nameParam,
+        Double.parseDouble(hoursParam),
+        resourceTypeParam,
+        startDateParam,
+        endDateParam,
+        Integer.parseInt(taskIdParam));
+
+    return "redirect:/projects/" + projectId + "/" + subprojectId;
+  }
+
+  @ExceptionHandler(Exception.class)
+  public String error(Model model, Exception exception) {
+    model.addAttribute("message", exception.getMessage());
+    return "error";
   }
 }

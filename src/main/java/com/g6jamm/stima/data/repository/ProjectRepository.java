@@ -1,17 +1,19 @@
 package com.g6jamm.stima.data.repository;
 
-import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.exception.SystemException;
+import com.g6jamm.stima.domain.model.ProjectComposite;
+import com.g6jamm.stima.domain.model.User;
 
-import java.time.LocalDate;
+import java.util.List;
 
 public interface ProjectRepository {
-  Project createProject(String name, LocalDate startDate, LocalDate endDate, String projectColor);
+  ProjectComposite createProject(ProjectComposite project, User user) throws SystemException;
 
-  Project getProject(int projectId);
+  void editProject(ProjectComposite project) throws SystemException;
 
-  Project deleteProject(int projectId);
+  ProjectComposite getProject(int projectId) throws SystemException;
 
-  Project editProject(int projectId);
+  void deleteProject(int projectId) throws SystemException;
 
-  Project getTotalHoursOfProject(int projectId);
+  List<ProjectComposite> getProjects(User user) throws SystemException;
 }

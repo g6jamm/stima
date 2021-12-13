@@ -1,18 +1,19 @@
 package com.g6jamm.stima.data.repository.stub;
 
+import com.g6jamm.stima.domain.exception.SystemException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class UserRepositoryStubTest {
 
   @Test
-  void login() {
-    UserRepositoryStub userRepositoryStub = new UserRepositoryStub();
+  void login() throws SystemException {
+    UserRepositoryImpl userRepositoryImpl = new UserRepositoryImpl();
     String email = "demo@demo.com";
     String password = "demo";
     String expectedName = "John";
 
-    Assertions.assertEquals(expectedName, userRepositoryStub.login(email, password).getFirstName());
+    Assertions.assertEquals(expectedName, userRepositoryImpl.login(email, password).getFirstName());
   }
 
   @Test

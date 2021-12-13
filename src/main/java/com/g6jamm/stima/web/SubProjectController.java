@@ -1,27 +1,40 @@
 package com.g6jamm.stima.web;
 
-import com.g6jamm.stima.data.repository.stub.*;
+import com.g6jamm.stima.data.repository.mysql.PermissionRepositoryImpl;
+import com.g6jamm.stima.data.repository.mysql.ProjectRepositoryImpl;
+import com.g6jamm.stima.data.repository.mysql.ResourceTypeRepositoryImpl;
+import com.g6jamm.stima.data.repository.mysql.TaskRepositoryImpl;
+import com.g6jamm.stima.data.repository.mysql.UserRepositoryImpl;
+import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
-import com.g6jamm.stima.domain.model.SubProject;
+import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.Task;
+import com.g6jamm.stima.domain.model.User;
 import com.g6jamm.stima.domain.service.ProjectService;
-import com.g6jamm.stima.domain.service.SubProjectService;
 import com.g6jamm.stima.domain.service.TaskService;
+import com.g6jamm.stima.domain.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
 public class SubProjectController {
-  private final SubProjectService SUBPROJECT_SERVICE =
-      new SubProjectService(new SubProjectRepositoryStub());
-  TaskService taskService =
-      new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
+  private final TaskService TASK_SERVICE =
+      new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryImpl());
+  private final ProjectService PROJECT_SERVICE = new ProjectService(new ProjectRepositoryImpl());
+  private final UserService USER_SERVICE =
+      new UserService(
+          new UserRepositoryImpl(),
+          new ResourceTypeRepositoryImpl(),
+          new PermissionRepositoryImpl());
 
   /**
    * Get method for sub project page, shows all task for the sup project
@@ -34,45 +47,72 @@ public class SubProjectController {
    */
   @GetMapping("/projects/{projectId}/{subProjectId}")
   public String subProjectPage(
-      Model model, @PathVariable int projectId, @PathVariable int subProjectId) {
-    SubProject subProject = SUBPROJECT_SERVICE.getSubProject(subProjectId);
-    TaskService taskService =
-        new TaskService(new TaskRepositoryStub(), new ResourceTypeRepositoryStub());
-    List<Task> tasks = taskService.getTasks();
-    // TODO need change remove hardcoded tasks when possible
+      WebRequest webRequest,
+      Model model,
+      @PathVariable int projectId,
+      @PathVariable int subProjectId)
+      throws SystemException {
 
-    //    for (Task t : tasks) {
-    //      SUBPROJECT_SERVICE.addTaskToSubProject(subProject.getId(), t);
-    //    } //TODO FIX!!
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+      return "redirect:/";
+    }
 
-    model.addAttribute("tasks", tasks);
-    model.addAttribute("subProject", subProject);
-    model.addAttribute("resourceTypes", taskService.getResourceTypes());
+    User user =
+        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
 
-    ProjectService projectService = new ProjectService(new ProjectRepositoryStub());
+    ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
 
-    model.addAttribute("parentProject", projectService.getProjectById(projectId));
+    Project subProject = null; // TODO: move
+    for (Project sp : project.getSubProjects()) {
+      if (subProjectId == sp.getId()) {
+        subProject = sp;
+      }
+    }
 
-    return "subProject";
+    if (subProject != null) {
+      List<Task> tasks = subProject.getTasks();
+      model.addAttribute("tasks", tasks);
+      model.addAttribute("subProject", subProject);
+      model.addAttribute("resourceTypes", TASK_SERVICE.getResourceTypes());
+      model.addAttribute("parentProject", project);
+
+      return "subProject";
+    }
+
+    return "redirect:/projects/" + projectId;
   }
 
   @PostMapping("/projects/{projectId}/create-task")
-  public String createProjectTask(WebRequest webRequest, Model model, @PathVariable int projectId) {
+  public String createProjectTask(WebRequest webRequest, Model model, @PathVariable int projectId)
+      throws SystemException {
 
-    createTask(webRequest, model);
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
+
+      return "redirect:/";
+    }
+
+    User user =
+        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
+    ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
+
+    try {
+      createTask(webRequest, project);
+    } catch (TaskCreationException e) {
+      model.addAttribute("error", e.getMessage());
+    }
 
     return "redirect:/projects/" + projectId;
   }
 
   /**
-   * Post method for creating new tasks. Takes all input from the form and passes them to
-   * taskService which create a Task object. This object is then added to the parameter "model".
+   * Method for creating new tasks. Takes all input from the form and passes them to taskService
+   * which create a Task object. The newly created task is then added to the projects list of tasks.
    *
    * @param webRequest
-   * @param model
    * @author Andreas
    */
-  private void createTask(WebRequest webRequest, Model model) {
+  private void createTask(WebRequest webRequest, Project project)
+      throws TaskCreationException, SystemException {
 
     String taskNameParam = webRequest.getParameter("task-name");
     String taskHoursParam = webRequest.getParameter("task-hours");
@@ -87,23 +127,20 @@ public class SubProjectController {
     String taskStartDate =
         !taskStartDateParam.isEmpty()
             ? taskStartDateParam
-            : "1990-01-01"; // TODO: change to project start date
+            : project.getStartDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
     String taskEndDate =
         !taskEndDateParam.isEmpty()
             ? taskEndDateParam
-            : "1990-01-01"; // TODO: change to project end date
+            : project
+                .getStartDate()
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")); // TODO: More validation
 
-    // TODO Add to Task to project
-    try {
-      model.addAttribute(
-          "Task",
-          taskService.createtask(
-              taskNameParam, hours, resourceTypeParam, taskStartDate, taskEndDate));
-      model.addAttribute("ResourceTypes", taskService.getResourceTypes());
-    } catch (TaskCreationException e) {
-      model.addAttribute("error", e.getMessage());
-    }
+    Task task =
+        TASK_SERVICE.createtask(
+            taskNameParam, hours, resourceTypeParam, taskStartDate, taskEndDate, project.getId());
+
+    project.addTask(task);
   }
 
   @PostMapping("/projects/{projectId}/{subProjectId}/create-task")
@@ -111,33 +148,35 @@ public class SubProjectController {
       WebRequest webRequest,
       Model model,
       @PathVariable int projectId,
-      @PathVariable int subProjectId) {
+      @PathVariable int subProjectId)
+      throws SystemException, TaskCreationException {
 
-    createTask(webRequest, model);
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+      return "redirect:/";
+    }
+
+    User user =
+        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
+
+    ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
+
+    Project subProject = null; // TODO: move
+    for (Project projectComponent : project.getSubProjects()) {
+      if (projectComponent.getId() == subProjectId) {
+        subProject = projectComponent;
+      }
+    }
+
+    if (subProject != null) {
+      createTask(webRequest, subProject);
+    }
 
     return "redirect:/projects/" + projectId + "/" + subProjectId;
   }
 
-  /**
-   * Initial Get method for displaying a task. @Author Andreas
-   *
-   * @param webRequest
-   * @param model
-   * @return
-   */
-  @GetMapping("/task")
-  public String task(WebRequest webRequest, Model model) {
-    if (model.getAttribute("Task") == null) {
-      try {
-        model.addAttribute(
-            "Task",
-            taskService.createtask(
-                "Placeholder", 1.0, "Senior Developer", "1990-01-01", "1991-01-01"));
-        model.addAttribute("ResourceTypes", taskService.getResourceTypes());
-      } catch (TaskCreationException e) {
-        model.addAttribute("error", e.getMessage());
-      }
-    }
-    return "Task";
+  @ExceptionHandler(Exception.class)
+  public String error(Model model, Exception exception) {
+    model.addAttribute("message", exception.getMessage());
+    return "error";
   }
 }

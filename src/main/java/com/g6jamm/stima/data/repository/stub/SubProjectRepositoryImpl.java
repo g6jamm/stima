@@ -1,49 +1,49 @@
 package com.g6jamm.stima.data.repository.stub;
 
 import com.g6jamm.stima.data.repository.SubProjectRepository;
-import com.g6jamm.stima.domain.model.SubProject;
+import com.g6jamm.stima.domain.exception.SystemException;
+import com.g6jamm.stima.domain.model.Project;
+import com.g6jamm.stima.domain.model.ProjectComposite;
+import com.g6jamm.stima.domain.model.ProjectLeaf;
 import com.g6jamm.stima.domain.model.Task;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubProjectRepositoryStub implements SubProjectRepository {
+public class SubProjectRepositoryImpl implements SubProjectRepository {
 
-  private static final List<SubProject> SUB_PROJECTS = new ArrayList<>();
+  private static final List<Project> SUB_PROJECTS = new ArrayList<>();
 
-  public SubProjectRepositoryStub() {
+  public SubProjectRepositoryImpl() {
     if (SUB_PROJECTS.isEmpty()) {
       SUB_PROJECTS.add(
-          new SubProject.SubProjectBuilder()
+          new ProjectLeaf.SubProjectBuilder()
               .subProjectId(SUB_PROJECTS.size() + 1)
               .name("example")
-              .hours(100)
-              .price(80000)
               .startDate(LocalDate.of(2020, 1, 1))
               .endDate(LocalDate.of(2021, 1, 1))
+              .tasks(new ArrayList<Task>())
               .colorCode("green")
               .build());
 
       SUB_PROJECTS.add(
-          new SubProject.SubProjectBuilder()
+          new ProjectLeaf.SubProjectBuilder()
               .subProjectId(SUB_PROJECTS.size() + 1)
               .name("example2")
-              .hours(100)
-              .price(80000)
               .startDate(LocalDate.of(2020, 1, 1))
               .endDate(LocalDate.of(2021, 1, 1))
+              .tasks(new ArrayList<Task>())
               .colorCode("blue")
               .build());
 
       SUB_PROJECTS.add(
-          new SubProject.SubProjectBuilder()
+          new ProjectLeaf.SubProjectBuilder()
               .subProjectId(SUB_PROJECTS.size() + 1)
               .name("example3")
-              .hours(1)
-              .price(500)
               .startDate(LocalDate.of(2020, 5, 1))
               .endDate(LocalDate.of(2021, 8, 1))
+              .tasks(new ArrayList<Task>())
               .colorCode("red")
               .build());
     }
@@ -54,7 +54,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
    * @author Jackie
    */
   @Override
-  public List<SubProject> getSubProjects() {
+  public List<Project> getSubProjects(int projectId) throws SystemException {
     return SUB_PROJECTS;
   }
 
@@ -66,14 +66,13 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
    * @author Jackie
    */
   @Override
-  public SubProject getSubproject(int subProjectId) {
+  public Project getSubproject(int subProjectId) throws SystemException {
 
-    for (SubProject sp : SUB_PROJECTS) {
+    for (Project sp : SUB_PROJECTS) {
       if (sp.getId() == subProjectId) {
         return sp;
       }
     }
-    // TODO exception
     return null;
   }
 
@@ -87,29 +86,26 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
    * @author Jackie
    */
   @Override
-  public SubProject createSubProject(
-      String name, LocalDate startDate, LocalDate endDate, String projectColor) {
+  public ProjectLeaf createSubProject(
+      String name, LocalDate startDate, LocalDate endDate, String projectColor, int parentProjectId)
+      throws SystemException {
 
-    SubProject subProject =
-        new SubProject.SubProjectBuilder()
+    ProjectLeaf subProject =
+        new ProjectLeaf.SubProjectBuilder()
             .subProjectId(SUB_PROJECTS.size() + 1)
             .name(name)
-            // .hours(0)
-            // .price(0)
-            // .tasks(null)
+            .tasks(new ArrayList<Task>())
             .startDate(startDate)
             .endDate(endDate)
             .colorCode(projectColor)
             .build();
 
-    SUB_PROJECTS.add(subProject);
-
     return subProject;
   }
 
   @Override
-  public SubProject deleteSubProject(SubProject subProject) {
-    return subProject;
+  public ProjectLeaf deleteSubProject(int subProjectId) {
+    return null;
   }
 
   /**
@@ -123,7 +119,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
   @Override
   public boolean addTaskToSubProject(int subProjectId, Task task) {
 
-    for (SubProject sp : SUB_PROJECTS) {
+    for (Project sp : SUB_PROJECTS) {
       if (sp.getId() == subProjectId) {
         sp.addTask(task);
         return true;
@@ -141,7 +137,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
    * @author Jackie
    */
   @Override
-  public double getTotalHours(SubProject subProject) {
+  public double getTotalHours(ProjectLeaf subProject) {
     int result = 0;
     List<Task> tasks = subProject.getTasks();
 
@@ -160,7 +156,7 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
    * @author Jackie
    */
   @Override
-  public int getTotalPrice(SubProject subProject) {
+  public int getTotalPrice(ProjectLeaf subProject) {
     int result = 0;
     List<Task> tasks = subProject.getTasks();
 
@@ -170,4 +166,10 @@ public class SubProjectRepositoryStub implements SubProjectRepository {
 
     return result;
   }
+
+  @Override
+  public void editProject(ProjectComposite project) throws SystemException {}
+
+  @Override
+  public void deleteProject(int projectId) throws SystemException {}
 }
