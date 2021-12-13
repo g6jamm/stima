@@ -16,8 +16,10 @@ public class UserService {
   private final ResourceTypeRepository RESOURCE_TYPE_REPOSITORY;
   private final PermissionRepository PERMISSION_REPOSITORY;
 
-
-  public UserService(UserRepository userRepository, ResourceTypeRepository resourceTypeRepository, PermissionRepository permissionRepository) {
+  public UserService(
+      UserRepository userRepository,
+      ResourceTypeRepository resourceTypeRepository,
+      PermissionRepository permissionRepository) {
     this.USER_REPOSITORY = userRepository;
     this.RESOURCE_TYPE_REPOSITORY = resourceTypeRepository;
     this.PERMISSION_REPOSITORY = permissionRepository;
@@ -47,7 +49,13 @@ public class UserService {
    * @throws SignUpException
    * @author Mohamad
    */
-  public User createUser(String firstName, String lastName, String email, String password, String resourceType, String permission)
+  public User createUser(
+      String firstName,
+      String lastName,
+      String email,
+      String password,
+      String resourceType,
+      String permission)
       throws SignUpException, SystemException, ResourceTypeNotFoundException {
     User user =
         new User.UserBuilder()
@@ -57,7 +65,6 @@ public class UserService {
             .resourceType(RESOURCE_TYPE_REPOSITORY.findByName(resourceType))
             .permission(PERMISSION_REPOSITORY.findByName(permission))
             .password(password)
-
             .build();
     return USER_REPOSITORY.createUser(user);
   }

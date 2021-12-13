@@ -16,13 +16,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
-/**
- * @Mohamad
- */
+/** @Mohamad */
 @Controller
 public class UserController { // TODO change name to Login controller?
 
-  private final UserService USER_SERVICE = new UserService(new UserRepositoryImpl(), new ResourceTypeRepositoryImpl(), new PermissionRepositoryImpl());
+  private final UserService USER_SERVICE =
+      new UserService(
+          new UserRepositoryImpl(),
+          new ResourceTypeRepositoryImpl(),
+          new PermissionRepositoryImpl());
 
   @GetMapping("/")
   public String goToHomepage(WebRequest webRequest) {
@@ -65,7 +67,8 @@ public class UserController { // TODO change name to Login controller?
   }
 
   @PostMapping("/create_user")
-  public String createUser(WebRequest webRequest, Model model) throws SystemException, ResourceTypeNotFoundException {
+  public String createUser(WebRequest webRequest, Model model)
+      throws SystemException, ResourceTypeNotFoundException {
     String firstName = webRequest.getParameter("firstname");
     String lastName = webRequest.getParameter("lastname");
     String email = webRequest.getParameter("email");
@@ -76,7 +79,9 @@ public class UserController { // TODO change name to Login controller?
 
     try {
       if (validatePassword(password1, password2)) {
-        User user = USER_SERVICE.createUser(firstName, lastName, email, password1, resourceType, permission);
+        User user =
+            USER_SERVICE.createUser(
+                firstName, lastName, email, password1, resourceType, permission);
         webRequest.setAttribute("user", user.getId(), WebRequest.SCOPE_SESSION);
         return "redirect:/projects";
       }

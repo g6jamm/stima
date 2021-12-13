@@ -2,9 +2,7 @@ package com.g6jamm.stima.data.repository.mysql;
 
 import com.g6jamm.stima.data.repository.RoleRepository;
 import com.g6jamm.stima.data.repository.util.DbManager;
-import com.g6jamm.stima.domain.exception.ResourceTypeNotFoundException;
 import com.g6jamm.stima.domain.exception.SystemException;
-import com.g6jamm.stima.domain.model.ResourceType;
 import com.g6jamm.stima.domain.model.Role;
 
 import java.sql.PreparedStatement;
@@ -26,10 +24,7 @@ public class RoleRepositoryImpl implements RoleRepository {
       while (rs.next()) {
 
         Role role =
-            new Role.RoleBuilder()
-                .id(rs.getInt("role_id"))
-                .name(rs.getString("name"))
-                .build();
+            new Role.RoleBuilder().id(rs.getInt("role_id")).name(rs.getString("name")).build();
 
         result.add(role);
       }
@@ -51,10 +46,7 @@ public class RoleRepositoryImpl implements RoleRepository {
       ResultSet rs = ps.executeQuery();
 
       if (rs.next()) {
-        return new Role.RoleBuilder()
-            .id(rs.getInt("role_id"))
-            .name(rs.getString("name"))
-            .build();
+        return new Role.RoleBuilder().id(rs.getInt("role_id")).name(rs.getString("name")).build();
       }
     } catch (SQLException e) {
       throw new SystemException(e);
