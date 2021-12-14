@@ -127,14 +127,14 @@ public class SubProjectController {
     String taskStartDate =
         !taskStartDateParam.isEmpty()
             ? taskStartDateParam
-            : project.getStartDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            : project.getStartDate().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
 
     String taskEndDate =
         !taskEndDateParam.isEmpty()
             ? taskEndDateParam
             : project
                 .getStartDate()
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")); // TODO: More validation
+                .format(DateTimeFormatter.ofPattern("MM-dd-yyyy")); // TODO: More validation
 
     Task task =
         TASK_SERVICE.createtask(
