@@ -11,7 +11,6 @@ import com.g6jamm.stima.domain.model.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-
 /** @author Mohamd */
 class UserServiceTest {
 

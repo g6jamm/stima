@@ -2,8 +2,9 @@ package com.g6jamm.stima.data.repository.mysql;
 
 import com.g6jamm.stima.data.repository.UserRepository;
 import com.g6jamm.stima.data.repository.util.DbManager;
-import com.g6jamm.stima.domain.exception.SignUpException;
 import com.g6jamm.stima.domain.exception.SystemException;
+import com.g6jamm.stima.domain.model.Permission;
+import com.g6jamm.stima.domain.model.ResourceType;
 import com.g6jamm.stima.domain.model.User;
 
 import java.sql.PreparedStatement;
@@ -16,7 +17,16 @@ public class UserRepositoryImpl implements UserRepository {
   @Override
   public User login(String email, String password) throws SystemException {
     try {
-      String query = "SELECT * FROM users WHERE email = ? AND password = ?";
+      String query =
+          "SELECT * "
+              + "FROM users u "
+              + "INNER JOIN permissions up "
+              + "ON up.permission_id = u.permission_id "
+              + "INNER JOIN resource_types ur "
+              + "ON ur.resource_type_id = u.resource_type_id "
+              + "WHERE u.email = ? "
+              + "AND u.password = ?";
+
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setString(1, email);
       ps.setBytes(2, password.getBytes());
@@ -25,11 +35,21 @@ public class UserRepositoryImpl implements UserRepository {
 
       if (resultSet.next()) {
         return new User.UserBuilder()
+            .id(resultSet.getInt("user_id"))
             .firstName(resultSet.getString("first_name"))
             .lastName(resultSet.getString("last_name"))
             .email(resultSet.getString("email"))
             .password(resultSet.getString("password"))
-            .id(resultSet.getInt("user_id"))
+            .resourceType(
+                new ResourceType.ResourceTypeBuilder()
+                    .id(resultSet.getInt("ur.resource_type_id"))
+                    .name(resultSet.getString("up.name"))
+                    .build())
+            .permission(
+                new Permission.PermissionBuilder()
+                    .id(resultSet.getInt("up.permission_id"))
+                    .name(resultSet.getString("up.name"))
+                    .build())
             .build();
       }
     } catch (SQLException e) {
@@ -39,7 +59,7 @@ public class UserRepositoryImpl implements UserRepository {
   }
 
   @Override
-  public User createUser(User user) throws SignUpException, SystemException {
+  public User createUser(User user) throws SystemException {
     int userId = getNewUserId(user);
     return new User.UserBuilder()
         .firstName(user.getFirstName())
