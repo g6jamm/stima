@@ -18,15 +18,39 @@
         <div class="container">
             <h1 th:text="${subProject.getName}"></h1>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-3">
+
                 <div class="col">
                     <a data-bs-target="#taskModal" data-bs-toggle="modal" href="#">
-                        <div class="card shadow-sm align-items-center justify-content-center card-btn">
-                            <div class="card-body card-text card-text-size-sm card-icon">
-                                +
+                        <div class="card shadow-sm card-btn">
+                            <div class="mt-2 mx-2 blur no-select">
+                                <div class="btn-toolbar float-end" role="toolbar">
+                                    <div class="btn-group" role="group">
+                                    <span class="btn btn-edit">
+                                        <i aria-hidden="true" class="fas fa-pen" style="color: #000"></i>
+                                    </span>
+                                    </div>
+                                    <div class="btn-group" role="group">
+                                    <span class="btn btn-delete">
+                                        <i aria-hidden="true" class="fas fa-trash-alt" style="color: #000"></i>
+                                    </span>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="card-body card-text sm blur no-select" style="margin-top: 23px; color: #000">
+                                <p>Lorem ipsum</p>
+                                <p>Timer: 000.0</p>
+                                <p>Pris: 0000000 DKK</p>
+                                <p>Nødvendige arbejdsdage: 000,00</p>
+                                <p>Nødvendige antal medarbejdere: 00,00</p>
+                                <p>Start date: 2020-01-01</p>
+                                <p>End date: 2021-01-01</p>
+                                <p>Dage tilgængelige i perioden: 00</p>
+                            </div>
+                            <span class="btn-plus-icon"><i aria-hidden="true" class="fas fa-plus"></i></span>
                         </div>
                     </a>
                 </div>
+
                 <div class="col" th:each="task : ${tasks}">
 
                     <div class="card shadow-sm"
@@ -49,15 +73,15 @@
                         </div>
 
                         <a href="#">
-                            <div class="card-body card-text card-text-size-xxsm">
+                            <div class="card-body card-text card-text-size-xxsm card-body-mt">
                                 <p th:text="${task.getName}"></p>
                                 <p th:text="'Timer: ' + ${task.getHours}"></p>
                                 <p th:text="'Pris: ' + ${task.getPrice} + ' DKK'"></p>
                                 <p th:text="'Resource type: ' + ${task.resourceType.getName()}"></p>
                                 <p th:text="'Estimerede arbejdsdage: ' + ${task.calculateWorkdays()}"></p>
                                 <p th:text="'Estimerede resourcer: ' + ${task.calculateResources()}"></p>
-                                <p th:text="'Start date: ' + ${task.getStartDate()}"></p>
-                                <p th:text="'End date: ' + ${task.getEndDate()}"></p>
+                                <p th:text="'Start dato: ' + ${task.getStartDate()}"></p>
+                                <p th:text="'Slut dato: ' + ${task.getEndDate()}"></p>
                             </div>
                         </a>
                     </div>
