@@ -39,24 +39,32 @@ public class TaskRepositoryImpl implements TaskRepository {
   }
 
   @Override
-  public Task getTask(int task_id) throws SystemException {
+  public Task getTask(int taskId) throws SystemException {
     try {
       String query =
-          "SELECT * "
+          "SELECT task_id, "
+              + "t.task.name AS task_name, "
+              + "hours, "
+              + "r.resource_type_id, "
+              + "project_id, "
+              + "start_date, "
+              + "end_date, "
+              + "price_per_hour, "
+              + "r.name AS resource_name "
               + "FROM tasks t "
-              + "INNER JOIN tasks tr "
-              + "ON tr.resource_type_id = t.resource_type_id "
-              + "WHERE tr.resource_type_id = ?";
+              + "INNER JOIN resource_type r "
+              + "ON t.resource_type_id = r.resource_type_id "
+              + "WHERE task_id = ?";
 
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
-      ps.setInt(1, task_id);
+      ps.setInt(1, taskId);
       ResultSet resultSet = ps.executeQuery();
 
       if (resultSet.next()) {
 
         ResourceType resourceType =
             new ResourceType.ResourceTypeBuilder()
-                .name(resultSet.getString("resource_name"))
+                .name(resultSet.getString("name"))
                 .id(resultSet.getInt("resource_type_id"))
                 .pricePrHour(resultSet.getInt("price_per_hour"))
                 .build();
@@ -82,11 +90,19 @@ public class TaskRepositoryImpl implements TaskRepository {
 
     try {
       String query =
-          "SELECT * "
+          "SELECT task_id, "
+              + "t.name as task_name, "
+              + "hours, "
+              + "r.resource_type_id, "
+              + "project_id, "
+              + "start_date, "
+              + "end_date, "
+              + "price_per_hour, "
+              + "r.name AS resource_name "
               + "FROM tasks t "
-              + "INNER JOIN tasks tr "
-              + "ON tr.resource_type_id = t.resource_type_id "
-              + "WHERE tr.resource_type_id = ?";
+              + "INNER JOIN resource_types r "
+              + "ON t.resource_type_id = r.resource_type_id "
+              + "WHERE project_id = ?";
 
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setInt(1, projectId);

@@ -107,7 +107,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
   public void deleteProject(int projectId) throws SystemException {
 
     try {
-      String query = "DELETE FROM projects " + "WHERE project_id = ?";
+      String query = "DELETE FROM projects WHERE project_id = ?";
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setInt(1, projectId);
       ps.execute();
@@ -184,7 +184,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
   }
 
   private boolean linkProjectAndUser(Project project, User user) throws SQLException {
-    String query = "INSERT INTO project_users (project_id, user_id, role_id) " + "VALUES (?, ?, 1)";
+    String query = "INSERT INTO project_users (project_id, user_id, role_id) VALUES (?, ?, 1)";
 
     PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
     ps.setInt(1, project.getId());
