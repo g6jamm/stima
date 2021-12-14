@@ -25,10 +25,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   public List<Project> getSubProjects(int projectId) throws SystemException {
 
     List<Project> subProjects = new ArrayList<>();
-    String query =
-        "SELECT * " +
-            "FROM projects " +
-            "WHERE parent_project_id = ?";
+    String query = "SELECT * " + "FROM projects " + "WHERE parent_project_id = ?";
 
     try {
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
