@@ -57,8 +57,7 @@ public class SubProjectController {
       return "redirect:/";
     }
 
-    User user =
-        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
+    User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
 
     ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
 
@@ -91,8 +90,8 @@ public class SubProjectController {
       return "redirect:/";
     }
 
-    User user =
-        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
+    User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
+
     ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
 
     try {
@@ -155,8 +154,7 @@ public class SubProjectController {
       return "redirect:/";
     }
 
-    User user =
-        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
+    User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
 
     ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
 
@@ -175,8 +173,9 @@ public class SubProjectController {
   }
 
   @ExceptionHandler(Exception.class)
-  public String error(Model model, Exception exception) {
-    model.addAttribute("message", exception.getMessage());
+  public String error(Model model, Exception e) {
+    model.addAttribute("message", e.getMessage());
+    e.printStackTrace();
     return "error";
   }
 }

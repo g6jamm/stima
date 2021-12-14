@@ -18,7 +18,7 @@ import org.springframework.web.context.request.WebRequest;
 
 /** @Mohamad */
 @Controller
-public class UserController { // TODO change name to Login controller?
+public class UserController {
 
   private final UserService USER_SERVICE =
       new UserService(
@@ -35,7 +35,7 @@ public class UserController { // TODO change name to Login controller?
     return "index";
   }
 
-  @GetMapping("/createuser")
+  @GetMapping("/create-user")
   public String signUp(WebRequest webRequest) {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
       return "redirect:/";
@@ -56,7 +56,7 @@ public class UserController { // TODO change name to Login controller?
       String password = webRequest.getParameter("password");
       User user = USER_SERVICE.login(email, password);
 
-      webRequest.setAttribute("user", user.getId(), WebRequest.SCOPE_SESSION);
+      webRequest.setAttribute("user", user, WebRequest.SCOPE_SESSION);
       return "redirect:/projects";
 
     } catch (LoginException e) {
@@ -81,7 +81,7 @@ public class UserController { // TODO change name to Login controller?
         User user =
             USER_SERVICE.createUser(
                 firstName, lastName, email, password1, resourceType, permission);
-        webRequest.setAttribute("user", user.getId(), WebRequest.SCOPE_SESSION);
+        webRequest.setAttribute("user", user, WebRequest.SCOPE_SESSION);
         return "redirect:/projects";
       }
       model.addAttribute("signupFail", "The passwords do not match");
