@@ -64,7 +64,7 @@ public class TaskRepositoryImpl implements TaskRepository {
 
         ResourceType resourceType =
             new ResourceType.ResourceTypeBuilder()
-                .name(resultSet.getString("name"))
+                .name(resultSet.getString("resource_name"))
                 .id(resultSet.getInt("resource_type_id"))
                 .pricePrHour(resultSet.getInt("price_per_hour"))
                 .build();

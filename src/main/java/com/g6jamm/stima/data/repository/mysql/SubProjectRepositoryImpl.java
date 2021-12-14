@@ -26,11 +26,9 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
 
     List<Project> subProjects = new ArrayList<>();
     String query =
-        "SELECT * "
-            + "FROM projects p "
-            + "INNER JOIN tasks pt "
-            + "ON pt.project_id = p.project_id "
-            + "WHERE p.parent_project_id = ?";
+        "SELECT * " +
+            "FROM projects " +
+            "WHERE parent_project_id = ?";
 
     try {
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
