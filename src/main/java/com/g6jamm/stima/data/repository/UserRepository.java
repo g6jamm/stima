@@ -14,6 +14,4 @@ public interface UserRepository {
   boolean userExists(int id) throws SystemException;
 
   int getNewUserId(User user) throws SystemException;
-
-  User getUser(int id) throws SystemException;
 }

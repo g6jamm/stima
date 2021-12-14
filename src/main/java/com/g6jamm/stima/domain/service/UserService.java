@@ -71,15 +71,6 @@ public class UserService {
 
   /**
    * @param userId
-   * @return User if exists
-   * @author Mohamad
-   */
-  public User getUser(int userId) throws SystemException {
-    return USER_REPOSITORY.getUser(userId);
-  }
-
-  /**
-   * @param userId
    * @return true if user exists
    * @author Mohamad
    */

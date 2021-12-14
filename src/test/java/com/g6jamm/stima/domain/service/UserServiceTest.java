@@ -101,28 +101,6 @@ class UserServiceTest {
   //  }
 
   @Test
-  void getUserByIdSuccessfullTest() throws SystemException {
-    UserService userService =
-        new UserService(
-            new UserRepositoryImpl(),
-            new ResourceTypeRepositoryImpl(),
-            new PermissionRepositoryImpl());
-    User actualUser = userService.getUser(1);
-    assertEquals(1, actualUser.getId());
-  }
-
-  @Test
-  void getUserByIdFailTest() throws SystemException {
-    UserService userService =
-        new UserService(
-            new UserRepositoryImpl(),
-            new ResourceTypeRepositoryImpl(),
-            new PermissionRepositoryImpl());
-    User actualUser = userService.getUser(1);
-    assertNotEquals(0, actualUser.getId());
-  }
-
-  @Test
   void userExistsSuccessfullyTest() throws SystemException {
     UserService userService =
         new UserService(

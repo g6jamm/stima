@@ -98,28 +98,4 @@ public class UserRepositoryImpl implements UserRepository {
     }
     return 0;
   }
-
-  @Override
-  public User getUser(int id) throws SystemException {
-    try {
-      String query = "SELECT * FROM users WHERE user_id = ?";
-      PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
-      ps.setInt(1, id);
-
-      ResultSet resultSet = ps.executeQuery();
-      if (resultSet.next()) {
-        return new User.UserBuilder()
-            .firstName(resultSet.getString("first_name"))
-            .lastName(resultSet.getString("last_name"))
-            .email(resultSet.getString("email"))
-            .password(resultSet.getString("password"))
-            .id(resultSet.getInt("user_id"))
-            .build();
-      }
-
-    } catch (SQLException e) {
-      throw new SystemException(e);
-    }
-    return null;
-  }
 }
