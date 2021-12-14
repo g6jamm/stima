@@ -22,7 +22,7 @@
         </div>
 
         <a th:href="${link}">
-            <div class="card-body card-text sm" style="margin-top: 50px">
+            <div class="card-body card-text sm card-body-mt">
                 <p th:text="${project.getName}"></p>
                 <p th:text="'Timer: ' + ${project.calculateHours()}"></p>
                 <p th:text="'Pris: ' + ${project.calculatePrice()} + ' DKK'"></p>
