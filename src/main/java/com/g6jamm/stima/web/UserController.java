@@ -74,8 +74,8 @@ public class UserController {
     String firstNameParam = webRequest.getParameter("user-firstname");
     String lastNameParam = webRequest.getParameter("user-lastname");
     String emailParam = webRequest.getParameter("user-email");
-    String resourceTypeParam = "Junior Developer";
-    String permissionParam = "user";
+    String resourceTypeParam = webRequest.getParameter("user-resource-type");
+    String permissionParam = webRequest.getParameter("user-resource-permission");
     String password1Param = webRequest.getParameter("user-password1");
     String password2Param = webRequest.getParameter("user-password2");
 
