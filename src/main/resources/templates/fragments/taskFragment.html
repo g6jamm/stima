@@ -63,9 +63,9 @@
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label">Resurcetype:</label>
-                            <select class="form-select" name="edit-task-resource-type">
+                            <select class="form-select" name="edit-task-resource-type" required>
                                 <option th:each="resourceType : ${resourceTypes}"
-                                        th:selected="${task.resourceType.getName}"
+                                        th:selected="${task.resourceType.getName == resourceType.getName}"
                                         th:text="${resourceType.getName}"
                                         th:value="${resourceType.getName}">
                                 </option>
