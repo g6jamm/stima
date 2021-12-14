@@ -6,7 +6,7 @@
 
 <nav class="container breadcrumb-container">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active">Projects</li>
+        <li class="breadcrumb-item active">Projekter</li>
     </ol>
 </nav>
 
@@ -17,23 +17,23 @@
                 <div class="col-12 col-lg-9 col-xl-7">
                     <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                         <div class="card-body p-4 p-md-5">
-                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h3>
+                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registrering</h3>
                             <form action="/create_user" method="POST" name="signup" role="form">
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
                                         <div class="form-outline">
-                                            <input type="text" id="firstName" name="firstname"
-                                                   class="form-control form-control-lg"/>
-                                            <label class="form-label" for="firstName">First Name</label>
+                                            <input class="form-control form-control-lg" id="firstName" name="firstname"
+                                                   type="text"/>
+                                            <label class="form-label" for="firstName">Fornavn</label>
                                         </div>
 
                                     </div>
                                     <div class="col-md-6 mb-4">
 
                                         <div class="form-outline">
-                                            <input type="text" id="lastName" name="lastname"
-                                                   class="form-control form-control-lg"/>
-                                            <label class="form-label" for="lastName">Last Name</label>
+                                            <input class="form-control form-control-lg" id="lastName" name="lastname"
+                                                   type="text"/>
+                                            <label class="form-label" for="lastName">Efternavn</label>
                                         </div>
                                     </div>
                                 </div>
@@ -41,8 +41,8 @@
                                     <div class="col-md-6 mb-4 pb-2">
 
                                         <div class="form-outline">
-                                            <input type="email" id="emailAddress" name="email"
-                                                   class="form-control form-control-lg"/>
+                                            <input class="form-control form-control-lg" id="emailAddress" name="email"
+                                                   type="email"/>
                                             <label class="form-label" for="emailAddress">Email</label>
                                         </div>
 
@@ -52,12 +52,12 @@
                                         <div class="col-12">
 
                                             <select class="form-select" name="role">
-                                                <option value="1" disabled>Choose option</option>
+                                                <option disabled value="1">Choose option</option>
                                                 <option value="2">Senior Developer</option>
                                                 <option value="3">Junior Developer</option>
                                                 <option value="4">Project Manager</option>
                                             </select>
-                                            <label class="form-label select-label">Choose Role</label>
+                                            <label class="form-label select-label">Vælg rolle</label>
 
                                         </div>
                                     </div>
@@ -65,14 +65,14 @@
 
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
-                                        <input type="tel" id="password1" name="password1"
-                                               class="form-control form-control-lg"/>
-                                        <label class="form-label" for="password1">Password</label>
+                                        <input class="form-control form-control-lg" id="password1" name="password1"
+                                               type="tel"/>
+                                        <label class="form-label" for="password1">Kode</label>
                                     </div>
                                     <div class="col-md-6 mb-4">
-                                        <input type="tel" id="password2" name="password2"
-                                               class="form-control form-control-lg"/>
-                                        <label class="form-label" for="password2">Repeat Password</label>
+                                        <input class="form-control form-control-lg" id="password2" name="password2"
+                                               type="tel"/>
+                                        <label class="form-label" for="password2">Gentag kode</label>
                                     </div>
                                 </div>
 
