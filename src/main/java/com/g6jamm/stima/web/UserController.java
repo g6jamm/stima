@@ -2,12 +2,14 @@ package com.g6jamm.stima.web;
 
 import com.g6jamm.stima.data.repository.mysql.PermissionRepositoryImpl;
 import com.g6jamm.stima.data.repository.mysql.ResourceTypeRepositoryImpl;
+import com.g6jamm.stima.data.repository.mysql.TaskRepositoryImpl;
 import com.g6jamm.stima.data.repository.mysql.UserRepositoryImpl;
 import com.g6jamm.stima.domain.exception.LoginException;
 import com.g6jamm.stima.domain.exception.ResourceTypeNotFoundException;
 import com.g6jamm.stima.domain.exception.SignUpException;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.User;
+import com.g6jamm.stima.domain.service.TaskService;
 import com.g6jamm.stima.domain.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,9 @@ import org.springframework.web.context.request.WebRequest;
 /** @Mohamad */
 @Controller
 public class UserController {
+
+  private final TaskService TASK_SERVICE =
+      new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryImpl());
 
   private final UserService USER_SERVICE =
       new UserService(
@@ -66,8 +71,45 @@ public class UserController {
     }
   }
 
-  @PostMapping("/create_user")
+  @PostMapping("/create-user")
   public String createUser(WebRequest webRequest, Model model)
+      throws SystemException, ResourceTypeNotFoundException {
+    String firstNameParam = webRequest.getParameter("user-firstname");
+    String lastNameParam = webRequest.getParameter("user-lastname");
+    String emailParam = webRequest.getParameter("user-email");
+    String resourceTypeParam = "Junior Developer";
+    String permissionParam = "user";
+    String password1Param = webRequest.getParameter("user-password1");
+    String password2Param = webRequest.getParameter("user-password2");
+
+    model.addAttribute("resourceTypes", TASK_SERVICE.getResourceTypes());
+
+    try {
+      if (validatePassword(password1Param, password2Param)) {
+        User user =
+            USER_SERVICE.createUser(
+                firstNameParam,
+                lastNameParam,
+                emailParam,
+                password1Param,
+                resourceTypeParam,
+                permissionParam);
+
+        webRequest.setAttribute("user", user, WebRequest.SCOPE_SESSION);
+
+        return "redirect:/projects"; // TODO: redirect to a success page?
+      }
+     // model.addAttribute("signupFail", "Kodeordet matcher ikke.");
+     // return "createUser";
+    } catch (SignUpException e) {
+      model.addAttribute("signupFail", e.getMessage());
+      //return "createUser";
+    }
+    return null;
+  }
+
+  @PostMapping("/create_user")
+  public String createUserOld(WebRequest webRequest, Model model)
       throws SystemException, ResourceTypeNotFoundException {
     String firstName = webRequest.getParameter("firstname");
     String lastName = webRequest.getParameter("lastname");
