@@ -73,12 +73,13 @@
                             <label class="col-form-label">Farve:</label>
                             <select class="form-select" name="edit-project-color" required>
                                 <option th:each="color : ${projectColors}"
-                                        th:selected="${project.getColorCode}"
+                                        th:selected="${project.getColorCode == color.value}"
                                         th:style="'color: #fff; background-color: ' + ${color.value}"
                                         th:text="${color.key}"
                                         th:value="${color.value}">
                                 </option>
                             </select>
+
                         </div>
                     </div>
                     <div class="modal-footer">
