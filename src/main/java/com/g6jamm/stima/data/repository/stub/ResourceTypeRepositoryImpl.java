@@ -42,7 +42,7 @@ public class ResourceTypeRepositoryImpl implements ResourceTypeRepository {
   }
 
   @Override
-  public ResourceType findByName(String resourceTypeName) throws ResourceTypeNotFoundException {
+  public ResourceType getByResourceTypeName(String resourceTypeName) throws ResourceTypeNotFoundException {
     for (ResourceType resourceType : RESOURCE_TYPES) {
       if (resourceType.getName().equals(resourceTypeName)) return resourceType;
     }

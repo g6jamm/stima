@@ -42,7 +42,8 @@ public class ResourceTypeRepositoryImpl implements ResourceTypeRepository {
   }
 
   @Override
-  public ResourceType findByName(String resourceTypeName) throws ResourceTypeNotFoundException {
+  public ResourceType getByResourceTypeName(String resourceTypeName)
+      throws ResourceTypeNotFoundException {
 
     try {
       String query = "SELECT * FROM resource_types WHERE name = ?";

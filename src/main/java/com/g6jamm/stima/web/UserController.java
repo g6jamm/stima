@@ -27,12 +27,11 @@ public class UserController {
           new PermissionRepositoryImpl());
 
   @GetMapping("/")
-  public String goToHomepage(WebRequest webRequest) {
-
-    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
-      return "redirect:/projects";
+  public String index(WebRequest webRequest) {
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+      return "index";
     }
-    return "index";
+    return "redirect:/projects";
   }
 
   @GetMapping("/create-user")
@@ -54,9 +53,11 @@ public class UserController {
     try {
       String email = webRequest.getParameter("email");
       String password = webRequest.getParameter("password");
+
       User user = USER_SERVICE.login(email, password);
 
       webRequest.setAttribute("user", user, WebRequest.SCOPE_SESSION);
+
       return "redirect:/projects";
 
     } catch (LoginException e) {
@@ -81,6 +82,7 @@ public class UserController {
         User user =
             USER_SERVICE.createUser(
                 firstName, lastName, email, password1, resourceType, permission);
+
         webRequest.setAttribute("user", user, WebRequest.SCOPE_SESSION);
         return "redirect:/projects";
       }
