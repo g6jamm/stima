@@ -85,8 +85,7 @@ public class SubProjectController {
   public String createProjectTask(WebRequest webRequest, Model model, @PathVariable int projectId)
       throws SystemException {
 
-    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
-
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
       return "redirect:/";
     }
 
