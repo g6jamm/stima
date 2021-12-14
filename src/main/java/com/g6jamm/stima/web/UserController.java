@@ -2,14 +2,12 @@ package com.g6jamm.stima.web;
 
 import com.g6jamm.stima.data.repository.mysql.PermissionRepositoryImpl;
 import com.g6jamm.stima.data.repository.mysql.ResourceTypeRepositoryImpl;
-import com.g6jamm.stima.data.repository.mysql.TaskRepositoryImpl;
 import com.g6jamm.stima.data.repository.mysql.UserRepositoryImpl;
 import com.g6jamm.stima.domain.exception.LoginException;
 import com.g6jamm.stima.domain.exception.ResourceTypeNotFoundException;
 import com.g6jamm.stima.domain.exception.SignUpException;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.User;
-import com.g6jamm.stima.domain.service.TaskService;
 import com.g6jamm.stima.domain.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
