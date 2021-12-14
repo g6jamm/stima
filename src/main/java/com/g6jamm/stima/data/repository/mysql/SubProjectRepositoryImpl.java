@@ -25,7 +25,12 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   public List<Project> getSubProjects(int projectId) throws SystemException {
 
     List<Project> subProjects = new ArrayList<>();
-    String query = "SELECT * FROM projects WHERE parent_project_id = ?";
+    String query =
+        "SELECT * "
+            + "FROM projects p "
+            + "INNER JOIN tasks pt "
+            + "ON pt.project_id = p.project_id "
+            + "WHERE p.parent_project_id = ?";
 
     try {
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
@@ -38,9 +43,10 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
             new ProjectLeaf.SubProjectBuilder()
                 .subProjectId(rs.getInt("project_id"))
                 .name(rs.getString("name"))
-                .tasks(
-                    TASK_REPOSITORY.getTasks(
-                        rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
+                .tasks(TASK_REPOSITORY.getTasks(rs.getInt("project_id")))
+                // Vi kan spare kald til databasen ved at bygge et
+                // task-objekt i metoden. Dette er bevidst fravalgt, da det
+                // vil gøre koden væsentlig mindre vedligeholdes venlig.
                 .startDate(LocalDate.parse(rs.getString("start_date")))
                 .endDate(LocalDate.parse(rs.getString("end_date")))
                 .colorCode(rs.getString("colorscode"))
@@ -91,8 +97,8 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       int parentProjectId)
       throws SystemException {
     String query =
-        "INSERT INTO projects(name, start_date, end_date, colorscode, parent_project_id) values"
-            + " (?,?,?,?,?)";
+        "INSERT INTO projects(name, start_date, end_date, colorscode, parent_project_id) "
+            + "VALUES (?, ?, ?, ?, ?)";
 
     try {
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
@@ -136,8 +142,10 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
 
     try {
       String query =
-          "UPDATE projects SET name = ?, start_date = ?, end_date = ?, colorscode = ? WHERE"
-              + " project_id = ?";
+          "UPDATE projects "
+              + "SET name = ?, start_date = ?, end_date = ?, colorscode = ? "
+              + "WHERE project_id = ?";
+
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setString(1, subProject.getName());
       ps.setString(2, String.valueOf(Date.valueOf(subProject.getStartDate())));

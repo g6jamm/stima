@@ -25,8 +25,8 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
     try {
       String query =
-          "INSERT INTO projects (name, start_date, end_date, colorscode, parent_project_id) VALUES "
-              + "(?, ?, ?, ?, ?)";
+          "INSERT INTO projects (name, start_date, end_date, colorscode, parent_project_id) "
+              + "VALUES (?, ?, ?, ?, ?)";
       PreparedStatement ps =
           DbManager.getInstance()
               .getConnection()
@@ -67,7 +67,11 @@ public class ProjectRepositoryImpl implements ProjectRepository {
   public ProjectComposite getProject(int projectId) throws SystemException {
 
     try {
-      String query = "SELECT * FROM projects WHERE project_id = ? AND parent_project_id is NULL";
+      String query =
+          "SELECT * "
+              + "FROM projects "
+              + "WHERE project_id = ? "
+              + "AND parent_project_id is NULL";
 
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setInt(1, projectId);
@@ -81,12 +85,14 @@ public class ProjectRepositoryImpl implements ProjectRepository {
             .startDate(LocalDate.parse(rs.getString("start_date")))
             .endDate(LocalDate.parse(rs.getString("end_date")))
             .colorCode(rs.getString("colorscode"))
-            .tasks(
-                TASK_REPOSITORY.getTasks(
-                    rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
-            .subProjects(
-                SUBPROJECT_REPOSITORY.getSubProjects(
-                    rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
+            .tasks(TASK_REPOSITORY.getTasks(rs.getInt("project_id")))
+            // Vi kan spare kald til databasen ved at bygge et
+            // task-objekt i metoden. Dette er bevidst fravalgt, da det
+            // vil gøre koden væsentlig mindre vedligeholdes venlig.
+            .subProjects(SUBPROJECT_REPOSITORY.getSubProjects(rs.getInt("project_id")))
+            // Vi kan spare kald til databasen ved at bygge et
+            // subproject-objekt i metoden. Dette er bevidst fravalgt, da det
+            // vil gøre koden væsentlig mindre vedligeholdes venlig.
             .build();
       }
 
@@ -101,7 +107,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
   public void deleteProject(int projectId) throws SystemException {
 
     try {
-      String query = "DELETE FROM projects WHERE project_id = ?";
+      String query = "DELETE FROM projects " + "WHERE project_id = ?";
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setInt(1, projectId);
       ps.execute();
@@ -116,8 +122,10 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
     try {
       String query =
-          "UPDATE projects SET name = ?, start_date = ?, end_date = ?, colorscode = ? WHERE"
-              + " project_id = ?";
+          "UPDATE projects "
+              + "SET name = ?, start_date = ?, end_date = ?, colorscode = ? "
+              + "WHERE project_id = ?";
+
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setString(1, project.getName());
       ps.setString(2, String.valueOf(Date.valueOf(project.getStartDate())));
@@ -139,8 +147,12 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     try {
 
       String query =
-          "SELECT * FROM project_users pu INNER JOIN projects p ON pu.project_id = p.project_id"
-              + " WHERE user_id = ?";
+          "SELECT * "
+              + "FROM project_users pu "
+              + "INNER JOIN projects p "
+              + "ON pu.project_id = p.project_id "
+              + "WHERE user_id = ?";
+
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setInt(1, user.getId());
       ResultSet rs = ps.executeQuery();
@@ -172,9 +184,8 @@ public class ProjectRepositoryImpl implements ProjectRepository {
   }
 
   private boolean linkProjectAndUser(Project project, User user) throws SQLException {
-    String query =
-        "INSERT INTO project_users (project_id, user_id, role_id) VALUES (?, ?, 1)"; // 1 is for
-    // role_id;
+    String query = "INSERT INTO project_users (project_id, user_id, role_id) " + "VALUES (?, ?, 1)";
+
     PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
     ps.setInt(1, project.getId());
     ps.setInt(2, user.getId());
