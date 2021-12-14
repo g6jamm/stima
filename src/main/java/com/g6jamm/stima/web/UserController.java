@@ -108,34 +108,6 @@ public class UserController {
     return null;
   }
 
-  @PostMapping("/create_user")
-  public String createUserOld(WebRequest webRequest, Model model)
-      throws SystemException, ResourceTypeNotFoundException {
-    String firstName = webRequest.getParameter("firstname");
-    String lastName = webRequest.getParameter("lastname");
-    String email = webRequest.getParameter("email");
-    String resourceType = "Junior Developer";
-    String permission = "user";
-    String password1 = webRequest.getParameter("password1");
-    String password2 = webRequest.getParameter("password2");
-
-    try {
-      if (validatePassword(password1, password2)) {
-        User user =
-            USER_SERVICE.createUser(
-                firstName, lastName, email, password1, resourceType, permission);
-
-        webRequest.setAttribute("user", user, WebRequest.SCOPE_SESSION);
-        return "redirect:/projects";
-      }
-      model.addAttribute("signupFail", "The passwords do not match");
-      return "createUser";
-    } catch (SignUpException e) {
-      model.addAttribute("signupFail", e.getMessage());
-      return "createUser";
-    }
-  }
-
   private boolean validatePassword(String password1, String password2) {
     return password1.equals(password2);
   }
