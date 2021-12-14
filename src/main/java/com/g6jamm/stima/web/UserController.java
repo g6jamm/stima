@@ -22,9 +22,6 @@ import org.springframework.web.context.request.WebRequest;
 @Controller
 public class UserController {
 
-  private final TaskService TASK_SERVICE =
-      new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryImpl());
-
   private final UserService USER_SERVICE =
       new UserService(
           new UserRepositoryImpl(),
@@ -81,8 +78,6 @@ public class UserController {
     String permissionParam = "user";
     String password1Param = webRequest.getParameter("user-password1");
     String password2Param = webRequest.getParameter("user-password2");
-
-    model.addAttribute("resourceTypes", TASK_SERVICE.getResourceTypes());
 
     try {
       if (validatePassword(password1Param, password2Param)) {
