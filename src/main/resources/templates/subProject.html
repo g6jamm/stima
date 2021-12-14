@@ -6,7 +6,7 @@
 
 <nav class="container breadcrumb-container">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a th:href="@{/projects}">Projects</a></li>
+        <li class="breadcrumb-item"><a th:href="@{/projects}">Projekter</a></li>
         <li class="breadcrumb-item active"><a th:href="@{/projects/{projectId} (projectId=${parentProject.getId})}"
                                               th:text="${parentProject.getName}"></a></li>
         <li class="breadcrumb-item active" th:text="${subProject.getName}"></li>
