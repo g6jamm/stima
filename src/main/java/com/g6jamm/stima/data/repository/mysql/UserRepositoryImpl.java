@@ -93,7 +93,7 @@ public class UserRepositoryImpl implements UserRepository {
     try {
       String query =
           "INSERT INTO users(first_name, last_name, email, password, resource_type_id,"
-              + " permission_id) VALUES(?,?,?,?,?,?)";
+              + " permission_id) VALUES(?, ?, ?, ?, ?, ?)";
       PreparedStatement ps =
           DbManager.getInstance()
               .getConnection()

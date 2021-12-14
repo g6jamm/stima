@@ -62,6 +62,7 @@ public class ResourceTypeRepositoryImpl implements ResourceTypeRepository {
     } catch (SQLException e) {
       throw new ResourceTypeNotFoundException("ResourceType does not exists");
     }
+
     return null;
   }
 }
