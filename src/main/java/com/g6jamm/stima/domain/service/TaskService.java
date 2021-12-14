@@ -53,8 +53,7 @@ public class TaskService {
     return RESOURCE_TYPE_REPOSITORY.getResourceTypes();
   }
 
-  private ResourceType getResourceTypeByName(String resourceTypeName)
-      throws TaskCreationException {
+  private ResourceType getResourceTypeByName(String resourceTypeName) throws TaskCreationException {
     try {
       return RESOURCE_TYPE_REPOSITORY.getByResourceTypeName(resourceTypeName);
     } catch (ResourceTypeNotFoundException e) {

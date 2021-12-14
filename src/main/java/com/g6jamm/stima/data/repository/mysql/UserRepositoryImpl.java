@@ -2,7 +2,6 @@ package com.g6jamm.stima.data.repository.mysql;
 
 import com.g6jamm.stima.data.repository.UserRepository;
 import com.g6jamm.stima.data.repository.util.DbManager;
-import com.g6jamm.stima.domain.exception.SignUpException;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.Permission;
 import com.g6jamm.stima.domain.model.ResourceType;
