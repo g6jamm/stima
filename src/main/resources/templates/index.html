@@ -6,17 +6,17 @@
     <main>
         <form action="/login" method="POST" name="login" role="form">
             <img alt="" class="img-center" th:src="@{/img/logo.png}"/>
-            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+            <h1 class="h3 mb-3 fw-normal">Velkommen til stima!</h1>
             <div class="form-floating">
                 <input class="form-control" id="floatingInput" name="email" placeholder="demo@demo.com" type="email">
-                <label for="floatingInput">Email address</label>
+                <label for="floatingInput">Email</label>
             </div>
             <div class="form-floating">
                 <input class="form-control" id="floatingPassword" name="password" placeholder="demo" type="password">
-                <label for="floatingPassword">Password</label>
+                <label for="floatingPassword">Kode</label>
             </div>
             <label class="mb-0" th:text="${loginFail}"></label>
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Log ind</button>
         </form>
     </main>
     <footer th:replace="fragments/footerFragtment :: footer"></footer>
