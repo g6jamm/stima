@@ -83,6 +83,7 @@ public class ProjectController {
     model.addAttribute("projectColors", COLOR_SERVICE.getProjectColors());
     model.addAttribute("classActiveSettings", "active");
     model.addAttribute("resourceTypes", TASK_SERVICE.getResourceTypes());
+    model.addAttribute("permissions", USER_SERVICE.getPermissions());
 
     return "project";
   }
