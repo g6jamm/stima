@@ -9,14 +9,15 @@
             <div class="mt-2 mx-2">
                 <div class="btn-toolbar float-end" role="toolbar">
                     <div class="btn-group" role="group">
-                        <a class="btn btn-edit" data-bs-toggle="modal"
+                        <a aria-label="Redigér" class="btn btn-edit" data-bs-toggle="modal"
                            href="#" th:data-bs-target="'#editTaskModal' + ${task.getId}"
                            type="button"><i
                                 class="fas fa-pen"></i></a>
                     </div>
                     <div class="btn-group" role="group">
                         <form method="POST" th:action="@{{path}/delete-task (path=${link})}">
-                            <button aria-label="Slet" class="btn btn-delete" type="submit"><i class="fas fa-trash-alt"></i></button>
+                            <button aria-label="Slet" class="btn btn-delete" type="submit"><i
+                                    class="fas fa-trash-alt"></i></button>
                         </form>
                     </div>
                 </div>
