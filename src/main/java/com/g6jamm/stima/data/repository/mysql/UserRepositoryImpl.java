@@ -43,7 +43,7 @@ public class UserRepositoryImpl implements UserRepository {
             .resourceType(
                 new ResourceType.ResourceTypeBuilder()
                     .id(resultSet.getInt("ur.resource_type_id"))
-                    .name(resultSet.getString("up.name"))
+                    .name(resultSet.getString("ur.name"))
                     .build())
             .permission(
                 new Permission.PermissionBuilder()
