@@ -22,6 +22,6 @@
             </ul>
         </div>
     </div>
-    <div th:if="${session.user.getPermission.getId == 1}" th:replace="fragments/createUserFragment"></div>
+    <div th:if="${session.user.getPermission.getId == 1}" th:replace="fragments/createUserFragment :: user"></div>
 </nav>
 </html>

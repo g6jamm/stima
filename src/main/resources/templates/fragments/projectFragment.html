@@ -9,8 +9,7 @@
             <div class="btn-toolbar float-end" role="toolbar">
                 <div class="btn-group" role="group">
                     <a aria-label="Redigér" class="btn btn-edit" data-bs-toggle="modal"
-                       href="#" th:data-bs-target="'#editProjectModal' + ${project.getId}"
-                       type="button"><i
+                       href="#" th:data-bs-target="'#editProjectModal' + ${project.getId}"><i
                             class="fas fa-pen"></i></a>
                 </div>
                 <div class="btn-group" role="group">
@@ -36,7 +35,7 @@
         </a>
     </div>
 
-    <div aria-hidden="true" aria-labelledby="editProjectModalLabel" class="modal fade"
+    <div aria-hidden="true" class="modal fade"
          tabindex="-1"
          th:id="'editProjectModal' + ${project.getId}">
         <div class="modal-dialog modal-lg">
@@ -72,7 +71,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label">Farve:</label>
-                            <select class="form-select" name="edit-project-color" required>
+                            <select class="form-select" name="edit-project-color">
                                 <option th:each="color : ${projectColors}"
                                         th:selected="${project.getColorCode == color.value}"
                                         th:style="'color: #fff; background-color: ' + ${color.value}"

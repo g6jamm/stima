@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="da" xmlns:th="http://www.thymeleaf.org">
-<div aria-hidden="true" aria-labelledby="createUserModalLabel" class="modal fade"
-     id="createUserModal"
-     tabindex="-1">
+<div aria-hidden="true" class="modal fade" id="createUserModal"
+     tabindex="-1"
+     th:fragment="user">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -12,7 +12,6 @@
             </div>
             <form method="POST"
                   name="createUserForm"
-                  role="form"
                   th:action="@{/create-user}">
                 <div class="modal-body">
                     <div class="mb-3">
@@ -29,14 +28,14 @@
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label">Resurce type:</label>
-                        <select class="form-select" name="user-resource-type" required>
+                        <select class="form-select" name="user-resource-type">
                             <option th:each="resourceType : ${resourceTypes}" th:text="${resourceType.getName}"
                                     th:value="${resourceType.getName}"></option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label">Tilladelse:</label>
-                        <select class="form-select" name="user-permission" required>
+                        <select class="form-select" name="user-permission">
                             <option th:each="permission : ${permissions}" th:text="${permission.getName}"
                                     th:value="${permission.getName}"></option>
                         </select>
