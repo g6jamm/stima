@@ -155,4 +155,18 @@ public class TaskRepositoryImpl implements TaskRepository {
       throw new SystemException(e);
     }
   }
+
+  @Override
+  public void deleteTask(int taskId) throws SystemException {
+
+    try {
+      String query = "DELETE FROM tasks WHERE task_id = ?";
+      PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
+      ps.setInt(1, taskId);
+      ps.execute();
+
+    } catch (SQLException e) {
+      throw new SystemException(e);
+    }
+  }
 }

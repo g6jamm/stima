@@ -77,4 +77,8 @@ public class TaskService {
 
     TASK_REPOSITORY.editTask(task);
   }
+
+  public void deleteTask(int taskId) throws SystemException {
+    TASK_REPOSITORY.deleteTask(taskId);
+  }
 }

@@ -188,11 +188,28 @@ public class ProjectController {
   }
 
   @PostMapping("/projects/{projectId}/{subprojectId}/delete-project")
-  public String deleteSubProject(@PathVariable int projectId, @PathVariable int subprojectId)
+  public String deleteSubproject(@PathVariable int projectId, @PathVariable int subprojectId)
       throws SystemException {
     SUBPROJECT_SERVICE.deleteProject(subprojectId);
 
     return "redirect:/projects/" + projectId;
+  }
+
+  @PostMapping("/projects/{projectId}/delete-task/{taskId}")
+  public String deleteProjectTask(@PathVariable int projectId, @PathVariable int taskId)
+      throws SystemException {
+    TASK_SERVICE.deleteTask(taskId);
+
+    return "redirect:/projects/" + projectId;
+  }
+
+  @PostMapping("/projects/{projectId}/{subprojectId}/delete-task/{taskId}")
+  public String deleteSubprojectTask(
+      @PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId)
+      throws SystemException {
+    TASK_SERVICE.deleteTask(taskId);
+
+    return "redirect:/projects/" + projectId + "/" + subprojectId;
   }
 
   @PostMapping("/projects/{projectId}/edit-task")
