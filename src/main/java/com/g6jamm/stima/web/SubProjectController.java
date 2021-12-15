@@ -75,6 +75,7 @@ public class SubProjectController {
       model.addAttribute("tasks", tasks);
       model.addAttribute("subProject", subProject);
       model.addAttribute("resourceTypes", TASK_SERVICE.getResourceTypes());
+      model.addAttribute("permissions", USER_SERVICE.getPermissions());
       model.addAttribute("parentProject", project);
 
       return "subProject";
