@@ -125,21 +125,4 @@ public class UserRepositoryImpl implements UserRepository {
 
     return user.getId();
   }
-
-  /**
-   * @param id
-   * @return user with user ID that matches param ID
-   * @author Mohamad
-   */
-  @Override
-  public User getUser(int id) throws SystemException {
-    User result = null;
-
-    for (User u : USER_LIST) {
-      if (u.getId() == id) {
-        result = u;
-      }
-    }
-    return result;
-  }
 }

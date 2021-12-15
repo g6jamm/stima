@@ -10,5 +10,6 @@ public interface ResourceTypeRepository {
 
   public List<ResourceType> getResourceTypes() throws SystemException;
 
-  public ResourceType findByName(String resourceTypeName) throws ResourceTypeNotFoundException;
+  public ResourceType getByResourceTypeName(String resourceTypeName)
+      throws ResourceTypeNotFoundException;
 }

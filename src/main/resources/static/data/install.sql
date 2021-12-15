@@ -12,13 +12,13 @@ DROP TABLE IF EXISTS roles;
 
 CREATE TABLE users
 (
-    user_id         int(10)        NOT NULL AUTO_INCREMENT,
-    first_name      varchar(255)   NOT NULL,
-    last_name       varchar(255)   NOT NULL,
-    email           varchar(255)   NOT NULL UNIQUE,
-    password        varbinary(255) NOT NULL,
+    user_id          int(10)        NOT NULL AUTO_INCREMENT,
+    first_name       varchar(255)   NOT NULL,
+    last_name        varchar(255)   NOT NULL,
+    email            varchar(255)   NOT NULL UNIQUE,
+    password         varbinary(255) NOT NULL,
     resource_type_id int(10)        NOT NULL,
-    permission_id   int(10)        NOT NULL,
+    permission_id    int(10)        NOT NULL,
     PRIMARY KEY (user_id)
 );
 CREATE TABLE projects
@@ -45,8 +45,8 @@ CREATE TABLE tasks
 CREATE TABLE resource_types
 (
     resource_type_id int(10)     NOT NULL AUTO_INCREMENT,
-    price_per_hour  int(10)     NOT NULL,
-    name            varchar(50) NOT NULL,
+    price_per_hour   int(10)     NOT NULL,
+    name             varchar(50) NOT NULL,
     PRIMARY KEY (resource_type_id)
 );
 CREATE TABLE permissions
@@ -76,19 +76,20 @@ CREATE TABLE roles
     name    varchar(255) NOT NULL,
     PRIMARY KEY (role_id)
 );
+
 ALTER TABLE users
-    ADD CONSTRAINT FKusers426032 FOREIGN KEY (permission_id) REFERENCES permissions (permission_id);
+    ADD CONSTRAINT FKusers426032 FOREIGN KEY (permission_id) REFERENCES permissions (permission_id) ON DELETE CASCADE;
 ALTER TABLE project_users
-    ADD CONSTRAINT FKproject_us392526 FOREIGN KEY (project_id) REFERENCES projects (project_id);
+    ADD CONSTRAINT FKproject_us392526 FOREIGN KEY (project_id) REFERENCES projects (project_id) ON DELETE CASCADE;
 ALTER TABLE project_users
-    ADD CONSTRAINT FKproject_us409367 FOREIGN KEY (user_id) REFERENCES users (user_id);
+    ADD CONSTRAINT FKproject_us409367 FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE;
 ALTER TABLE project_users
-    ADD CONSTRAINT FKproject_us744300 FOREIGN KEY (role_id) REFERENCES roles (role_id);
+    ADD CONSTRAINT FKproject_us744300 FOREIGN KEY (role_id) REFERENCES roles (role_id) ON DELETE CASCADE;
 ALTER TABLE tasks
-    ADD CONSTRAINT FKtasks862162 FOREIGN KEY (resource_type_id) REFERENCES resource_types (resource_type_id);
+    ADD CONSTRAINT FKtasks862162 FOREIGN KEY (resource_type_id) REFERENCES resource_types (resource_type_id) ON DELETE CASCADE;
 ALTER TABLE tasks
-    ADD CONSTRAINT FKtasks538315 FOREIGN KEY (project_id) REFERENCES projects (project_id);
+    ADD CONSTRAINT FKtasks538315 FOREIGN KEY (project_id) REFERENCES projects (project_id) ON DELETE CASCADE;
 ALTER TABLE projects
-    ADD CONSTRAINT FKprojects828510 FOREIGN KEY (colorscode) REFERENCES colors (code);
+    ADD CONSTRAINT FKprojects828510 FOREIGN KEY (colorscode) REFERENCES colors (code) ON DELETE CASCADE;
 ALTER TABLE users
-    ADD CONSTRAINT FKusers693904 FOREIGN KEY (resource_type_id) REFERENCES resource_types (resource_type_id);
+    ADD CONSTRAINT FKusers693904 FOREIGN KEY (resource_type_id) REFERENCES resource_types (resource_type_id) ON DELETE CASCADE;

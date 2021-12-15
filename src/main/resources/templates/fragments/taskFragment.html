@@ -22,7 +22,7 @@
                 </div>
             </div>
 
-            <div class="card-body card-text card-text-size-xxsm">
+            <div class="card-body card-text card-text-size-xxsm card-body-mt">
                 <p th:text="${task.getName}"></p>
                 <p th:text="'Timer: ' + ${task.getHours}"></p>
                 <p th:text="'Pris: ' + ${task.getPrice} + ' DKK'"></p>
@@ -51,21 +51,21 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="col-form-label" th:for="'edit-task-name-' + ${task.getId}">Navn:</label>
-                            <input required class="form-control" name="edit-task-name"
+                            <input class="form-control" name="edit-task-name" required
                                    th:id="'edit-task-name-' + ${task.getId}" th:value="${task.getName}"
                                    type="text">
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label" th:for="'edit-task-hours-' + ${task.getId}">Timer:</label>
-                            <input required class="form-control" name="edit-task-hours"
+                            <input class="form-control" name="edit-task-hours" required
                                    th:id="'edit-task-hours-' + ${task.getId}" th:value="${task.getHours}"
                                    type="text">
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label">Resurcetype:</label>
-                            <select class="form-select" name="edit-task-resource-type">
+                            <select class="form-select" name="edit-task-resource-type" required>
                                 <option th:each="resourceType : ${resourceTypes}"
-                                        th:selected="${task.resourceType.getName}"
+                                        th:selected="${task.resourceType.getName == resourceType.getName}"
                                         th:text="${resourceType.getName}"
                                         th:value="${resourceType.getName}">
                                 </option>
@@ -73,12 +73,12 @@
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label" for="edit-task-start-date">Start dag:</label>
-                            <input required class="form-control" id="edit-task-start-date" name="edit-task-start-date"
+                            <input class="form-control" id="edit-task-start-date" name="edit-task-start-date" required
                                    th:value="${task.getStartDate}" type="date">
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label" for="edit-task-end-date">Slut dag:</label>
-                            <input required class="form-control" id="edit-task-end-date" name="edit-task-end-date"
+                            <input class="form-control" id="edit-task-end-date" name="edit-task-end-date" required
                                    th:value="${task.getEndDate}" type="date">
                         </div>
                         <input hidden name="task-id" th:value="${task.getId}"/>

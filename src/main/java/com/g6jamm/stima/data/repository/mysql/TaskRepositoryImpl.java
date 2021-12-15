@@ -20,8 +20,8 @@ public class TaskRepositoryImpl implements TaskRepository {
 
     try {
       String query =
-          "INSERT INTO tasks(name, hours, resource_type_id, project_id, start_date, end_date)"
-              + " VALUES(?,?,?,?,?,?)";
+          "INSERT INTO tasks(name, hours, resource_type_id, project_id, start_date, end_date) "
+              + "VALUES(?, ?, ?, ?, ?, ?)";
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
 
       ps.setString(1, task.getName());
@@ -39,23 +39,25 @@ public class TaskRepositoryImpl implements TaskRepository {
   }
 
   @Override
-  public Task getTask(int task_id) throws SystemException {
+  public Task getTask(int taskId) throws SystemException {
     try {
       String query =
-          "SELECT task_id"
-              + ",t.name AS task_name"
-              + ", hours"
-              + ", r.resource_type_id"
-              + ", project_id"
-              + ", start_date"
-              + ", end_date"
-              + ", price_per_hour"
-              + ", r.name AS resource_name"
-              + "FROM tasks t"
-              + "INNER JOIN resource_type r ON t.resource_type_id = r.resource_type_id"
+          "SELECT task_id, "
+              + "t.task.name AS task_name, "
+              + "hours, "
+              + "r.resource_type_id, "
+              + "project_id, "
+              + "start_date, "
+              + "end_date, "
+              + "price_per_hour, "
+              + "r.name AS resource_name "
+              + "FROM tasks t "
+              + "INNER JOIN resource_type r "
+              + "ON t.resource_type_id = r.resource_type_id "
               + "WHERE task_id = ?";
+
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
-      ps.setInt(1, task_id);
+      ps.setInt(1, taskId);
       ResultSet resultSet = ps.executeQuery();
 
       if (resultSet.next()) {
@@ -88,25 +90,25 @@ public class TaskRepositoryImpl implements TaskRepository {
 
     try {
       String query =
-          "SELECT task_id"
-              + ",t.name as task_name"
-              + ", hours"
-              + ", r.resource_type_id"
-              + ", project_id"
-              + ", start_date"
-              + ", end_date"
-              + ", price_per_hour"
-              + ", r.name as resource_name \n"
-              + "FROM tasks t\n"
-              + "inner join resource_types r on t.resource_type_id = r.resource_type_id\n"
-              + "where project_id = ?";
+          "SELECT task_id, "
+              + "t.name as task_name, "
+              + "hours, "
+              + "r.resource_type_id, "
+              + "project_id, "
+              + "start_date, "
+              + "end_date, "
+              + "price_per_hour, "
+              + "r.name AS resource_name "
+              + "FROM tasks t "
+              + "INNER JOIN resource_types r "
+              + "ON t.resource_type_id = r.resource_type_id "
+              + "WHERE project_id = ?";
 
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setInt(1, projectId);
       ResultSet resultSet = ps.executeQuery();
 
       while (resultSet.next()) {
-
         ResourceType resourceType =
             new ResourceType.ResourceTypeBuilder()
                 .name(resultSet.getString("resource_name"))
@@ -127,6 +129,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     } catch (SQLException e) {
       throw new SystemException(e);
     }
+
     return result;
   }
 
@@ -134,8 +137,9 @@ public class TaskRepositoryImpl implements TaskRepository {
   public void editTask(Task task) throws SystemException {
     try {
       String query =
-          "UPDATE tasks SET name = ?, hours = ?, resource_type_id = ?, start_date = ?, end_date = ?"
-              + " WHERE task_id = ?";
+          "UPDATE tasks "
+              + "SET name = ?, hours = ?, resource_type_id = ?, start_date = ?, end_date = ? "
+              + "WHERE task_id = ?";
 
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
       ps.setString(1, task.getName());

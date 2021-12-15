@@ -57,8 +57,9 @@ public class SubProjectController {
       return "redirect:/";
     }
 
-    User user =
-        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
+    model.addAttribute("classActiveSettings", "active");
+
+    User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
 
     ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
 
@@ -74,6 +75,7 @@ public class SubProjectController {
       model.addAttribute("tasks", tasks);
       model.addAttribute("subProject", subProject);
       model.addAttribute("resourceTypes", TASK_SERVICE.getResourceTypes());
+      model.addAttribute("permissions", USER_SERVICE.getPermissions());
       model.addAttribute("parentProject", project);
 
       return "subProject";
@@ -86,13 +88,12 @@ public class SubProjectController {
   public String createProjectTask(WebRequest webRequest, Model model, @PathVariable int projectId)
       throws SystemException {
 
-    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) != null) {
-
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
       return "redirect:/";
     }
 
-    User user =
-        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
+    User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
+
     ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
 
     try {
@@ -127,14 +128,14 @@ public class SubProjectController {
     String taskStartDate =
         !taskStartDateParam.isEmpty()
             ? taskStartDateParam
-            : project.getStartDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            : project.getStartDate().format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
 
     String taskEndDate =
         !taskEndDateParam.isEmpty()
             ? taskEndDateParam
             : project
                 .getStartDate()
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")); // TODO: More validation
+                .format(DateTimeFormatter.ofPattern("MM-dd-yyyy")); // TODO: More validation
 
     Task task =
         TASK_SERVICE.createtask(
@@ -155,8 +156,7 @@ public class SubProjectController {
       return "redirect:/";
     }
 
-    User user =
-        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
+    User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
 
     ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
 
@@ -175,8 +175,9 @@ public class SubProjectController {
   }
 
   @ExceptionHandler(Exception.class)
-  public String error(Model model, Exception exception) {
-    model.addAttribute("message", exception.getMessage());
+  public String error(Model model, Exception e) {
+    model.addAttribute("message", e.getMessage());
+    e.printStackTrace();
     return "error";
   }
 }

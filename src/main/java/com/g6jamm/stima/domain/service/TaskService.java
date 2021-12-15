@@ -34,7 +34,7 @@ public class TaskService {
         new Task.TaskBuilder()
             .name(taskName)
             .hours(hours)
-            .resourceType(findResourceTypeByName(resourceType))
+            .resourceType(getResourceTypeByName(resourceType))
             .startDate(convertStringToDate(startDate))
             .endDate(convertStringToDate(endDate))
             .build();
@@ -53,11 +53,9 @@ public class TaskService {
     return RESOURCE_TYPE_REPOSITORY.getResourceTypes();
   }
 
-  private ResourceType findResourceTypeByName(String resourceTypeName)
-      throws TaskCreationException {
+  private ResourceType getResourceTypeByName(String resourceTypeName) throws TaskCreationException {
     try {
-      ResourceType resourceType = RESOURCE_TYPE_REPOSITORY.findByName(resourceTypeName);
-      return resourceType;
+      return RESOURCE_TYPE_REPOSITORY.getByResourceTypeName(resourceTypeName);
     } catch (ResourceTypeNotFoundException e) {
       throw new TaskCreationException(e.getMessage());
     }
@@ -71,7 +69,7 @@ public class TaskService {
         new Task.TaskBuilder()
             .name(taskName)
             .hours(hours)
-            .resourceType(findResourceTypeByName(resourceType))
+            .resourceType(getResourceTypeByName(resourceType))
             .startDate(convertStringToDate(startDate))
             .endDate(convertStringToDate(endDate))
             .id(id)

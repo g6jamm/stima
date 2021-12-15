@@ -1,5 +1,8 @@
 USE stima;
 
+SET FOREIGN_KEY_CHECKS = 0;
+SET AUTO_INCREMENT_INCREMENT = 1;
+
 INSERT INTO permissions (permission_id, name)
 VALUES (1, 'admin'),
        (2, 'user');
@@ -34,7 +37,6 @@ VALUES ('Thor', '2021-01-01', '2021-01-02', '#dc5b6e', null),
 
 INSERT INTO users (first_name, last_name, email, password, resource_type_id, permission_id)
 VALUES ('John', 'Doe', 'demo@demo.com', _binary 'Demo', 1, 2),
-       ('John', 'Doe', '', _binary '', 1, 1), #tmp dev account
        ('Admin', 'Admin', 'admin@stima.com', _binary 'admin', 1, 1);
 
 INSERT INTO tasks (name, hours, resource_type_id, project_id, start_date, end_date)
@@ -44,8 +46,7 @@ VALUES ('Sprite', 200, 1, 1, '2021-01-01', '2021-01-02'),
        ('Sunset', 200, 1, 1, '2021-01-01', '2021-01-02');
 
 INSERT INTO project_users (project_id, user_id, role_id)
-VALUES (1, 2, 1),
-       (2, 2, 1),
-       (3, 2, 1),
-       (4, 2, 1),
-       (5, 2, 1);
+VALUES (1, 1, 1),
+       (2, 1, 1),
+       (3, 1, 1),
+       (4, 1, 1);

@@ -43,12 +43,15 @@ public class ProjectController {
       return "redirect:/";
     }
 
-    User user =
-        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
+    User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
+
     List<ProjectComposite> projects = PROJECT_SERVICE.getProjects(user);
 
     model.addAttribute("projects", projects);
+    model.addAttribute("classActiveSettings", "active");
     model.addAttribute("projectColors", COLOR_SERVICE.getProjectColors());
+    model.addAttribute("resourceTypes", TASK_SERVICE.getResourceTypes());
+    model.addAttribute("permissions", USER_SERVICE.getPermissions());
 
     return "projects";
   }
@@ -67,8 +70,8 @@ public class ProjectController {
       return "redirect:/";
     }
 
-    User user =
-        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
+    User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
+
     ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
 
     List<Project> subProjects = project.getSubProjects();
@@ -80,6 +83,7 @@ public class ProjectController {
     model.addAttribute("projectColors", COLOR_SERVICE.getProjectColors());
     model.addAttribute("classActiveSettings", "active");
     model.addAttribute("resourceTypes", TASK_SERVICE.getResourceTypes());
+    model.addAttribute("permissions", USER_SERVICE.getPermissions());
 
     return "project";
   }
@@ -91,8 +95,7 @@ public class ProjectController {
       return "redirect:/";
     }
 
-    User user =
-        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
+    User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
 
     String subProjectNameParam = webRequest.getParameter("create-subproject-name");
     String startDateParam = webRequest.getParameter("create-subproject-start-date");
@@ -115,13 +118,12 @@ public class ProjectController {
   }
 
   @PostMapping("/projects/create-project")
-  public String createProject(WebRequest webRequest, Model model) throws SystemException {
+  public String createProject(WebRequest webRequest) throws SystemException {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
       return "redirect:/";
     }
 
-    User user =
-        USER_SERVICE.getUser((Integer) (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION)));
+    User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
 
     String projectNameParam = webRequest.getParameter("create-project-name");
     String startDateParam = webRequest.getParameter("create-project-start-date");
@@ -242,8 +244,9 @@ public class ProjectController {
   }
 
   @ExceptionHandler(Exception.class)
-  public String error(Model model, Exception exception) {
-    model.addAttribute("message", exception.getMessage());
+  public String error(Model model, Exception e) {
+    model.addAttribute("message", e.getMessage());
+    e.printStackTrace();
     return "error";
   }
 }
