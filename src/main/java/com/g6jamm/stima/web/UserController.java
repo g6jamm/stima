@@ -66,32 +66,39 @@ public class UserController {
     }
   }
 
-  @PostMapping("/create_user")
+  @PostMapping("/create-user")
   public String createUser(WebRequest webRequest, Model model)
       throws SystemException, ResourceTypeNotFoundException {
-    String firstName = webRequest.getParameter("firstname");
-    String lastName = webRequest.getParameter("lastname");
-    String email = webRequest.getParameter("email");
-    String resourceType = "Junior Developer";
-    String permission = "user";
-    String password1 = webRequest.getParameter("password1");
-    String password2 = webRequest.getParameter("password2");
+    String firstNameParam = webRequest.getParameter("user-firstname");
+    String lastNameParam = webRequest.getParameter("user-lastname");
+    String emailParam = webRequest.getParameter("user-email");
+    String resourceTypeParam = webRequest.getParameter("user-resource-type");
+    String permissionIdParam = webRequest.getParameter("user-permission");
+    String password1Param = webRequest.getParameter("user-password1");
+    String password2Param = webRequest.getParameter("user-password2");
 
     try {
-      if (validatePassword(password1, password2)) {
+      if (validatePassword(password1Param, password2Param)) {
         User user =
             USER_SERVICE.createUser(
-                firstName, lastName, email, password1, resourceType, permission);
+                firstNameParam,
+                lastNameParam,
+                emailParam,
+                password1Param,
+                resourceTypeParam,
+                permissionIdParam);
 
         webRequest.setAttribute("user", user, WebRequest.SCOPE_SESSION);
-        return "redirect:/projects";
+
+        return "redirect:/projects"; // TODO: redirect to a success page?
       }
-      model.addAttribute("signupFail", "The passwords do not match");
-      return "createUser";
+      // model.addAttribute("signupFail", "Kodeordet matcher ikke.");
+      // return "createUser";
     } catch (SignUpException e) {
       model.addAttribute("signupFail", e.getMessage());
-      return "createUser";
+      // return "createUser";
     }
+    return null;
   }
 
   private boolean validatePassword(String password1, String password2) {

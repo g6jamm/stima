@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<div aria-hidden="true" aria-labelledby="createUserModalLabel" class="modal fade"
+     id="createUserModal"
+     tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createUserModalLabel">Tilføj ny bruger</h5>
+                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
+                        type="button"></button>
+            </div>
+            <form method="POST"
+                  name="createUserForm"
+                  role="form"
+                  th:action="@{/create-user}">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="col-form-label" for="user-firstname">Fornavn:</label>
+                        <input class="form-control" id="user-firstname" name="user-firstname" required type="text">
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label" for="user-lastname">Efternavn:</label>
+                        <input class="form-control" id="user-lastname" name="user-lastname" required type="text">
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label" for="user-email">Email:</label>
+                        <input class="form-control" id="user-email" name="user-email" required type="email">
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Resurce type:</label>
+                        <select class="form-select" name="user-resource-type" required>
+                            <option th:each="resourceType : ${resourceTypes}" th:text="${resourceType.getName}"
+                                    th:value="${resourceType.getName}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Tilladelse:</label>
+                        <select class="form-select" name="user-permission" required>
+                            <option th:each="permission : ${permissions}" th:text="${permission.getName}"
+                                    th:value="${permission.getName}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label" for="user-password1">Kode:</label>
+                        <input class="form-control" id="user-password1" name="user-password1" required
+                               type="password">
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label" for="user-password2">Gentag kode:</label>
+                        <input class="form-control" id="user-password2" name="user-password2" required
+                               type="password">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">
+                        Luk
+                    </button>
+                    <button class="btn btn-primary" type="submit">Opret</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</html>

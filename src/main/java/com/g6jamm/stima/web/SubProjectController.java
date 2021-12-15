@@ -57,6 +57,8 @@ public class SubProjectController {
       return "redirect:/";
     }
 
+    model.addAttribute("classActiveSettings", "active");
+
     User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
 
     ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);

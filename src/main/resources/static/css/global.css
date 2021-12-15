@@ -1,6 +1,7 @@
 html, body {
     background-color: #f5f5f5;
     font-family: Montserrat, sans-serif;
+    height: 100%;
 }
 
 .container {
@@ -106,4 +107,40 @@ a, a:hover {
 
 .card-body-mt {
     margin-top: 30px;
+}
+
+.content-center {
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.container-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+}
+
+.container-signin .form-floating:focus-within {
+    z-index: 2;
+}
+
+.container-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.container-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.img-center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
 }
