@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 public class TaskServiceTest {
 
   @Test
-  public void createValidTaskTest() throws TaskCreationException, SystemException {
+  public void testCreateValidTask() throws TaskCreationException, SystemException {
     TaskService taskService =
         new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryImpl());
     Task task =

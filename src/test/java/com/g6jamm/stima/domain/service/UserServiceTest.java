@@ -1,7 +1,7 @@
 package com.g6jamm.stima.domain.service;
 
-import com.g6jamm.stima.data.repository.stub.ResourceTypeRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.PermissionRepositoryImpl;
+import com.g6jamm.stima.data.repository.stub.ResourceTypeRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.UserRepositoryImpl;
 import com.g6jamm.stima.domain.exception.LoginException;
 import com.g6jamm.stima.domain.exception.ResourceTypeNotFoundException;
@@ -19,7 +19,7 @@ class UserServiceTest {
    * constructor @Author Andreas
    */
   @Test
-  void createUserUserIdIncrements()
+  void testCreateUserUserIdIncrements()
       throws SignUpException, SystemException, ResourceTypeNotFoundException {
     UserService userService =
         new UserService(
@@ -35,11 +35,11 @@ class UserServiceTest {
     User actual =
         userService.createUser(firstName, lastName, email, password, resourceType, permission);
 
-    Assertions.assertEquals(3, actual.getId());
+    Assertions.assertEquals(4, actual.getId());
   }
 
   @Test
-  void loginSuccessfullyReturnCorrectUserTest() throws LoginException, SystemException {
+  void testLoginSuccessfullyReturnCorrectUser() throws LoginException, SystemException {
     UserService userService =
         new UserService(
             new UserRepositoryImpl(),
@@ -53,7 +53,7 @@ class UserServiceTest {
   }
 
   @Test
-  void loginFailReturnCorrectUserTest() throws LoginException, SystemException {
+  void testLoginFailReturnCorrectUser() throws LoginException, SystemException {
     UserService userService =
         new UserService(
             new UserRepositoryImpl(),
@@ -67,7 +67,7 @@ class UserServiceTest {
   }
 
   @Test
-  void createNewUserSuccessfullyTest()
+  void testCreateNewUserSuccessfully()
       throws SignUpException, SystemException, ResourceTypeNotFoundException {
     UserService userService =
         new UserService(
@@ -85,20 +85,8 @@ class UserServiceTest {
     Assertions.assertEquals("demo420@demo.com", actual.getEmail());
   }
 
-  //  @Test
-  //  void createNewUserUserAlreadyExistFailTest() throws LoginException {
-  //    UserService userService = new UserService(new UserRepositoryStub());
-  //    String firstName = "Bob";
-  //    String lastName = "Marley";
-  //    String email = "demo@demo.com";
-  //    String password = "demo";
-  //    assertThrows(LoginException.class, () ->
-  // userService.createUser(firstName,lastName,email,password));
-  //
-  //  }
-
   @Test
-  void userExistsSuccessfullyTest() throws SystemException {
+  void testUserExistsSuccessfully() throws SystemException {
     UserService userService =
         new UserService(
             new UserRepositoryImpl(),
@@ -106,11 +94,11 @@ class UserServiceTest {
             new PermissionRepositoryImpl());
     boolean doesUserExist = userService.userExists(1);
 
-    Assertions.assertEquals(true, doesUserExist);
+    Assertions.assertTrue(doesUserExist);
   }
 
   @Test
-  void userExistsFailTest() throws SystemException {
+  void testExistsFail() throws SystemException {
     UserService userService =
         new UserService(
             new UserRepositoryImpl(),
