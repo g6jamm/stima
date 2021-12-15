@@ -73,7 +73,7 @@ public class UserController {
     String lastNameParam = webRequest.getParameter("user-lastname");
     String emailParam = webRequest.getParameter("user-email");
     String resourceTypeParam = webRequest.getParameter("user-resource-type");
-    String permissionParam = webRequest.getParameter("user-resource-permission");
+    String permissionIdParam = webRequest.getParameter("user-permission");
     String password1Param = webRequest.getParameter("user-password1");
     String password2Param = webRequest.getParameter("user-password2");
 
@@ -86,7 +86,7 @@ public class UserController {
                 emailParam,
                 password1Param,
                 resourceTypeParam,
-                permissionParam);
+                permissionIdParam);
 
         webRequest.setAttribute("user", user, WebRequest.SCOPE_SESSION);
 

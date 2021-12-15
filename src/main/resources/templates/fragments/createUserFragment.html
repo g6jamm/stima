@@ -36,7 +36,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label">Tilladelse:</label>
-                        <select class="form-select" name="user-permission-type" required>
+                        <select class="form-select" name="user-permission" required>
                             <option th:each="permission : ${permissions}" th:text="${permission.getName}"
                                     th:value="${permission.getName}"></option>
                         </select>

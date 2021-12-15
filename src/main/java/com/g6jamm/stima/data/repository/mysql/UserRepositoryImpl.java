@@ -103,8 +103,8 @@ public class UserRepositoryImpl implements UserRepository {
       ps.setString(2, user.getLastName());
       ps.setString(3, user.getEmail());
       ps.setBytes(4, user.getPassword().getBytes());
-      ps.setInt(5, user.getResourceType().getId()); // implementeres i senere iteration
-      ps.setInt(6, user.getPermission().getId()); // implementeres i senere iteration
+      ps.setInt(5, user.getResourceType().getId());
+      ps.setInt(6, user.getPermission().getId());
 
       ps.executeUpdate();
       ResultSet resultSet = ps.getGeneratedKeys();

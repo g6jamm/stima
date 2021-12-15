@@ -7,7 +7,10 @@ import com.g6jamm.stima.domain.exception.LoginException;
 import com.g6jamm.stima.domain.exception.ResourceTypeNotFoundException;
 import com.g6jamm.stima.domain.exception.SignUpException;
 import com.g6jamm.stima.domain.exception.SystemException;
+import com.g6jamm.stima.domain.model.Permission;
 import com.g6jamm.stima.domain.model.User;
+
+import java.util.List;
 
 /** @author Mohamad */
 public class UserService {
@@ -66,6 +69,7 @@ public class UserService {
             .permission(PERMISSION_REPOSITORY.findByName(permission))
             .password(password)
             .build();
+
     return USER_REPOSITORY.createUser(user);
   }
 
@@ -76,5 +80,9 @@ public class UserService {
    */
   public boolean userExists(int userId) throws SystemException {
     return USER_REPOSITORY.userExists(userId);
+  }
+
+  public List<Permission> getPermissions() throws SystemException {
+    return PERMISSION_REPOSITORY.getPermissions();
   }
 }
