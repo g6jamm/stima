@@ -54,12 +54,10 @@ public class Headproject implements Project {
   }
 
   /**
-   * Method for calculating totalhours of a project.
-   * Loops through subprojects and tasks to find the total.
+   * Method for calculating totalhours of a project. Loops through subprojects and tasks to find the
+   * total.
    *
-   * may be called recursivly.
-   *
-   * @Author Andreas
+   * <p>may be called recursivly. @Author Andreas
    */
   public double calculateHours() {
     double totalHours = 0.0;
@@ -77,11 +75,11 @@ public class Headproject implements Project {
   }
 
   /**
-   * Method for calculating totalprice of a project.
-   * Loops through subprojects and tasks to find the total.
-   * may be called recursivly.
+   * Method for calculating totalprice of a project. Loops through subprojects and tasks to find the
+   * total. may be called recursivly.
    *
-   * @auther Mathias, Andreas*/
+   * @auther Mathias, Andreas
+   */
   public int calculatePrice() {
     int totalPrice = 0;
     if (!SUB_PROJECTS.isEmpty()) {
