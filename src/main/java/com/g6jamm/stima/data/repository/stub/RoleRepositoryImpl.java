@@ -13,7 +13,7 @@ public class RoleRepositoryImpl implements RoleRepository {
   }
 
   @Override
-  public Role findByName(String roleName) throws SystemException {
+  public Role getRole(String roleName) throws SystemException {
     return null;
   }
 }

@@ -50,9 +50,7 @@ public class UserRepositoryImpl implements UserRepository {
   }
 
   /**
-   * @param email
-   * @param password
-   * @return User if user exist in stub data, else rturns null
+   * @return User if user exist in stub data, else return null
    * @author Mohamad
    */
   @Override
@@ -67,7 +65,6 @@ public class UserRepositoryImpl implements UserRepository {
   }
 
   /**
-   * @param user
    * @return New user, and assigns ID to user
    * @author Mohamad
    */
@@ -92,7 +89,6 @@ public class UserRepositoryImpl implements UserRepository {
   }
 
   /**
-   * @param userId
    * @return true if user exists in list
    * @author Mohamad
    */
@@ -106,7 +102,6 @@ public class UserRepositoryImpl implements UserRepository {
   }
 
   /**
-   * @param user
    * @return New user ID
    * @author Mohamad
    */

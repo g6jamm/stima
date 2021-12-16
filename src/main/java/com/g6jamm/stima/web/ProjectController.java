@@ -33,8 +33,6 @@ public class ProjectController {
   /**
    * View all projects.
    *
-   * @param model Model
-   * @return String
    * @auther Mathias
    */
   @GetMapping("/projects")
@@ -45,7 +43,7 @@ public class ProjectController {
 
     User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
 
-    List<ProjectComposite> projects = PROJECT_SERVICE.getProjects(user);
+    List<Headproject> projects = PROJECT_SERVICE.getProjects(user);
 
     model.addAttribute("projects", projects);
     model.addAttribute("classActiveSettings", "active");
@@ -59,8 +57,6 @@ public class ProjectController {
   /**
    * View a specific project.
    *
-   * @param model Model
-   * @return String
    * @auther Mathias
    */
   @GetMapping("/projects/{projectId}")
@@ -72,7 +68,7 @@ public class ProjectController {
 
     User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
 
-    ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
+    Headproject project = PROJECT_SERVICE.getProjectById(user, projectId);
 
     List<Project> subProjects = project.getSubProjects();
     model.addAttribute("projects", subProjects);
@@ -88,6 +84,11 @@ public class ProjectController {
     return "project";
   }
 
+  /**
+   * Create a subproject.
+   *
+   * @auther Mathias
+   */
   @PostMapping("/projects/{projectId}/create-subproject")
   public String createSubProject(WebRequest webRequest, @PathVariable int projectId)
       throws SystemException {
@@ -102,9 +103,9 @@ public class ProjectController {
     String endDateParam = webRequest.getParameter("create-subproject-end-date");
     String projectColorParam = webRequest.getParameter("create-subproject-color");
 
-    ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
+    Headproject project = PROJECT_SERVICE.getProjectById(user, projectId);
 
-    ProjectLeaf subProject =
+    Subproject subProject =
         SUBPROJECT_SERVICE.createSubProject(
             subProjectNameParam,
             LocalDate.parse(startDateParam),
@@ -117,6 +118,11 @@ public class ProjectController {
     return "redirect:/projects/" + projectId;
   }
 
+  /**
+   * Create a headproject.
+   *
+   * @auther Mathias
+   */
   @PostMapping("/projects/create-project")
   public String createProject(WebRequest webRequest) throws SystemException {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
@@ -130,17 +136,21 @@ public class ProjectController {
     String endDateParam = webRequest.getParameter("create-project-end-date");
     String projectColorParam = webRequest.getParameter("create-project-color");
 
-    ProjectComposite project =
-        PROJECT_SERVICE.createProject(
-            projectNameParam,
-            LocalDate.parse(startDateParam),
-            LocalDate.parse(endDateParam),
-            projectColorParam,
-            user);
+    PROJECT_SERVICE.createProject(
+        projectNameParam,
+        LocalDate.parse(startDateParam),
+        LocalDate.parse(endDateParam),
+        projectColorParam,
+        user);
 
     return "redirect:/projects";
   }
 
+  /**
+   * Edit a subproject.
+   *
+   * @auther Mathias
+   */
   @PostMapping("/projects/{projectId}/{subprojectId}/edit-project")
   public String editSubProject(
       WebRequest webRequest, @PathVariable int projectId, @PathVariable int subprojectId)
@@ -161,6 +171,11 @@ public class ProjectController {
     return "redirect:/projects/" + projectId;
   }
 
+  /**
+   * Edit a headproject.
+   *
+   * @auther Mathias
+   */
   @PostMapping("/projects/{projectId}/edit-project")
   public String editProject(WebRequest webRequest, @PathVariable int projectId)
       throws SystemException {
@@ -180,6 +195,11 @@ public class ProjectController {
     return "redirect:/projects";
   }
 
+  /**
+   * Edit a headproject.
+   *
+   * @auther Mathias
+   */
   @PostMapping("/projects/{projectId}/delete-project")
   public String deleteProject(@PathVariable int projectId) throws SystemException {
     PROJECT_SERVICE.deleteProject(projectId);
@@ -187,6 +207,11 @@ public class ProjectController {
     return "redirect:/projects";
   }
 
+  /**
+   * Delte a subproject.
+   *
+   * @auther Mathias
+   */
   @PostMapping("/projects/{projectId}/{subprojectId}/delete-project")
   public String deleteSubproject(@PathVariable int projectId, @PathVariable int subprojectId)
       throws SystemException {
@@ -195,6 +220,11 @@ public class ProjectController {
     return "redirect:/projects/" + projectId;
   }
 
+  /**
+   * Delete a task.
+   *
+   * @auther Mathias
+   */
   @PostMapping("/projects/{projectId}/delete-task/{taskId}")
   public String deleteProjectTask(@PathVariable int projectId, @PathVariable int taskId)
       throws SystemException {
@@ -203,6 +233,11 @@ public class ProjectController {
     return "redirect:/projects/" + projectId;
   }
 
+  /**
+   * Delete a task.
+   *
+   * @auther Mathias
+   */
   @PostMapping("/projects/{projectId}/{subprojectId}/delete-task/{taskId}")
   public String deleteSubprojectTask(
       @PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId)
@@ -212,6 +247,11 @@ public class ProjectController {
     return "redirect:/projects/" + projectId + "/" + subprojectId;
   }
 
+  /**
+   * Edit a task.
+   *
+   * @auther Mathias
+   */
   @PostMapping("/projects/{projectId}/edit-task")
   public String editProjectTask(WebRequest webRequest, @PathVariable int projectId)
       throws TaskCreationException, SystemException {
@@ -234,6 +274,11 @@ public class ProjectController {
     return "redirect:/projects/" + projectId;
   }
 
+  /**
+   * Edit a task.
+   *
+   * @auther Mathias
+   */
   @PostMapping("/projects/{projectId}/{subprojectId}/edit-task")
   public String editSubProjectTask(
       WebRequest webRequest, @PathVariable int projectId, @PathVariable int subprojectId)
@@ -246,9 +291,6 @@ public class ProjectController {
     String endDateParam = webRequest.getParameter("edit-task-end-date");
     String taskIdParam = webRequest.getParameter("task-id");
 
-    // TODO check if valid date
-    // TODO check if date are inside project start and end
-
     TASK_SERVICE.editTask(
         nameParam,
         Double.parseDouble(hoursParam),
@@ -260,6 +302,7 @@ public class ProjectController {
     return "redirect:/projects/" + projectId + "/" + subprojectId;
   }
 
+  /** @auther Mohamad */
   @ExceptionHandler(Exception.class)
   public String error(Model model, Exception e) {
     model.addAttribute("message", e.getMessage());

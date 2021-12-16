@@ -1,7 +1,7 @@
 package com.g6jamm.stima.data.repository.mysql;
 
 import com.g6jamm.stima.data.repository.ProjectColorRepository;
-import com.g6jamm.stima.data.repository.util.DbManager;
+import com.g6jamm.stima.data.repository.mysql.util.DbManager;
 import com.g6jamm.stima.domain.exception.SystemException;
 
 import java.sql.ResultSet;
@@ -9,7 +9,14 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+/** @author Mathias */
 public class ProjectColorImpl implements ProjectColorRepository {
+
+  /**
+   * Returns map of product colors.
+   *
+   * @auther Mathias
+   */
   public Map<String, String> getProjectColors() throws SystemException {
 
     try {

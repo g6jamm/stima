@@ -1,14 +1,10 @@
 package com.g6jamm.stima.web;
 
-import com.g6jamm.stima.data.repository.mysql.PermissionRepositoryImpl;
-import com.g6jamm.stima.data.repository.mysql.ProjectRepositoryImpl;
-import com.g6jamm.stima.data.repository.mysql.ResourceTypeRepositoryImpl;
-import com.g6jamm.stima.data.repository.mysql.TaskRepositoryImpl;
-import com.g6jamm.stima.data.repository.mysql.UserRepositoryImpl;
+import com.g6jamm.stima.data.repository.mysql.*;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
+import com.g6jamm.stima.domain.model.Headproject;
 import com.g6jamm.stima.domain.model.Project;
-import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.Task;
 import com.g6jamm.stima.domain.model.User;
 import com.g6jamm.stima.domain.service.ProjectService;
@@ -37,7 +33,10 @@ public class SubProjectController {
           new PermissionRepositoryImpl());
 
   /**
-   * Get method for sub project page, shows all task for the sup project
+   * Get method for displaying subproject page, shows all task for a subproject Redirects the user
+   * to login if not logged in. Finds the subproject based on projectid and subProjectId givin in
+   * the parameter. First by getting the head project, then by looping through the headprojects
+   * subprojects. Last it adds it to the model
    *
    * @param model
    * @param projectId
@@ -61,9 +60,9 @@ public class SubProjectController {
 
     User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
 
-    ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
+    Headproject project = PROJECT_SERVICE.getProjectById(user, projectId);
 
-    Project subProject = null; // TODO: move
+    Project subProject = null;
     for (Project sp : project.getSubProjects()) {
       if (subProjectId == sp.getId()) {
         subProject = sp;
@@ -84,6 +83,18 @@ public class SubProjectController {
     return "redirect:/projects/" + projectId;
   }
 
+  /**
+   * Post method for adding tasks to Headprojects. Redirects the user to login if not logged in.
+   * Finds the headproject based on projectid givin in the parameter. calls createTask() with the
+   * webrequest and project.
+   *
+   * @author Andreas
+   * @param webRequest
+   * @param projectId
+   * @return
+   * @throws SystemException thrown on error when creating tasks.
+   * @throws TaskCreationException thrown on error when deciding on which resourcetype to use.
+   */
   @PostMapping("/projects/{projectId}/create-task")
   public String createProjectTask(WebRequest webRequest, Model model, @PathVariable int projectId)
       throws SystemException {
@@ -94,7 +105,7 @@ public class SubProjectController {
 
     User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
 
-    ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
+    Headproject project = PROJECT_SERVICE.getProjectById(user, projectId);
 
     try {
       createTask(webRequest, project);
@@ -138,18 +149,30 @@ public class SubProjectController {
                 .format(DateTimeFormatter.ofPattern("MM-dd-yyyy")); // TODO: More validation
 
     Task task =
-        TASK_SERVICE.createtask(
+        TASK_SERVICE.createTask(
             taskNameParam, hours, resourceTypeParam, taskStartDate, taskEndDate, project.getId());
 
     project.addTask(task);
   }
 
+  /**
+   * Post method for adding tasks to subprojects. Redirects the user to login if not logged in
+   *
+   * <p>Finds the subproject based on project id and subProjectId given in the parameter. First by
+   * getting the head project, then by looping through the headprojects subprojects.
+   *
+   * <p>calls createTask() with the webrequest and subproject. @Author Andreas, Jackie
+   *
+   * @param webRequest
+   * @param projectId
+   * @param subProjectId
+   * @return
+   * @throws SystemException thrown on error when creating tasks.
+   * @throws TaskCreationException thrown on error when deciding on which resourcetype to use.
+   */
   @PostMapping("/projects/{projectId}/{subProjectId}/create-task")
   public String createSubProjectTask(
-      WebRequest webRequest,
-      Model model,
-      @PathVariable int projectId,
-      @PathVariable int subProjectId)
+      WebRequest webRequest, @PathVariable int projectId, @PathVariable int subProjectId)
       throws SystemException, TaskCreationException {
 
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
@@ -158,9 +181,9 @@ public class SubProjectController {
 
     User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
 
-    ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
+    Headproject project = PROJECT_SERVICE.getProjectById(user, projectId);
 
-    Project subProject = null; // TODO: move
+    Project subProject = null;
     for (Project projectComponent : project.getSubProjects()) {
       if (projectComponent.getId() == subProjectId) {
         subProject = projectComponent;

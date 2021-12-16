@@ -8,8 +8,7 @@ import java.util.List;
 
 public interface ResourceTypeRepository {
 
-  public List<ResourceType> getResourceTypes() throws SystemException;
+  List<ResourceType> getResourceTypes() throws SystemException;
 
-  public ResourceType getByResourceTypeName(String resourceTypeName)
-      throws ResourceTypeNotFoundException;
+  ResourceType getByResourceTypeName(String resourceTypeName) throws ResourceTypeNotFoundException;
 }

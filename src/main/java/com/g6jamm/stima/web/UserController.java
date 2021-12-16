@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
-/** @Mohamad */
 @Controller
 public class UserController {
 
@@ -26,6 +25,7 @@ public class UserController {
           new ResourceTypeRepositoryImpl(),
           new PermissionRepositoryImpl());
 
+  /** @auther Mohamad */
   @GetMapping("/")
   public String index(WebRequest webRequest) {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
@@ -34,6 +34,7 @@ public class UserController {
     return "redirect:/projects";
   }
 
+  /** @auther Mohamad */
   @GetMapping("/create-user")
   public String signUp(WebRequest webRequest) {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
@@ -42,12 +43,14 @@ public class UserController {
     return "createUser";
   }
 
+  /** @auther Mohamad */
   @GetMapping("/logout")
   public String logout(WebRequest webRequest) {
     webRequest.removeAttribute("user", WebRequest.SCOPE_SESSION);
     return "redirect:/";
   }
 
+  /** @auther Mohamad */
   @PostMapping("/login")
   public String logIn(WebRequest webRequest, Model model) throws SystemException {
     try {
@@ -66,6 +69,7 @@ public class UserController {
     }
   }
 
+  /** @auther Mohamad, Mathias */
   @PostMapping("/create-user")
   public String createUser(WebRequest webRequest, Model model)
       throws SystemException, ResourceTypeNotFoundException {
@@ -92,15 +96,13 @@ public class UserController {
 
         return "redirect:/projects"; // TODO: redirect to a success page?
       }
-      // model.addAttribute("signupFail", "Kodeordet matcher ikke.");
-      // return "createUser";
     } catch (SignUpException e) {
-      model.addAttribute("signupFail", e.getMessage());
-      // return "createUser";
+      model.addAttribute("signupFail", e.getMessage()); // TODO
     }
     return null;
   }
 
+  /** @auther Mohamad */
   private boolean validatePassword(String password1, String password2) {
     return password1.equals(password2);
   }

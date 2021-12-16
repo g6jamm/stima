@@ -2,7 +2,7 @@ package com.g6jamm.stima.domain.service;
 
 import com.g6jamm.stima.data.repository.ProjectRepository;
 import com.g6jamm.stima.domain.exception.SystemException;
-import com.g6jamm.stima.domain.model.ProjectComposite;
+import com.g6jamm.stima.domain.model.Headproject;
 import com.g6jamm.stima.domain.model.User;
 
 import java.time.LocalDate;
@@ -16,12 +16,14 @@ public class ProjectService {
     this.PROJECT_REPOSITORY = projectRepository;
   }
 
-  public List<ProjectComposite> getProjects(User user) throws SystemException {
+  /** @auther Mathias */
+  public List<Headproject> getProjects(User user) throws SystemException {
     return PROJECT_REPOSITORY.getProjects(user);
   }
 
-  public ProjectComposite getProjectById(User user, int projectID) throws SystemException {
-    for (ProjectComposite project : getProjects(user)) {
+  /** @auther Mathias */
+  public Headproject getProjectById(User user, int projectID) throws SystemException {
+    for (Headproject project : getProjects(user)) {
       if (projectID == project.getId()) {
         return project;
       }
@@ -30,12 +32,13 @@ public class ProjectService {
     return null;
   }
 
-  public ProjectComposite createProject(
+  /** @auther Mathias */
+  public Headproject createProject(
       String name, LocalDate startDate, LocalDate endDate, String projectColor, User user)
       throws SystemException {
 
-    ProjectComposite project =
-        new ProjectComposite.ProjectBuilder()
+    Headproject project =
+        new Headproject.ProjectBuilder()
             .projectName(name)
             .startDate(startDate)
             .endDate(endDate)
@@ -45,12 +48,13 @@ public class ProjectService {
     return PROJECT_REPOSITORY.createProject(project, user);
   }
 
+  /** @auther Mathias */
   public void editProject(
       int projectId, String name, LocalDate startDate, LocalDate endDate, String projectColor)
       throws SystemException {
 
-    ProjectComposite project =
-        new ProjectComposite.ProjectBuilder()
+    Headproject project =
+        new Headproject.ProjectBuilder()
             .projectId(projectId)
             .projectName(name)
             .startDate(startDate)
@@ -61,6 +65,7 @@ public class ProjectService {
     PROJECT_REPOSITORY.editProject(project);
   }
 
+  /** @auther Mathias */
   public void deleteProject(int projectId) throws SystemException {
     PROJECT_REPOSITORY.deleteProject(projectId);
   }

@@ -1,6 +1,6 @@
-package com.g6jamm.stima.data.repository.util;
+package com.g6jamm.stima.data.repository.mysql.util;
 
-import com.g6jamm.stima.data.repository.util.type.ConnectionType;
+import com.g6jamm.stima.data.repository.mysql.util.type.ConnectionType;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
@@ -11,6 +11,12 @@ public class DbSelector {
 
   private static ConnectionType connectionType;
 
+  /**
+   * Returns properties depending on localhost or Heroku. This is done to hide sensitive data on
+   * GitHub from the production env.
+   *
+   * @auther Andreas, Mathias
+   */
   public static Properties selectConnection() {
     Properties properties = new Properties();
 

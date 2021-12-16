@@ -13,7 +13,7 @@ public class PermissionRepositoryImpl implements PermissionRepository {
   }
 
   @Override
-  public Permission findByName(String permissionName) throws SystemException {
+  public Permission getPermission(String permissionName) throws SystemException {
     return null;
   }
 }
