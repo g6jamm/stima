@@ -1,7 +1,7 @@
 package com.g6jamm.stima.data.repository.mysql;
 
 import com.g6jamm.stima.data.repository.ResourceTypeRepository;
-import com.g6jamm.stima.data.repository.util.DbManager;
+import com.g6jamm.stima.data.repository.mysql.util.DbManager;
 import com.g6jamm.stima.domain.exception.ResourceTypeNotFoundException;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.ResourceType;
@@ -12,8 +12,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/** @auther Mathias */
 public class ResourceTypeRepositoryImpl implements ResourceTypeRepository {
 
+  /**
+   * Returns a list of resource types.
+   *
+   * @auther Mathias
+   */
   @Override
   public List<ResourceType> getResourceTypes() throws SystemException {
     List<ResourceType> resourceTypes = new ArrayList<>();
@@ -41,6 +47,11 @@ public class ResourceTypeRepositoryImpl implements ResourceTypeRepository {
     }
   }
 
+  /**
+   * Returns a specific resource type by name.
+   *
+   * @auther Mathias
+   */
   @Override
   public ResourceType getByResourceTypeName(String resourceTypeName)
       throws ResourceTypeNotFoundException {

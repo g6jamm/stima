@@ -5,19 +5,19 @@ import java.time.LocalDate;
 import java.util.List;
 
 /** @auther Mathias */
-public class ProjectComposite implements Project {
+public class Headproject implements Project {
 
   private final int PROJECT_ID;
-  private final String PROJECT_NAME;
+  private final String NAME;
   private final LocalDate START_DATE;
   private final LocalDate END_DATE;
   private final List<Task> TASKS;
   private final List<Project> SUB_PROJECTS;
   private final String COLOR_CODE;
 
-  private ProjectComposite(ProjectBuilder projectBuilder) {
+  private Headproject(ProjectBuilder projectBuilder) {
     this.PROJECT_ID = projectBuilder.projectId;
-    this.PROJECT_NAME = projectBuilder.projectName;
+    this.NAME = projectBuilder.name;
     this.START_DATE = projectBuilder.startDate;
     this.END_DATE = projectBuilder.endDate;
     this.TASKS = projectBuilder.tasks;
@@ -30,7 +30,7 @@ public class ProjectComposite implements Project {
   }
 
   public String getName() {
-    return PROJECT_NAME;
+    return NAME;
   }
 
   public LocalDate getStartDate() {
@@ -53,6 +53,12 @@ public class ProjectComposite implements Project {
     return COLOR_CODE;
   }
 
+  /**
+   * Method for calculating totalhours of a project. Loops through subprojects and tasks to find the
+   * total.
+   *
+   * <p>may be called recursivly. @Author Andreas
+   */
   public double calculateHours() {
     double totalHours = 0.0;
     if (!SUB_PROJECTS.isEmpty()) {
@@ -68,6 +74,12 @@ public class ProjectComposite implements Project {
     return totalHours;
   }
 
+  /**
+   * Method for calculating totalprice of a project. Loops through subprojects and tasks to find the
+   * total. may be called recursivly.
+   *
+   * @auther Mathias, Andreas
+   */
   public int calculatePrice() {
     int totalPrice = 0;
     if (!SUB_PROJECTS.isEmpty()) {
@@ -90,6 +102,14 @@ public class ProjectComposite implements Project {
     return Math.round(workdaysNeeded * 100.0) / 100.0;
   }
 
+  public long calculateDays() {
+    return Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays() + 1;
+  }
+
+  public void addSubProject(Project project) {
+    SUB_PROJECTS.add(project);
+  }
+
   public double calculateResources() {
 
     long workdaysAvailable =
@@ -98,21 +118,13 @@ public class ProjectComposite implements Project {
     return Math.round(result * 100.0) / 100.0;
   }
 
-  public long calculateDays() {
-    return Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays() + 1;
-  }
-
   public void addTask(Task task) {
     TASKS.add(task);
   }
 
-  public void addSubProject(Project project) {
-    SUB_PROJECTS.add(project);
-  }
-
   public static class ProjectBuilder {
     private int projectId;
-    private String projectName;
+    private String name;
     private LocalDate startDate;
     private LocalDate endDate;
     private List<Task> tasks;
@@ -125,7 +137,7 @@ public class ProjectComposite implements Project {
     }
 
     public ProjectBuilder projectName(String name) {
-      this.projectName = name;
+      this.name = name;
       return this;
     }
 
@@ -154,9 +166,13 @@ public class ProjectComposite implements Project {
       return this;
     }
 
+    /**
+     * Method to reset variables in the builder. Added in order to avoid having a variable hanging
+     * from a previous use. @Author Andreas
+     */
     private void reset() {
       this.projectId = 0;
-      this.projectName = null;
+      this.name = null;
       this.startDate = null;
       this.endDate = null;
       this.tasks = null;
@@ -164,8 +180,8 @@ public class ProjectComposite implements Project {
       this.colorCode = null;
     }
 
-    public ProjectComposite build() {
-      ProjectComposite headProject = new ProjectComposite(this);
+    public Headproject build() {
+      Headproject headProject = new Headproject(this);
       reset();
       return headProject;
     }

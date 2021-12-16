@@ -1,13 +1,16 @@
+<!-- @auther Mathias -->
 <!DOCTYPE html>
 <html lang="da" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/headFragment :: head (title='Error')"></head>
 <body>
 <nav th:replace="fragments/navFragment :: nav"></nav>
 <main>
-    <div class="container">
-        <h1>Hov, der gik noget galt.</h1>
-        <div>
-            <p th:text="${message}"></p>
+    <div class="py-5 bg-light">
+        <div class="container">
+            <h1>Hov, der gik noget galt.</h1>
+            <div>
+                <p th:text="${message}"></p>
+            </div>
         </div>
     </div>
 </main>

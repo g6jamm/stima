@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface RoleRepository {
 
-  public List<Role> getRoles() throws SystemException;
+  List<Role> getRoles() throws SystemException;
 
-  public Role findByName(String roleName) throws SystemException;
+  Role getRole(String roleName) throws SystemException;
 }

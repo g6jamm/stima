@@ -1,7 +1,7 @@
 package com.g6jamm.stima.data.repository.mysql;
 
 import com.g6jamm.stima.data.repository.UserRepository;
-import com.g6jamm.stima.data.repository.util.DbManager;
+import com.g6jamm.stima.data.repository.mysql.util.DbManager;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.Permission;
 import com.g6jamm.stima.domain.model.ResourceType;
@@ -43,7 +43,7 @@ public class UserRepositoryImpl implements UserRepository {
             .resourceType(
                 new ResourceType.ResourceTypeBuilder()
                     .id(resultSet.getInt("ur.resource_type_id"))
-                    .name(resultSet.getString("up.name"))
+                    .name(resultSet.getString("ur.name"))
                     .build())
             .permission(
                 new Permission.PermissionBuilder()

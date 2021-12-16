@@ -1,7 +1,9 @@
+<!-- @auther Mathias -->
 <!DOCTYPE html>
 <html lang="da">
-<footer>
-    <p class="mt-5 mb-3 text-muted" th:text="'&copy; ' + ${#dates.year(#dates.createNow())}"></p>
+<footer class="container">
+    <p class="mt-5 mb-3 text-muted" th:text="'&copy; ' + ${#dates.year(#dates.createNow)}"></p>
+
     <script crossorigin="anonymous"
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

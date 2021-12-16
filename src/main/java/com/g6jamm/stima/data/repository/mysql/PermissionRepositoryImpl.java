@@ -1,7 +1,7 @@
 package com.g6jamm.stima.data.repository.mysql;
 
 import com.g6jamm.stima.data.repository.PermissionRepository;
-import com.g6jamm.stima.data.repository.util.DbManager;
+import com.g6jamm.stima.data.repository.mysql.util.DbManager;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.Permission;
 
@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/** @author Mohamad */
 public class PermissionRepositoryImpl implements PermissionRepository {
   @Override
   public List<Permission> getPermissions() throws SystemException {
@@ -39,7 +40,7 @@ public class PermissionRepositoryImpl implements PermissionRepository {
   }
 
   @Override
-  public Permission findByName(String permissionName) throws SystemException {
+  public Permission getPermission(String permissionName) throws SystemException {
     try {
       String query = "SELECT * FROM permissions WHERE name = ?";
 

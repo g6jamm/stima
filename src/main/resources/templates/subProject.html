@@ -1,3 +1,4 @@
+<!-- @auther Mathias -->
 <!DOCTYPE html>
 <html lang="da" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/headFragment :: head (title=${subProject.getName})"></head>
@@ -86,9 +87,7 @@
                         </a>
                     </div>
 
-                    <div aria-hidden="true" class="modal fade" tabindex="-1"
-                         th:aria-labelledby="'editTaskModalLabel' + ${task.getId}"
-                         th:id="'editTaskModal' + ${task.getId}">
+                    <div aria-hidden="true" class="modal fade" tabindex="-1" th:id="'editTaskModal' + ${task.getId}">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">

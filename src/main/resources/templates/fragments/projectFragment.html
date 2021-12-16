@@ -1,3 +1,4 @@
+<!-- @auther Mathias -->
 <!DOCTYPE html>
 <html lang="da" xmlns:th="http://www.thymeleaf.org">
 
@@ -8,14 +9,14 @@
         <div class="mt-2 mx-2">
             <div class="btn-toolbar float-end" role="toolbar">
                 <div class="btn-group" role="group">
-                    <a class="btn btn-edit" data-bs-toggle="modal"
-                       href="#" th:data-bs-target="'#editProjectModal' + ${project.getId}"
-                       type="button"><i
+                    <a aria-label="Redigér" class="btn btn-edit" data-bs-toggle="modal"
+                       href="#" th:data-bs-target="'#editProjectModal' + ${project.getId}"><i
                             class="fas fa-pen"></i></a>
                 </div>
                 <div class="btn-group" role="group">
                     <form method="POST" th:action=" @{{path}/delete-project (path=${link})}">
-                        <button class="btn btn-delete" type="submit"><i class="fas fa-trash-alt"></i></button>
+                        <button aria-label="Slet" class="btn btn-delete" type="submit"><i class="fas fa-trash-alt"></i>
+                        </button>
                     </form>
                 </div>
             </div>
@@ -30,12 +31,12 @@
                 <p th:text="'Nødvendige antal medarbejdere: ' + ${project.calculateResources()}"></p>
                 <p th:text="'Start date: ' + ${project.getStartDate()}"></p>
                 <p th:text="'End date: ' + ${project.getEndDate()}"></p>
-                <p th:text="'Dage tilgængelige i perioden: ' + ${project.calculateDays}"></p>
+                <p th:text="'Dage tilgængelige i perioden: ' + ${project.calculateDays} + ' dage'"></p>
             </div>
         </a>
     </div>
 
-    <div aria-hidden="true" aria-labelledby="editProjectModalLabel" class="modal fade"
+    <div aria-hidden="true" class="modal fade"
          tabindex="-1"
          th:id="'editProjectModal' + ${project.getId}">
         <div class="modal-dialog modal-lg">
@@ -71,7 +72,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label">Farve:</label>
-                            <select class="form-select" name="edit-project-color" required>
+                            <select class="form-select" name="edit-project-color">
                                 <option th:each="color : ${projectColors}"
                                         th:selected="${project.getColorCode == color.value}"
                                         th:style="'color: #fff; background-color: ' + ${color.value}"

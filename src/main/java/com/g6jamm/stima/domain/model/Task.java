@@ -58,6 +58,10 @@ public class Task {
     return Math.round(workdaysNeeded * 100.0) / 100.0;
   }
 
+  public long calculateDays() {
+    return Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays() + 1;
+  }
+
   public double calculateResources() {
 
     long workdaysAvailable =
@@ -65,10 +69,6 @@ public class Task {
     double result = calculateWorkdays() / (workdaysAvailable);
 
     return Math.round(result * 100.0) / 100.0;
-  }
-
-  public long calculateDays() {
-    return Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays() + 1;
   }
 
   public static class TaskBuilder {
@@ -99,8 +99,7 @@ public class Task {
       if (this.resourceType == null) {
         this.price = 0;
       } else {
-        this.price =
-            (int) this.hours * this.resourceType.getPricePrHour(); // TODO: Fix rounding issue.
+        this.price = (int) this.hours * this.resourceType.getPricePrHour();
       }
     }
 
@@ -131,9 +130,9 @@ public class Task {
 
     public Task build() {
       price();
-      Task newTask = new Task(this);
+      Task task = new Task(this);
       reset();
-      return newTask;
+      return task;
     }
   }
 }

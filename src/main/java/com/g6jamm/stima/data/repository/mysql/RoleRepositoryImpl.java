@@ -1,7 +1,7 @@
 package com.g6jamm.stima.data.repository.mysql;
 
 import com.g6jamm.stima.data.repository.RoleRepository;
-import com.g6jamm.stima.data.repository.util.DbManager;
+import com.g6jamm.stima.data.repository.mysql.util.DbManager;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.Role;
 
@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/** @author Mohamad */
 public class RoleRepositoryImpl implements RoleRepository {
 
   @Override
@@ -37,7 +38,7 @@ public class RoleRepositoryImpl implements RoleRepository {
   }
 
   @Override
-  public Role findByName(String roleName) throws SystemException {
+  public Role getRole(String roleName) throws SystemException {
     try {
       String query = "SELECT * FROM roles WHERE name = ?";
 

@@ -3,7 +3,7 @@ package com.g6jamm.stima.domain.model;
 public class Role {
 
   private final String NAME;
-  private int ID;
+  private final int ID;
 
   public Role(RoleBuilder roleBuilder) {
     this.ID = roleBuilder.id;

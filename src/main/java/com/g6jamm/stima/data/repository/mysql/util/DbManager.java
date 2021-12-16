@@ -1,15 +1,20 @@
-package com.g6jamm.stima.data.repository.util;
+package com.g6jamm.stima.data.repository.mysql.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/** @author Mathias */
 public class DbManager {
   private static DbManager instance;
   private Connection connection;
 
-  /** Create a connection to the database using properties defined in application.properties. */
+  /**
+   * Create a connection to the database using properties defined in application.properties.
+   *
+   * @auther Mathias
+   */
   private DbManager() {
     Properties properties = DbSelector.selectConnection();
     String url = properties.getProperty("url");
@@ -22,7 +27,11 @@ public class DbManager {
     }
   }
 
-  /** Returns a new instance of DbManager using singleton pattern. */
+  /**
+   * Returns a new instance of DbManager.
+   *
+   * @auther Mathias
+   */
   public static DbManager getInstance() {
     if (null == instance) {
       instance = new DbManager();
@@ -39,7 +48,11 @@ public class DbManager {
     return instance;
   }
 
-  /** Returns the connection of the instance. */
+  /**
+   * Returns the connection of the instance.
+   *
+   * @auther Mathias
+   */
   public Connection getConnection() {
     return connection;
   }

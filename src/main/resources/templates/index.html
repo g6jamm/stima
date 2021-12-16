@@ -1,11 +1,12 @@
+<!-- @auther Mohamad, Mathias -->
 <!DOCTYPE html>
 <html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/headFragment :: head (title='Log ind')"></head>
 <body class="content-center text-center">
 <div class="container-signin">
     <main>
-        <form action="/login" method="POST" name="login" role="form">
-            <img alt="" class="img-center" th:src="@{/img/logo.png}"/>
+        <form action="/login" method="POST" name="login">
+            <img alt="" class="img-center" height="150" src="" th:src="@{/img/logo.png}" width="150"/>
             <h1 class="h3 mb-3 fw-normal">Velkommen til stima!</h1>
             <div class="form-floating">
                 <input class="form-control" id="floatingInput" name="email" placeholder="demo@demo.com" type="email">
@@ -13,7 +14,7 @@
             </div>
             <div class="form-floating">
                 <input class="form-control" id="floatingPassword" name="password" placeholder="demo" type="password">
-                <label for="floatingPassword">Kode</label>
+                <label for="floatingPassword">Adgangskode</label>
             </div>
             <label class="mb-0" th:text="${loginFail}"></label>
             <button class="w-100 btn btn-lg btn-primary" type="submit">Log ind</button>

@@ -3,10 +3,10 @@ package com.g6jamm.stima.data.repository.mysql;
 import com.g6jamm.stima.data.repository.ProjectRepository;
 import com.g6jamm.stima.data.repository.SubProjectRepository;
 import com.g6jamm.stima.data.repository.TaskRepository;
-import com.g6jamm.stima.data.repository.util.DbManager;
+import com.g6jamm.stima.data.repository.mysql.util.DbManager;
 import com.g6jamm.stima.domain.exception.SystemException;
+import com.g6jamm.stima.domain.model.Headproject;
 import com.g6jamm.stima.domain.model.Project;
-import com.g6jamm.stima.domain.model.ProjectComposite;
 import com.g6jamm.stima.domain.model.User;
 
 import java.sql.*;
@@ -14,14 +14,19 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/** @author Mathias */
 public class ProjectRepositoryImpl implements ProjectRepository {
 
   private final TaskRepository TASK_REPOSITORY = new TaskRepositoryImpl();
   private final SubProjectRepository SUBPROJECT_REPOSITORY = new SubProjectRepositoryImpl();
 
+  /**
+   * Create a new project and store it in the database.
+   *
+   * @auther Mathias
+   */
   @Override
-  public ProjectComposite createProject(ProjectComposite project, User user)
-      throws SystemException {
+  public Headproject createProject(Headproject project, User user) throws SystemException {
 
     try {
       String query =
@@ -43,7 +48,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
       ResultSet gk = ps.getGeneratedKeys();
       if (gk.next()) {
         project =
-            new ProjectComposite.ProjectBuilder()
+            new Headproject.ProjectBuilder()
                 .projectId(gk.getInt(1))
                 .projectName(project.getName())
                 .startDate(project.getStartDate())
@@ -63,46 +68,11 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     return project;
   }
 
-  @Override
-  public ProjectComposite getProject(int projectId) throws SystemException {
-
-    try {
-      String query =
-          "SELECT * "
-              + "FROM projects "
-              + "WHERE project_id = ? "
-              + "AND parent_project_id is NULL";
-
-      PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
-      ps.setInt(1, projectId);
-
-      ResultSet rs = ps.executeQuery();
-
-      if (rs.next()) {
-        return new ProjectComposite.ProjectBuilder()
-            .projectId(projectId)
-            .projectName(rs.getString("name"))
-            .startDate(LocalDate.parse(rs.getString("start_date")))
-            .endDate(LocalDate.parse(rs.getString("end_date")))
-            .colorCode(rs.getString("colorscode"))
-            .tasks(TASK_REPOSITORY.getTasks(rs.getInt("project_id")))
-            // Vi kan spare kald til databasen ved at bygge et
-            // task-objekt i metoden. Dette er bevidst fravalgt, da det
-            // vil gøre koden væsentlig mindre vedligeholdes venlig.
-            .subProjects(SUBPROJECT_REPOSITORY.getSubProjects(rs.getInt("project_id")))
-            // Vi kan spare kald til databasen ved at bygge et
-            // subproject-objekt i metoden. Dette er bevidst fravalgt, da det
-            // vil gøre koden væsentlig mindre vedligeholdes venlig.
-            .build();
-      }
-
-    } catch (SQLException e) {
-      throw new SystemException(e);
-    }
-
-    return null;
-  }
-
+  /**
+   * Delete project from the database by project id.
+   *
+   * @auther Mathias
+   */
   @Override
   public void deleteProject(int projectId) throws SystemException {
 
@@ -117,8 +87,13 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     }
   }
 
+  /**
+   * Edit project in database by project object.
+   *
+   * @auther Mathias
+   */
   @Override
-  public void editProject(ProjectComposite project) throws SystemException {
+  public void editProject(Headproject project) throws SystemException {
 
     try {
       String query =
@@ -140,10 +115,15 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     }
   }
 
+  /**
+   * Get a list of project of owned by a user.
+   *
+   * @auther Mathias
+   */
   @Override
-  public List<ProjectComposite> getProjects(User user) throws SystemException {
+  public List<Headproject> getProjects(User user) throws SystemException {
 
-    List<ProjectComposite> projects = new ArrayList<>();
+    List<Headproject> projects = new ArrayList<>();
     try {
 
       String query =
@@ -158,18 +138,14 @@ public class ProjectRepositoryImpl implements ProjectRepository {
       ResultSet rs = ps.executeQuery();
 
       while (rs.next()) {
-        ProjectComposite project =
-            new ProjectComposite.ProjectBuilder()
+        Headproject project =
+            new Headproject.ProjectBuilder()
                 .projectId(rs.getInt("project_id"))
                 .projectName(rs.getString("name"))
                 .startDate(LocalDate.parse(rs.getString("start_date")))
                 .endDate(LocalDate.parse(rs.getString("end_date")))
-                .tasks(
-                    TASK_REPOSITORY.getTasks(
-                        rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
-                .subProjects(
-                    SUBPROJECT_REPOSITORY.getSubProjects(
-                        rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
+                .tasks(TASK_REPOSITORY.getTasks(rs.getInt("project_id")))
+                .subProjects(SUBPROJECT_REPOSITORY.getSubProjects(rs.getInt("project_id")))
                 .colorCode(rs.getString("colorscode"))
                 .build();
 
@@ -183,6 +159,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     return projects;
   }
 
+  /** @author Andreas */
   private boolean linkProjectAndUser(Project project, User user) throws SQLException {
     String query = "INSERT INTO project_users (project_id, user_id, role_id) VALUES (?, ?, 1)";
 

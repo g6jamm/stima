@@ -9,9 +9,9 @@ public interface TaskRepository {
 
   Task createTask(Task task, int projectId) throws SystemException;
 
-  Task getTask(int task_id) throws SystemException;
-
   List<Task> getTasks(int projectId) throws SystemException;
 
   void editTask(Task task) throws SystemException;
+
+  void deleteTask(int taskId) throws SystemException;
 }
