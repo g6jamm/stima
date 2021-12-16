@@ -5,7 +5,6 @@ import com.g6jamm.stima.data.repository.stub.TaskRepositoryImpl;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.Task;
-import com.g6jamm.stima.domain.service.TaskService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
