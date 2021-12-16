@@ -127,7 +127,7 @@ public class TaskService {
    * @param resourceType
    * @param startDate
    * @param endDate
-   * @param id$
+   * @param id
    * @throws TaskCreationException
    * @throws SystemException
    */
