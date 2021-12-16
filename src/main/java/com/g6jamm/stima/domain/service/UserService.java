@@ -29,7 +29,7 @@ public class UserService {
   }
 
   /**
-   * Returns a user if user exist in dataabase.
+   * Returns a user if user exist in database.
    *
    * @author Mohamad
    */
@@ -76,6 +76,9 @@ public class UserService {
     return USER_REPOSITORY.userExists(userId);
   }
 
+  /**
+   * Returns a list of perssions.
+   */
   public List<Permission> getPermissions() throws SystemException {
     return PERMISSION_REPOSITORY.getPermissions();
   }
