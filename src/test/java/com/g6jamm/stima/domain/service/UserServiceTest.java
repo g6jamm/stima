@@ -11,13 +11,9 @@ import com.g6jamm.stima.domain.model.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-/** @author Mohamd */
+/** @author Mohamd, Andreas */
 class UserServiceTest {
 
-  /**
-   * Found bug in UserRepositoryStub - generated id didnt consider the users created in the
-   * constructor @Author Andreas
-   */
   @Test
   void testCreateUserUserIdIncrements()
       throws SignUpException, SystemException, ResourceTypeNotFoundException {

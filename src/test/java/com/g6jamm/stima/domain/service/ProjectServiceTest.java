@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
+/** @author Mathias */
 class ProjectServiceTest {
   @Test
   public void createValidProjectTest() throws SystemException {
