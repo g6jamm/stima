@@ -118,7 +118,7 @@ public class Headproject implements Project {
     return Math.round(result * 100.0) / 100.0;
   }
 
-  public void addSubProject(Subproject subproject){
+  public void addSubProject(Subproject subproject) {
     SUB_PROJECTS.add(subproject);
   }
 

@@ -12,7 +12,7 @@ public class Task {
   private final LocalDate END_DATE;
   private final ResourceType RESOURCE_TYPE;
   private final int ID;
-  
+
   private Task(TaskBuilder taskBuilder) {
     this.ID = taskBuilder.id;
     this.NAME = taskBuilder.name;
