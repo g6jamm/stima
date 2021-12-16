@@ -11,6 +11,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Mohamad
+ */
 public class RoleRepositoryImpl implements RoleRepository {
 
   @Override
@@ -37,7 +40,7 @@ public class RoleRepositoryImpl implements RoleRepository {
   }
 
   @Override
-  public Role findByName(String roleName) throws SystemException {
+  public Role getRole(String roleName) throws SystemException {
     try {
       String query = "SELECT * FROM roles WHERE name = ?";
 

@@ -45,7 +45,7 @@ public class ProjectController {
 
     User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
 
-    List<ProjectComposite> projects = PROJECT_SERVICE.getProjects(user);
+    List<Headproject> projects = PROJECT_SERVICE.getProjects(user);
 
     model.addAttribute("projects", projects);
     model.addAttribute("classActiveSettings", "active");
@@ -72,7 +72,7 @@ public class ProjectController {
 
     User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
 
-    ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
+    Headproject project = PROJECT_SERVICE.getProjectById(user, projectId);
 
     List<Project> subProjects = project.getSubProjects();
     model.addAttribute("projects", subProjects);
@@ -102,9 +102,9 @@ public class ProjectController {
     String endDateParam = webRequest.getParameter("create-subproject-end-date");
     String projectColorParam = webRequest.getParameter("create-subproject-color");
 
-    ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
+    Headproject project = PROJECT_SERVICE.getProjectById(user, projectId);
 
-    ProjectLeaf subProject =
+    Subproject subProject =
         SUBPROJECT_SERVICE.createSubProject(
             subProjectNameParam,
             LocalDate.parse(startDateParam),
@@ -130,7 +130,7 @@ public class ProjectController {
     String endDateParam = webRequest.getParameter("create-project-end-date");
     String projectColorParam = webRequest.getParameter("create-project-color");
 
-    ProjectComposite project =
+    Headproject project =
         PROJECT_SERVICE.createProject(
             projectNameParam,
             LocalDate.parse(startDateParam),

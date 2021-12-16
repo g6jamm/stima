@@ -6,7 +6,7 @@ import com.g6jamm.stima.data.repository.TaskRepository;
 import com.g6jamm.stima.data.repository.util.DbManager;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.Project;
-import com.g6jamm.stima.domain.model.ProjectComposite;
+import com.g6jamm.stima.domain.model.Headproject;
 import com.g6jamm.stima.domain.model.User;
 
 import java.sql.*;
@@ -14,13 +14,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Mathias
+ */
 public class ProjectRepositoryImpl implements ProjectRepository {
 
   private final TaskRepository TASK_REPOSITORY = new TaskRepositoryImpl();
   private final SubProjectRepository SUBPROJECT_REPOSITORY = new SubProjectRepositoryImpl();
 
   @Override
-  public ProjectComposite createProject(ProjectComposite project, User user)
+  public Headproject createProject(Headproject project, User user)
       throws SystemException {
 
     try {
@@ -43,7 +46,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
       ResultSet gk = ps.getGeneratedKeys();
       if (gk.next()) {
         project =
-            new ProjectComposite.ProjectBuilder()
+            new Headproject.ProjectBuilder()
                 .projectId(gk.getInt(1))
                 .projectName(project.getName())
                 .startDate(project.getStartDate())
@@ -64,7 +67,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
   }
 
   @Override
-  public ProjectComposite getProject(int projectId) throws SystemException {
+  public Headproject getProject(int projectId) throws SystemException {
 
     try {
       String query =
@@ -79,7 +82,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
       ResultSet rs = ps.executeQuery();
 
       if (rs.next()) {
-        return new ProjectComposite.ProjectBuilder()
+        return new Headproject.ProjectBuilder()
             .projectId(projectId)
             .projectName(rs.getString("name"))
             .startDate(LocalDate.parse(rs.getString("start_date")))
@@ -118,7 +121,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
   }
 
   @Override
-  public void editProject(ProjectComposite project) throws SystemException {
+  public void editProject(Headproject project) throws SystemException {
 
     try {
       String query =
@@ -141,9 +144,9 @@ public class ProjectRepositoryImpl implements ProjectRepository {
   }
 
   @Override
-  public List<ProjectComposite> getProjects(User user) throws SystemException {
+  public List<Headproject> getProjects(User user) throws SystemException {
 
-    List<ProjectComposite> projects = new ArrayList<>();
+    List<Headproject> projects = new ArrayList<>();
     try {
 
       String query =
@@ -158,18 +161,18 @@ public class ProjectRepositoryImpl implements ProjectRepository {
       ResultSet rs = ps.executeQuery();
 
       while (rs.next()) {
-        ProjectComposite project =
-            new ProjectComposite.ProjectBuilder()
+        Headproject project =
+            new Headproject.ProjectBuilder()
                 .projectId(rs.getInt("project_id"))
                 .projectName(rs.getString("name"))
                 .startDate(LocalDate.parse(rs.getString("start_date")))
                 .endDate(LocalDate.parse(rs.getString("end_date")))
                 .tasks(
                     TASK_REPOSITORY.getTasks(
-                        rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
+                        rs.getInt("project_id")))
                 .subProjects(
                     SUBPROJECT_REPOSITORY.getSubProjects(
-                        rs.getInt("project_id"))) // TODO kan laves som innerjoin istedet
+                        rs.getInt("project_id")))
                 .colorCode(rs.getString("colorscode"))
                 .build();
 
@@ -183,6 +186,9 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     return projects;
   }
 
+  /**
+   * @author Andreas
+   */
   private boolean linkProjectAndUser(Project project, User user) throws SQLException {
     String query = "INSERT INTO project_users (project_id, user_id, role_id) VALUES (?, ?, 1)";
 

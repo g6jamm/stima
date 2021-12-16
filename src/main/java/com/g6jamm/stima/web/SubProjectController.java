@@ -8,7 +8,7 @@ import com.g6jamm.stima.data.repository.mysql.UserRepositoryImpl;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.Project;
-import com.g6jamm.stima.domain.model.ProjectComposite;
+import com.g6jamm.stima.domain.model.Headproject;
 import com.g6jamm.stima.domain.model.Task;
 import com.g6jamm.stima.domain.model.User;
 import com.g6jamm.stima.domain.service.ProjectService;
@@ -61,7 +61,7 @@ public class SubProjectController {
 
     User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
 
-    ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
+    Headproject project = PROJECT_SERVICE.getProjectById(user, projectId);
 
     Project subProject = null; // TODO: move
     for (Project sp : project.getSubProjects()) {
@@ -94,7 +94,7 @@ public class SubProjectController {
 
     User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
 
-    ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
+    Headproject project = PROJECT_SERVICE.getProjectById(user, projectId);
 
     try {
       createTask(webRequest, project);
@@ -158,7 +158,7 @@ public class SubProjectController {
 
     User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
 
-    ProjectComposite project = PROJECT_SERVICE.getProjectById(user, projectId);
+    Headproject project = PROJECT_SERVICE.getProjectById(user, projectId);
 
     Project subProject = null; // TODO: move
     for (Project projectComponent : project.getSubProjects()) {

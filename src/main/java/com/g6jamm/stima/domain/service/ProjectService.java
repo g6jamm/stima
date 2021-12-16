@@ -2,7 +2,7 @@ package com.g6jamm.stima.domain.service;
 
 import com.g6jamm.stima.data.repository.ProjectRepository;
 import com.g6jamm.stima.domain.exception.SystemException;
-import com.g6jamm.stima.domain.model.ProjectComposite;
+import com.g6jamm.stima.domain.model.Headproject;
 import com.g6jamm.stima.domain.model.User;
 
 import java.time.LocalDate;
@@ -16,12 +16,12 @@ public class ProjectService {
     this.PROJECT_REPOSITORY = projectRepository;
   }
 
-  public List<ProjectComposite> getProjects(User user) throws SystemException {
+  public List<Headproject> getProjects(User user) throws SystemException {
     return PROJECT_REPOSITORY.getProjects(user);
   }
 
-  public ProjectComposite getProjectById(User user, int projectID) throws SystemException {
-    for (ProjectComposite project : getProjects(user)) {
+  public Headproject getProjectById(User user, int projectID) throws SystemException {
+    for (Headproject project : getProjects(user)) {
       if (projectID == project.getId()) {
         return project;
       }
@@ -30,12 +30,12 @@ public class ProjectService {
     return null;
   }
 
-  public ProjectComposite createProject(
+  public Headproject createProject(
       String name, LocalDate startDate, LocalDate endDate, String projectColor, User user)
       throws SystemException {
 
-    ProjectComposite project =
-        new ProjectComposite.ProjectBuilder()
+    Headproject project =
+        new Headproject.ProjectBuilder()
             .projectName(name)
             .startDate(startDate)
             .endDate(endDate)
@@ -49,8 +49,8 @@ public class ProjectService {
       int projectId, String name, LocalDate startDate, LocalDate endDate, String projectColor)
       throws SystemException {
 
-    ProjectComposite project =
-        new ProjectComposite.ProjectBuilder()
+    Headproject project =
+        new Headproject.ProjectBuilder()
             .projectId(projectId)
             .projectName(name)
             .startDate(startDate)

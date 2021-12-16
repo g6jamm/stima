@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 /** @auther Mathias */
-public class ProjectComposite implements Project {
+public class Headproject implements Project {
 
   private final int PROJECT_ID;
   private final String PROJECT_NAME;
@@ -15,7 +15,7 @@ public class ProjectComposite implements Project {
   private final List<Project> SUB_PROJECTS;
   private final String COLOR_CODE;
 
-  private ProjectComposite(ProjectBuilder projectBuilder) {
+  private Headproject(ProjectBuilder projectBuilder) {
     this.PROJECT_ID = projectBuilder.projectId;
     this.PROJECT_NAME = projectBuilder.projectName;
     this.START_DATE = projectBuilder.startDate;
@@ -164,8 +164,8 @@ public class ProjectComposite implements Project {
       this.colorCode = null;
     }
 
-    public ProjectComposite build() {
-      ProjectComposite headProject = new ProjectComposite(this);
+    public Headproject build() {
+      Headproject headProject = new Headproject(this);
       reset();
       return headProject;
     }

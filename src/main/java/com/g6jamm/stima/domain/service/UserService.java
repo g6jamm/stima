@@ -66,7 +66,7 @@ public class UserService {
             .lastName(lastName)
             .email(email)
             .resourceType(RESOURCE_TYPE_REPOSITORY.getByResourceTypeName(resourceType))
-            .permission(PERMISSION_REPOSITORY.findByName(permission))
+            .permission(PERMISSION_REPOSITORY.getPermission(permission))
             .password(password)
             .build();
 

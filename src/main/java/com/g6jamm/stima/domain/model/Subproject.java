@@ -4,7 +4,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
 
-public class ProjectLeaf implements Project {
+public class Subproject implements Project {
 
   /**
    * Model for subproject
@@ -19,7 +19,7 @@ public class ProjectLeaf implements Project {
   private final LocalDate END_DATE;
   private final String COLOR_CODE;
 
-  public ProjectLeaf(SubProjectBuilder subProjectBuilder) {
+  public Subproject(SubProjectBuilder subProjectBuilder) {
     this.SUB_PROJECT_ID = subProjectBuilder.subProjectId;
     this.SUB_PROJECT_NAME = subProjectBuilder.subProjectName;
     this.SUB_PROJECT_TASKS = subProjectBuilder.subProjectTasks;
@@ -143,8 +143,8 @@ public class ProjectLeaf implements Project {
       this.colorCode = null;
     }
 
-    public ProjectLeaf build() {
-      ProjectLeaf newSubProject = new ProjectLeaf(this);
+    public Subproject build() {
+      Subproject newSubProject = new Subproject(this);
       reset();
       return newSubProject;
     }

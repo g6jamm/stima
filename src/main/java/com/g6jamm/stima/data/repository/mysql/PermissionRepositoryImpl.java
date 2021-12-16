@@ -11,6 +11,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Mohamad
+ */
 public class PermissionRepositoryImpl implements PermissionRepository {
   @Override
   public List<Permission> getPermissions() throws SystemException {
@@ -39,7 +42,7 @@ public class PermissionRepositoryImpl implements PermissionRepository {
   }
 
   @Override
-  public Permission findByName(String permissionName) throws SystemException {
+  public Permission getPermission(String permissionName) throws SystemException {
     try {
       String query = "SELECT * FROM permissions WHERE name = ?";
 
@@ -59,3 +62,4 @@ public class PermissionRepositoryImpl implements PermissionRepository {
     return null;
   }
 }
+

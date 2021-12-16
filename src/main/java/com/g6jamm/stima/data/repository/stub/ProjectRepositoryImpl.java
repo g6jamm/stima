@@ -4,7 +4,7 @@ import com.g6jamm.stima.data.repository.ProjectRepository;
 import com.g6jamm.stima.data.repository.SubProjectRepository;
 import com.g6jamm.stima.data.repository.TaskRepository;
 import com.g6jamm.stima.domain.exception.SystemException;
-import com.g6jamm.stima.domain.model.ProjectComposite;
+import com.g6jamm.stima.domain.model.Headproject;
 import com.g6jamm.stima.domain.model.User;
 
 import java.time.LocalDate;
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ProjectRepositoryImpl implements ProjectRepository {
 
-  private static final List<ProjectComposite> projects = new ArrayList<>();
+  private static final List<Headproject> projects = new ArrayList<>();
   private final TaskRepository TASK_REPOSITORY = new TaskRepositoryImpl();
   private final SubProjectRepository SUBPROJECT_REPOSITORY = new SubProjectRepositoryImpl();
 
@@ -24,7 +24,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
   public void createTestData() throws SystemException {
     if (projects.isEmpty()) {
       projects.add(
-          new ProjectComposite.ProjectBuilder()
+          new Headproject.ProjectBuilder()
               .projectId(projects.size() + 1)
               .projectName("Projekt pink")
               .startDate(LocalDate.of(2021, 1, 1))
@@ -35,7 +35,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
               .build());
 
       projects.add(
-          new ProjectComposite.ProjectBuilder()
+          new Headproject.ProjectBuilder()
               .projectId(projects.size() + 1)
               .projectName("Projekt lilla")
               .startDate(LocalDate.of(2021, 1, 1))
@@ -46,7 +46,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
               .build());
 
       projects.add(
-          new ProjectComposite.ProjectBuilder()
+          new Headproject.ProjectBuilder()
               .projectId(projects.size() + 1)
               .projectName("Projekt grøn")
               .startDate(LocalDate.of(2021, 1, 1))
@@ -57,7 +57,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
               .build());
 
       projects.add(
-          new ProjectComposite.ProjectBuilder()
+          new Headproject.ProjectBuilder()
               .projectId(projects.size() + 1)
               .projectName("Projekt brun")
               .startDate(LocalDate.of(2021, 1, 1))
@@ -70,11 +70,11 @@ public class ProjectRepositoryImpl implements ProjectRepository {
   }
 
   @Override
-  public ProjectComposite createProject(ProjectComposite project, User user)
+  public Headproject createProject(Headproject project, User user)
       throws SystemException {
 
-    ProjectComposite newProject =
-        new ProjectComposite.ProjectBuilder()
+    Headproject newProject =
+        new Headproject.ProjectBuilder()
             .projectId(projects.size() + 1)
             .projectName(project.getName())
             .startDate(project.getStartDate())
@@ -89,12 +89,12 @@ public class ProjectRepositoryImpl implements ProjectRepository {
   }
 
   @Override
-  public ProjectComposite getProject(int projectId) throws SystemException {
+  public Headproject getProject(int projectId) throws SystemException {
     return null;
   }
 
   @Override
-  public List<ProjectComposite> getProjects(User user) throws SystemException {
+  public List<Headproject> getProjects(User user) throws SystemException {
     return projects;
   }
 
@@ -102,5 +102,5 @@ public class ProjectRepositoryImpl implements ProjectRepository {
   public void deleteProject(int projectId) throws SystemException {}
 
   @Override
-  public void editProject(ProjectComposite project) throws SystemException {}
+  public void editProject(Headproject project) throws SystemException {}
 }
