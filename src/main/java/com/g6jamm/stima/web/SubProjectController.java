@@ -142,9 +142,7 @@ public class SubProjectController {
 
   @PostMapping("/projects/{projectId}/{subProjectId}/create-task")
   public String createSubProjectTask(
-      WebRequest webRequest,
-      @PathVariable int projectId,
-      @PathVariable int subProjectId)
+      WebRequest webRequest, @PathVariable int projectId, @PathVariable int subProjectId)
       throws SystemException, TaskCreationException {
 
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
