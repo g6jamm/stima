@@ -14,4 +14,12 @@ class DbManagerTest {
 
     Assertions.assertNotNull(result);
   }
+
+  @Test
+  void testIfConnectionIsSingleton() {
+    Connection connection1 = DbManager.getInstance().getConnection();
+    Connection connection2 = DbManager.getInstance().getConnection();
+
+    Assertions.assertEquals(connection1, connection2);
+  }
 }
