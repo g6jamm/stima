@@ -1,4 +1,4 @@
-package com.g6jamm.stima.data.repository.util;
+package com.g6jamm.stima.data.repository.mysql.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,6 +1,6 @@
-package com.g6jamm.stima.data.repository.util;
+package com.g6jamm.stima.data.repository.mysql.util;
 
-import com.g6jamm.stima.data.repository.util.type.ConnectionType;
+import com.g6jamm.stima.data.repository.mysql.util.type.ConnectionType;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
