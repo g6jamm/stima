@@ -4,7 +4,7 @@ public class ResourceType {
 
   private final String NAME;
   private final int PRICE_PR_HOUR;
-  private int ID;
+  private final int ID;
 
   public ResourceType(ResourceTypeBuilder resourceTypeBuilder) {
     this.ID = resourceTypeBuilder.id;

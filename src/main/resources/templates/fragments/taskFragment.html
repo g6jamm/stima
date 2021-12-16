@@ -14,7 +14,8 @@
                                 class="fas fa-pen"></i></a>
                     </div>
                     <div class="btn-group" role="group">
-                        <form method="POST" th:action="@{{path}/delete-task/{taskId} (path=${link}, taskId=${task.getId})}">
+                        <form method="POST"
+                              th:action="@{{path}/delete-task/{taskId} (path=${link}, taskId=${task.getId})}">
                             <button aria-label="Slet" class="btn btn-delete" type="submit"><i
                                     class="fas fa-trash-alt"></i></button>
                         </form>

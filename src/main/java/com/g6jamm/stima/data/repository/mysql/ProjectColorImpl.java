@@ -9,9 +9,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author Mathias
- */
+/** @author Mathias */
 public class ProjectColorImpl implements ProjectColorRepository {
   public Map<String, String> getProjectColors() throws SystemException {
 

@@ -11,9 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Mohamad
- */
+/** @author Mohamad */
 public class PermissionRepositoryImpl implements PermissionRepository {
   @Override
   public List<Permission> getPermissions() throws SystemException {
@@ -62,4 +60,3 @@ public class PermissionRepositoryImpl implements PermissionRepository {
     return null;
   }
 }
-

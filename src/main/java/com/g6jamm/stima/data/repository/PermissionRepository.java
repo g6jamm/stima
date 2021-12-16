@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PermissionRepository {
 
-  public List<Permission> getPermissions() throws SystemException;
+  List<Permission> getPermissions() throws SystemException;
 
-  public Permission getPermission(String permissionName) throws SystemException;
+  Permission getPermission(String permissionName) throws SystemException;
 }

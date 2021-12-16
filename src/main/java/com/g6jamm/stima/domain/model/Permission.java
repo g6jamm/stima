@@ -3,7 +3,7 @@ package com.g6jamm.stima.domain.model;
 public class Permission {
 
   private final String NAME;
-  private int ID;
+  private final int ID;
 
   public Permission(PermissionBuilder permissionBuilder) {
     this.ID = permissionBuilder.id;

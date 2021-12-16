@@ -1,14 +1,10 @@
 package com.g6jamm.stima.web;
 
-import com.g6jamm.stima.data.repository.mysql.PermissionRepositoryImpl;
-import com.g6jamm.stima.data.repository.mysql.ProjectRepositoryImpl;
-import com.g6jamm.stima.data.repository.mysql.ResourceTypeRepositoryImpl;
-import com.g6jamm.stima.data.repository.mysql.TaskRepositoryImpl;
-import com.g6jamm.stima.data.repository.mysql.UserRepositoryImpl;
+import com.g6jamm.stima.data.repository.mysql.*;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
-import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.Headproject;
+import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.Task;
 import com.g6jamm.stima.domain.model.User;
 import com.g6jamm.stima.domain.service.ProjectService;

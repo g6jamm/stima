@@ -5,8 +5,8 @@ import com.g6jamm.stima.data.repository.SubProjectRepository;
 import com.g6jamm.stima.data.repository.TaskRepository;
 import com.g6jamm.stima.data.repository.util.DbManager;
 import com.g6jamm.stima.domain.exception.SystemException;
-import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.Headproject;
+import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.User;
 
 import java.sql.*;
@@ -14,17 +14,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Mathias
- */
+/** @author Mathias */
 public class ProjectRepositoryImpl implements ProjectRepository {
 
   private final TaskRepository TASK_REPOSITORY = new TaskRepositoryImpl();
   private final SubProjectRepository SUBPROJECT_REPOSITORY = new SubProjectRepositoryImpl();
 
   @Override
-  public Headproject createProject(Headproject project, User user)
-      throws SystemException {
+  public Headproject createProject(Headproject project, User user) throws SystemException {
 
     try {
       String query =
@@ -64,46 +61,6 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     }
 
     return project;
-  }
-
-  @Override
-  public Headproject getProject(int projectId) throws SystemException {
-
-    try {
-      String query =
-          "SELECT * "
-              + "FROM projects "
-              + "WHERE project_id = ? "
-              + "AND parent_project_id is NULL";
-
-      PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
-      ps.setInt(1, projectId);
-
-      ResultSet rs = ps.executeQuery();
-
-      if (rs.next()) {
-        return new Headproject.ProjectBuilder()
-            .projectId(projectId)
-            .projectName(rs.getString("name"))
-            .startDate(LocalDate.parse(rs.getString("start_date")))
-            .endDate(LocalDate.parse(rs.getString("end_date")))
-            .colorCode(rs.getString("colorscode"))
-            .tasks(TASK_REPOSITORY.getTasks(rs.getInt("project_id")))
-            // Vi kan spare kald til databasen ved at bygge et
-            // task-objekt i metoden. Dette er bevidst fravalgt, da det
-            // vil gøre koden væsentlig mindre vedligeholdes venlig.
-            .subProjects(SUBPROJECT_REPOSITORY.getSubProjects(rs.getInt("project_id")))
-            // Vi kan spare kald til databasen ved at bygge et
-            // subproject-objekt i metoden. Dette er bevidst fravalgt, da det
-            // vil gøre koden væsentlig mindre vedligeholdes venlig.
-            .build();
-      }
-
-    } catch (SQLException e) {
-      throw new SystemException(e);
-    }
-
-    return null;
   }
 
   @Override
@@ -167,12 +124,8 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                 .projectName(rs.getString("name"))
                 .startDate(LocalDate.parse(rs.getString("start_date")))
                 .endDate(LocalDate.parse(rs.getString("end_date")))
-                .tasks(
-                    TASK_REPOSITORY.getTasks(
-                        rs.getInt("project_id")))
-                .subProjects(
-                    SUBPROJECT_REPOSITORY.getSubProjects(
-                        rs.getInt("project_id")))
+                .tasks(TASK_REPOSITORY.getTasks(rs.getInt("project_id")))
+                .subProjects(SUBPROJECT_REPOSITORY.getSubProjects(rs.getInt("project_id")))
                 .colorCode(rs.getString("colorscode"))
                 .build();
 
@@ -186,9 +139,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     return projects;
   }
 
-  /**
-   * @author Andreas
-   */
+  /** @author Andreas */
   private boolean linkProjectAndUser(Project project, User user) throws SQLException {
     String query = "INSERT INTO project_users (project_id, user_id, role_id) VALUES (?, ?, 1)";
 

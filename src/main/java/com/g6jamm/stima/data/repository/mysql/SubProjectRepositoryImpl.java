@@ -4,8 +4,8 @@ import com.g6jamm.stima.data.repository.SubProjectRepository;
 import com.g6jamm.stima.data.repository.TaskRepository;
 import com.g6jamm.stima.data.repository.util.DbManager;
 import com.g6jamm.stima.domain.exception.SystemException;
-import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.Headproject;
+import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.Subproject;
 
 import java.sql.Date;
@@ -16,9 +16,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Jackie
- */
+/** @author Jackie */
 public class SubProjectRepositoryImpl implements SubProjectRepository {
 
   private final TaskRepository TASK_REPOSITORY = new TaskRepositoryImpl();

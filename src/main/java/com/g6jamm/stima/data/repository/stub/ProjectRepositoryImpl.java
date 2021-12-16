@@ -70,8 +70,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
   }
 
   @Override
-  public Headproject createProject(Headproject project, User user)
-      throws SystemException {
+  public Headproject createProject(Headproject project, User user) throws SystemException {
 
     Headproject newProject =
         new Headproject.ProjectBuilder()
@@ -86,11 +85,6 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
     projects.add(newProject);
     return project;
-  }
-
-  @Override
-  public Headproject getProject(int projectId) throws SystemException {
-    return null;
   }
 
   @Override

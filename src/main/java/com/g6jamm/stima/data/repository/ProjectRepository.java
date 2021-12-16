@@ -11,8 +11,6 @@ public interface ProjectRepository {
 
   void editProject(Headproject project) throws SystemException;
 
-  Headproject getProject(int projectId) throws SystemException;
-
   void deleteProject(int projectId) throws SystemException;
 
   List<Headproject> getProjects(User user) throws SystemException;

@@ -5,7 +5,6 @@ import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.Headproject;
 import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.Subproject;
-import com.g6jamm.stima.domain.model.Task;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
               .name("example")
               .startDate(LocalDate.of(2020, 1, 1))
               .endDate(LocalDate.of(2021, 1, 1))
-              .tasks(new ArrayList<Task>())
+              .tasks(new ArrayList<>())
               .colorCode("green")
               .build());
 
@@ -33,7 +32,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
               .name("example2")
               .startDate(LocalDate.of(2020, 1, 1))
               .endDate(LocalDate.of(2021, 1, 1))
-              .tasks(new ArrayList<Task>())
+              .tasks(new ArrayList<>())
               .colorCode("blue")
               .build());
 
@@ -43,7 +42,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
               .name("example3")
               .startDate(LocalDate.of(2020, 5, 1))
               .endDate(LocalDate.of(2021, 8, 1))
-              .tasks(new ArrayList<Task>())
+              .tasks(new ArrayList<>())
               .colorCode("red")
               .build());
     }
@@ -61,9 +60,6 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   /**
    * Creates a sub project
    *
-   * @param name
-   * @param startDate
-   * @param endDate
    * @return sub project
    * @author Jackie
    */
@@ -72,17 +68,14 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
       String name, LocalDate startDate, LocalDate endDate, String projectColor, int parentProjectId)
       throws SystemException {
 
-    Subproject subProject =
-        new Subproject.SubProjectBuilder()
-            .subProjectId(SUB_PROJECTS.size() + 1)
-            .name(name)
-            .tasks(new ArrayList<Task>())
-            .startDate(startDate)
-            .endDate(endDate)
-            .colorCode(projectColor)
-            .build();
-
-    return subProject;
+    return new Subproject.SubProjectBuilder()
+        .subProjectId(SUB_PROJECTS.size() + 1)
+        .name(name)
+        .tasks(new ArrayList<>())
+        .startDate(startDate)
+        .endDate(endDate)
+        .colorCode(projectColor)
+        .build();
   }
 
   @Override
