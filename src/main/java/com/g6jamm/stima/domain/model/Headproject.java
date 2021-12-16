@@ -97,7 +97,7 @@ public class Headproject implements Project {
   public void addSubProject(Project project) {
     SUB_PROJECTS.add(project);
   }
-  
+
   public double calculateResources() {
 
     long workdaysAvailable =
