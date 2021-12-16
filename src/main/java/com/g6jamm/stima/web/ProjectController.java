@@ -302,9 +302,7 @@ public class ProjectController {
     return "redirect:/projects/" + projectId + "/" + subprojectId;
   }
 
-  /**
-   * @auther Mohamad
-   */
+  /** @auther Mohamad */
   @ExceptionHandler(Exception.class)
   public String error(Model model, Exception e) {
     model.addAttribute("message", e.getMessage());

@@ -14,9 +14,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
 
   private static final List<Project> SUB_PROJECTS = new ArrayList<>();
 
-  /**
-   * @auther Jackie
-   */
+  /** @auther Jackie */
   public SubProjectRepositoryImpl() {
     if (SUB_PROJECTS.isEmpty()) {
       SUB_PROJECTS.add(

@@ -6,9 +6,7 @@ import java.util.List;
 
 public class Subproject implements Project {
 
-  /**
-   * @auther Jackie
-   */
+  /** @auther Jackie */
   private final int SUB_PROJECT_ID;
 
   private final String SUB_PROJECT_NAME;

@@ -24,12 +24,14 @@ public class SubProjectService {
       String name, LocalDate startDate, LocalDate endDate, String projectColor, int parentProjectId)
       throws SystemException {
     return SUB_PROJECT_REPOSITORY.createSubProject(
-        name, startDate, endDate, projectColor, parentProjectId); // TODO: @Jackie parse an object instead
+        name,
+        startDate,
+        endDate,
+        projectColor,
+        parentProjectId); // TODO: @Jackie parse an object instead
   }
 
-  /**
-   * @auther Mathias
-   */
+  /** @auther Mathias */
   public void editProject(
       int projectId, String name, LocalDate startDate, LocalDate endDate, String projectColor)
       throws SystemException {
@@ -46,9 +48,7 @@ public class SubProjectService {
     SUB_PROJECT_REPOSITORY.editProject(subproject);
   }
 
-  /**
-   * @auther Mathias
-   */
+  /** @auther Mathias */
   public void deleteProject(int projectId) throws SystemException {
     SUB_PROJECT_REPOSITORY.deleteProject(projectId);
   }

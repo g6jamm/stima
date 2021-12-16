@@ -68,9 +68,7 @@ public class Headproject implements Project {
     return totalHours;
   }
 
-  /**
-   * @auther Mathias
-   */
+  /** @auther Mathias */
   public int calculatePrice() {
     int totalPrice = 0;
     if (!SUB_PROJECTS.isEmpty()) {

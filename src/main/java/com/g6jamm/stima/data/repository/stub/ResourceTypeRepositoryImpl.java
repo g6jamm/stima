@@ -12,9 +12,7 @@ public class ResourceTypeRepositoryImpl implements ResourceTypeRepository {
 
   private static final List<ResourceType> RESOURCE_TYPES = new ArrayList<>();
 
-  /**
-   * @auther Andreas
-   */
+  /** @auther Andreas */
   public ResourceTypeRepositoryImpl() {
     if (RESOURCE_TYPES.isEmpty()) {
       RESOURCE_TYPES.add(

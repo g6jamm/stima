@@ -1,9 +1,7 @@
 package com.g6jamm.stima.domain.exception;
 
 public class LoginException extends Exception {
-  /**
-   * @auther Mohamad
-   */
+  /** @auther Mohamad */
   public LoginException(String message) {
     super(message);
   }

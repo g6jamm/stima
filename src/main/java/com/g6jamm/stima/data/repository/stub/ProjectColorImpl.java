@@ -6,9 +6,7 @@ import com.g6jamm.stima.domain.exception.SystemException;
 import java.util.Map;
 
 public class ProjectColorImpl implements ProjectColorRepository {
-  /**
-   * @auther Mathias
-   */
+  /** @auther Mathias */
   private static final Map<String, String> PROJECT_COLORS =
       Map.of(
           "Light Carmine Pink",
