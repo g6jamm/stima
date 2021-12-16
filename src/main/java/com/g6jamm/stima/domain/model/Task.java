@@ -95,8 +95,7 @@ public class Task {
       if (this.resourceType == null) {
         this.price = 0;
       } else {
-        this.price =
-            (int) this.hours * this.resourceType.getPricePrHour();
+        this.price = (int) this.hours * this.resourceType.getPricePrHour();
       }
     }
 
