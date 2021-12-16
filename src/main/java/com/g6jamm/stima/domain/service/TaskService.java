@@ -127,7 +127,7 @@ public class TaskService {
    * @param resourceType
    * @param startDate
    * @param endDate
-   * @param id
+   * @param id$
    * @throws TaskCreationException
    * @throws SystemException
    */
@@ -153,7 +153,7 @@ public class TaskService {
 
   /**
    * Method for deleting a task.
-   * 
+   *
    * @Author Mathias
    * @param taskId
    * @throws SystemException
