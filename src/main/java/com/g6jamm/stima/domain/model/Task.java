@@ -96,7 +96,7 @@ public class Task {
         this.price = 0;
       } else {
         this.price =
-            (int) this.hours * this.resourceType.getPricePrHour(); // TODO: Fix rounding issue.
+            (int) this.hours * this.resourceType.getPricePrHour();
       }
     }
 

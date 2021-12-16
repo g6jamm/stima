@@ -92,9 +92,19 @@ public class User {
       return this;
     }
 
+    private void reset() {
+      this.id = 0;
+      this.firstName = null;
+      this.lastName = null;
+      this.email = null;
+      this.password = null;
+      this.resourceType = null;
+      this.permission = null;
+    }
+
     public User build() {
       User result = new User(this);
-      // todo: reset
+      reset();
       return result;
     }
   }
