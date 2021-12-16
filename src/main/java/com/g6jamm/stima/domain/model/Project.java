@@ -24,6 +24,4 @@ public interface Project {
   void addTask(Task task);
 
   double calculateWorkdays();
-
-  double calculateResources();
 }
