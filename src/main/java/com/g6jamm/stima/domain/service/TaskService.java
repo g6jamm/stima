@@ -22,12 +22,10 @@ public class TaskService {
   }
 
   /**
-   * Service method for creating a task, in order for us to create a task we need to build a task object.
-   * This task object is then send to the repository which returns a new task.
+   * Service method for creating a task, in order for us to create a task we need to build a task
+   * object. This task object is then send to the repository which returns a new task.
    *
-   * The Task created here is incomplete.
-   *
-   * @Author Andreas
+   * <p>The Task created here is incomplete. @Author Andreas
    *
    * @param taskName
    * @param hours
@@ -39,7 +37,6 @@ public class TaskService {
    * @throws TaskCreationException
    * @throws SystemException
    */
-
   public Task createTask(
       String taskName,
       double hours,
@@ -61,9 +58,8 @@ public class TaskService {
   }
 
   /**
-   * Utility method for converting a date given as a string to LocalDate
+   * Utility method for converting a date given as a string to LocalDate @Author Andreas
    *
-   * @Author Andreas
    * @param stringDate
    * @return
    */
@@ -78,20 +74,17 @@ public class TaskService {
    * @return
    * @throws SystemException
    */
-
   public List<Task> getTasks(int projectId) throws SystemException {
     return TASK_REPOSITORY.getTasks(projectId);
   }
 
   /**
-   * Method for retrieving resourcetypes.
-   * This is used for dynamicly making drop downs in the html
+   * Method for retrieving resourcetypes. This is used for dynamicly making drop downs in the
+   * html @Author Andreas
    *
-   * @Author Andreas
    * @return
    * @throws SystemException
    */
-
   public List<ResourceType> getResourceTypes() throws SystemException {
     return RESOURCE_TYPE_REPOSITORY.getResourceTypes();
   }
@@ -99,15 +92,13 @@ public class TaskService {
   /**
    * Method for getting a resourcetype by its name.
    *
-   * When recieving a webrequest the reourcename is a string. This validates it and converts to a RessourceType object.
+   * <p>When recieving a webrequest the reourcename is a string. This validates it and converts to a
+   * RessourceType object. @Auther Andreas
    *
-   * @Auther Andreas
    * @param resourceTypeName
    * @return a ResourceType
    * @throws TaskCreationException Thrown when the ressourcetype was not found.
    */
-
-
   private ResourceType getResourceTypeByName(String resourceTypeName) throws TaskCreationException {
     try {
       return RESOURCE_TYPE_REPOSITORY.getByResourceTypeName(resourceTypeName);
@@ -119,9 +110,9 @@ public class TaskService {
   /**
    * Method for updating a Task with new information.
    *
-   * Due to builder pattern we have to create a new object in and store that to the database.
+   * <p>Due to builder pattern we have to create a new object in and store that to the
+   * database. @Author Mathias
    *
-   * @Author Mathias
    * @param taskName
    * @param hours
    * @param resourceType
@@ -131,9 +122,6 @@ public class TaskService {
    * @throws TaskCreationException
    * @throws SystemException
    */
-
-
-
   public void editTask(
       String taskName, double hours, String resourceType, String startDate, String endDate, int id)
       throws TaskCreationException, SystemException {
@@ -152,13 +140,11 @@ public class TaskService {
   }
 
   /**
-   * Method for deleting a task.
-   * 
-   * @Author Mathias
+   * Method for deleting a task. @Author Mathias
+   *
    * @param taskId
    * @throws SystemException
    */
-
   public void deleteTask(int taskId) throws SystemException {
     TASK_REPOSITORY.deleteTask(taskId);
   }
