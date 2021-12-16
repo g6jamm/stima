@@ -143,7 +143,6 @@ public class SubProjectController {
   @PostMapping("/projects/{projectId}/{subProjectId}/create-task")
   public String createSubProjectTask(
       WebRequest webRequest,
-      Model model,
       @PathVariable int projectId,
       @PathVariable int subProjectId)
       throws SystemException, TaskCreationException {
