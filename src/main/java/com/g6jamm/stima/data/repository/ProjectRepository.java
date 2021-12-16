@@ -7,6 +7,7 @@ import com.g6jamm.stima.domain.model.User;
 import java.util.List;
 
 public interface ProjectRepository {
+
   Headproject createProject(Headproject project, User user) throws SystemException;
 
   void editProject(Headproject project) throws SystemException;

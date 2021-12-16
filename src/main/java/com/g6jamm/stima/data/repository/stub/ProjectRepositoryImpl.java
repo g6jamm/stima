@@ -21,6 +21,9 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     createTestData();
   }
 
+  /**
+   * @auther Mathias, Andreas
+   */
   public void createTestData() throws SystemException {
     if (projects.isEmpty()) {
       projects.add(
@@ -69,6 +72,9 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     }
   }
 
+  /**
+   * @auther Mathias
+   */
   @Override
   public Headproject createProject(Headproject project, User user) throws SystemException {
 
@@ -87,14 +93,23 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     return project;
   }
 
+  /**
+   * @auther Mathias
+   */
   @Override
   public List<Headproject> getProjects(User user) throws SystemException {
     return projects;
   }
 
+  /**
+   * This part is not implemented yet.
+   */
   @Override
   public void deleteProject(int projectId) throws SystemException {}
 
+  /**
+   * This part is not implemented yet.
+   */
   @Override
   public void editProject(Headproject project) throws SystemException {}
 }

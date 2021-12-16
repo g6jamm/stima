@@ -29,10 +29,8 @@ public class UserService {
   }
 
   /**
-   * @param email
-   * @param password
-   * @return User if user exist in DB
-   * @throws LoginException
+   * Returns a user if user exist in dataabase.
+   *
    * @author Mohamad
    */
   public User login(String email, String password) throws LoginException, SystemException {
@@ -44,12 +42,8 @@ public class UserService {
   }
 
   /**
-   * @param firstName
-   * @param lastName
-   * @param email
-   * @param password
-   * @return New User with the new ID
-   * @throws SignUpException
+   * Returns a user with the new ID.
+   *
    * @author Mohamad
    */
   public User createUser(
@@ -74,8 +68,8 @@ public class UserService {
   }
 
   /**
-   * @param userId
-   * @return true if user exists
+   * Return true if user exists. Else return false.
+   *
    * @author Mohamad
    */
   public boolean userExists(int userId) throws SystemException {

@@ -93,10 +93,8 @@ public class TaskRepositoryImpl implements TaskRepository {
   }
 
   /**
-   * Edit task.
+   * Edit task in the database for a given task.
    *
-   * @param task
-   * @throws SystemException
    * @auther Mathias
    */
   @Override
@@ -123,10 +121,8 @@ public class TaskRepositoryImpl implements TaskRepository {
   }
 
   /**
-   * Delete task by Id.
+   * Delete task in the database by a given task id.
    *
-   * @param taskId
-   * @throws SystemException
    * @auther Mathias
    */
   @Override

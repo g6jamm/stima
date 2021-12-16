@@ -7,8 +7,6 @@ import java.util.List;
 public class Subproject implements Project {
 
   /**
-   * Model for subproject
-   *
    * @auther Jackie
    */
   private final int SUB_PROJECT_ID;

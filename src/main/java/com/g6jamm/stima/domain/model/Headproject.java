@@ -8,7 +8,7 @@ import java.util.List;
 public class Headproject implements Project {
 
   private final int PROJECT_ID;
-  private final String PROJECT_NAME;
+  private final String NAME;
   private final LocalDate START_DATE;
   private final LocalDate END_DATE;
   private final List<Task> TASKS;
@@ -17,7 +17,7 @@ public class Headproject implements Project {
 
   private Headproject(ProjectBuilder projectBuilder) {
     this.PROJECT_ID = projectBuilder.projectId;
-    this.PROJECT_NAME = projectBuilder.projectName;
+    this.NAME = projectBuilder.name;
     this.START_DATE = projectBuilder.startDate;
     this.END_DATE = projectBuilder.endDate;
     this.TASKS = projectBuilder.tasks;
@@ -30,7 +30,7 @@ public class Headproject implements Project {
   }
 
   public String getName() {
-    return PROJECT_NAME;
+    return NAME;
   }
 
   public LocalDate getStartDate() {
@@ -68,6 +68,9 @@ public class Headproject implements Project {
     return totalHours;
   }
 
+  /**
+   * @auther Mathias
+   */
   public int calculatePrice() {
     int totalPrice = 0;
     if (!SUB_PROJECTS.isEmpty()) {
@@ -112,7 +115,7 @@ public class Headproject implements Project {
 
   public static class ProjectBuilder {
     private int projectId;
-    private String projectName;
+    private String name;
     private LocalDate startDate;
     private LocalDate endDate;
     private List<Task> tasks;
@@ -125,7 +128,7 @@ public class Headproject implements Project {
     }
 
     public ProjectBuilder projectName(String name) {
-      this.projectName = name;
+      this.name = name;
       return this;
     }
 
@@ -156,7 +159,7 @@ public class Headproject implements Project {
 
     private void reset() {
       this.projectId = 0;
-      this.projectName = null;
+      this.name = null;
       this.startDate = null;
       this.endDate = null;
       this.tasks = null;

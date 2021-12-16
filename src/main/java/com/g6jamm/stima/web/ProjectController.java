@@ -33,8 +33,6 @@ public class ProjectController {
   /**
    * View all projects.
    *
-   * @param model Model
-   * @return String
    * @auther Mathias
    */
   @GetMapping("/projects")
@@ -59,8 +57,6 @@ public class ProjectController {
   /**
    * View a specific project.
    *
-   * @param model Model
-   * @return String
    * @auther Mathias
    */
   @GetMapping("/projects/{projectId}")
@@ -88,6 +84,11 @@ public class ProjectController {
     return "project";
   }
 
+  /**
+   * Create a subproject.
+   *
+   * @auther Mathias
+   */
   @PostMapping("/projects/{projectId}/create-subproject")
   public String createSubProject(WebRequest webRequest, @PathVariable int projectId)
       throws SystemException {
@@ -117,6 +118,11 @@ public class ProjectController {
     return "redirect:/projects/" + projectId;
   }
 
+  /**
+   * Create a headproject.
+   *
+   * @auther Mathias
+   */
   @PostMapping("/projects/create-project")
   public String createProject(WebRequest webRequest) throws SystemException {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
@@ -140,6 +146,11 @@ public class ProjectController {
     return "redirect:/projects";
   }
 
+  /**
+   * Edit a subproject.
+   *
+   * @auther Mathias
+   */
   @PostMapping("/projects/{projectId}/{subprojectId}/edit-project")
   public String editSubProject(
       WebRequest webRequest, @PathVariable int projectId, @PathVariable int subprojectId)
@@ -160,6 +171,11 @@ public class ProjectController {
     return "redirect:/projects/" + projectId;
   }
 
+  /**
+   * Edit a headproject.
+   *
+   * @auther Mathias
+   */
   @PostMapping("/projects/{projectId}/edit-project")
   public String editProject(WebRequest webRequest, @PathVariable int projectId)
       throws SystemException {
@@ -179,6 +195,11 @@ public class ProjectController {
     return "redirect:/projects";
   }
 
+  /**
+   * Edit a headproject.
+   *
+   * @auther Mathias
+   */
   @PostMapping("/projects/{projectId}/delete-project")
   public String deleteProject(@PathVariable int projectId) throws SystemException {
     PROJECT_SERVICE.deleteProject(projectId);
@@ -186,6 +207,11 @@ public class ProjectController {
     return "redirect:/projects";
   }
 
+  /**
+   * Delte a subproject.
+   *
+   * @auther Mathias
+   */
   @PostMapping("/projects/{projectId}/{subprojectId}/delete-project")
   public String deleteSubproject(@PathVariable int projectId, @PathVariable int subprojectId)
       throws SystemException {
@@ -194,6 +220,11 @@ public class ProjectController {
     return "redirect:/projects/" + projectId;
   }
 
+  /**
+   * Delete a task.
+   *
+   * @auther Mathias
+   */
   @PostMapping("/projects/{projectId}/delete-task/{taskId}")
   public String deleteProjectTask(@PathVariable int projectId, @PathVariable int taskId)
       throws SystemException {
@@ -202,6 +233,11 @@ public class ProjectController {
     return "redirect:/projects/" + projectId;
   }
 
+  /**
+   * Delete a task.
+   *
+   * @auther Mathias
+   */
   @PostMapping("/projects/{projectId}/{subprojectId}/delete-task/{taskId}")
   public String deleteSubprojectTask(
       @PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId)
@@ -211,6 +247,11 @@ public class ProjectController {
     return "redirect:/projects/" + projectId + "/" + subprojectId;
   }
 
+  /**
+   * Edit a task.
+   *
+   * @auther Mathias
+   */
   @PostMapping("/projects/{projectId}/edit-task")
   public String editProjectTask(WebRequest webRequest, @PathVariable int projectId)
       throws TaskCreationException, SystemException {
@@ -233,6 +274,11 @@ public class ProjectController {
     return "redirect:/projects/" + projectId;
   }
 
+  /**
+   * Edit a task.
+   *
+   * @auther Mathias
+   */
   @PostMapping("/projects/{projectId}/{subprojectId}/edit-task")
   public String editSubProjectTask(
       WebRequest webRequest, @PathVariable int projectId, @PathVariable int subprojectId)
@@ -256,6 +302,9 @@ public class ProjectController {
     return "redirect:/projects/" + projectId + "/" + subprojectId;
   }
 
+  /**
+   * @auther Mohamad
+   */
   @ExceptionHandler(Exception.class)
   public String error(Model model, Exception e) {
     model.addAttribute("message", e.getMessage());

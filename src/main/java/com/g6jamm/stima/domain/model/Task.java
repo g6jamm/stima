@@ -130,9 +130,9 @@ public class Task {
 
     public Task build() {
       price();
-      Task newTask = new Task(this);
+      Task task = new Task(this);
       reset();
-      return newTask;
+      return task;
     }
   }
 }

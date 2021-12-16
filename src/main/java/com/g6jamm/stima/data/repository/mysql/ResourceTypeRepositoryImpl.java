@@ -12,9 +12,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/** @author Mohamad */
+/** @auther Mathias */
 public class ResourceTypeRepositoryImpl implements ResourceTypeRepository {
 
+  /**
+   * Returns a list of resource types.
+   *
+   * @auther Mathias
+   */
   @Override
   public List<ResourceType> getResourceTypes() throws SystemException {
     List<ResourceType> resourceTypes = new ArrayList<>();
@@ -42,6 +47,11 @@ public class ResourceTypeRepositoryImpl implements ResourceTypeRepository {
     }
   }
 
+  /**
+   * Returns a specific resource type by name.
+   *
+   * @auther Mathias
+   */
   @Override
   public ResourceType getByResourceTypeName(String resourceTypeName)
       throws ResourceTypeNotFoundException {

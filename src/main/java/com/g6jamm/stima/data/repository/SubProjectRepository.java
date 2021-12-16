@@ -8,7 +8,6 @@ import com.g6jamm.stima.domain.model.Subproject;
 import java.time.LocalDate;
 import java.util.List;
 
-/** @author Jackie */
 public interface SubProjectRepository {
 
   List<Project> getSubProjects(int projectId) throws SystemException;

@@ -11,6 +11,12 @@ import java.util.Map;
 
 /** @author Mathias */
 public class ProjectColorImpl implements ProjectColorRepository {
+
+  /**
+   * Returns map of product colors.
+   *
+   * @auther Mathias
+   */
   public Map<String, String> getProjectColors() throws SystemException {
 
     try {

@@ -16,10 +16,16 @@ public class ProjectService {
     this.PROJECT_REPOSITORY = projectRepository;
   }
 
+  /**
+   * @auther Mathias
+   */
   public List<Headproject> getProjects(User user) throws SystemException {
     return PROJECT_REPOSITORY.getProjects(user);
   }
 
+  /**
+   * @auther Mathias
+   */
   public Headproject getProjectById(User user, int projectID) throws SystemException {
     for (Headproject project : getProjects(user)) {
       if (projectID == project.getId()) {
@@ -30,6 +36,9 @@ public class ProjectService {
     return null;
   }
 
+  /**
+   * @auther Mathias
+   */
   public Headproject createProject(
       String name, LocalDate startDate, LocalDate endDate, String projectColor, User user)
       throws SystemException {
@@ -45,6 +54,9 @@ public class ProjectService {
     return PROJECT_REPOSITORY.createProject(project, user);
   }
 
+  /**
+   * @auther Mathias
+   */
   public void editProject(
       int projectId, String name, LocalDate startDate, LocalDate endDate, String projectColor)
       throws SystemException {
@@ -61,6 +73,9 @@ public class ProjectService {
     PROJECT_REPOSITORY.editProject(project);
   }
 
+  /**
+   * @auther Mathias
+   */
   public void deleteProject(int projectId) throws SystemException {
     PROJECT_REPOSITORY.deleteProject(projectId);
   }

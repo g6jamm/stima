@@ -34,11 +34,9 @@ public class SubProjectController {
 
   /**
    * Get method for displaying subproject page, shows all task for a subproject Redirects the user
-   * to login if not logged in
-   *
-   * <p>Finds the subproject based on projectid and subProjectId givin in the parameter. First by
-   * getting the head project, then by looping through the headprojects subprojects. Last it adds it
-   * to the model
+   * to login if not logged in. Finds the subproject based on projectid and subProjectId givin in
+   * the parameter. First by getting the head project, then by looping through the headprojects
+   * subprojects. Last it adds it to the model
    *
    * @param model
    * @param projectId
@@ -86,12 +84,11 @@ public class SubProjectController {
   }
 
   /**
-   * Post method for adding tasks to Headprojects. Redirects the user to login if not logged in
+   * Post method for adding tasks to Headprojects. Redirects the user to login if not logged in.
+   * Finds the headproject based on projectid givin in the parameter. calls createTask() with the
+   * webrequest and project.
    *
-   * <p>Finds the headproject based on projectid givin in the parameter.
-   *
-   * <p>calls createTask() with the webrequest and project. @Author Andreas
-   *
+   * @author Andreas
    * @param webRequest
    * @param projectId
    * @return
@@ -161,7 +158,7 @@ public class SubProjectController {
   /**
    * Post method for adding tasks to subprojects. Redirects the user to login if not logged in
    *
-   * <p>Finds the subproject based on projectid and subProjectId givin in the parameter. First by
+   * <p>Finds the subproject based on project id and subProjectId given in the parameter. First by
    * getting the head project, then by looping through the headprojects subprojects.
    *
    * <p>calls createTask() with the webrequest and subproject. @Author Andreas, Jackie

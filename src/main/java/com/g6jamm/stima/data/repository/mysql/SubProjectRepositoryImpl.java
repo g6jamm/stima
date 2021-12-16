@@ -21,6 +21,11 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
 
   private final TaskRepository TASK_REPOSITORY = new TaskRepositoryImpl();
 
+  /**
+   * Get a list of subproject with a specific project id.
+   *
+   * @auther Mathias
+   */
   @Override
   public List<Project> getSubProjects(int projectId) throws SystemException {
 
@@ -57,6 +62,11 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
     return subProjects;
   }
 
+  /**
+   * Create a new subproject and save it to the database.
+   *
+   * @auther Mathias
+   */
   @Override
   public Subproject createSubProject(
       String name,
@@ -86,9 +96,14 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
     return null;
   }
 
+  /**
+   * Edit project details in the database for a given project.
+   *
+   * @auther Mathias
+   */
   @Override
-  public void editProject(Headproject subProject) throws SystemException {
-
+  public void editProject(Headproject project) throws SystemException {
+    // TODO: This method does already exists in HeadProject. To be merged. /Mathias
     try {
       String query =
           "UPDATE projects "
@@ -96,11 +111,11 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
               + "WHERE project_id = ?";
 
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);
-      ps.setString(1, subProject.getName());
-      ps.setString(2, String.valueOf(Date.valueOf(subProject.getStartDate())));
-      ps.setString(3, String.valueOf(Date.valueOf(subProject.getEndDate())));
-      ps.setString(4, subProject.getColorCode());
-      ps.setInt(5, subProject.getId());
+      ps.setString(1, project.getName());
+      ps.setString(2, String.valueOf(Date.valueOf(project.getStartDate())));
+      ps.setString(3, String.valueOf(Date.valueOf(project.getEndDate())));
+      ps.setString(4, project.getColorCode());
+      ps.setInt(5, project.getId());
 
       ps.execute();
 
@@ -109,9 +124,14 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
     }
   }
 
+  /**
+   * Delete project in the database for a given subproject.
+   *
+   * @auther Mathias
+   */
   @Override
   public void deleteProject(int projectId) throws SystemException {
-
+    // TODO: This method does already exists in HeadProject. To be merged. /Mathias
     try {
       String query = "DELETE FROM projects WHERE project_id = ?";
       PreparedStatement ps = DbManager.getInstance().getConnection().prepareStatement(query);

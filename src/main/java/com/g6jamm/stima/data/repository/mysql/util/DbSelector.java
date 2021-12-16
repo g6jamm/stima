@@ -11,6 +11,12 @@ public class DbSelector {
 
   private static ConnectionType connectionType;
 
+  /**
+   * Returns properties depending on localhost or Heroku. This is done to hide sensitive data on
+   * GitHub from the production env.
+   *
+   * @auther Andreas, Mathias
+   */
   public static Properties selectConnection() {
     Properties properties = new Properties();
 

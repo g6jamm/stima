@@ -21,6 +21,7 @@ public class TaskService {
     this.RESOURCE_TYPE_REPOSITORY = resourceTypeRepository;
   }
 
+
   public Task createTask(
       String taskName,
       double hours,
@@ -45,14 +46,23 @@ public class TaskService {
     return LocalDate.parse(stringDate);
   }
 
+  /**
+   * @auther Andreas
+   */
   public List<Task> getTasks(int projectId) throws SystemException {
     return TASK_REPOSITORY.getTasks(projectId);
   }
 
+  /**
+   * @auther Andreas
+   */
   public List<ResourceType> getResourceTypes() throws SystemException {
     return RESOURCE_TYPE_REPOSITORY.getResourceTypes();
   }
 
+  /**
+   * @auther Andreas
+   */
   private ResourceType getResourceTypeByName(String resourceTypeName) throws TaskCreationException {
     try {
       return RESOURCE_TYPE_REPOSITORY.getByResourceTypeName(resourceTypeName);
@@ -61,6 +71,9 @@ public class TaskService {
     }
   }
 
+  /**
+   * @auther Mathias
+   */
   public void editTask(
       String taskName, double hours, String resourceType, String startDate, String endDate, int id)
       throws TaskCreationException, SystemException {
@@ -78,6 +91,9 @@ public class TaskService {
     TASK_REPOSITORY.editTask(task);
   }
 
+  /**
+   * @auther Mathias
+   */
   public void deleteTask(int taskId) throws SystemException {
     TASK_REPOSITORY.deleteTask(taskId);
   }
