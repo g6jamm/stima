@@ -102,7 +102,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
    * @auther Mathias
    */
   @Override
-  public void editProject(Headproject project) throws SystemException {
+  public void editProject(Project project) throws SystemException {
     // TODO: This method does already exists in HeadProject. To be merged. /Mathias
     try {
       String query =

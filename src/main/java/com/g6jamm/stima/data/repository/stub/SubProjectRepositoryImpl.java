@@ -80,7 +80,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   }
 
   @Override
-  public void editProject(Headproject project) throws SystemException {}
+  public void editProject(Project project) throws SystemException {}
 
   @Override
   public void deleteProject(int projectId) throws SystemException {}
