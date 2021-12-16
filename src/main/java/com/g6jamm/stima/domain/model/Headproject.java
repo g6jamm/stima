@@ -60,7 +60,6 @@ public class Headproject implements Project {
    * may be called recursivly.
    *
    * @Author Andreas
-   * @return
    */
   public double calculateHours() {
     double totalHours = 0.0;
