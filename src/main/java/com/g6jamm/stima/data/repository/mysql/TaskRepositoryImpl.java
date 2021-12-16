@@ -38,6 +38,13 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
   }
 
+  /**
+   *
+   * @param projectId
+   * @return
+   * @throws SystemException
+   * @ Andreas, Mohamad, Mathias
+   */
   @Override
   public List<Task> getTasks(int projectId) throws SystemException {
     List<Task> result = new ArrayList<>();
@@ -87,6 +94,12 @@ public class TaskRepositoryImpl implements TaskRepository {
     return result;
   }
 
+  /**
+   * Edit task.
+   * @param task
+   * @throws SystemException
+   * @auther Mathias
+   */
   @Override
   public void editTask(Task task) throws SystemException {
     try {
@@ -110,6 +123,12 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
   }
 
+  /**
+   * Delete task by Id.
+   * @param taskId
+   * @throws SystemException
+   * @auther Mathias
+   */
   @Override
   public void deleteTask(int taskId) throws SystemException {
 
