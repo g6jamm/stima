@@ -1,4 +1,4 @@
-package com.g6jamm.stima.test.TaskService;
+package com.g6jamm.stima.domain.service;
 
 import com.g6jamm.stima.data.repository.stub.ResourceTypeRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.TaskRepositoryImpl;
