@@ -18,295 +18,317 @@ import java.util.List;
 
 @Controller
 public class ProjectController {
-  private final ProjectService PROJECT_SERVICE = new ProjectService(new ProjectRepositoryImpl());
-  private final TaskService TASK_SERVICE =
-      new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryImpl());
-  private final SubProjectService SUBPROJECT_SERVICE =
-      new SubProjectService(new SubProjectRepositoryImpl());
-  private final UserService USER_SERVICE =
-      new UserService(
-          new UserRepositoryImpl(),
-          new ResourceTypeRepositoryImpl(),
-          new PermissionRepositoryImpl());
-  private final ProjectColorService COLOR_SERVICE = new ProjectColorService(new ProjectColorImpl());
+    private final ProjectService PROJECT_SERVICE = new ProjectService(new ProjectRepositoryImpl());
+    private final TaskService TASK_SERVICE =
+            new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryImpl());
+    private final SubProjectService SUBPROJECT_SERVICE =
+            new SubProjectService(new SubProjectRepositoryImpl());
+    private final UserService USER_SERVICE =
+            new UserService(
+                    new UserRepositoryImpl(),
+                    new ResourceTypeRepositoryImpl(),
+                    new PermissionRepositoryImpl());
+    private final ProjectColorService COLOR_SERVICE = new ProjectColorService(new ProjectColorImpl());
 
-  /**
-   * View all projects.
-   *
-   * @auther Mathias
-   */
-  @GetMapping("/projects")
-  public String projects(WebRequest webRequest, Model model) throws SystemException {
-    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
-      return "redirect:/";
+    /**
+     * Mapping for seeing all available headprojects for a logged in user.
+     * Checks if a user is logged in and redirects if not.
+     *
+     * @auther Mathias
+     */
+    @GetMapping("/projects")
+    public String projects(WebRequest webRequest, Model model) throws SystemException {
+        if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+            return "redirect:/";
+        }
+
+        User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
+
+        List<Headproject> projects = PROJECT_SERVICE.getProjects(user);
+
+        model.addAttribute("projects", projects);
+        model.addAttribute("classActiveSettings", "active");
+        model.addAttribute("projectColors", COLOR_SERVICE.getProjectColors());
+        model.addAttribute("resourceTypes", TASK_SERVICE.getResourceTypes());
+        model.addAttribute("permissions", USER_SERVICE.getPermissions());
+
+        return "projects";
     }
 
-    User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
+    /**
+     * Mapping for viewing a single headproject.
+     * Check if the user is logged in if not they are redirected.
+     * Gets the specific project for the user and adds it to the model.
+     *
+     * @auther Mathias
+     */
+    @GetMapping("/projects/{projectId}")
+    public String projectId(WebRequest webRequest, Model model, @PathVariable int projectId)
+            throws SystemException {
+        if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+            return "redirect:/";
+        }
 
-    List<Headproject> projects = PROJECT_SERVICE.getProjects(user);
+        User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
 
-    model.addAttribute("projects", projects);
-    model.addAttribute("classActiveSettings", "active");
-    model.addAttribute("projectColors", COLOR_SERVICE.getProjectColors());
-    model.addAttribute("resourceTypes", TASK_SERVICE.getResourceTypes());
-    model.addAttribute("permissions", USER_SERVICE.getPermissions());
+        Headproject project = PROJECT_SERVICE.getProjectById(user, projectId);
 
-    return "projects";
-  }
+        List<Project> subProjects = project.getSubProjects();
+        model.addAttribute("projects", subProjects);
 
-  /**
-   * View a specific project.
-   *
-   * @auther Mathias
-   */
-  @GetMapping("/projects/{projectId}")
-  public String projectId(WebRequest webRequest, Model model, @PathVariable int projectId)
-      throws SystemException {
-    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
-      return "redirect:/";
+        List<Task> tasks = project.getTasks();
+        model.addAttribute("tasks", tasks);
+        model.addAttribute("parentproject", project);
+        model.addAttribute("projectColors", COLOR_SERVICE.getProjectColors());
+        model.addAttribute("classActiveSettings", "active");
+        model.addAttribute("resourceTypes", TASK_SERVICE.getResourceTypes());
+        model.addAttribute("permissions", USER_SERVICE.getPermissions());
+
+        return "project";
     }
 
-    User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
+    /**
+     * Mapping for creating new subprojects for a headproject.
+     * Creates a new subproject based on input from the webrequest and adds it to the headproject.
+     *
+     * @auther Mathias
+     */
+    @PostMapping("/projects/{projectId}/create-subproject")
+    public String createSubProject(WebRequest webRequest, @PathVariable int projectId)
+            throws SystemException {
+        if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+            return "redirect:/";
+        }
 
-    Headproject project = PROJECT_SERVICE.getProjectById(user, projectId);
+        User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
 
-    List<Project> subProjects = project.getSubProjects();
-    model.addAttribute("projects", subProjects);
+        String subProjectNameParam = webRequest.getParameter("create-subproject-name");
+        String startDateParam = webRequest.getParameter("create-subproject-start-date");
+        String endDateParam = webRequest.getParameter("create-subproject-end-date");
+        String projectColorParam = webRequest.getParameter("create-subproject-color");
 
-    List<Task> tasks = project.getTasks();
-    model.addAttribute("tasks", tasks);
-    model.addAttribute("parentproject", project);
-    model.addAttribute("projectColors", COLOR_SERVICE.getProjectColors());
-    model.addAttribute("classActiveSettings", "active");
-    model.addAttribute("resourceTypes", TASK_SERVICE.getResourceTypes());
-    model.addAttribute("permissions", USER_SERVICE.getPermissions());
+        Headproject project = PROJECT_SERVICE.getProjectById(user, projectId);
 
-    return "project";
-  }
+        Subproject subProject =
+                SUBPROJECT_SERVICE.createSubProject(
+                        subProjectNameParam,
+                        LocalDate.parse(startDateParam),
+                        LocalDate.parse(endDateParam),
+                        projectColorParam,
+                        projectId);
 
-  /**
-   * Create a subproject.
-   *
-   * @auther Mathias
-   */
-  @PostMapping("/projects/{projectId}/create-subproject")
-  public String createSubProject(WebRequest webRequest, @PathVariable int projectId)
-      throws SystemException {
-    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
-      return "redirect:/";
+        project.addSubProject(subProject);
+
+        return "redirect:/projects/" + projectId;
     }
 
-    User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
+    /**
+     * Mapping for creating a new headproject.
+     *
+     * @auther Mathias
+     */
+    @PostMapping("/projects/create-project")
+    public String createProject(WebRequest webRequest) throws SystemException {
+        if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+            return "redirect:/";
+        }
 
-    String subProjectNameParam = webRequest.getParameter("create-subproject-name");
-    String startDateParam = webRequest.getParameter("create-subproject-start-date");
-    String endDateParam = webRequest.getParameter("create-subproject-end-date");
-    String projectColorParam = webRequest.getParameter("create-subproject-color");
+        User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
 
-    Headproject project = PROJECT_SERVICE.getProjectById(user, projectId);
+        String projectNameParam = webRequest.getParameter("create-project-name");
+        String startDateParam = webRequest.getParameter("create-project-start-date");
+        String endDateParam = webRequest.getParameter("create-project-end-date");
+        String projectColorParam = webRequest.getParameter("create-project-color");
 
-    Subproject subProject =
-        SUBPROJECT_SERVICE.createSubProject(
-            subProjectNameParam,
-            LocalDate.parse(startDateParam),
-            LocalDate.parse(endDateParam),
-            projectColorParam,
-            projectId);
+        PROJECT_SERVICE.createProject(
+                projectNameParam,
+                LocalDate.parse(startDateParam),
+                LocalDate.parse(endDateParam),
+                projectColorParam,
+                user);
 
-    project.getSubProjects().add(subProject);
-
-    return "redirect:/projects/" + projectId;
-  }
-
-  /**
-   * Create a headproject.
-   *
-   * @auther Mathias
-   */
-  @PostMapping("/projects/create-project")
-  public String createProject(WebRequest webRequest) throws SystemException {
-    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
-      return "redirect:/";
+        return "redirect:/projects";
     }
 
-    User user = (User) webRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
+    /**
+     * Mapping for editing a subproject based on the user input in the webrequest.
+     *
+     * @auther Mathias
+     */
+    @PostMapping("/projects/{projectId}/{subprojectId}/edit-project")
+    public String editSubProject(
+            WebRequest webRequest, @PathVariable int projectId, @PathVariable int subprojectId)
+            throws SystemException {
+        if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+            return "redirect:/";
+        }
 
-    String projectNameParam = webRequest.getParameter("create-project-name");
-    String startDateParam = webRequest.getParameter("create-project-start-date");
-    String endDateParam = webRequest.getParameter("create-project-end-date");
-    String projectColorParam = webRequest.getParameter("create-project-color");
+        String projectNameParam = webRequest.getParameter("edit-project-name");
+        String startDateParam = webRequest.getParameter("edit-project-start-date");
+        String endDateParam = webRequest.getParameter("edit-project-end-date");
+        String projectColorParam = webRequest.getParameter("edit-project-color");
 
-    PROJECT_SERVICE.createProject(
-        projectNameParam,
-        LocalDate.parse(startDateParam),
-        LocalDate.parse(endDateParam),
-        projectColorParam,
-        user);
+        SUBPROJECT_SERVICE.editProject(
+                subprojectId,
+                projectNameParam,
+                LocalDate.parse(startDateParam),
+                LocalDate.parse(endDateParam),
+                projectColorParam);
 
-    return "redirect:/projects";
-  }
+        return "redirect:/projects/" + projectId;
+    }
 
-  /**
-   * Edit a subproject.
-   *
-   * @auther Mathias
-   */
-  @PostMapping("/projects/{projectId}/{subprojectId}/edit-project")
-  public String editSubProject(
-      WebRequest webRequest, @PathVariable int projectId, @PathVariable int subprojectId)
-      throws SystemException {
+    /**
+     * Mapping for editing a headproject based on the user input in the webrequest.
+     *
+     * @auther Mathias
+     */
+    @PostMapping("/projects/{projectId}/edit-project")
+    public String editProject(WebRequest webRequest, @PathVariable int projectId)
+            throws SystemException {
 
-    String projectNameParam = webRequest.getParameter("edit-project-name");
-    String startDateParam = webRequest.getParameter("edit-project-start-date");
-    String endDateParam = webRequest.getParameter("edit-project-end-date");
-    String projectColorParam = webRequest.getParameter("edit-project-color");
+        if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+            return "redirect:/";
+        }
+        String projectNameParam = webRequest.getParameter("edit-project-name");
+        String startDateParam = webRequest.getParameter("edit-project-start-date");
+        String endDateParam = webRequest.getParameter("edit-project-end-date");
+        String projectColorParam = webRequest.getParameter("edit-project-color");
 
-    SUBPROJECT_SERVICE.editProject(
-        subprojectId,
-        projectNameParam,
-        LocalDate.parse(startDateParam),
-        LocalDate.parse(endDateParam),
-        projectColorParam);
+        PROJECT_SERVICE.editProject(
+                projectId,
+                projectNameParam,
+                LocalDate.parse(startDateParam),
+                LocalDate.parse(endDateParam),
+                projectColorParam);
 
-    return "redirect:/projects/" + projectId;
-  }
+        return "redirect:/projects";
+    }
 
-  /**
-   * Edit a headproject.
-   *
-   * @auther Mathias
-   */
-  @PostMapping("/projects/{projectId}/edit-project")
-  public String editProject(WebRequest webRequest, @PathVariable int projectId)
-      throws SystemException {
+    /**
+     * Mapping for deleting a Headproject
+     *
+     * @auther Mathias
+     */
+    @PostMapping("/projects/{projectId}/delete-project")
+    public String deleteProject(@PathVariable int projectId) throws SystemException {
+        PROJECT_SERVICE.deleteProject(projectId);
 
-    String projectNameParam = webRequest.getParameter("edit-project-name");
-    String startDateParam = webRequest.getParameter("edit-project-start-date");
-    String endDateParam = webRequest.getParameter("edit-project-end-date");
-    String projectColorParam = webRequest.getParameter("edit-project-color");
+        return "redirect:/projects";
+    }
 
-    PROJECT_SERVICE.editProject(
-        projectId,
-        projectNameParam,
-        LocalDate.parse(startDateParam),
-        LocalDate.parse(endDateParam),
-        projectColorParam);
+    /**
+     * Mapping for deleting a subproject.
+     *
+     * @auther Mathias
+     */
+    @PostMapping("/projects/{projectId}/{subprojectId}/delete-project")
+    public String deleteSubproject(@PathVariable int projectId, @PathVariable int subprojectId)
+            throws SystemException {
+        SUBPROJECT_SERVICE.deleteProject(subprojectId);
 
-    return "redirect:/projects";
-  }
+        return "redirect:/projects/" + projectId;
+    }
 
-  /**
-   * Edit a headproject.
-   *
-   * @auther Mathias
-   */
-  @PostMapping("/projects/{projectId}/delete-project")
-  public String deleteProject(@PathVariable int projectId) throws SystemException {
-    PROJECT_SERVICE.deleteProject(projectId);
+    /**
+     * Mapping for deleting a task on a headproject.
+     *
+     * @auther Mathias
+     */
+    @PostMapping("/projects/{projectId}/delete-task/{taskId}")
+    public String deleteProjectTask(@PathVariable int projectId, @PathVariable int taskId)
+            throws SystemException {
+        TASK_SERVICE.deleteTask(taskId);
 
-    return "redirect:/projects";
-  }
+        return "redirect:/projects/" + projectId;
+    }
 
-  /**
-   * Delte a subproject.
-   *
-   * @auther Mathias
-   */
-  @PostMapping("/projects/{projectId}/{subprojectId}/delete-project")
-  public String deleteSubproject(@PathVariable int projectId, @PathVariable int subprojectId)
-      throws SystemException {
-    SUBPROJECT_SERVICE.deleteProject(subprojectId);
+    /**
+     * Delete a task for deleting a task on a subproject.
+     *
+     * @auther Mathias
+     */
+    @PostMapping("/projects/{projectId}/{subprojectId}/delete-task/{taskId}")
+    public String deleteSubprojectTask(
+            @PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId)
+            throws SystemException {
+        TASK_SERVICE.deleteTask(taskId);
 
-    return "redirect:/projects/" + projectId;
-  }
+        return "redirect:/projects/" + projectId + "/" + subprojectId;
+    }
 
-  /**
-   * Delete a task.
-   *
-   * @auther Mathias
-   */
-  @PostMapping("/projects/{projectId}/delete-task/{taskId}")
-  public String deleteProjectTask(@PathVariable int projectId, @PathVariable int taskId)
-      throws SystemException {
-    TASK_SERVICE.deleteTask(taskId);
+    /**
+     * Mapping for editing tasks on a headproject.
+     *
+     * @auther Mathias
+     */
+    @PostMapping("/projects/{projectId}/edit-task")
+    public String editProjectTask(WebRequest webRequest, @PathVariable int projectId)
+            throws TaskCreationException, SystemException {
 
-    return "redirect:/projects/" + projectId;
-  }
+        if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+            return "redirect:/";
+        }
 
-  /**
-   * Delete a task.
-   *
-   * @auther Mathias
-   */
-  @PostMapping("/projects/{projectId}/{subprojectId}/delete-task/{taskId}")
-  public String deleteSubprojectTask(
-      @PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId)
-      throws SystemException {
-    TASK_SERVICE.deleteTask(taskId);
+        String nameParam = webRequest.getParameter("edit-task-name");
+        String hoursParam = webRequest.getParameter("edit-task-hours");
+        String resourceTypeParam = webRequest.getParameter("edit-task-resource-type");
+        String startDateParam = webRequest.getParameter("edit-task-start-date");
+        String endDateParam = webRequest.getParameter("edit-task-end-date");
+        String taskIdParam = webRequest.getParameter("task-id");
 
-    return "redirect:/projects/" + projectId + "/" + subprojectId;
-  }
+        TASK_SERVICE.editTask(
+                nameParam,
+                Double.parseDouble(hoursParam),
+                resourceTypeParam,
+                startDateParam,
+                endDateParam,
+                Integer.parseInt(taskIdParam));
 
-  /**
-   * Edit a task.
-   *
-   * @auther Mathias
-   */
-  @PostMapping("/projects/{projectId}/edit-task")
-  public String editProjectTask(WebRequest webRequest, @PathVariable int projectId)
-      throws TaskCreationException, SystemException {
+        return "redirect:/projects/" + projectId;
+    }
 
-    String nameParam = webRequest.getParameter("edit-task-name");
-    String hoursParam = webRequest.getParameter("edit-task-hours");
-    String resourceTypeParam = webRequest.getParameter("edit-task-resource-type");
-    String startDateParam = webRequest.getParameter("edit-task-start-date");
-    String endDateParam = webRequest.getParameter("edit-task-end-date");
-    String taskIdParam = webRequest.getParameter("task-id");
+    /**
+     * mapping for editing tasks on a subproject.
+     *
+     * @auther Mathias
+     */
+    @PostMapping("/projects/{projectId}/{subprojectId}/edit-task")
+    public String editSubProjectTask(
+            WebRequest webRequest, @PathVariable int projectId, @PathVariable int subprojectId)
+            throws TaskCreationException, SystemException {
 
-    TASK_SERVICE.editTask(
-        nameParam,
-        Double.parseDouble(hoursParam),
-        resourceTypeParam,
-        startDateParam,
-        endDateParam,
-        Integer.parseInt(taskIdParam));
+        if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+            return "redirect:/";
+        }
 
-    return "redirect:/projects/" + projectId;
-  }
+        String nameParam = webRequest.getParameter("edit-task-name");
+        String hoursParam = webRequest.getParameter("edit-task-hours");
+        String resourceTypeParam = webRequest.getParameter("edit-task-resource-type");
+        String startDateParam = webRequest.getParameter("edit-task-start-date");
+        String endDateParam = webRequest.getParameter("edit-task-end-date");
+        String taskIdParam = webRequest.getParameter("task-id");
 
-  /**
-   * Edit a task.
-   *
-   * @auther Mathias
-   */
-  @PostMapping("/projects/{projectId}/{subprojectId}/edit-task")
-  public String editSubProjectTask(
-      WebRequest webRequest, @PathVariable int projectId, @PathVariable int subprojectId)
-      throws TaskCreationException, SystemException {
+        TASK_SERVICE.editTask(
+                nameParam,
+                Double.parseDouble(hoursParam),
+                resourceTypeParam,
+                startDateParam,
+                endDateParam,
+                Integer.parseInt(taskIdParam));
 
-    String nameParam = webRequest.getParameter("edit-task-name");
-    String hoursParam = webRequest.getParameter("edit-task-hours");
-    String resourceTypeParam = webRequest.getParameter("edit-task-resource-type");
-    String startDateParam = webRequest.getParameter("edit-task-start-date");
-    String endDateParam = webRequest.getParameter("edit-task-end-date");
-    String taskIdParam = webRequest.getParameter("task-id");
+        return "redirect:/projects/" + projectId + "/" + subprojectId;
+    }
 
-    TASK_SERVICE.editTask(
-        nameParam,
-        Double.parseDouble(hoursParam),
-        resourceTypeParam,
-        startDateParam,
-        endDateParam,
-        Integer.parseInt(taskIdParam));
-
-    return "redirect:/projects/" + projectId + "/" + subprojectId;
-  }
-
-  /** @auther Mohamad */
-  @ExceptionHandler(Exception.class)
-  public String error(Model model, Exception e) {
-    model.addAttribute("message", e.getMessage());
-    e.printStackTrace();
-    return "error";
-  }
+    /**
+     * Method for handling expections. This displays an error page with the message recieved from the excpetion
+     *
+     * @auther Mohamad
+     */
+    @ExceptionHandler(Exception.class)
+    public String error(Model model, Exception e) {
+        model.addAttribute("message", e.getMessage());
+        e.printStackTrace();
+        return "error";
+    }
 }
