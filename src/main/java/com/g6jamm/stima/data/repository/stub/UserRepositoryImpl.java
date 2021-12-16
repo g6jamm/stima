@@ -9,6 +9,7 @@ import com.g6jamm.stima.domain.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class UserRepositoryImpl implements UserRepository {
 
@@ -91,17 +92,17 @@ public class UserRepositoryImpl implements UserRepository {
   }
 
   /**
-   * @param id
+   * @param userId
    * @return true if user exists in list
    * @author Mohamad
    */
   @Override
-  public boolean userExists(int id) throws SystemException {
-    return USER_LIST.stream().anyMatch(user -> id == user.getId());
+  public boolean userExists(int userId) throws SystemException {
+    return USER_LIST.stream().anyMatch(user -> userId == user.getId());
   }
 
   private boolean emailExists(String email) {
-    return USER_LIST.stream().anyMatch(user -> email == user.getEmail());
+    return USER_LIST.stream().anyMatch(user -> Objects.equals(email, user.getEmail()));
   }
 
   /**

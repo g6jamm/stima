@@ -9,10 +9,11 @@ import com.g6jamm.stima.domain.service.TaskService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+/** @author Andreas */
 public class TaskServiceTest {
 
   @Test
-  public void createValidTaskTest() throws TaskCreationException, SystemException {
+  public void testCreateValidTask() throws TaskCreationException, SystemException {
     TaskService taskService =
         new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryImpl());
     Task task =
@@ -26,7 +27,6 @@ public class TaskServiceTest {
     TaskService taskService =
         new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryImpl());
     Task task = taskService.getTasks(1).get(0);
-    // expected is 5000 - Task 0 in stub is hours = 5 and pricePrHour = 1000
     Assertions.assertEquals(5000, task.getPrice());
   }
 
