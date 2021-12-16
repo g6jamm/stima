@@ -59,7 +59,7 @@ public class SubProjectController {
 
     Headproject project = PROJECT_SERVICE.getProjectById(user, projectId);
 
-    Project subProject = null; // TODO: move
+    Project subProject = null;
     for (Project sp : project.getSubProjects()) {
       if (subProjectId == sp.getId()) {
         subProject = sp;
@@ -134,7 +134,7 @@ public class SubProjectController {
                 .format(DateTimeFormatter.ofPattern("MM-dd-yyyy")); // TODO: More validation
 
     Task task =
-        TASK_SERVICE.createtask(
+        TASK_SERVICE.createTask(
             taskNameParam, hours, resourceTypeParam, taskStartDate, taskEndDate, project.getId());
 
     project.addTask(task);
@@ -153,7 +153,7 @@ public class SubProjectController {
 
     Headproject project = PROJECT_SERVICE.getProjectById(user, projectId);
 
-    Project subProject = null; // TODO: move
+    Project subProject = null;
     for (Project projectComponent : project.getSubProjects()) {
       if (projectComponent.getId() == subProjectId) {
         subProject = projectComponent;

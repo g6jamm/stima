@@ -21,7 +21,7 @@ public class TaskService {
     this.RESOURCE_TYPE_REPOSITORY = resourceTypeRepository;
   }
 
-  public Task createtask(
+  public Task createTask(
       String taskName,
       double hours,
       String resourceType,

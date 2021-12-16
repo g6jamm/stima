@@ -130,13 +130,12 @@ public class ProjectController {
     String endDateParam = webRequest.getParameter("create-project-end-date");
     String projectColorParam = webRequest.getParameter("create-project-color");
 
-    Headproject project =
-        PROJECT_SERVICE.createProject(
-            projectNameParam,
-            LocalDate.parse(startDateParam),
-            LocalDate.parse(endDateParam),
-            projectColorParam,
-            user);
+    PROJECT_SERVICE.createProject(
+        projectNameParam,
+        LocalDate.parse(startDateParam),
+        LocalDate.parse(endDateParam),
+        projectColorParam,
+        user);
 
     return "redirect:/projects";
   }
@@ -245,9 +244,6 @@ public class ProjectController {
     String startDateParam = webRequest.getParameter("edit-task-start-date");
     String endDateParam = webRequest.getParameter("edit-task-end-date");
     String taskIdParam = webRequest.getParameter("task-id");
-
-    // TODO check if valid date
-    // TODO check if date are inside project start and end
 
     TASK_SERVICE.editTask(
         nameParam,

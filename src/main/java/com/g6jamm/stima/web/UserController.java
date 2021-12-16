@@ -92,11 +92,8 @@ public class UserController {
 
         return "redirect:/projects"; // TODO: redirect to a success page?
       }
-      // model.addAttribute("signupFail", "Kodeordet matcher ikke.");
-      // return "createUser";
     } catch (SignUpException e) {
-      model.addAttribute("signupFail", e.getMessage());
-      // return "createUser";
+      model.addAttribute("signupFail", e.getMessage()); // TODO
     }
     return null;
   }

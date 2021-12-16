@@ -17,7 +17,7 @@ public class TaskServiceTest {
     TaskService taskService =
         new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryImpl());
     Task task =
-        taskService.createtask("Test", 2.5, "Project Manager", "1990-01-01", "1990-01-01", 1);
+        taskService.createTask("Test", 2.5, "Project Manager", "1990-01-01", "1990-01-01", 1);
 
     Assertions.assertEquals(3, task.getId());
   }
@@ -35,7 +35,7 @@ public class TaskServiceTest {
     TaskService taskService =
         new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryImpl());
     Task task =
-        taskService.createtask("Test", 2.5, "Senior Developer", "1990-01-01", "1990-01-01", 1);
+        taskService.createTask("Test", 2.5, "Senior Developer", "1990-01-01", "1990-01-01", 1);
 
     Assertions.assertEquals((int) 2.5 * 1250, task.getPrice());
   }
@@ -47,6 +47,6 @@ public class TaskServiceTest {
     String resourceName = "This does not exist";
     Assertions.assertThrows(
         TaskCreationException.class,
-        () -> taskService.createtask("test", 2.1, resourceName, "1111-11-11", "1111-11-11", 1));
+        () -> taskService.createTask("test", 2.1, resourceName, "1111-11-11", "1111-11-11", 1));
   }
 }
