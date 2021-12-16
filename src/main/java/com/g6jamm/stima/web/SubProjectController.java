@@ -197,6 +197,9 @@ public class SubProjectController {
     return "redirect:/projects/" + projectId + "/" + subProjectId;
   }
 
+  /**
+   *Method for handling expections. This displays an error page with the message recieved from the excpetion
+   */
   @ExceptionHandler(Exception.class)
   public String error(Model model, Exception e) {
     model.addAttribute("message", e.getMessage());
