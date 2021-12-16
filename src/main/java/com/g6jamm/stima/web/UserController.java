@@ -25,7 +25,13 @@ public class UserController {
           new ResourceTypeRepositoryImpl(),
           new PermissionRepositoryImpl());
 
-  /** @auther Mohamad */
+  /**
+   * Get Mapping for returning the index page.
+   *
+   * <p>if there is a user in the session we redirect to /projects.
+   *
+   * @auther Mohamad
+   */
   @GetMapping("/")
   public String index(WebRequest webRequest) {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
@@ -34,7 +40,13 @@ public class UserController {
     return "redirect:/projects";
   }
 
-  /** @auther Mohamad */
+  /**
+   * get mapping for showing the create user page.
+   *
+   * <p>if there is no user in the session we redirect to index page.
+   *
+   * @auther Mohamad
+   */
   @GetMapping("/create-user")
   public String signUp(WebRequest webRequest) {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
@@ -43,14 +55,26 @@ public class UserController {
     return "createUser";
   }
 
-  /** @auther Mohamad */
+  /**
+   * Mapping for lougout.
+   *
+   * <p>This method removes the user from the session amd redirected to the index page.
+   *
+   * @auther Mohamad
+   */
   @GetMapping("/logout")
   public String logout(WebRequest webRequest) {
     webRequest.removeAttribute("user", WebRequest.SCOPE_SESSION);
     return "redirect:/";
   }
 
-  /** @auther Mohamad */
+  /**
+   * Mapping for sign in, this checks if the user exists and email/passward matches what is in the
+   * datalayer. Returns the user to /projects if succesful else an error is displayed on the index
+   * page.
+   *
+   * @auther Mohamad
+   */
   @PostMapping("/login")
   public String logIn(WebRequest webRequest, Model model) throws SystemException {
     try {
@@ -69,10 +93,22 @@ public class UserController {
     }
   }
 
-  /** @auther Mohamad, Mathias */
+  /**
+   * Mapping for creating new users. This is only available when logged in. This method takes the
+   * input from the form and creates a user if the passwords are the same.
+   *
+   * <p>Returns an error if not succesful.
+   *
+   * @auther Mohamad, Mathias
+   */
   @PostMapping("/create-user")
   public String createUser(WebRequest webRequest, Model model)
       throws SystemException, ResourceTypeNotFoundException {
+
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+      return "redirect:/";
+    }
+
     String firstNameParam = webRequest.getParameter("user-firstname");
     String lastNameParam = webRequest.getParameter("user-lastname");
     String emailParam = webRequest.getParameter("user-email");
@@ -83,30 +119,35 @@ public class UserController {
 
     try {
       if (validatePassword(password1Param, password2Param)) {
-        User user =
-            USER_SERVICE.createUser(
-                firstNameParam,
-                lastNameParam,
-                emailParam,
-                password1Param,
-                resourceTypeParam,
-                permissionIdParam);
+        USER_SERVICE.createUser(
+            firstNameParam,
+            lastNameParam,
+            emailParam,
+            password1Param,
+            resourceTypeParam,
+            permissionIdParam);
 
-        webRequest.setAttribute("user", user, WebRequest.SCOPE_SESSION);
-
-        return "redirect:/projects"; // TODO: redirect to a success page?
+        return "redirect:/projects";
       }
     } catch (SignUpException e) {
-      model.addAttribute("signupFail", e.getMessage()); // TODO
+      model.addAttribute("signupFail", e.getMessage());
     }
     return null;
   }
 
-  /** @auther Mohamad */
+  /**
+   * Method for checking if passwords are eqaul. Returns true or false
+   *
+   * @auther Mohamad
+   */
   private boolean validatePassword(String password1, String password2) {
     return password1.equals(password2);
   }
 
+  /**
+   * Method for handling expections. This displays an error page with the message recieved from the
+   * excpetion
+   */
   @ExceptionHandler(Exception.class)
   public String error(Model model, Exception e) {
     model.addAttribute("message", e.getMessage());

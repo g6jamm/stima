@@ -2,7 +2,6 @@ package com.g6jamm.stima.domain.service;
 
 import com.g6jamm.stima.data.repository.SubProjectRepository;
 import com.g6jamm.stima.domain.exception.SystemException;
-import com.g6jamm.stima.domain.model.Headproject;
 import com.g6jamm.stima.domain.model.Subproject;
 
 import java.time.LocalDate;
@@ -24,22 +23,22 @@ public class SubProjectService {
       String name, LocalDate startDate, LocalDate endDate, String projectColor, int parentProjectId)
       throws SystemException {
     return SUB_PROJECT_REPOSITORY.createSubProject(
-        name,
-        startDate,
-        endDate,
-        projectColor,
-        parentProjectId); // TODO: @Jackie parse an object instead
+        name, startDate, endDate, projectColor, parentProjectId);
   }
 
-  /** @auther Mathias */
+  /**
+   * Method for creating a subproject with the new state of the project.
+   *
+   * @author Mathias
+   */
   public void editProject(
       int projectId, String name, LocalDate startDate, LocalDate endDate, String projectColor)
       throws SystemException {
 
-    Headproject subproject =
-        new Headproject.ProjectBuilder()
-            .projectId(projectId)
-            .projectName(name)
+    Subproject subproject =
+        new Subproject.SubProjectBuilder()
+            .subProjectId(projectId)
+            .name(name)
             .startDate(startDate)
             .endDate(endDate)
             .colorCode(projectColor)
@@ -48,7 +47,11 @@ public class SubProjectService {
     SUB_PROJECT_REPOSITORY.editProject(subproject);
   }
 
-  /** @auther Mathias */
+  /**
+   * Method for forwarding delete request to the repository
+   *
+   * @author Mathias
+   */
   public void deleteProject(int projectId) throws SystemException {
     SUB_PROJECT_REPOSITORY.deleteProject(projectId);
   }

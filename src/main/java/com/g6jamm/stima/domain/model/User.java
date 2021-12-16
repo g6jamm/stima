@@ -7,8 +7,8 @@ public class User {
   private final String LAST_NAME;
   private final String EMAIL;
   private final String PASSWORD;
-  private final ResourceType RESOURCETYPE; // TODO skal vi stadig bruge den?
-  private final Permission PERMISSION; // TODO skal vi stadig bruge den?
+  private final ResourceType RESOURCETYPE;
+  private final Permission PERMISSION;
 
   private User(UserBuilder userBuilder) {
     this.ID = userBuilder.id;

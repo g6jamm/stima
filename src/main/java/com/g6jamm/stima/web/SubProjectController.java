@@ -88,12 +88,12 @@ public class SubProjectController {
    * Finds the headproject based on projectid givin in the parameter. calls createTask() with the
    * webrequest and project.
    *
-   * @author Andreas
    * @param webRequest
    * @param projectId
    * @return
    * @throws SystemException thrown on error when creating tasks.
    * @throws TaskCreationException thrown on error when deciding on which resourcetype to use.
+   * @author Andreas
    */
   @PostMapping("/projects/{projectId}/create-task")
   public String createProjectTask(WebRequest webRequest, Model model, @PathVariable int projectId)
@@ -197,6 +197,10 @@ public class SubProjectController {
     return "redirect:/projects/" + projectId + "/" + subProjectId;
   }
 
+  /**
+   * Method for handling expections. This displays an error page with the message recieved from the
+   * excpetion
+   */
   @ExceptionHandler(Exception.class)
   public String error(Model model, Exception e) {
     model.addAttribute("message", e.getMessage());

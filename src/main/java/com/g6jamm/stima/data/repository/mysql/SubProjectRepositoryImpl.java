@@ -4,7 +4,6 @@ import com.g6jamm.stima.data.repository.SubProjectRepository;
 import com.g6jamm.stima.data.repository.TaskRepository;
 import com.g6jamm.stima.data.repository.mysql.util.DbManager;
 import com.g6jamm.stima.domain.exception.SystemException;
-import com.g6jamm.stima.domain.model.Headproject;
 import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.Subproject;
 
@@ -102,7 +101,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
    * @auther Mathias
    */
   @Override
-  public void editProject(Headproject project) throws SystemException {
+  public void editProject(Project project) throws SystemException {
     // TODO: This method does already exists in HeadProject. To be merged. /Mathias
     try {
       String query =

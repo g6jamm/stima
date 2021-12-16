@@ -13,7 +13,11 @@ public class ProjectColorService {
     this.PROJECT_COLOR_REPOSITORY_STUB = projectColorRepositoryStub;
   }
 
-  /** @auther Mathias */
+  /**
+   * Method for getting a map of available colors from the repository.
+   *
+   * @auther Mathias
+   */
   public Map<String, String> getProjectColors() throws SystemException {
     return PROJECT_COLOR_REPOSITORY_STUB.getProjectColors();
   }
