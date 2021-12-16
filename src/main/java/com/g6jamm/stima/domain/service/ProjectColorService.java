@@ -9,8 +9,8 @@ public class ProjectColorService {
   private final ProjectColorRepository PROJECT_COLOR_REPOSITORY;
 
   /** @auther Mathias */
-  public ProjectColorService(ProjectColorRepository projectColorRepositoryStub) {
-    this.PROJECT_COLOR_REPOSITORY = projectColorRepositoryStub;
+  public ProjectColorService(ProjectColorRepository projectColorRepository) {
+    this.PROJECT_COLOR_REPOSITORY = projectColorRepository;
   }
 
   /** @auther Mathias */
