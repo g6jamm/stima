@@ -167,10 +167,9 @@ public class Headproject implements Project {
     }
 
     /**
-     * Method to reset variables in the builder. Added in order to avoid having a variable hanging from a previous use.
-     * @Author Andreas
+     * Method to reset variables in the builder. Added in order to avoid having a variable hanging
+     * from a previous use. @Author Andreas
      */
-
     private void reset() {
       this.projectId = 0;
       this.name = null;
