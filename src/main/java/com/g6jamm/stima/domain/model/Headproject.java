@@ -53,6 +53,15 @@ public class Headproject implements Project {
     return COLOR_CODE;
   }
 
+  /**
+   * Method for calculating totalhours of a project.
+   * Loops through subprojects and tasks to find the total.
+   *
+   * may be called recursivly.
+   *
+   * @Author Andreas
+   * @return
+   */
   public double calculateHours() {
     double totalHours = 0.0;
     if (!SUB_PROJECTS.isEmpty()) {
@@ -68,7 +77,12 @@ public class Headproject implements Project {
     return totalHours;
   }
 
-  /** @auther Mathias */
+  /**
+   * Method for calculating totalprice of a project.
+   * Loops through subprojects and tasks to find the total.
+   * may be called recursivly.
+   *
+   * @auther Mathias, Andreas*/
   public int calculatePrice() {
     int totalPrice = 0;
     if (!SUB_PROJECTS.isEmpty()) {
