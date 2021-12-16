@@ -25,7 +25,7 @@ public class TaskService {
    * Service method for creating a task, in order for us to create a task we need to build a task
    * object. This task object is then send to the repository which returns a new task.
    *
-   * The Task created here is incomplete. @Author Andreas
+   * <p>The Task created here is incomplete. @Author Andreas
    *
    * @param taskName
    * @param hours
@@ -92,7 +92,7 @@ public class TaskService {
   /**
    * Method for getting a resourcetype by its name.
    *
-   * When recieving a webrequest the reourcename is a string. This validates it and converts to a
+   * <p>When recieving a webrequest the reourcename is a string. This validates it and converts to a
    * RessourceType object. @Auther Andreas
    *
    * @param resourceTypeName
@@ -110,7 +110,7 @@ public class TaskService {
   /**
    * Method for updating a Task with new information.
    *
-   * Due to builder pattern we have to create a new object in and store that to the
+   * <p>Due to builder pattern we have to create a new object in and store that to the
    * database. @Author Mathias
    *
    * @param taskName
@@ -140,9 +140,8 @@ public class TaskService {
   }
 
   /**
-   * Method for deleting a task.
+   * Method for deleting a task. @Author Mathias
    *
-   * @Author Mathias
    * @param taskId
    * @throws SystemException
    */
