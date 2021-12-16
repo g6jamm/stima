@@ -90,6 +90,22 @@ public class Headproject implements Project {
     return Math.round(workdaysNeeded * 100.0) / 100.0;
   }
 
+  public long calculateDays() {
+    return Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays() + 1;
+  }
+
+  public void addSubProject(Project project) {
+    SUB_PROJECTS.add(project);
+  }
+  
+  public double calculateResources() {
+
+    long workdaysAvailable =
+        Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays() + 1;
+    double result = calculateWorkdays() / (workdaysAvailable);
+    return Math.round(result * 100.0) / 100.0;
+  }
+
   public void addTask(Task task) {
     TASKS.add(task);
   }
