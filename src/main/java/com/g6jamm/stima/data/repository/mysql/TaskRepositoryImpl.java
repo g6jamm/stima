@@ -39,11 +39,9 @@ public class TaskRepositoryImpl implements TaskRepository {
   }
 
   /**
-   *
    * @param projectId
    * @return
-   * @throws SystemException
-   * @ Andreas, Mohamad, Mathias
+   * @throws SystemException @ Andreas, Mohamad, Mathias
    */
   @Override
   public List<Task> getTasks(int projectId) throws SystemException {
@@ -96,6 +94,7 @@ public class TaskRepositoryImpl implements TaskRepository {
 
   /**
    * Edit task.
+   *
    * @param task
    * @throws SystemException
    * @auther Mathias
@@ -125,6 +124,7 @@ public class TaskRepositoryImpl implements TaskRepository {
 
   /**
    * Delete task by Id.
+   *
    * @param taskId
    * @throws SystemException
    * @auther Mathias
