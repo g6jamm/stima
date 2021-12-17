@@ -33,11 +33,11 @@ public class UserRepositoryImpl implements UserRepository {
               .permission(new Permission.PermissionBuilder().name("user").build())
               .build();
 
-      User user2 =
+      User admin =
           new User.UserBuilder()
               .firstName("Jane")
               .lastName("Doe")
-              .email("admin@com.com")
+              .email("admin@demo.com")
               .password("Demo")
               .id(USER_LIST.size() + 1)
               .resourceType(new ResourceType.ResourceTypeBuilder().name("Junior Developer").build())
@@ -45,7 +45,7 @@ public class UserRepositoryImpl implements UserRepository {
               .build();
 
       USER_LIST.add(user);
-      USER_LIST.add(user2);
+      USER_LIST.add(admin);
     }
   }
 
