@@ -31,7 +31,7 @@ public class SubProjectService {
         parentProjectId); // TODO: @Jackie parse an object instead
   }
 
-  /** @auther Mathias */
+  /** @author Mathias */
   public void editProject(
       int projectId, String name, LocalDate startDate, LocalDate endDate, String projectColor)
       throws SystemException {
@@ -48,7 +48,7 @@ public class SubProjectService {
     SUB_PROJECT_REPOSITORY.editProject(subproject);
   }
 
-  /** @auther Mathias */
+  /** @author Mathias */
   public void deleteProject(int projectId) throws SystemException {
     SUB_PROJECT_REPOSITORY.deleteProject(projectId);
   }

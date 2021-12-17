@@ -15,7 +15,7 @@ public class ProjectColorImpl implements ProjectColorRepository {
   /**
    * Returns map of product colors.
    *
-   * @auther Mathias
+   * @author Mathias og Jackie
    */
   public Map<String, String> getProjectColors() throws SystemException {
 

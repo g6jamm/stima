@@ -23,6 +23,7 @@ import java.util.List;
 
 @Controller
 public class SubProjectController {
+
   private final TaskService TASK_SERVICE =
       new TaskService(new TaskRepositoryImpl(), new ResourceTypeRepositoryImpl());
   private final ProjectService PROJECT_SERVICE = new ProjectService(new ProjectRepositoryImpl());
@@ -71,6 +72,7 @@ public class SubProjectController {
 
     if (subProject != null) {
       List<Task> tasks = subProject.getTasks();
+
       model.addAttribute("tasks", tasks);
       model.addAttribute("subProject", subProject);
       model.addAttribute("resourceTypes", TASK_SERVICE.getResourceTypes());
@@ -161,7 +163,8 @@ public class SubProjectController {
    * <p>Finds the subproject based on project id and subProjectId given in the parameter. First by
    * getting the head project, then by looping through the headprojects subprojects.
    *
-   * <p>calls createTask() with the webrequest and subproject. @Author Andreas, Jackie
+   * <p>calls createTask() with the webrequest and subproject.
+   * @author Andreas, Jackie
    *
    * @param webRequest
    * @param projectId

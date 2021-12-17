@@ -33,7 +33,7 @@ public class ProjectController {
   /**
    * View all projects.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @GetMapping("/projects")
   public String projects(WebRequest webRequest, Model model) throws SystemException {
@@ -57,7 +57,7 @@ public class ProjectController {
   /**
    * View a specific project.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @GetMapping("/projects/{projectId}")
   public String projectId(WebRequest webRequest, Model model, @PathVariable int projectId)
@@ -87,7 +87,7 @@ public class ProjectController {
   /**
    * Create a subproject.
    *
-   * @auther Mathias
+   * @author Mathias, Jackie
    */
   @PostMapping("/projects/{projectId}/create-subproject")
   public String createSubProject(WebRequest webRequest, @PathVariable int projectId)
@@ -121,7 +121,7 @@ public class ProjectController {
   /**
    * Create a headproject.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @PostMapping("/projects/create-project")
   public String createProject(WebRequest webRequest) throws SystemException {
@@ -149,7 +149,7 @@ public class ProjectController {
   /**
    * Edit a subproject.
    *
-   * @auther Mathias
+   * @author Mathias, Jackie
    */
   @PostMapping("/projects/{projectId}/{subprojectId}/edit-project")
   public String editSubProject(
@@ -174,7 +174,7 @@ public class ProjectController {
   /**
    * Edit a headproject.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @PostMapping("/projects/{projectId}/edit-project")
   public String editProject(WebRequest webRequest, @PathVariable int projectId)
@@ -198,7 +198,7 @@ public class ProjectController {
   /**
    * Edit a headproject.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @PostMapping("/projects/{projectId}/delete-project")
   public String deleteProject(@PathVariable int projectId) throws SystemException {
@@ -208,9 +208,9 @@ public class ProjectController {
   }
 
   /**
-   * Delte a subproject.
+   * Delete a subproject.
    *
-   * @auther Mathias
+   * @author Mathias, Jackie
    */
   @PostMapping("/projects/{projectId}/{subprojectId}/delete-project")
   public String deleteSubproject(@PathVariable int projectId, @PathVariable int subprojectId)
@@ -221,9 +221,9 @@ public class ProjectController {
   }
 
   /**
-   * Delete a task.
+   * Delete a task from project.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @PostMapping("/projects/{projectId}/delete-task/{taskId}")
   public String deleteProjectTask(@PathVariable int projectId, @PathVariable int taskId)
@@ -234,9 +234,9 @@ public class ProjectController {
   }
 
   /**
-   * Delete a task.
+   * Delete a task from sub project.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @PostMapping("/projects/{projectId}/{subprojectId}/delete-task/{taskId}")
   public String deleteSubprojectTask(
@@ -248,9 +248,9 @@ public class ProjectController {
   }
 
   /**
-   * Edit a task.
+   * Edit a task in project.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @PostMapping("/projects/{projectId}/edit-task")
   public String editProjectTask(WebRequest webRequest, @PathVariable int projectId)
@@ -275,9 +275,9 @@ public class ProjectController {
   }
 
   /**
-   * Edit a task.
+   * Edit a task in sub project.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @PostMapping("/projects/{projectId}/{subprojectId}/edit-task")
   public String editSubProjectTask(
@@ -302,7 +302,7 @@ public class ProjectController {
     return "redirect:/projects/" + projectId + "/" + subprojectId;
   }
 
-  /** @auther Mohamad */
+  /** @author Mohamad */
   @ExceptionHandler(Exception.class)
   public String error(Model model, Exception e) {
     model.addAttribute("message", e.getMessage());

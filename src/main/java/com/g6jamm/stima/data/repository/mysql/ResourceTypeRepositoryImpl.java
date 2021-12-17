@@ -18,7 +18,7 @@ public class ResourceTypeRepositoryImpl implements ResourceTypeRepository {
   /**
    * Returns a list of resource types.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @Override
   public List<ResourceType> getResourceTypes() throws SystemException {
@@ -50,7 +50,7 @@ public class ResourceTypeRepositoryImpl implements ResourceTypeRepository {
   /**
    * Returns a specific resource type by name.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @Override
   public ResourceType getByResourceTypeName(String resourceTypeName)

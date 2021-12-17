@@ -25,7 +25,7 @@ public class UserController {
           new ResourceTypeRepositoryImpl(),
           new PermissionRepositoryImpl());
 
-  /** @auther Mohamad */
+  /** @author Mohamad */
   @GetMapping("/")
   public String index(WebRequest webRequest) {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
@@ -34,7 +34,7 @@ public class UserController {
     return "redirect:/projects";
   }
 
-  /** @auther Mohamad */
+  /** @author Mohamad */
   @GetMapping("/create-user")
   public String signUp(WebRequest webRequest) {
     if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
@@ -43,14 +43,14 @@ public class UserController {
     return "createUser";
   }
 
-  /** @auther Mohamad */
+  /** @author Mohamad */
   @GetMapping("/logout")
   public String logout(WebRequest webRequest) {
     webRequest.removeAttribute("user", WebRequest.SCOPE_SESSION);
     return "redirect:/";
   }
 
-  /** @auther Mohamad */
+  /** @author Mohamad */
   @PostMapping("/login")
   public String logIn(WebRequest webRequest, Model model) throws SystemException {
     try {
@@ -69,7 +69,7 @@ public class UserController {
     }
   }
 
-  /** @auther Mohamad, Mathias */
+  /** @author Mohamad, Mathias */
   @PostMapping("/create-user")
   public String createUser(WebRequest webRequest, Model model)
       throws SystemException, ResourceTypeNotFoundException {
@@ -102,7 +102,7 @@ public class UserController {
     return null;
   }
 
-  /** @auther Mohamad */
+  /** @author Mohamad */
   private boolean validatePassword(String password1, String password2) {
     return password1.equals(password2);
   }

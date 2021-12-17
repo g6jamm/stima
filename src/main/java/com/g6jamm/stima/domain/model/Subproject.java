@@ -6,7 +6,10 @@ import java.util.List;
 
 public class Subproject implements Project {
 
-  /** @auther Jackie */
+  /**
+   * Model class for sub project
+   * @auther Jackie
+   */
   private final int SUB_PROJECT_ID;
 
   private final String SUB_PROJECT_NAME;
@@ -92,6 +95,11 @@ public class Subproject implements Project {
     SUB_PROJECT_TASKS.add(task);
   }
 
+
+  /**
+   * Builder class for a sub project
+   * @author Jackie
+   */
   public static class SubProjectBuilder {
     private int subProjectId;
     private String subProjectName;

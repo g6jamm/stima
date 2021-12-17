@@ -16,7 +16,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/** @author Jackie */
 public class SubProjectRepositoryImpl implements SubProjectRepository {
 
   private final TaskRepository TASK_REPOSITORY = new TaskRepositoryImpl();
@@ -24,7 +23,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   /**
    * Get a list of subproject with a specific project id.
    *
-   * @auther Mathias
+   * @author Mathias og Jackie
    */
   @Override
   public List<Project> getSubProjects(int projectId) throws SystemException {
@@ -65,7 +64,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   /**
    * Create a new subproject and save it to the database.
    *
-   * @auther Mathias
+   * @author Mathias og Jackie
    */
   @Override
   public Subproject createSubProject(
@@ -99,7 +98,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   /**
    * Edit project details in the database for a given project.
    *
-   * @auther Mathias
+   * @author Mathias og Jackie
    */
   @Override
   public void editProject(Headproject project) throws SystemException {
@@ -127,7 +126,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   /**
    * Delete project in the database for a given subproject.
    *
-   * @auther Mathias
+   * @author Mathias og Jackie
    */
   @Override
   public void deleteProject(int projectId) throws SystemException {
