@@ -9,10 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @Andreas
- */
-
+/** @Andreas */
 public class TaskRepositoryImpl implements TaskRepository {
 
   private static final ResourceTypeRepository RESOURCE_TYPE_REPOSITORY =

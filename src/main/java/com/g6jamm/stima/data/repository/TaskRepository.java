@@ -1,9 +1,6 @@
 package com.g6jamm.stima.data.repository;
 
-/**
- * @Mohamad, Andreas
- */
-
+/** @Mohamad, Andreas */
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.Task;
 

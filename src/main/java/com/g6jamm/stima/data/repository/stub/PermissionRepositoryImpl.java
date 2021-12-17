@@ -6,9 +6,7 @@ import com.g6jamm.stima.domain.model.Permission;
 
 import java.util.List;
 
-/**
- * @author Mohamad
- */
+/** @author Mohamad */
 public class PermissionRepositoryImpl implements PermissionRepository {
   @Override
   public List<Permission> getPermissions() throws SystemException {

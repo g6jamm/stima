@@ -5,9 +5,7 @@ import com.g6jamm.stima.domain.model.Permission;
 
 import java.util.List;
 
-/**
- * @author Mohamad
- */
+/** @author Mohamad */
 public interface PermissionRepository {
 
   List<Permission> getPermissions() throws SystemException;
