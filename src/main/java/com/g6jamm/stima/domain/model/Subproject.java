@@ -4,11 +4,14 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
 
-/** @auther Jakie */
+/**
+ * Model class for sub project
+ *
+ * @author Jackie
+ */
 public class Subproject implements Project {
 
   private final int ID;
-
   private final String NAME;
   private final List<Task> TASKS;
   private final LocalDate START_DATE;
@@ -92,6 +95,11 @@ public class Subproject implements Project {
     TASKS.add(task);
   }
 
+  /**
+   * Builder class for a sub project
+   *
+   * @author Jackie
+   */
   public static class SubProjectBuilder {
     private int id;
     private String name;

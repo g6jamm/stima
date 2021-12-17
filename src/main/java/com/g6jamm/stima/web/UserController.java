@@ -29,7 +29,7 @@ public class UserController {
    * Get Mapping for returning the index page. If there is a user in the session we redirect to
    * /projects.
    *
-   * @auther Mohamad
+   * @author Mohamad
    */
   @GetMapping("/")
   public String index(WebRequest webRequest) {
@@ -43,7 +43,7 @@ public class UserController {
    * get mapping for showing the create user page. if there is no user in the session we redirect to
    * index page.
    *
-   * @auther Mohamad
+   * @author Mohamad
    */
   @GetMapping("/create-user")
   public String signUp(WebRequest webRequest) {
@@ -57,7 +57,7 @@ public class UserController {
    * Mapping for logout. This method removes the user from the session amd redirected to the index
    * page.
    *
-   * @auther Mohamad
+   * @author Mohamad
    */
   @GetMapping("/logout")
   public String logout(WebRequest webRequest) {
@@ -70,7 +70,7 @@ public class UserController {
    * datalayer. Returns the user to /projects if successful else an error is displayed on the index
    * page.
    *
-   * @auther Mohamad
+   * @author Mohamad
    */
   @PostMapping("/login")
   public String logIn(WebRequest webRequest, Model model) throws SystemException {
@@ -95,7 +95,7 @@ public class UserController {
    * input from the form and creates a user if the passwords are the same. Returns an error if not
    * successful.
    *
-   * @auther Mohamad, Mathias
+   * @author Mohamad, Mathias
    */
   @PostMapping("/create-user")
   public String createUser(WebRequest webRequest, Model model)
@@ -134,7 +134,7 @@ public class UserController {
   /**
    * Method for checking if passwords are eqaul. Returns true or false
    *
-   * @auther Mohamad
+   * @author Mohamad
    */
   private boolean validatePassword(String password1, String password2) {
     return password1.equals(password2);

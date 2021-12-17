@@ -13,7 +13,7 @@ public class DbManager {
   /**
    * Create a connection to the database using properties defined in application.properties.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   private DbManager() {
     Properties properties = DbSelector.selectConnection();
@@ -30,7 +30,7 @@ public class DbManager {
   /**
    * Returns a new instance of DbManager.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   public static DbManager getInstance() {
     if (null == instance) {
@@ -51,7 +51,7 @@ public class DbManager {
   /**
    * Returns the connection of the instance.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   public Connection getConnection() {
     return connection;

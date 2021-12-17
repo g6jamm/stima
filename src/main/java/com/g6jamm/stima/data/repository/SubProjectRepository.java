@@ -9,8 +9,28 @@ import java.util.List;
 
 public interface SubProjectRepository {
 
+  /**
+   * Implementation for a list with sub projects
+   *
+   * @param projectId
+   * @return
+   * @throws SystemException
+   * @author Jackie
+   */
   List<Project> getSubProjects(int projectId) throws SystemException;
 
+  /**
+   * Implementation for creating a sub project
+   *
+   * @param name
+   * @param startDate
+   * @param endDate
+   * @param projectColorParam
+   * @param parentProjectId
+   * @return
+   * @throws SystemException
+   * @author Jackie
+   */
   Subproject createSubProject(
       String name,
       LocalDate startDate,
@@ -19,7 +39,21 @@ public interface SubProjectRepository {
       int parentProjectId)
       throws SystemException;
 
+  /**
+   * Implementation for editing a sub project
+   *
+   * @param project
+   * @throws SystemException
+   * @author Jackie
+   */
   void editProject(Project project) throws SystemException;
 
+  /**
+   * Implementation for deliging a sub project
+   *
+   * @param projectId
+   * @throws SystemException
+   * @author Jackie
+   */
   void deleteProject(int projectId) throws SystemException;
 }

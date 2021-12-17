@@ -13,7 +13,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
 
   private static final List<Project> SUB_PROJECTS = new ArrayList<>();
 
-  /** @auther Jackie */
+  /** @author Jackie */
   public SubProjectRepositoryImpl() {
     if (SUB_PROJECTS.isEmpty()) {
       SUB_PROJECTS.add(
@@ -49,6 +49,8 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   }
 
   /**
+   * Gives a list of sub projekcts
+   *
    * @return List of Projects
    * @author Jackie
    */
@@ -78,9 +80,13 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
         .build();
   }
 
+  /** This part is not implemented yet. */
   @Override
   public void editProject(Project project) throws SystemException {}
 
+  /** This part is not implemented yet. */
   @Override
-  public void deleteProject(int projectId) throws SystemException {}
+  public void deleteProject(int projectId) throws SystemException {
+    // Later implementation
+  }
 }

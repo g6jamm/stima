@@ -34,7 +34,7 @@ public class ProjectController {
    * Mapping for seeing all available headprojects for a logged in user. Checks if a user is logged
    * in and redirects if not.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @GetMapping("/projects")
   public String projects(WebRequest webRequest, Model model) throws SystemException {
@@ -59,7 +59,7 @@ public class ProjectController {
    * Mapping for viewing a single headproject. Check if the user is logged in if not they are
    * redirected. Gets the specific project for the user and adds it to the model.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @GetMapping("/projects/{projectId}")
   public String projectId(WebRequest webRequest, Model model, @PathVariable int projectId)
@@ -90,7 +90,7 @@ public class ProjectController {
    * Mapping for creating new subprojects for a headproject. Creates a new subproject based on input
    * from the webrequest and adds it to the headproject.
    *
-   * @auther Mathias
+   * @author Mathias, Jackie
    */
   @PostMapping("/projects/{projectId}/create-subproject")
   public String createSubProject(WebRequest webRequest, @PathVariable int projectId)
@@ -124,7 +124,7 @@ public class ProjectController {
   /**
    * Mapping for creating a new headproject.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @PostMapping("/projects/create-project")
   public String createProject(WebRequest webRequest) throws SystemException {
@@ -152,7 +152,7 @@ public class ProjectController {
   /**
    * Mapping for editing a subproject based on the user input in the webrequest.
    *
-   * @auther Mathias
+   * @author Mathias, Jackie
    */
   @PostMapping("/projects/{projectId}/{subprojectId}/edit-project")
   public String editSubProject(
@@ -180,7 +180,7 @@ public class ProjectController {
   /**
    * Mapping for editing a headproject based on the user input in the webrequest.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @PostMapping("/projects/{projectId}/edit-project")
   public String editProject(WebRequest webRequest, @PathVariable int projectId)
@@ -207,7 +207,7 @@ public class ProjectController {
   /**
    * Mapping for deleting a Headproject
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @PostMapping("/projects/{projectId}/delete-project")
   public String deleteProject(@PathVariable int projectId) throws SystemException {
@@ -219,7 +219,7 @@ public class ProjectController {
   /**
    * Mapping for deleting a subproject.
    *
-   * @auther Mathias
+   * @author Mathias, Jackie
    */
   @PostMapping("/projects/{projectId}/{subprojectId}/delete-project")
   public String deleteSubproject(@PathVariable int projectId, @PathVariable int subprojectId)
@@ -232,7 +232,7 @@ public class ProjectController {
   /**
    * Mapping for deleting a task on a headproject.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @PostMapping("/projects/{projectId}/delete-task/{taskId}")
   public String deleteProjectTask(@PathVariable int projectId, @PathVariable int taskId)
@@ -245,7 +245,7 @@ public class ProjectController {
   /**
    * Delete a task for deleting a task on a subproject.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @PostMapping("/projects/{projectId}/{subprojectId}/delete-task/{taskId}")
   public String deleteSubprojectTask(
@@ -259,7 +259,7 @@ public class ProjectController {
   /**
    * Mapping for editing tasks on a headproject.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @PostMapping("/projects/{projectId}/edit-task")
   public String editProjectTask(WebRequest webRequest, @PathVariable int projectId)
@@ -290,7 +290,7 @@ public class ProjectController {
   /**
    * mapping for editing tasks on a subproject.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @PostMapping("/projects/{projectId}/{subprojectId}/edit-task")
   public String editSubProjectTask(
@@ -323,7 +323,7 @@ public class ProjectController {
    * Method for handling expections. This displays an error page with the message recieved from the
    * excpetion
    *
-   * @auther Mohamad
+   * @author Mohamad
    */
   @ExceptionHandler(Exception.class)
   public String error(Model model, Exception e) {

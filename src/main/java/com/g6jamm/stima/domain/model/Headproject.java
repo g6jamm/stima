@@ -4,7 +4,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
 
-/** @auther Mathias */
+/** @author Mathias */
 public class Headproject implements Project {
 
   private final int PROJECT_ID;
