@@ -36,8 +36,8 @@ VALUES ('Thor', '2021-01-01', '2021-01-02', '#dc5b6e', null),
        ('Ace', '2021-12-01', '2021-12-01', '#ead04b', 1);
 
 INSERT INTO users (first_name, last_name, email, password, resource_type_id, permission_id)
-VALUES ('John', 'Doe', 'demo@demo.com', _binary 'Demo', 1, 2),
-       ('Admin', 'Admin', 'admin@stima.com', _binary 'admin', 1, 1);
+VALUES ('John', 'Doe', 'user@demo.com', _binary 'Demo', 1, 2),
+       ('Admin', 'Admin', 'admin@demo.com', _binary 'Demo', 1, 1);
 
 INSERT INTO tasks (name, hours, resource_type_id, project_id, start_date, end_date)
 VALUES ('Sprite', 200, 1, 1, '2021-01-01', '2021-01-02'),
