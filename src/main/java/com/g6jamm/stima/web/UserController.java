@@ -1,8 +1,8 @@
 package com.g6jamm.stima.web;
 
-import com.g6jamm.stima.data.repository.mysql.PermissionRepositoryImpl;
-import com.g6jamm.stima.data.repository.mysql.ResourceTypeRepositoryImpl;
-import com.g6jamm.stima.data.repository.mysql.UserRepositoryImpl;
+import com.g6jamm.stima.data.repository.stub.PermissionRepositoryImpl;
+import com.g6jamm.stima.data.repository.stub.ResourceTypeRepositoryImpl;
+import com.g6jamm.stima.data.repository.stub.UserRepositoryImpl;
 import com.g6jamm.stima.domain.exception.LoginException;
 import com.g6jamm.stima.domain.exception.ResourceTypeNotFoundException;
 import com.g6jamm.stima.domain.exception.SignUpException;
@@ -26,9 +26,8 @@ public class UserController {
           new PermissionRepositoryImpl());
 
   /**
-   * Get Mapping for returning the index page.
-   *
-   * <p>if there is a user in the session we redirect to /projects.
+   * Get Mapping for returning the index page. If there is a user in the session we redirect to
+   * /projects.
    *
    * @auther Mohamad
    */
@@ -41,9 +40,8 @@ public class UserController {
   }
 
   /**
-   * get mapping for showing the create user page.
-   *
-   * <p>if there is no user in the session we redirect to index page.
+   * get mapping for showing the create user page. if there is no user in the session we redirect to
+   * index page.
    *
    * @auther Mohamad
    */
@@ -56,9 +54,8 @@ public class UserController {
   }
 
   /**
-   * Mapping for lougout.
-   *
-   * <p>This method removes the user from the session amd redirected to the index page.
+   * Mapping for logout. This method removes the user from the session amd redirected to the index
+   * page.
    *
    * @auther Mohamad
    */
@@ -69,8 +66,8 @@ public class UserController {
   }
 
   /**
-   * Mapping for sign in, this checks if the user exists and email/passward matches what is in the
-   * datalayer. Returns the user to /projects if succesful else an error is displayed on the index
+   * Mapping for sign in, this checks if the user exists and email/password matches what is in the
+   * datalayer. Returns the user to /projects if successful else an error is displayed on the index
    * page.
    *
    * @auther Mohamad
@@ -95,9 +92,8 @@ public class UserController {
 
   /**
    * Mapping for creating new users. This is only available when logged in. This method takes the
-   * input from the form and creates a user if the passwords are the same.
-   *
-   * <p>Returns an error if not succesful.
+   * input from the form and creates a user if the passwords are the same. Returns an error if not
+   * successful.
    *
    * @auther Mohamad, Mathias
    */
@@ -145,8 +141,8 @@ public class UserController {
   }
 
   /**
-   * Method for handling expections. This displays an error page with the message recieved from the
-   * excpetion
+   * Method for handling exceptions. This displays an error page with the message received from the
+   * exception
    */
   @ExceptionHandler(Exception.class)
   public String error(Model model, Exception e) {

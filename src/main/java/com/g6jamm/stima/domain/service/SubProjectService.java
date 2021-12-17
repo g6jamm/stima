@@ -8,10 +8,10 @@ import java.time.LocalDate;
 
 public class SubProjectService {
 
-  private final SubProjectRepository SUB_PROJECT_REPOSITORY;
+  private final SubProjectRepository SUBPROJECT_REPOSITORY;
 
   public SubProjectService(SubProjectRepository subProjectRepository) {
-    this.SUB_PROJECT_REPOSITORY = subProjectRepository;
+    this.SUBPROJECT_REPOSITORY = subProjectRepository;
   }
 
   /**
@@ -22,7 +22,7 @@ public class SubProjectService {
   public Subproject createSubProject(
       String name, LocalDate startDate, LocalDate endDate, String projectColor, int parentProjectId)
       throws SystemException {
-    return SUB_PROJECT_REPOSITORY.createSubProject(
+    return SUBPROJECT_REPOSITORY.createSubProject(
         name, startDate, endDate, projectColor, parentProjectId);
   }
 
@@ -44,7 +44,7 @@ public class SubProjectService {
             .colorCode(projectColor)
             .build();
 
-    SUB_PROJECT_REPOSITORY.editProject(subproject);
+    SUBPROJECT_REPOSITORY.editProject(subproject);
   }
 
   /**
@@ -53,6 +53,6 @@ public class SubProjectService {
    * @author Mathias
    */
   public void deleteProject(int projectId) throws SystemException {
-    SUB_PROJECT_REPOSITORY.deleteProject(projectId);
+    SUBPROJECT_REPOSITORY.deleteProject(projectId);
   }
 }
