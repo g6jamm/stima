@@ -3,6 +3,7 @@ package com.g6jamm.stima.domain.model;
 import java.time.Duration;
 import java.time.LocalDate;
 
+/** @auther Andreas */
 public class Task {
 
   private final String NAME;
@@ -118,6 +119,10 @@ public class Task {
       return this;
     }
 
+    /**
+     * Method to reset variables in the builder. Added in order to avoid having a variable hanging
+     * from a previous use.
+     */
     private void reset() {
       this.id = 0;
       this.name = null;
@@ -128,6 +133,10 @@ public class Task {
       this.resourceType = null;
     }
 
+    /**
+     * Returns a Task object. The director can construct several product variations using the same
+     * building steps.
+     */
     public Task build() {
       price();
       Task task = new Task(this);

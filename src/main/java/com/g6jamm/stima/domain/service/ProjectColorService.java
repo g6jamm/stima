@@ -6,15 +6,19 @@ import com.g6jamm.stima.domain.exception.SystemException;
 import java.util.Map;
 
 public class ProjectColorService {
-  private final ProjectColorRepository PROJECT_COLOR_REPOSITORY_STUB;
+  private final ProjectColorRepository PROJECT_COLOR_REPOSITORY;
 
   /** @auther Mathias */
-  public ProjectColorService(ProjectColorRepository projectColorRepositoryStub) {
-    this.PROJECT_COLOR_REPOSITORY_STUB = projectColorRepositoryStub;
+  public ProjectColorService(ProjectColorRepository projectColorRepository) {
+    this.PROJECT_COLOR_REPOSITORY = projectColorRepository;
   }
 
-  /** @auther Mathias */
+  /**
+   * Returns a map of available colors from the repository.
+   *
+   * @auther Mathias
+   */
   public Map<String, String> getProjectColors() throws SystemException {
-    return PROJECT_COLOR_REPOSITORY_STUB.getProjectColors();
+    return PROJECT_COLOR_REPOSITORY.getProjectColors();
   }
 }

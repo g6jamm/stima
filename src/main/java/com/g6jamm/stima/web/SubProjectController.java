@@ -35,14 +35,10 @@ public class SubProjectController {
 
   /**
    * Get method for displaying subproject page, shows all task for a subproject Redirects the user
-   * to login if not logged in. Finds the subproject based on projectid and subProjectId givin in
-   * the parameter. First by getting the head project, then by looping through the headprojects
-   * subprojects. Last it adds it to the model
+   * to login if not logged in. Finds the subproject based on project id and subProjectId given in
+   * the parameter. First by getting the head project, then by looping through the head-projects
+   * subprojects. Last it adds it to the model.
    *
-   * @param model
-   * @param projectId
-   * @param subProjectId
-   * @return
    * @author Jackie
    */
   @GetMapping("/projects/{projectId}/{subProjectId}")
@@ -86,16 +82,11 @@ public class SubProjectController {
   }
 
   /**
-   * Post method for adding tasks to Headprojects. Redirects the user to login if not logged in.
-   * Finds the headproject based on projectid givin in the parameter. calls createTask() with the
-   * webrequest and project.
+   * Post method for adding tasks to head-projects. Redirects the user to login if not logged in.
+   * Finds the head-project based on project id given in the parameter. Calls createTask() with the
+   * web-request and project.
    *
    * @author Andreas
-   * @param webRequest
-   * @param projectId
-   * @return
-   * @throws SystemException thrown on error when creating tasks.
-   * @throws TaskCreationException thrown on error when deciding on which resourcetype to use.
    */
   @PostMapping("/projects/{projectId}/create-task")
   public String createProjectTask(WebRequest webRequest, Model model, @PathVariable int projectId)
@@ -122,7 +113,6 @@ public class SubProjectController {
    * Method for creating new tasks. Takes all input from the form and passes them to taskService
    * which create a Task object. The newly created task is then added to the projects list of tasks.
    *
-   * @param webRequest
    * @author Andreas
    */
   private void createTask(WebRequest webRequest, Project project)
@@ -158,7 +148,10 @@ public class SubProjectController {
   }
 
   /**
-   * Post method for adding tasks to subprojects. Redirects the user to login if not logged in
+   * Post method for adding tasks to subprojects. Redirects the user to login if not logged in Finds
+   * the subproject based on project id and subProjectId given in the parameter. First by getting
+   * the head project, then by looping through the head-projects subprojects. calls createTask()
+   * with the web-request and subproject.
    *
    * <p>Finds the subproject based on project id and subProjectId given in the parameter. First by
    * getting the head project, then by looping through the headprojects subprojects.
@@ -172,6 +165,8 @@ public class SubProjectController {
    * @return
    * @throws SystemException thrown on error when creating tasks.
    * @throws TaskCreationException thrown on error when deciding on which resourcetype to use.
+   * @author Andreas, Jackie
+
    */
   @PostMapping("/projects/{projectId}/{subProjectId}/create-task")
   public String createSubProjectTask(
@@ -200,6 +195,10 @@ public class SubProjectController {
     return "redirect:/projects/" + projectId + "/" + subProjectId;
   }
 
+  /**
+   * Method for handling exceptions. This displays an error page with the message received from the
+   * exception.
+   */
   @ExceptionHandler(Exception.class)
   public String error(Model model, Exception e) {
     model.addAttribute("message", e.getMessage());

@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskRepositoryImpl implements TaskRepository {
+
+  /** @author Andreas */
   @Override
   public Task createTask(Task task, int projectId) throws SystemException {
 
@@ -39,9 +41,9 @@ public class TaskRepositoryImpl implements TaskRepository {
   }
 
   /**
-   * @param projectId
-   * @return
-   * @throws SystemException @ Andreas, Mohamad, Mathias
+   * Returns a list of Task objects from the database, by a given project id.
+   *
+   * @auther Andreas, Mohamad, Mathias
    */
   @Override
   public List<Task> getTasks(int projectId) throws SystemException {

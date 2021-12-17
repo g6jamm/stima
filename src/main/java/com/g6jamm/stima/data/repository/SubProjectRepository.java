@@ -1,7 +1,6 @@
 package com.g6jamm.stima.data.repository;
 
 import com.g6jamm.stima.domain.exception.SystemException;
-import com.g6jamm.stima.domain.model.Headproject;
 import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.Subproject;
 
@@ -40,6 +39,7 @@ public interface SubProjectRepository {
       int parentProjectId)
       throws SystemException;
 
+
   /**
    * Implementation for editing a sub project
    *
@@ -47,7 +47,7 @@ public interface SubProjectRepository {
    * @throws SystemException
    * @author Jackie
    */
-  void editProject(Headproject project) throws SystemException;
+  void editProject(Project project) throws SystemException;
 
   /**
    * Implementation for deliging a sub project

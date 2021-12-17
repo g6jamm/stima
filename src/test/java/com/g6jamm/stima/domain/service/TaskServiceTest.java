@@ -1,11 +1,10 @@
-package com.g6jamm.stima.test.TaskService;
+package com.g6jamm.stima.domain.service;
 
 import com.g6jamm.stima.data.repository.stub.ResourceTypeRepositoryImpl;
 import com.g6jamm.stima.data.repository.stub.TaskRepositoryImpl;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.exception.TaskCreationException;
 import com.g6jamm.stima.domain.model.Task;
-import com.g6jamm.stima.domain.service.TaskService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

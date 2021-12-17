@@ -41,8 +41,8 @@ class UserServiceTest {
             new UserRepositoryImpl(),
             new ResourceTypeRepositoryImpl(),
             new PermissionRepositoryImpl());
-    String email = "demo@demo.com";
-    String password = "demo";
+    String email = "user@demo.com";
+    String password = "Demo";
     String expectedName = "John";
     String actualName = userService.login(email, password).getFirstName();
     Assertions.assertEquals(expectedName, actualName);
@@ -55,8 +55,8 @@ class UserServiceTest {
             new UserRepositoryImpl(),
             new ResourceTypeRepositoryImpl(),
             new PermissionRepositoryImpl());
-    String email = "demo@demo.com";
-    String password = "demo";
+    String email = "user@demo.com";
+    String password = "Demo";
     String expectedName = "Bo";
     String actualName = userService.login(email, password).getFirstName();
     Assertions.assertNotEquals(expectedName, actualName);

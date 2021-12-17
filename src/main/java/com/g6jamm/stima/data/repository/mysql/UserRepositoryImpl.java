@@ -14,6 +14,7 @@ import java.sql.Statement;
 
 public class UserRepositoryImpl implements UserRepository {
 
+  /** @author Mohamad, Mathias */
   @Override
   public User login(String email, String password) throws SystemException {
     try {
@@ -58,6 +59,7 @@ public class UserRepositoryImpl implements UserRepository {
     return null;
   }
 
+  /** @author Mohamad */
   @Override
   public User createUser(User user) throws SystemException {
     int userId = getNewUserId(user);
@@ -72,6 +74,7 @@ public class UserRepositoryImpl implements UserRepository {
         .build();
   }
 
+  /** @author Mohamad */
   @Override
   public boolean userExists(int id) throws SystemException {
     try {
@@ -87,6 +90,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
   }
 
+  /** @author Mohamad */
   @Override
   public int getNewUserId(User user) throws SystemException {
 

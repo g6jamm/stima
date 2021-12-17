@@ -31,7 +31,8 @@ public class ProjectController {
   private final ProjectColorService COLOR_SERVICE = new ProjectColorService(new ProjectColorImpl());
 
   /**
-   * View all projects.
+   * Mapping for seeing all available headprojects for a logged in user. Checks if a user is logged
+   * in and redirects if not.
    *
    * @author Mathias
    */
@@ -55,7 +56,8 @@ public class ProjectController {
   }
 
   /**
-   * View a specific project.
+   * Mapping for viewing a single headproject. Check if the user is logged in if not they are
+   * redirected. Gets the specific project for the user and adds it to the model.
    *
    * @author Mathias
    */
@@ -85,7 +87,8 @@ public class ProjectController {
   }
 
   /**
-   * Create a subproject.
+   * Mapping for creating new subprojects for a headproject. Creates a new subproject based on input
+   * from the webrequest and adds it to the headproject.
    *
    * @author Mathias, Jackie
    */
@@ -113,13 +116,13 @@ public class ProjectController {
             projectColorParam,
             projectId);
 
-    project.getSubProjects().add(subProject);
+    project.addSubProject(subProject);
 
     return "redirect:/projects/" + projectId;
   }
 
   /**
-   * Create a headproject.
+   * Mapping for creating a new headproject.
    *
    * @author Mathias
    */
@@ -147,7 +150,7 @@ public class ProjectController {
   }
 
   /**
-   * Edit a subproject.
+   * Mapping for editing a subproject based on the user input in the webrequest.
    *
    * @author Mathias, Jackie
    */
@@ -155,6 +158,9 @@ public class ProjectController {
   public String editSubProject(
       WebRequest webRequest, @PathVariable int projectId, @PathVariable int subprojectId)
       throws SystemException {
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+      return "redirect:/";
+    }
 
     String projectNameParam = webRequest.getParameter("edit-project-name");
     String startDateParam = webRequest.getParameter("edit-project-start-date");
@@ -172,7 +178,7 @@ public class ProjectController {
   }
 
   /**
-   * Edit a headproject.
+   * Mapping for editing a headproject based on the user input in the webrequest.
    *
    * @author Mathias
    */
@@ -180,6 +186,9 @@ public class ProjectController {
   public String editProject(WebRequest webRequest, @PathVariable int projectId)
       throws SystemException {
 
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+      return "redirect:/";
+    }
     String projectNameParam = webRequest.getParameter("edit-project-name");
     String startDateParam = webRequest.getParameter("edit-project-start-date");
     String endDateParam = webRequest.getParameter("edit-project-end-date");
@@ -196,7 +205,7 @@ public class ProjectController {
   }
 
   /**
-   * Edit a headproject.
+   * Mapping for deleting a Headproject
    *
    * @author Mathias
    */
@@ -208,7 +217,7 @@ public class ProjectController {
   }
 
   /**
-   * Delete a subproject.
+   * Mapping for deleting a subproject.
    *
    * @author Mathias, Jackie
    */
@@ -221,7 +230,7 @@ public class ProjectController {
   }
 
   /**
-   * Delete a task from project.
+   * Mapping for deleting a task on a headproject.
    *
    * @author Mathias
    */
@@ -234,7 +243,7 @@ public class ProjectController {
   }
 
   /**
-   * Delete a task from sub project.
+   * Delete a task for deleting a task on a subproject.
    *
    * @author Mathias
    */
@@ -248,13 +257,17 @@ public class ProjectController {
   }
 
   /**
-   * Edit a task in project.
+   * Mapping for editing tasks on a headproject.
    *
    * @author Mathias
    */
   @PostMapping("/projects/{projectId}/edit-task")
   public String editProjectTask(WebRequest webRequest, @PathVariable int projectId)
       throws TaskCreationException, SystemException {
+
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+      return "redirect:/";
+    }
 
     String nameParam = webRequest.getParameter("edit-task-name");
     String hoursParam = webRequest.getParameter("edit-task-hours");
@@ -275,7 +288,7 @@ public class ProjectController {
   }
 
   /**
-   * Edit a task in sub project.
+   * mapping for editing tasks on a subproject.
    *
    * @author Mathias
    */
@@ -283,6 +296,10 @@ public class ProjectController {
   public String editSubProjectTask(
       WebRequest webRequest, @PathVariable int projectId, @PathVariable int subprojectId)
       throws TaskCreationException, SystemException {
+
+    if (webRequest.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+      return "redirect:/";
+    }
 
     String nameParam = webRequest.getParameter("edit-task-name");
     String hoursParam = webRequest.getParameter("edit-task-hours");
@@ -302,7 +319,13 @@ public class ProjectController {
     return "redirect:/projects/" + projectId + "/" + subprojectId;
   }
 
-  /** @author Mohamad */
+
+  /**
+   * Method for handling expections. This displays an error page with the message recieved from the
+   * excpetion
+   *
+   * @author Mohamad
+   */
   @ExceptionHandler(Exception.class)
   public String error(Model model, Exception e) {
     model.addAttribute("message", e.getMessage());

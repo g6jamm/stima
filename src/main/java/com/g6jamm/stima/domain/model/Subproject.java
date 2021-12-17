@@ -4,39 +4,38 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Model class for sub project
+ * @author Jackie
+ */
 public class Subproject implements Project {
 
-  /**
-   * Model class for sub project
-   * @auther Jackie
-   */
-  private final int SUB_PROJECT_ID;
-
-  private final String SUB_PROJECT_NAME;
-  private final List<Task> SUB_PROJECT_TASKS;
+  private final int ID;
+  private final String NAME;
+  private final List<Task> TASKS;
   private final LocalDate START_DATE;
   private final LocalDate END_DATE;
   private final String COLOR_CODE;
 
   public Subproject(SubProjectBuilder subProjectBuilder) {
-    this.SUB_PROJECT_ID = subProjectBuilder.subProjectId;
-    this.SUB_PROJECT_NAME = subProjectBuilder.subProjectName;
-    this.SUB_PROJECT_TASKS = subProjectBuilder.subProjectTasks;
+    this.ID = subProjectBuilder.id;
+    this.NAME = subProjectBuilder.name;
+    this.TASKS = subProjectBuilder.tasks;
     this.START_DATE = subProjectBuilder.startDate;
     this.END_DATE = subProjectBuilder.endDate;
     this.COLOR_CODE = subProjectBuilder.colorCode;
   }
 
   public List<Task> getTasks() {
-    return this.SUB_PROJECT_TASKS;
+    return this.TASKS;
   }
 
   public int getId() {
-    return this.SUB_PROJECT_ID;
+    return this.ID;
   }
 
   public String getName() {
-    return this.SUB_PROJECT_NAME;
+    return this.NAME;
   }
 
   public LocalDate getStartDate() {
@@ -49,8 +48,8 @@ public class Subproject implements Project {
 
   public double calculateHours() {
     double totalHours = 0.0;
-    if (!SUB_PROJECT_TASKS.isEmpty()) {
-      for (Task t : SUB_PROJECT_TASKS) {
+    if (!TASKS.isEmpty()) {
+      for (Task t : TASKS) {
         totalHours += t.getHours();
       }
     }
@@ -59,8 +58,8 @@ public class Subproject implements Project {
 
   public int calculatePrice() {
     int totalPrice = 0;
-    if (!SUB_PROJECT_TASKS.isEmpty()) {
-      for (Task t : SUB_PROJECT_TASKS) {
+    if (!TASKS.isEmpty()) {
+      for (Task t : TASKS) {
         totalPrice += t.getPrice();
       }
     }
@@ -92,7 +91,7 @@ public class Subproject implements Project {
   }
 
   public void addTask(Task task) {
-    SUB_PROJECT_TASKS.add(task);
+    TASKS.add(task);
   }
 
 
@@ -101,25 +100,25 @@ public class Subproject implements Project {
    * @author Jackie
    */
   public static class SubProjectBuilder {
-    private int subProjectId;
-    private String subProjectName;
-    private List<Task> subProjectTasks;
+    private int id;
+    private String name;
+    private List<Task> tasks;
     private LocalDate startDate;
     private LocalDate endDate;
     private String colorCode;
 
     public SubProjectBuilder subProjectId(int subProjectId) {
-      this.subProjectId = subProjectId;
+      this.id = subProjectId;
       return this;
     }
 
     public SubProjectBuilder name(String name) {
-      this.subProjectName = name;
+      this.name = name;
       return this;
     }
 
     public SubProjectBuilder tasks(List<Task> tasks) {
-      this.subProjectTasks = tasks;
+      this.tasks = tasks;
       return this;
     }
 
@@ -138,15 +137,23 @@ public class Subproject implements Project {
       return this;
     }
 
+    /**
+     * Method to reset variables in the builder. Added in order to avoid having a variable hanging
+     * from a previous use.
+     */
     private void reset() {
-      this.subProjectId = 0;
-      this.subProjectName = null;
-      this.subProjectTasks = null;
+      this.id = 0;
+      this.name = null;
+      this.tasks = null;
       this.startDate = null;
       this.endDate = null;
       this.colorCode = null;
     }
 
+    /**
+     * Returns a Subproject object. The director can construct several product variations using the
+     * same building steps.
+     */
     public Subproject build() {
       Subproject newSubProject = new Subproject(this);
       reset();

@@ -2,7 +2,6 @@ package com.g6jamm.stima.data.repository.stub;
 
 import com.g6jamm.stima.data.repository.SubProjectRepository;
 import com.g6jamm.stima.domain.exception.SystemException;
-import com.g6jamm.stima.domain.model.Headproject;
 import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.Subproject;
 
@@ -83,9 +82,8 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
 
   /** This part is not implemented yet. */
   @Override
-  public void editProject(Headproject project) throws SystemException {
-    //Later implementation
-  }
+  public void editProject(Project project) throws SystemException {}
+
 
   /** This part is not implemented yet. */
   @Override
