@@ -3,9 +3,7 @@ package com.g6jamm.stima.domain.model;
 import java.time.Duration;
 import java.time.LocalDate;
 
-/**
- * @auther Andreas
- */
+/** @auther Andreas */
 public class Task {
 
   private final String NAME;

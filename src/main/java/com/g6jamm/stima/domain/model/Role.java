@@ -1,8 +1,6 @@
 package com.g6jamm.stima.domain.model;
 
-/**
- * @auther Mohamad
- */
+/** @auther Mohamad */
 public class Role {
 
   private final String NAME;
