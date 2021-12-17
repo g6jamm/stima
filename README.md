@@ -43,6 +43,8 @@ git clone git@github.com:g6jamm/stima.git && cd stima
 
 ### Step 2 - install:
 
+Running the installation script requires bash shell.
+
 ```
 bash install.sh
 ```
