@@ -14,7 +14,7 @@ public class ProjectColorService {
   }
 
   /**
-   * Method for getting a map of available colors from the repository.
+   * Returns a map of available colors from the repository.
    *
    * @auther Mathias
    */

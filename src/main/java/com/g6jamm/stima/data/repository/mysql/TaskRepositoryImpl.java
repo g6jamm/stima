@@ -39,9 +39,9 @@ public class TaskRepositoryImpl implements TaskRepository {
   }
 
   /**
-   * @param projectId
-   * @return
-   * @throws SystemException @ Andreas, Mohamad, Mathias
+   * Returns a list of Task objects from the database, by a given project id.
+   *
+   * @auther Andreas, Mohamad, Mathias
    */
   @Override
   public List<Task> getTasks(int projectId) throws SystemException {

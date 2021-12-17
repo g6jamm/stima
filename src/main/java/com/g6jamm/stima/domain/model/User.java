@@ -1,5 +1,8 @@
 package com.g6jamm.stima.domain.model;
 
+/**
+ * @auther Mohamad
+ */
 public class User {
 
   private final int ID;
@@ -92,6 +95,10 @@ public class User {
       return this;
     }
 
+    /**
+     * Method to reset variables in the builder. Added in order to avoid having a variable hanging
+     * from a previous use.
+     */
     private void reset() {
       this.id = 0;
       this.firstName = null;

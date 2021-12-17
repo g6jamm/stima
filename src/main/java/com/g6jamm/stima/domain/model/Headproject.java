@@ -54,10 +54,10 @@ public class Headproject implements Project {
   }
 
   /**
-   * Method for calculating totalhours of a project. Loops through subprojects and tasks to find the
-   * total.
+   * Method for calculating total hours of a project. Loops through subprojects and tasks to find the
+   * total. May be called recursively.
    *
-   * <p>may be called recursivly. @Author Andreas
+   * @author Andreas
    */
   public double calculateHours() {
     double totalHours = 0.0;
@@ -75,8 +75,8 @@ public class Headproject implements Project {
   }
 
   /**
-   * Method for calculating totalprice of a project. Loops through subprojects and tasks to find the
-   * total. may be called recursivly.
+   * Method for calculating total price of a project. Loops through subprojects and tasks to find the
+   * total. May be called recursively.
    *
    * @auther Mathias, Andreas
    */
@@ -102,10 +102,17 @@ public class Headproject implements Project {
     return Math.round(workdaysNeeded * 100.0) / 100.0;
   }
 
+  /**
+   * Returns different in days, include start and end date.
+   * @auther Mathias
+   */
   public long calculateDays() {
     return Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays() + 1;
   }
 
+  /**
+   * @auther Mathias, Jakie
+   */
   public void addSubProject(Project project) {
     SUB_PROJECTS.add(project);
   }
@@ -115,6 +122,7 @@ public class Headproject implements Project {
     long workdaysAvailable =
         Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays() + 1;
     double result = calculateWorkdays() / (workdaysAvailable);
+
     return Math.round(result * 100.0) / 100.0;
   }
 
@@ -172,7 +180,9 @@ public class Headproject implements Project {
 
     /**
      * Method to reset variables in the builder. Added in order to avoid having a variable hanging
-     * from a previous use. @Author Andreas
+     * from a previous use.
+     *
+     * @author Andreas
      */
     private void reset() {
       this.projectId = 0;

@@ -17,7 +17,7 @@ public class ProjectService {
   }
 
   /**
-   * Method for getting a list of projects based on the user. This forwards the request to the
+   * Returns a list of projects based on the user. This forwards the request to the
    * repository.
    *
    * @author Mathias
@@ -27,7 +27,7 @@ public class ProjectService {
   }
 
   /**
-   * Method for getting a project based on id and the user. This gets all projects for the user and
+   * Returns a project based on id and the user. This gets all projects for the user and
    * loops through the list a check if the id exists.
    *
    * @author Mathias
@@ -43,10 +43,9 @@ public class ProjectService {
   }
 
   /**
-   * Method for creating a new headproject Here we create an initial object for us to use in the
+   * Here we create an initial object for us to use in the
    * repository. The new object is then passed to the repository to create the rest of the object.
-   *
-   * <p>a complete object with id is then returned.
+   * A complete object with id is then returned.
    *
    * @author Mathias
    */
@@ -67,7 +66,7 @@ public class ProjectService {
 
   /**
    * Method for editing a project. A new object is build here with the new information. This
-   * headproject is then passed to the repository.
+   * project is then passed to the repository.
    *
    * @author Mathias
    */
@@ -88,7 +87,7 @@ public class ProjectService {
   }
 
   /**
-   * Method for forwading the delete request to the repository.
+   * Method for forwarding the delete request to the repository.
    *
    * @author Mathias
    */

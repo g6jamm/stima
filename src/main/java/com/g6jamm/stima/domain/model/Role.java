@@ -1,5 +1,8 @@
 package com.g6jamm.stima.domain.model;
 
+/**
+ * @auther Mohamad
+ */
 public class Role {
 
   private final String NAME;
@@ -32,6 +35,10 @@ public class Role {
       return this;
     }
 
+    /**
+     * Method to reset variables in the builder. Added in order to avoid having a variable hanging
+     * from a previous use.
+     */
     public void reset() {
       this.name = null;
       this.id = 0;
