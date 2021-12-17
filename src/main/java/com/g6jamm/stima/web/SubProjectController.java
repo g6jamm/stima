@@ -146,12 +146,12 @@ public class SubProjectController {
   }
 
   /**
-   * Post method for adding tasks to subprojects. Redirects the user to login if not logged in
-   * Finds the subproject based on project id and subProjectId given in the parameter. First by
-   * getting the head project, then by looping through the head-projects subprojects.
-   * calls createTask() with the web-request and subproject.
+   * Post method for adding tasks to subprojects. Redirects the user to login if not logged in Finds
+   * the subproject based on project id and subProjectId given in the parameter. First by getting
+   * the head project, then by looping through the head-projects subprojects. calls createTask()
+   * with the web-request and subproject.
    *
- * @auther Andreas, Jackie
+   * @auther Andreas, Jackie
    */
   @PostMapping("/projects/{projectId}/{subProjectId}/create-task")
   public String createSubProjectTask(
