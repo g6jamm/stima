@@ -145,6 +145,10 @@ public class Subproject implements Project {
       this.colorCode = null;
     }
 
+    /**
+     * Returns a Subproject object.
+     * The director can construct several product variations using the same building steps.
+     */
     public Subproject build() {
       Subproject newSubProject = new Subproject(this);
       reset();
@@ -152,3 +156,4 @@ public class Subproject implements Project {
     }
   }
 }
+

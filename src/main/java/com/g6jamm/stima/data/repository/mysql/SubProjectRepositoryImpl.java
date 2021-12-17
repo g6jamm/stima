@@ -44,9 +44,6 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
                 .subProjectId(rs.getInt("project_id"))
                 .name(rs.getString("name"))
                 .tasks(TASK_REPOSITORY.getTasks(rs.getInt("project_id")))
-                // Vi kan spare kald til databasen ved at bygge et
-                // task-objekt i metoden. Dette er bevidst fravalgt, da det
-                // vil gøre koden væsentlig mindre vedligeholdes venlig.
                 .startDate(LocalDate.parse(rs.getString("start_date")))
                 .endDate(LocalDate.parse(rs.getString("end_date")))
                 .colorCode(rs.getString("colorscode"))

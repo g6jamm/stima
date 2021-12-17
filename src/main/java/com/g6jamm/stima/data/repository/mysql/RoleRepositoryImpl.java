@@ -37,6 +37,7 @@ public class RoleRepositoryImpl implements RoleRepository {
     }
   }
 
+  /** @author Mohamad */
   @Override
   public Role getRole(String roleName) throws SystemException {
     try {

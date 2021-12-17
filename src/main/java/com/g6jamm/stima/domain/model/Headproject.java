@@ -194,6 +194,10 @@ public class Headproject implements Project {
       this.colorCode = null;
     }
 
+    /**
+     * Returns a Headproject object.
+     * The director can construct several product variations using the same building steps.
+     */
     public Headproject build() {
       Headproject headProject = new Headproject(this);
       reset();

@@ -109,6 +109,10 @@ public class User {
       this.permission = null;
     }
 
+    /**
+     * Returns a User object.
+     * The director can construct several product variations using the same building steps.
+     */
     public User build() {
       User result = new User(this);
       reset();
