@@ -83,6 +83,8 @@ How to deploy the on Heroku
 7. Select “Enable Automatic Deploys” if you want to redeploy every time the production branch changes.
 8. Select which branch to deploy and press deploy branch
 
+[Read more on Heroku](https://devcenter.heroku.com/articles/getting-started-with-java)
+
 ## License
 
 This project uses the following license: [MIT License](https://github.com/g6jamm/stima/blob/develop/LICENSE).
