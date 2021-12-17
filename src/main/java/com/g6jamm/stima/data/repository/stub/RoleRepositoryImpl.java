@@ -6,6 +6,7 @@ import com.g6jamm.stima.domain.model.Role;
 
 import java.util.List;
 
+/** @author Mohamad */
 public class RoleRepositoryImpl implements RoleRepository {
   @Override
   public List<Role> getRoles() throws SystemException {
