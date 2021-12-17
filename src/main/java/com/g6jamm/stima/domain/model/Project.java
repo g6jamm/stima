@@ -4,9 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Interface for project, Here we use a design Pattern called Composite Pattern to handle both
- * HeadProject and Subproject the same. There by creating polymophic behaviour and saving
- * code. @Author Andreas
+ * Interface for project. Here we use a design Pattern called Composite Pattern to handle both
+ * Project and Subproject the same. There by creating polymorphic behaviour and saving code.
+ *
+ * @author Andreas
  */
 public interface Project {
 

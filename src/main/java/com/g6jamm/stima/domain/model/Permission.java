@@ -32,11 +32,19 @@ public class Permission {
       return this;
     }
 
+    /**
+     * Method to reset variables in the builder. Added in order to avoid having a variable hanging
+     * from a previous use.
+     */
     public void reset() {
       this.name = null;
       this.id = 0;
     }
 
+    /**
+     * Returns a Permission object. The director can construct several product variations using the
+     * same building steps.
+     */
     public Permission build() {
       Permission permission = new Permission(this);
       reset();

@@ -13,6 +13,8 @@ import java.util.List;
 
 /** @author Mohamad */
 public class PermissionRepositoryImpl implements PermissionRepository {
+
+  /** @author Mohamad */
   @Override
   public List<Permission> getPermissions() throws SystemException {
     List<Permission> result = new ArrayList<>();
@@ -39,6 +41,7 @@ public class PermissionRepositoryImpl implements PermissionRepository {
     }
   }
 
+  /** @author Mohamad */
   @Override
   public Permission getPermission(String permissionName) throws SystemException {
     try {

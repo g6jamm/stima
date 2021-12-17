@@ -1,5 +1,6 @@
 package com.g6jamm.stima.domain.model;
 
+/** @auther Mohamad */
 public class ResourceType {
 
   private final String NAME;
@@ -44,12 +45,20 @@ public class ResourceType {
       return this;
     }
 
+    /**
+     * Method to reset variables in the builder. Added in order to avoid having a variable hanging
+     * from a previous use.
+     */
     public void reset() {
       this.name = null;
       this.id = 0;
       this.pricePrHour = 0;
     }
 
+    /**
+     * Returns a ResourceType object. The director can construct several product variations using
+     * the same building steps.
+     */
     public ResourceType build() {
       ResourceType resourceType = new ResourceType(this);
       reset();
