@@ -23,7 +23,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
   /**
    * Create a new project and store it in the database.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @Override
   public Headproject createProject(Headproject project, User user) throws SystemException {
@@ -71,7 +71,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
   /**
    * Delete project from the database by project id.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @Override
   public void deleteProject(int projectId) throws SystemException {
@@ -90,7 +90,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
   /**
    * Edit project in database by project object.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @Override
   public void editProject(Headproject project) throws SystemException {
@@ -118,7 +118,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
   /**
    * Get a list of project of owned by a user.
    *
-   * @auther Mathias
+   * @author Mathias
    */
   @Override
   public List<Headproject> getProjects(User user) throws SystemException {

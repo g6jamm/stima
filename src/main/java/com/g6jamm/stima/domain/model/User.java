@@ -1,5 +1,6 @@
 package com.g6jamm.stima.domain.model;
 
+/** @auther Mohamad */
 public class User {
 
   private final int ID;
@@ -7,8 +8,8 @@ public class User {
   private final String LAST_NAME;
   private final String EMAIL;
   private final String PASSWORD;
-  private final ResourceType RESOURCETYPE; // TODO skal vi stadig bruge den?
-  private final Permission PERMISSION; // TODO skal vi stadig bruge den?
+  private final ResourceType RESOURCETYPE;
+  private final Permission PERMISSION;
 
   private User(UserBuilder userBuilder) {
     this.ID = userBuilder.id;
@@ -92,6 +93,10 @@ public class User {
       return this;
     }
 
+    /**
+     * Method to reset variables in the builder. Added in order to avoid having a variable hanging
+     * from a previous use.
+     */
     private void reset() {
       this.id = 0;
       this.firstName = null;
@@ -102,6 +107,10 @@ public class User {
       this.permission = null;
     }
 
+    /**
+     * Returns a User object. The director can construct several product variations using the same
+     * building steps.
+     */
     public User build() {
       User result = new User(this);
       reset();

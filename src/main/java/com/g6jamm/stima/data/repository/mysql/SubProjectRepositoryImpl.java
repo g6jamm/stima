@@ -4,7 +4,6 @@ import com.g6jamm.stima.data.repository.SubProjectRepository;
 import com.g6jamm.stima.data.repository.TaskRepository;
 import com.g6jamm.stima.data.repository.mysql.util.DbManager;
 import com.g6jamm.stima.domain.exception.SystemException;
-import com.g6jamm.stima.domain.model.Headproject;
 import com.g6jamm.stima.domain.model.Project;
 import com.g6jamm.stima.domain.model.Subproject;
 
@@ -16,7 +15,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/** @author Jackie */
 public class SubProjectRepositoryImpl implements SubProjectRepository {
 
   private final TaskRepository TASK_REPOSITORY = new TaskRepositoryImpl();
@@ -24,7 +22,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   /**
    * Get a list of subproject with a specific project id.
    *
-   * @auther Mathias
+   * @author Mathias og Jackie
    */
   @Override
   public List<Project> getSubProjects(int projectId) throws SystemException {
@@ -45,9 +43,6 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
                 .subProjectId(rs.getInt("project_id"))
                 .name(rs.getString("name"))
                 .tasks(TASK_REPOSITORY.getTasks(rs.getInt("project_id")))
-                // Vi kan spare kald til databasen ved at bygge et
-                // task-objekt i metoden. Dette er bevidst fravalgt, da det
-                // vil gøre koden væsentlig mindre vedligeholdes venlig.
                 .startDate(LocalDate.parse(rs.getString("start_date")))
                 .endDate(LocalDate.parse(rs.getString("end_date")))
                 .colorCode(rs.getString("colorscode"))
@@ -65,7 +60,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   /**
    * Create a new subproject and save it to the database.
    *
-   * @auther Mathias
+   * @author Mathias og Jackie
    */
   @Override
   public Subproject createSubProject(
@@ -99,10 +94,10 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   /**
    * Edit project details in the database for a given project.
    *
-   * @auther Mathias
+   * @author Mathias og Jackie
    */
   @Override
-  public void editProject(Headproject project) throws SystemException {
+  public void editProject(Project project) throws SystemException {
     // TODO: This method does already exists in HeadProject. To be merged. /Mathias
     try {
       String query =
@@ -127,7 +122,7 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   /**
    * Delete project in the database for a given subproject.
    *
-   * @auther Mathias
+   * @author Mathias og Jackie
    */
   @Override
   public void deleteProject(int projectId) throws SystemException {

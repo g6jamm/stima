@@ -21,7 +21,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     createTestData();
   }
 
-  /** @auther Mathias, Andreas */
+  /** @author Mathias, Andreas */
   public void createTestData() throws SystemException {
     if (projects.isEmpty()) {
       projects.add(
@@ -70,7 +70,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     }
   }
 
-  /** @auther Mathias */
+  /** @author Mathias */
   @Override
   public Headproject createProject(Headproject project, User user) throws SystemException {
 
@@ -89,7 +89,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     return project;
   }
 
-  /** @auther Mathias */
+  /** @author Mathias */
   @Override
   public List<Headproject> getProjects(User user) throws SystemException {
     return projects;

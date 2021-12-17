@@ -13,6 +13,12 @@ Stima is a project estimation tool.
 
 To use stima, follow this link: https://stima2.herokuapp.com/
 
+Demo user:<br>
+`user@demo.com` : `Demo`
+<br>
+Demo admin user:<br>
+`admin@demo.com` : `Demo`
+
 ## Contributing to stima
 
 To contribute to stima, follow these steps:
@@ -36,6 +42,8 @@ git clone git@github.com:g6jamm/stima.git && cd stima
 ```
 
 ### Step 2 - install:
+
+Running the installation script requires bash shell.
 
 ```
 bash install.sh
@@ -61,6 +69,21 @@ Thanks to the following people who have contributed to this project:
 * [@Jarkyman](https://github.com/Jarkyman)
 * [@MathiasReker](https://github.com/MathiasReker)
 * [@Moshizzl3](https://github.com/Moshizzl3)
+
+## Deployment to Heruko
+
+How to deploy the on Heroku
+
+1. Create an account on Heruko
+2. Click on "new" in the right corner
+3. Select new app in the drop-down menu
+4. Name the app and select region (Europe recommended)
+5. During deploy method, select GitHub (this requires you to link your GitHub to Heroku)
+6. Search for your repository under “Connect to GitHub” and press connect
+7. Select “Enable Automatic Deploys” if you want to redeploy every time the production branch changes.
+8. Select which branch to deploy and press deploy branch
+
+[Read more on Heroku](https://devcenter.heroku.com/articles/getting-started-with-java)
 
 ## License
 
