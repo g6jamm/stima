@@ -197,6 +197,7 @@ public class SubProjectController {
   /**
    * Method for handling exceptions. This displays an error page with the message received from the
    * exception.
+   * @author Mohamad
    */
   @ExceptionHandler(Exception.class)
   public String error(Model model, Exception e) {

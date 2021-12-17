@@ -41,7 +41,7 @@ public class UserController {
 
   /**
    * get mapping for showing the create user page. if there is no user in the session we redirect to
-   * index page.
+   * indexpage.
    *
    * @author Mohamad
    */
@@ -143,6 +143,7 @@ public class UserController {
   /**
    * Method for handling exceptions. This displays an error page with the message received from the
    * exception
+   * @author Mohamad
    */
   @ExceptionHandler(Exception.class)
   public String error(Model model, Exception e) {

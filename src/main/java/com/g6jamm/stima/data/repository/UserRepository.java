@@ -4,6 +4,9 @@ import com.g6jamm.stima.domain.exception.SignUpException;
 import com.g6jamm.stima.domain.exception.SystemException;
 import com.g6jamm.stima.domain.model.User;
 
+/**
+ * @author Mohamad
+ */
 public interface UserRepository {
 
   User login(String email, String password) throws SystemException;

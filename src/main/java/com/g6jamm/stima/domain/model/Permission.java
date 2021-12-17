@@ -1,5 +1,8 @@
 package com.g6jamm.stima.domain.model;
 
+/**
+ * @author Mohamad
+ */
 public class Permission {
 
   private final String NAME;
