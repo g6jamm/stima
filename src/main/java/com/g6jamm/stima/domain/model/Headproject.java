@@ -54,8 +54,8 @@ public class Headproject implements Project {
   }
 
   /**
-   * Method for calculating total hours of a project. Loops through subprojects and tasks to find the
-   * total. May be called recursively.
+   * Method for calculating total hours of a project. Loops through subprojects and tasks to find
+   * the total. May be called recursively.
    *
    * @author Andreas
    */
@@ -75,8 +75,8 @@ public class Headproject implements Project {
   }
 
   /**
-   * Method for calculating total price of a project. Loops through subprojects and tasks to find the
-   * total. May be called recursively.
+   * Method for calculating total price of a project. Loops through subprojects and tasks to find
+   * the total. May be called recursively.
    *
    * @auther Mathias, Andreas
    */
@@ -104,15 +104,14 @@ public class Headproject implements Project {
 
   /**
    * Returns different in days, include start and end date.
+   *
    * @auther Mathias
    */
   public long calculateDays() {
     return Duration.between(START_DATE.atStartOfDay(), END_DATE.atStartOfDay()).toDays() + 1;
   }
 
-  /**
-   * @auther Mathias, Jakie
-   */
+  /** @auther Mathias, Jakie */
   public void addSubProject(Project project) {
     SUB_PROJECTS.add(project);
   }

@@ -134,8 +134,8 @@ public class Task {
     }
 
     /**
-     * Returns a Task object.
-     * The director can construct several product variations using the same building steps.
+     * Returns a Task object. The director can construct several product variations using the same
+     * building steps.
      */
     public Task build() {
       price();

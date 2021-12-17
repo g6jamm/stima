@@ -4,9 +4,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * @auther Jakie
- */
+/** @auther Jakie */
 public class Subproject implements Project {
 
   private final int ID;

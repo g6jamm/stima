@@ -42,8 +42,8 @@ public class Permission {
     }
 
     /**
-     * Returns a Permission object.
-     * The director can construct several product variations using the same building steps.
+     * Returns a Permission object. The director can construct several product variations using the
+     * same building steps.
      */
     public Permission build() {
       Permission permission = new Permission(this);
