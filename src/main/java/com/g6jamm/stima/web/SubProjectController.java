@@ -157,8 +157,8 @@ public class SubProjectController {
    * getting the head project, then by looping through the headprojects subprojects.
    *
    * <p>calls createTask() with the webrequest and subproject.
-   * @author Andreas, Jackie
    *
+   * @author Andreas, Jackie
    * @param webRequest
    * @param projectId
    * @param subProjectId
@@ -166,7 +166,6 @@ public class SubProjectController {
    * @throws SystemException thrown on error when creating tasks.
    * @throws TaskCreationException thrown on error when deciding on which resourcetype to use.
    * @author Andreas, Jackie
-
    */
   @PostMapping("/projects/{projectId}/{subProjectId}/create-task")
   public String createSubProjectTask(

@@ -25,7 +25,6 @@ public class UserController {
           new ResourceTypeRepositoryImpl(),
           new PermissionRepositoryImpl());
 
-
   /**
    * Get Mapping for returning the index page. If there is a user in the session we redirect to
    * /projects.
@@ -39,7 +38,6 @@ public class UserController {
     }
     return "redirect:/projects";
   }
-
 
   /**
    * get mapping for showing the create user page. if there is no user in the session we redirect to
@@ -55,7 +53,6 @@ public class UserController {
     return "createUser";
   }
 
-
   /**
    * Mapping for logout. This method removes the user from the session amd redirected to the index
    * page.
@@ -67,7 +64,6 @@ public class UserController {
     webRequest.removeAttribute("user", WebRequest.SCOPE_SESSION);
     return "redirect:/";
   }
-
 
   /**
    * Mapping for sign in, this checks if the user exists and email/password matches what is in the
@@ -93,7 +89,6 @@ public class UserController {
       return "index";
     }
   }
-
 
   /**
    * Mapping for creating new users. This is only available when logged in. This method takes the
@@ -136,13 +131,11 @@ public class UserController {
     return null;
   }
 
-
   /**
    * Method for checking if passwords are eqaul. Returns true or false
    *
    * @author Mohamad
    */
-
   private boolean validatePassword(String password1, String password2) {
     return password1.equals(password2);
   }

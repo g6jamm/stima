@@ -26,7 +26,6 @@ public class SubProjectService {
         name, startDate, endDate, projectColor, parentProjectId);
   }
 
-
   /**
    * Method for creating a subproject with the new state of the project.
    *
@@ -47,7 +46,6 @@ public class SubProjectService {
 
     SUBPROJECT_REPOSITORY.editProject(subproject);
   }
-
 
   /**
    * Method for forwarding delete request to the repository

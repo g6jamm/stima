@@ -39,7 +39,6 @@ public interface SubProjectRepository {
       int parentProjectId)
       throws SystemException;
 
-
   /**
    * Implementation for editing a sub project
    *

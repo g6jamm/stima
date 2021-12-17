@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * Model class for sub project
+ *
  * @author Jackie
  */
 public class Subproject implements Project {
@@ -94,9 +95,9 @@ public class Subproject implements Project {
     TASKS.add(task);
   }
 
-
   /**
    * Builder class for a sub project
+   *
    * @author Jackie
    */
   public static class SubProjectBuilder {

@@ -319,7 +319,6 @@ public class ProjectController {
     return "redirect:/projects/" + projectId + "/" + subprojectId;
   }
 
-
   /**
    * Method for handling expections. This displays an error page with the message recieved from the
    * excpetion

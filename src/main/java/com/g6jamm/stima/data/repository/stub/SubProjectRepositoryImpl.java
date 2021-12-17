@@ -84,10 +84,9 @@ public class SubProjectRepositoryImpl implements SubProjectRepository {
   @Override
   public void editProject(Project project) throws SystemException {}
 
-
   /** This part is not implemented yet. */
   @Override
   public void deleteProject(int projectId) throws SystemException {
-    //Later implementation
+    // Later implementation
   }
 }
