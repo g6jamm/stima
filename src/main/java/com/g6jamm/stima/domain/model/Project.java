@@ -5,8 +5,7 @@ import java.util.List;
 
 /**
  * Interface for project. Here we use a design Pattern called Composite Pattern to handle both
- * Project and Subproject the same. There by creating polymorphic behaviour and saving
- * code.
+ * Project and Subproject the same. There by creating polymorphic behaviour and saving code.
  *
  * @author Andreas
  */

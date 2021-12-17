@@ -56,8 +56,8 @@ public class ResourceType {
     }
 
     /**
-     * Returns a ResourceType object.
-     * The director can construct several product variations using the same building steps.
+     * Returns a ResourceType object. The director can construct several product variations using
+     * the same building steps.
      */
     public ResourceType build() {
       ResourceType resourceType = new ResourceType(this);

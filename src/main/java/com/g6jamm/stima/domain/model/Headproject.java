@@ -194,8 +194,8 @@ public class Headproject implements Project {
     }
 
     /**
-     * Returns a Headproject object.
-     * The director can construct several product variations using the same building steps.
+     * Returns a Headproject object. The director can construct several product variations using the
+     * same building steps.
      */
     public Headproject build() {
       Headproject headProject = new Headproject(this);

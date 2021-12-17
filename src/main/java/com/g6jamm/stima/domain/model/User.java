@@ -108,8 +108,8 @@ public class User {
     }
 
     /**
-     * Returns a User object.
-     * The director can construct several product variations using the same building steps.
+     * Returns a User object. The director can construct several product variations using the same
+     * building steps.
      */
     public User build() {
       User result = new User(this);

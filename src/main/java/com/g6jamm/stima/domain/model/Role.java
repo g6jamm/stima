@@ -43,8 +43,8 @@ public class Role {
     }
 
     /**
-     * Returns a Role object.
-     * The director can construct several product variations using the same building steps.
+     * Returns a Role object. The director can construct several product variations using the same
+     * building steps.
      */
     public Role build() {
       Role role = new Role(this);
